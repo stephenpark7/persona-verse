@@ -13,7 +13,7 @@ export default function Home() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!userData.username || !userData.email || !userData.password) return;
-    axios.post('/api/users', {
+    axios.post('/api/users/signup', {
       username: userData.username,
       email: userData.email,
       password: userData.password

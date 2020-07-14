@@ -1,9 +1,14 @@
+require('dotenv').config();
+
 // express, path, cors, dotenv
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-require('dotenv').config();
+
+// database set up
+const db = require('./models');
+db.sequelize.sync();
 
 // server port, production mode
 const SERVER_PORT = process.env.PORT || 5000;
@@ -15,11 +20,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // set up database middleware
-const db = require('./config/database');
-app.use((req, res, next) => {
-  req.db = db;
-  next();
-});
+// app.use((req, res, next) => {
+//   req.db = db;
+//   next();
+// });
 
 // api routing
 const usersRoutes = require('./api/users');
@@ -34,6 +38,10 @@ if (PRODUCTION_MODE) {
 }
 
 // start server
-app.listen(SERVER_PORT, () => {
-  console.log('Server started at port ' + SERVER_PORT);
-});
+//db.initialize().then(() => {
+  app.listen(SERVER_PORT, () => {
+    console.log('Server started at port ' + SERVER_PORT);
+  });
+// }).catch(err => {
+//   console.log(err);
+// });
