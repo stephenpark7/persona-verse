@@ -6,4 +6,8 @@ router.post('/signup', async (req, res) => {
   await userController.create(req, res);
 });
 
+router.post('/login', async (req, res) => {
+  await userController.login(req, res);
+});
+
 module.exports = router;

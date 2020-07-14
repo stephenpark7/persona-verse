@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
@@ -7,20 +7,28 @@ import Form from 'react-bootstrap/Form';
 import './Signup.css';
 import axios from 'axios';
 
-export default function Signup() {
-  const [userData, setUserData] = useState(null);
+import { UserContext } from '../UserContext';
+
+export default function Login() {
+  const userContext = useContext(UserContext);
+  const { setUserData } = userContext;
+
+  const [userInputData, setUserInputData] = useState(null);
+  const history = useHistory();
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!userData.username || !userData.email || !userData.password) return;
-    axios.post('/api/users/signup', {
-      username: userData.username,
-      email: userData.email,
-      password: userData.password
+    if (!userInputData.username || !userInputData.password) return;
+    axios.post('/api/users/login', {
+      username: userInputData.username,
+      email: userInputData.email,
+      password: userInputData.password
     }).then(res => {
-      console.log(res.data);
+      localStorage.setItem('token', JSON.stringify(res.data));
+      setUserData(res.data);
+      history.push('/');
     }).catch(err => {
-      console.log(err.response.data);
+      console.log(err); //.response.data
     });
   }
 
@@ -28,7 +36,7 @@ export default function Signup() {
     let target = e.target;
     let value = target.value;
     let name = target.name;
-    setUserData({...userData,
+    setUserInputData({...userInputData,
       [name]: value
     });
   }
@@ -36,22 +44,18 @@ export default function Signup() {
   return (
     <Container>
       <Jumbotron>
-        <h1>Sign up</h1>
+        <h1>Log in</h1>
         <Form onSubmit={handleSubmit}>
 
           <Form.Group className='mt-3 mb-3'>
             <Form.Control type='text' name='username' placeholder='Username' onChange={handleChange} required />
           </Form.Group>
 
-          <Form.Group className='mt-3 mb-3'>
-            <Form.Control type='email' name='email' placeholder='Email' onChange={handleChange} required />
-          </Form.Group>
-
           <Form.Group className='mb-3'>
             <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} required />
           </Form.Group>
 
-          <Button variant='primary' type='submit'>Sign up</Button>{' '}
+          <Button variant='primary' type='submit'>Log in</Button>{' '}
           <Link to='/'><Button variant='primary'>Go Back</Button></Link>
 
         </Form>

@@ -3,8 +3,8 @@ const User = db.User;
 const bcrypt = require("bcryptjs");
 const validator = require('validator');
 
-// const jwt = require("jsonwebtoken");
-// const jwtSecret = process.env.JWT_SECRET;
+const jwt = require("jsonwebtoken");
+const jwtSecret = process.env.JWT_SECRET;
 // const Op = db.Sequelize.Op;
 
 // Create a new account
@@ -29,6 +29,13 @@ exports.create = async (req, res) => {
     return;
   }
 
+  // Check if username already in use
+  const userData = await User.findOne({ where: { username: username } });
+  if (userData !== null) {
+    res.status(400).send('Username already in use.');
+    return;
+  }
+
   // Encrypt password
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -44,4 +51,36 @@ exports.create = async (req, res) => {
     console.log(err);
     res.status(400).json('Failed to create an account.')
   });
+}
+
+// Login
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+
+  // Check for missing fields
+  if (!username || !password) {
+    res.status(400).send('Missing field(s)');
+    return;
+  }
+
+  // Get user data
+  const userData = await User.findOne({ where: { username: username } });
+  if (userData === null) {
+    res.status(400).send('Username does not exist.');
+    return;
+  }
+
+  // Check password
+  if (await bcrypt.compare(password, userData.password)) {
+    const token = jwt.sign({ id: userData.id }, jwtSecret, {
+      expiresIn: 86400 // 24 hours
+    });
+    res.status(200).send({
+      id: userData.id,
+      username: username,
+      accessToken: token
+    });
+  } else {
+    res.status(400).send('Incorrect password.');
+  }
 }
