@@ -5,7 +5,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import { Link } from 'react-router-dom';
 
 import './Home.css';
-
+import TweetContainer from '../components/TweetContainer';
 import { UserContext } from '../UserContext';
 
 export default function Home() {
@@ -33,7 +33,9 @@ export default function Home() {
           </>
           : 
           <>
-            <p>Welcome {userData.username}!</p>
+            <TweetContainer userData={userData} />
+            {/* <p>Welcome {userData.username}!</p> */}
+            <br />
             <Button variant="primary" onClick={handleLogout}>Log out</Button>
           </>
         }

@@ -28,7 +28,7 @@ export default function Login() {
       setUserData(res.data);
       history.push('/');
     }).catch(err => {
-      console.log(err); //.response.data
+      console.log(err.response.data); //.response.data
     });
   }
 

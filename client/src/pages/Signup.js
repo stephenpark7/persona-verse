@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
@@ -9,6 +9,7 @@ import axios from 'axios';
 
 export default function Signup() {
   const [userData, setUserData] = useState(null);
+  const history = useHistory();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,7 +19,8 @@ export default function Signup() {
       email: userData.email,
       password: userData.password
     }).then(res => {
-      console.log(res.data);
+      history.push('/');
+      //console.log(res.data);
     }).catch(err => {
       console.log(err.response.data);
     });

@@ -7,6 +7,11 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   dialectOptions: {
       ssl: { rejectUnauthorized: false }
   },
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  }
   // logging: false
 });
 
@@ -16,8 +21,14 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.User = require("./user.model")(sequelize, Sequelize);
+db.Tweet = require("./tweet.model")(sequelize, Sequelize);
+db.User.hasMany(db.Tweet);
 
 module.exports = db;
+
+process.on('SIGINT', function () {
+  sequelize.close();
+});
 
 // sequelize
 // .authenticate()

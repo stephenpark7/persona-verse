@@ -19,15 +19,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// set up database middleware
-// app.use((req, res, next) => {
-//   req.db = db;
-//   next();
-// });
-
 // api routing
-const usersRoutes = require('./api/users');
-app.use('/api/users', usersRoutes);
+app.use('/api/users', require('./api/users'));
+app.use('/api/tweets', require('./api/tweets'));
 
 // serve production build
 if (PRODUCTION_MODE) {
@@ -38,10 +32,6 @@ if (PRODUCTION_MODE) {
 }
 
 // start server
-//db.initialize().then(() => {
-  app.listen(SERVER_PORT, () => {
-    console.log('Server started at port ' + SERVER_PORT);
-  });
-// }).catch(err => {
-//   console.log(err);
-// });
+app.listen(SERVER_PORT, () => {
+  console.log('Server started at port ' + SERVER_PORT);
+});
