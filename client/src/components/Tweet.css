@@ -1,0 +1,22 @@
+.tweet-container {
+  margin-bottom: 1em;
+}
+
+.display-name {
+  font-weight: bold;
+}
+
+.username {
+  margin-left: 5px;
+  color: gray;
+}
+
+.date::before {
+  margin-right: 5px;
+  content: '·';
+}
+
+.date {
+  margin-left: 5px;
+  color: gray;
+}

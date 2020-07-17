@@ -33,7 +33,7 @@ export default function Home() {
           </>
           : 
           <>
-            <TweetContainer userData={userData} />
+            <TweetContainer />
             {/* <p>Welcome {userData.username}!</p> */}
             <br />
             <Button variant="primary" onClick={handleLogout}>Log out</Button>

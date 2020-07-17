@@ -1,9 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
-export default function TweetContainer({ userData }) {
+import { UserContext } from '../UserContext';
+import Tweet from '../components/Tweet';
+
+export default function TweetContainer() {
+  const userContext = useContext(UserContext);
+  const { userData } = userContext;
 
   const [tweetMessage, setTweetText] = useState('');
   const [tweetData, setTweetData] = useState(null);
@@ -27,8 +32,16 @@ export default function TweetContainer({ userData }) {
       }
     }).then(res => {
       setTweetText('');
+      const newTweet = res.data;
+      newTweet.User = {
+        username: userData.username,
+        display_name: userData.display_name,
+      }
+      console.log(newTweet);
+      setTweetData([...tweetData, newTweet]);
+      //console.log(res.data);
       // update / refresh page
-      fetchData();
+      //fetchData();
     }).catch(err => {
       console.log(err); //.response.data
     });
@@ -44,8 +57,9 @@ export default function TweetContainer({ userData }) {
         'x-access-token': userData.accessToken
       }      
     }).then(res => {
-      //console.log(res.data);
-      setTweetData(res.data);
+      const tweetData = res.data;
+      console.log(tweetData);
+      setTweetData(tweetData);
     }).catch(err => {
       console.log(err);
     });
@@ -67,11 +81,9 @@ export default function TweetContainer({ userData }) {
 
       <br /><br />
       <h2>Tweets</h2>
-      <ul>
-        {tweetData && tweetData.map((tweet, idx) => 
-          <li key={idx}>{tweet.message} - Likes: {tweet.likes}</li>
-        )}
-      </ul>
+      {tweetData && tweetData.map((data, idx) => 
+        <Tweet key={idx} data={data} />
+      )}
 
     </Form>
   );
