@@ -1,5 +1,13 @@
 # twitter-clone
-Twitter clone using PERN stack. 
 
-## Goals
-For practice and to use as a portfolio piece.
+A twitter clone, for learning purposes.
+
+## Tech Stack
+
+Postgres, Express.js, Node.js, React
+
+## Instructions
+
+Run production for client and server: `npm start` \
+Run development for client and server: `npm run dev` \
+Build for production: `npm run build`
