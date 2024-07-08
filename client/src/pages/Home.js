@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import Jumbotron from 'react-bootstrap/Jumbotron';
+import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import './Home.css';
@@ -19,27 +18,29 @@ export default function Home() {
 
   return (
     <Container>
-      <Jumbotron>
-        <h1>Twitter</h1>
-        {!userData ? 
-          <>
-            <p>Create an account or log in.</p>
-            <Link to='/signup'>
-              <Button variant="primary">Sign up</Button>{' '}
-            </Link>
-            <Link to='/login'>
-              <Button variant="primary">Log in</Button>
-            </Link>
-          </>
-          : 
-          <>
-            <TweetContainer />
-            {/* <p>Welcome {userData.username}!</p> */}
-            <br />
-            <Button variant="primary" onClick={handleLogout}>Log out</Button>
-          </>
-        }
-      </Jumbotron>
+      <Row className='my-5'>
+        <Col>
+          <h1>Twitter</h1>
+          {!userData ? 
+            <>
+              <p>Create an account or log in.</p>
+              <Link to='/signup'>
+                <Button variant="primary">Sign up</Button>{' '}
+              </Link>
+              <Link to='/login'>
+                <Button variant="primary">Log in</Button>
+              </Link>
+            </>
+            : 
+            <>
+              <TweetContainer />
+              {/* <p>Welcome {userData.username}!</p> */}
+              <br />
+              <Button variant="primary" onClick={handleLogout}>Log out</Button>
+            </>
+          }
+        </Col>
+      </Row>
     </Container>
   )
 }

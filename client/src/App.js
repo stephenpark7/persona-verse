@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -18,11 +18,11 @@ function App() {
   return (
     <UserContext.Provider value={{ userData, setUserData }}>
       <Router>
-        <Switch>
-          <Route path='/signup'><Signup /></Route>
-          <Route path='/login'><Login /></Route>
-          <Route path='/'><Home /></Route>
-        </Switch>
+        <Routes>
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Home />} />
+        </Routes>
       </Router>
     </UserContext.Provider>
   );

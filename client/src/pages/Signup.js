@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
+import { Link, useNavigate } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
 import './Signup.css';
 import axios from 'axios';
 
 export default function Signup() {
   const [userData, setUserData] = useState(null);
-  const history = useHistory();
+  const history = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -37,27 +36,29 @@ export default function Signup() {
 
   return (
     <Container>
-      <Jumbotron>
-        <h1>Sign up</h1>
-        <Form onSubmit={handleSubmit}>
+      <Row className='my-5'>
+        <Col>
+          <h1>Sign up</h1>
+          <Form onSubmit={handleSubmit}>
 
-          <Form.Group className='mt-3 mb-3'>
-            <Form.Control type='text' name='username' placeholder='Username' onChange={handleChange} required />
-          </Form.Group>
+            <Form.Group className='mt-3 mb-3'>
+              <Form.Control type='text' name='username' placeholder='Username' onChange={handleChange} required />
+            </Form.Group>
 
-          <Form.Group className='mt-3 mb-3'>
-            <Form.Control type='email' name='email' placeholder='Email' onChange={handleChange} required />
-          </Form.Group>
+            <Form.Group className='mt-3 mb-3'>
+              <Form.Control type='email' name='email' placeholder='Email' onChange={handleChange} required />
+            </Form.Group>
 
-          <Form.Group className='mb-3'>
-            <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} required />
-          </Form.Group>
+            <Form.Group className='mb-3'>
+              <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} required />
+            </Form.Group>
 
-          <Button variant='primary' type='submit'>Sign up</Button>{' '}
-          <Link to='/'><Button variant='primary'>Go Back</Button></Link>
+            <Button variant='primary' type='submit'>Sign up</Button>{' '}
+            <Link to='/'><Button variant='primary'>Go Back</Button></Link>
 
-        </Form>
-      </Jumbotron>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   )
 }
