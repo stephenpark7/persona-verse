@@ -9,7 +9,6 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     min: 0,
     idle: 10000
   }
-  // logging: false
 });
 
 const db = {};
@@ -26,19 +25,3 @@ module.exports = db;
 process.on('SIGINT', function () {
   sequelize.close();
 });
-
-// sequelize
-// .authenticate()
-// .then(function() {
-//     console.log('Connection has been established successfully.');
-//     resolve();
-// })
-// .catch(function(err) {
-//     console.log('Unable to connect to the database:', err);
-// });
-
-// module.exports.initialize = () => {
-//   return new Promise((resolve, reject) => {
-
-//   });
-// }
