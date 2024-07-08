@@ -133,8 +133,16 @@ checkBrowsers(paths.appPath, isInteractive)
 
     ['SIGINT', 'SIGTERM'].forEach(function (sig) {
       process.on(sig, function () {
-        devServer.close();
-        process.exit();
+        // Ensure devServer is defined and has a compiler
+        if (devServer && devServer.compiler) {
+          devServer.compiler.close(function () {
+            console.log('Webpack dev server closed.');
+            process.exit();
+          });
+        } else {
+          console.log('Webpack dev server is not properly configured.');
+          process.exit();
+        }
       });
     });
 
