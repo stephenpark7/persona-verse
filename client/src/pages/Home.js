@@ -8,39 +8,38 @@ import TweetContainer from '../components/TweetContainer';
 import { UserContext } from '../UserContext';
 
 export default function Home() {
-  const userContext = useContext(UserContext);
-  const { userData, setUserData } = userContext;
+  const { userData, setUserData } = useContext(UserContext);
 
-  function handleLogout() {
-    localStorage.setItem('token', null);
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Use removeItem instead of setItem to remove token
     setUserData(null);
-  }
+  };
 
   return (
     <Container>
       <Row className='my-5'>
         <Col>
           <h1>Twitter</h1>
-          {!userData ? 
+          {!userData ? (
             <>
               <p>Create an account or log in.</p>
               <Link to='/signup'>
-                <Button variant="primary">Sign up</Button>{' '}
-              </Link>
+                <Button variant="primary">Sign up</Button>
+              </Link>{' '}
               <Link to='/login'>
                 <Button variant="primary">Log in</Button>
               </Link>
             </>
-            : 
+          ) : (
             <>
               <TweetContainer />
               {/* <p>Welcome {userData.username}!</p> */}
               <br />
               <Button variant="primary" onClick={handleLogout}>Log out</Button>
             </>
-          }
+          )}
         </Col>
       </Row>
     </Container>
-  )
+  );
 }
