@@ -19,7 +19,6 @@ export default function Signup() {
       password: userData.password
     }).then(res => {
       history.push('/');
-      //console.log(res.data);
     }).catch(err => {
       console.log(err.response.data);
     });
@@ -50,7 +49,7 @@ export default function Signup() {
             </Form.Group>
 
             <Form.Group className='mb-3'>
-              <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} required />
+              <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} autoComplete='password' required />
             </Form.Group>
 
             <Button variant='primary' type='submit'>Sign up</Button>{' '}
