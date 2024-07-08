@@ -44,11 +44,9 @@ exports.create = async (req, res) => {
     username: username,
     email: email,
     password: hashedPassword
-  }).then(user => {
-    // console.log(user);
+  }).then(() => {
     res.status(200).send('Successfully created an account.');
-  }).catch(err => {
-    // console.log(err);
+  }).catch(() => {
     res.status(400).send('Failed to create an account.');
   });
 }

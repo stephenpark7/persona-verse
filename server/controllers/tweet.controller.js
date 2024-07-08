@@ -12,10 +12,9 @@ exports.create = async (req, res) => {
     ownerId: req.userId,
     message: message,
     likes: 0
-  }).then(tweet => {
-    // console.log(tweet);
+  }).then(() => {
     res.status(200).send('Successfully created a tweet.');
-  }).catch(err => {
+  }).catch(() => {
     res.status(400).send('Failed to create an account.');
   });
 }
@@ -29,7 +28,7 @@ exports.get = async (req, res) => {
     }
   }).then(tweets => {
     res.status(200).json(tweets);
-  }).catch(err => {
+  }).catch(() => {
     res.status(400).send('Failed to get tweets.');
   });
 }
