@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const validator = require('validator');
 
 const jwt = require("jsonwebtoken");
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SECRET || 'secret';
 // const Op = db.Sequelize.Op;
 
 // Create a new account
@@ -43,7 +43,8 @@ exports.create = async (req, res) => {
   User.create({
     username: username,
     email: email,
-    password: hashedPassword
+    password: hashedPassword,
+    displayName: username
   }).then(() => {
     res.status(200).send('Successfully created an account.');
   }).catch(() => {

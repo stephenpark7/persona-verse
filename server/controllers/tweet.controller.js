@@ -8,27 +8,30 @@ exports.create = async (req, res) => {
   if (message.length === 0) return;
 
   // Save tweet to database
-  Tweet.create({
-    ownerId: req.userId,
-    message: message,
-    likes: 0
-  }).then(() => {
-    res.status(200).send('Successfully created a tweet.');
-  }).catch(() => {
-    res.status(400).send('Failed to create an account.');
-  });
+  try {
+    const tweet = await Tweet.create({
+      UserId: req.userId,
+      message: message,
+      likes: 0
+    });
+    res.status(200).send(tweet);
+  } catch {
+    res.status(400).send('Failed to create a tweet.');
+  }
 }
 
 // Get tweets
 exports.get = async (req, res) => {
-  Tweet.findAll({
-    attributes: ['message', 'likes'],
-    where: {
-      ownerId: req.userId 
-    }
-  }).then(tweets => {
+  try {
+    const tweets = await Tweet.findAll({
+      attributes: ['message', 'likes'],
+      where: {
+        UserId: req.userId
+      },
+      include: db.User
+    });
     res.status(200).json(tweets);
-  }).catch(() => {
+  } catch {
     res.status(400).send('Failed to get tweets.');
-  });
+  }
 }

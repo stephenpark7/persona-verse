@@ -8,7 +8,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     max: 5,
     min: 0,
     idle: 10000
-  }
+  },
+  // sync: { force: true }
 });
 
 const db = {};
@@ -19,6 +20,7 @@ db.sequelize = sequelize;
 db.User = require("./user.model")(sequelize, Sequelize);
 db.Tweet = require("./tweet.model")(sequelize, Sequelize);
 db.User.hasMany(db.Tweet);
+db.Tweet.belongsTo(db.User);
 
 module.exports = db;
 
