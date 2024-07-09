@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { TrashFill } from 'react-bootstrap-icons';
 import './Tweet.css';
 
 export default function Tweet({ data }) {
@@ -11,7 +12,7 @@ export default function Tweet({ data }) {
 
   return (
     <div className='tweet-container'>
-      <span className='display-name'>{displayName}</span>
+      <span className='display-name'>{displayName ?? username}</span>
       <span className='username'>@{username}</span>
       <span className='date'>{tweetDate}</span><br />
       <span className='text'>{text}</span>
