@@ -24,11 +24,16 @@ exports.create = async (req, res) => {
 exports.get = async (req, res) => {
   try {
     const tweets = await Tweet.findAll({
-      attributes: ['message', 'likes'],
-      where: {
-        UserId: req.userId
+      attributes: {
+        include: ['message', 'likes'],
       },
-      include: db.User
+      where: {
+        UserId: req.userId,
+      },
+      include: {
+        model: db.User,
+        attributes: ['username', 'displayName'],
+      },
     });
     res.status(200).json(tweets);
   } catch {

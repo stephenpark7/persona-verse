@@ -1,5 +1,4 @@
 import React from 'react';
-// import Container from 'react-bootstrap/Container';
 import moment from 'moment';
 import './Tweet.css';
 
@@ -8,7 +7,7 @@ export default function Tweet({ data }) {
   const displayName = data.User.display_name;
   const username = data.User.username;
   const tweetDate = moment(data.createdAt, 'YYYY-MM-DD').format('MMM D');
-  const text = data.text;
+  const text = data.message;
 
   return (
     <div className='tweet-container'>
