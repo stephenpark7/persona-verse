@@ -37,7 +37,7 @@ export default function TweetContainer() {
         username: userData.username,
         display_name: userData.display_name,
       }
-      setTweetData([ ...tweetData, newTweet ]);
+      setTweetData([ newTweet, ...tweetData ]);
     }).catch(err => {
       console.log(err); //.response.data
     });

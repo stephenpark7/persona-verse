@@ -34,6 +34,7 @@ exports.get = async (req, res) => {
         model: db.User,
         attributes: ['username', 'displayName'],
       },
+      order: [['createdAt', 'DESC']],
     });
     res.status(200).json(tweets);
   } catch {
