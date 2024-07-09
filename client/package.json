@@ -23,7 +23,6 @@
     "css-minimizer-webpack-plugin": "^7.0.0",
     "dotenv": "^16.4.5",
     "dotenv-expand": "^11.0.6",
-    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-jsx": "^0.1.0",
     "eslint-webpack-plugin": "^4.2.0",
     "file-loader": "^6.2.0",
@@ -88,7 +87,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.7",
     "@babel/eslint-parser": "^7.24.7",
-    "eslint": "^9.6.0",
+    "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",
     "globals": "^15.8.0"
   },
