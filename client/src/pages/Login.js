@@ -21,7 +21,7 @@ export default function Login() {
     axios.post('/api/users/login', {
       username: userInputData.username,
       email: userInputData.email,
-      password: userInputData.password
+      password: userInputData.password,
     }).then(res => {
       const data = res.data;
       localStorage.setItem('token', JSON.stringify(data));
@@ -37,7 +37,7 @@ export default function Login() {
     let value = target.value;
     let name = target.name;
     setUserInputData({...userInputData,
-      [name]: value
+      [name]: value,
     });
   }
 

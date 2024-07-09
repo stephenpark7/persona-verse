@@ -25,11 +25,11 @@ export default function TweetContainer() {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
-        'x-access-token': userData.accessToken
+        'x-access-token': userData.accessToken,
       },
       data: {
-        message: tweetMessage
-      }
+        message: tweetMessage,
+      },
     }).then(res => {
       setTweetText('');
       const newTweet = res.data;
@@ -54,11 +54,11 @@ export default function TweetContainer() {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
-        'x-access-token': userData.accessToken
-      }
+        'x-access-token': userData.accessToken,
+      },
     }).then(res => {
       const tweetData = res.data;
-      // console.log(tweetData);
+      console.log(tweetData);
       setTweetData(tweetData);
     }).catch(err => {
       console.log(err);
@@ -82,7 +82,7 @@ export default function TweetContainer() {
       <br /><br />
       <h2>Tweets</h2>
       {tweetData && tweetData.map((data, idx) =>
-        <Tweet key={idx} data={data} />
+        <Tweet key={idx} data={data} />,
       )}
 
     </Form>

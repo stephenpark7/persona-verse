@@ -16,7 +16,7 @@ export default function Signup() {
     axios.post('/api/users/signup', {
       username: userData.username,
       email: userData.email,
-      password: userData.password
+      password: userData.password,
     }).then(() => {
       navigate('/');
     }).catch(err => {
@@ -29,7 +29,7 @@ export default function Signup() {
     let value = target.value;
     let name = target.name;
     setUserData({...userData,
-      [name]: value
+      [name]: value,
     });
   }
 

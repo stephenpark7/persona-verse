@@ -15,6 +15,7 @@ const defaultConfig = {
     'array-bracket-spacing': [ 'error', 'always' ],
     'eol-last': [ 'error', 'always' ],
     'quotes': [ 'error', 'single' ],
+    'comma-dangle': [ 'error', 'always-multiline' ],
   }
 };
 
