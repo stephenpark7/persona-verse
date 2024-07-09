@@ -35,7 +35,7 @@ module.exports = function (proxy, allowedHost) {
     // really know what you're doing with a special environment variable.
     // Note: ["localhost", ".localhost"] will support subdomains - but we might
     // want to allow setting the allowedHosts manually for more complex setups
-    allowedHosts: disableFirewall ? 'all' : [allowedHost],
+    allowedHosts: disableFirewall ? 'all' : [ allowedHost ],
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': '*',
@@ -59,7 +59,7 @@ module.exports = function (proxy, allowedHost) {
       // for some reason broken when imported through webpack. If you just want to
       // use an image, put it in `src` and `import` it from JavaScript instead.
       directory: paths.appPublic,
-      publicPath: [paths.publicUrlOrPath],
+      publicPath: [ paths.publicUrlOrPath ],
       // By default files from `contentBase` will not trigger a page reload.
       watch: {
         // Reportedly, this avoids CPU overload on some systems.

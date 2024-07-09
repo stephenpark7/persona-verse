@@ -8,7 +8,7 @@ import Signup from './pages/Signup';
 import { UserContext } from './UserContext';
 
 function App() {
-  const [userData, setUserData] = useState(null);
+  const [ userData, setUserData ] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');

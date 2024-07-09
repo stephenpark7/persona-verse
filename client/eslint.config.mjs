@@ -1,22 +1,30 @@
-import globals from "globals";
+import globals from 'globals';
+import babelParser from '@babel/eslint-parser';
+import reactPlugin from 'eslint-plugin-react';
 
-const jsFilesConfig = {
-  files: ["**/*.{js,mjs,cjs,jsx}"],
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+const defaultConfig = {
+  files: [ '**/*.js' ],
+  languageOptions: {
+    globals: {
+      ...globals.browser,
     },
+    parser: babelParser,
+    sourceType: 'module',
   },
-  globals: globals.browser,
-  extends: [
-    "plugin:@eslint/js/recommended",
-    "plugin:eslint-plugin-react/recommended",
-  ],
   rules: {
-    // Additional rules configuration as needed
-  },
+    'array-bracket-spacing': [ 'error', 'always' ],
+    'eol-last': [ 'error', 'always' ],
+    'quotes': [ 'error', 'single' ],
+  }
+};
+
+const pluginsConfig = {
+  plugins: {
+    reactPlugin,
+  }
 };
 
 export default [
-  jsFilesConfig,
+  defaultConfig,
+  pluginsConfig
 ];

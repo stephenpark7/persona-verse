@@ -38,10 +38,10 @@ const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
 const babelRuntimeEntry = require.resolve('babel-preset-react-app');
 const babelRuntimeEntryHelpers = require.resolve(
   '@babel/runtime/helpers/esm/assertThisInitialized',
-  { paths: [babelRuntimeEntry] }
+  { paths: [ babelRuntimeEntry ] }
 );
 const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
-  paths: [babelRuntimeEntry],
+  paths: [ babelRuntimeEntry ],
 });
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
@@ -190,7 +190,7 @@ module.exports = function (webpackEnv) {
     devServer: {
       server: 'https'
     },
-    target: ['browserslist'],
+    target: [ 'browserslist' ],
     // Webpack noise constrained to errors and warnings
     stats: 'errors-warnings',
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
@@ -238,9 +238,9 @@ module.exports = function (webpackEnv) {
       cacheDirectory: paths.appWebpackCache,
       store: 'pack',
       buildDependencies: {
-        defaultWebpack: ['webpack/lib/'],
-        config: [__filename],
-        tsconfig: [paths.appTsConfig, paths.appJsConfig].filter(f =>
+        defaultWebpack: [ 'webpack/lib/' ],
+        config: [ __filename ],
+        tsconfig: [ paths.appTsConfig, paths.appJsConfig ].filter(f =>
           fs.existsSync(f)
         ),
       },
@@ -300,7 +300,7 @@ module.exports = function (webpackEnv) {
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
-      modules: ['node_modules', paths.appNodeModules].concat(
+      modules: [ 'node_modules', paths.appNodeModules ].concat(
         modules.additionalModulePaths || []
       ),
       // These are the reasonable defaults supported by the Node ecosystem.
@@ -357,7 +357,7 @@ module.exports = function (webpackEnv) {
             // TODO: Merge this config once `image/avif` is in the mime-db
             // https://github.com/jshttp/mime-db
             {
-              test: [/\.avif$/],
+              test: [ /\.avif$/ ],
               type: 'asset',
               mimetype: 'image/avif',
               parser: {
@@ -370,7 +370,7 @@ module.exports = function (webpackEnv) {
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
             {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+              test: [ /\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/ ],
               type: 'asset',
               parser: {
                 dataUrlCondition: {
@@ -387,7 +387,7 @@ module.exports = function (webpackEnv) {
                     prettier: false,
                     svgo: false,
                     svgoConfig: {
-                      plugins: [{ removeViewBox: false }],
+                      plugins: [ { removeViewBox: false } ],
                     },
                     titleProp: true,
                     ref: true,
@@ -401,7 +401,7 @@ module.exports = function (webpackEnv) {
                 },
               ],
               issuer: {
-                and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+                and: [ /\.(ts|tsx|js|jsx|md|mdx)$/ ],
               },
             },
             // Process application JS with Babel.
@@ -556,7 +556,7 @@ module.exports = function (webpackEnv) {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/^$/, /\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [ /^$/, /\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/ ],
               type: 'asset/resource',
             },
             // ** STOP ** Are you adding a new loader?
@@ -597,7 +597,7 @@ module.exports = function (webpackEnv) {
       // https://github.com/facebook/create-react-app/issues/5358
       isEnvProduction &&
         shouldInlineRuntimeChunk &&
-        new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
+        new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [ /runtime-.+[.]js/ ]),
       // Makes some environment variables available in index.html.
       // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
       // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
@@ -671,7 +671,7 @@ module.exports = function (webpackEnv) {
         new WorkboxWebpackPlugin.InjectManifest({
           swSrc,
           dontCacheBustURLsMatching: /\.[0-9a-f]{8}\./,
-          exclude: [/\.map$/, /asset-manifest\.json$/, /LICENSE/],
+          exclude: [ /\.map$/, /asset-manifest\.json$/, /LICENSE/ ],
           // Bump up the default maximum size (2mb) that's precached,
           // to make lazy-loading failure scenarios less likely.
           // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
@@ -728,7 +728,7 @@ module.exports = function (webpackEnv) {
       !disableESLintPlugin &&
         new ESLintPlugin({
           // Plugin options
-          extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+          extensions: [ 'js', 'mjs', 'jsx', 'ts', 'tsx' ],
           formatter: require.resolve('react-dev-utils/eslintFormatter'),
           eslintPath: require.resolve('eslint'),
           failOnError: !(isEnvDevelopment && emitErrorsAsWarnings),
@@ -742,7 +742,7 @@ module.exports = function (webpackEnv) {
           cwd: paths.appPath,
           resolvePluginsRelativeTo: __dirname,
           baseConfig: {
-            extends: [require.resolve('eslint-config-react-app/base')],
+            extends: [ require.resolve('eslint-config-react-app/base') ],
             rules: {
               ...(!hasJsxRuntime && {
                 'react/react-in-jsx-scope': 'error',

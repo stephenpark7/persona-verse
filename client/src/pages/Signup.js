@@ -7,8 +7,8 @@ import './Signup.css';
 import axios from 'axios';
 
 export default function Signup() {
-  const [userData, setUserData] = useState(null);
-  const history = useNavigate();
+  const [ userData, setUserData ] = useState(null);
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -17,8 +17,8 @@ export default function Signup() {
       username: userData.username,
       email: userData.email,
       password: userData.password
-    }).then(res => {
-      history.push('/');
+    }).then(() => {
+      navigate('/');
     }).catch(err => {
       console.log(err.response.data);
     });

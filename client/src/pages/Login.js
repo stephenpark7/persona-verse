@@ -12,8 +12,8 @@ export default function Login() {
   const userContext = useContext(UserContext);
   const { setUserData } = userContext;
 
-  const [userInputData, setUserInputData] = useState(null);
-  const history = useNavigate();
+  const [ userInputData, setUserInputData ] = useState(null);
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -23,11 +23,12 @@ export default function Login() {
       email: userInputData.email,
       password: userInputData.password
     }).then(res => {
-      localStorage.setItem('token', JSON.stringify(res.data));
-      setUserData(res.data);
-      history.push('/');
+      const data = res.data;
+      localStorage.setItem('token', JSON.stringify(data));
+      setUserData(data);
+      navigate('/');
     }).catch(err => {
-      console.log(err.response.data); //.response.data
+      console.log(err);
     });
   }
 
@@ -52,7 +53,7 @@ export default function Login() {
             </Form.Group>
 
             <Form.Group className='mb-3'>
-              <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} required />
+              <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} autoComplete='password' required />
             </Form.Group>
 
             <Button variant='primary' type='submit'>Log in</Button>{' '}

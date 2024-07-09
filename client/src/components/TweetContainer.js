@@ -10,8 +10,8 @@ export default function TweetContainer() {
   const userContext = useContext(UserContext);
   const { userData } = userContext;
 
-  const [tweetMessage, setTweetText] = useState('');
-  const [tweetData, setTweetData] = useState(null);
+  const [ tweetMessage, setTweetText ] = useState('');
+  const [ tweetData, setTweetData ] = useState(null);
 
   function handleChange(e) {
     setTweetText(e.target.value);
@@ -20,13 +20,13 @@ export default function TweetContainer() {
   function handleSubmitTweet() {
     if (tweetMessage.length === 0) return;
     axios({
-      method: 'post', 
-      url: '/api/tweets/create', 
-      withCredentials: true, 
+      method: 'post',
+      url: '/api/tweets/create',
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': userData.accessToken
-      }, 
+      },
       data: {
         message: tweetMessage
       }
@@ -38,7 +38,7 @@ export default function TweetContainer() {
         display_name: userData.display_name,
       }
       console.log(newTweet);
-      setTweetData([...tweetData, newTweet]);
+      setTweetData([ ...tweetData, newTweet ]);
       //console.log(res.data);
       // update / refresh page
       //fetchData();
@@ -55,33 +55,33 @@ export default function TweetContainer() {
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': userData.accessToken
-      }      
+      }
     }).then(res => {
       const tweetData = res.data;
-      console.log(tweetData);
+      // console.log(tweetData);
       setTweetData(tweetData);
     }).catch(err => {
       console.log(err);
     });
-  }, [userData]);
+  }, [ userData ]);
 
   useEffect(() => {
     if (userData) {
       fetchData();
     }
-  }, [userData, fetchData]);
+  }, [ userData, fetchData ]);
 
   return (
     <Form>
       <Form.Group className='mt-3 mb-3'>
-        <Form.Control type='text' name='username' placeholder={"What's happening?"} 
-                      value={tweetMessage} onChange={handleChange} required />
+        <Form.Control type='text' name='username' placeholder={'What\'s happening?'}
+          value={tweetMessage} onChange={handleChange} required />
       </Form.Group>
       <Button variant="primary" onClick={handleSubmitTweet}>Tweet</Button>
 
       <br /><br />
       <h2>Tweets</h2>
-      {tweetData && tweetData.map((data, idx) => 
+      {tweetData && tweetData.map((data, idx) =>
         <Tweet key={idx} data={data} />
       )}
 
