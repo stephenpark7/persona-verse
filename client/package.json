@@ -89,7 +89,9 @@
     "@babel/eslint-parser": "^7.24.7",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",
-    "globals": "^15.8.0"
+    "globals": "^15.8.0",
+    "stylelint": "^16.6.1",
+    "stylelint-config-standard": "^36.0.1"
   },
   "jest": {
     "roots": [

@@ -1,11 +1,8 @@
 import React, { useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-import './Home.css';
-import TweetContainer from '../components/TweetContainer';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { UserContext } from '../UserContext';
+import TweetContainer from '../components/TweetContainer';
 
 export default function Home() {
   const { userData, setUserData } = useContext(UserContext);
