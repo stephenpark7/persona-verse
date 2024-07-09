@@ -4,7 +4,7 @@ A twitter clone, for learning purposes.
 
 ## Tech Stack
 
-Postgres, Express.js, Node.js, React, Sequelize
+Postgres, Express.js, Node.js, React, Sequelize, Babel, Webpack, ESLint
 
 ## Setup Instructions
 
