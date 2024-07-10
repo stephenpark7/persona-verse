@@ -6,7 +6,7 @@ It was built with Create React App, then ejected so that I could see exactly how
 
 ## Tech Stack
 
-Postgres, Express.js, Node.js, React, Sequelize, Babel, Webpack, ESLint, Stylelint
+Postgres, Express.js, Node.js, React, Sequelize, Babel, Webpack, ESLint, Stylelint, Docker
 
 ## Setup Instructions
 
