@@ -25,6 +25,9 @@ const dotenvFiles = [
   paths.dotenv,
 ].filter(Boolean);
 
+const dotenv = require('dotenv');
+const dotenvExpand = require('dotenv-expand');
+
 // Load environment variables from .env* files. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.  Variable expansion is supported in .env files.
@@ -32,7 +35,7 @@ const dotenvFiles = [
 // https://github.com/motdotla/dotenv-expand
 dotenvFiles.forEach(dotenvFile => {
   if (fs.existsSync(dotenvFile)) {
-    require('dotenv-expand').expand(require('dotenv').config({ path: dotenvFile }));
+    dotenvExpand.expand(dotenv.config({ path: dotenvFile }));
   }
 });
 
@@ -84,6 +87,9 @@ function getClientEnvironment(publicUrl) {
         // Whether or not react-refresh is enabled.
         // It is defined here so it is available in the webpackHotDevClient.
         FAST_REFRESH: process.env.FAST_REFRESH !== 'false',
+        // Add other environment variables to the client environment here.
+        API_HOST_NAME: process.env.API_HOST_NAME,
+        API_PORT: process.env.API_PORT,
       },
     );
   // Stringify all values so we can feed into webpack DefinePlugin

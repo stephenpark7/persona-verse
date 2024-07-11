@@ -9,7 +9,7 @@ import axios from 'axios';
 import { UserContext } from '../UserContext';
 
 export default function Login() {
-  // console.log(process.env.REACT_APP_API_HOST_NAME);
+  console.log(process.env);
 
   const userContext = useContext(UserContext);
   const { setUserData } = userContext;
