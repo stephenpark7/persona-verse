@@ -10,7 +10,6 @@ class User extends Model {
     return this.getDataValue('password');
   }
 
-
   static initModel() {
     User.init({
       username: {
