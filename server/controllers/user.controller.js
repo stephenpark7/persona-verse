@@ -13,26 +13,26 @@ exports.create = async (req, res) => {
 
   // Check for missing fields
   if (!username || !email || !password) {
-    res.status(400).send('Missing field(s)');
+    res.status(200).json({ error: 'Missing field(s)' });
     return;
   }
 
   // Username validation
   if (!validator.isAlphanumeric(username)) {
-    res.status(400).send('Username must contain only alphanumeric characters.');
+    res.status(200).json({ error: 'Username must contain only alphanumeric characters.' });
     return;
   }
 
   // Email validation
   if (!validator.isEmail(email)) {
-    res.status(400).send('Email address is not valid.');
+    res.status(200).json({ error: 'Invalid email address.' });
     return;
   }
 
   // Check if username already in use
   const userData = await User.findOne({ where: { username: username } });
   if (userData !== null) {
-    res.status(400).send('Username already in use.');
+    res.status(200).json({ error: 'Username already in use.' });
     return;
   }
 
@@ -46,9 +46,9 @@ exports.create = async (req, res) => {
     password: hashedPassword,
     displayName: username
   }).then(() => {
-    res.status(200).send('Successfully created an account.');
+    res.status(200).json({ message: 'Account created.' })
   }).catch(() => {
-    res.status(400).send('Failed to create an account.');
+    res.status(200).json({ error: 'Error creating account.' });
   });
 }
 

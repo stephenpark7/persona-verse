@@ -3,35 +3,28 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import API from '../lib/api';
 import './Signup.css';
-import axios from 'axios';
 
 import { UserContext } from '../UserContext';
 
 export default function Login() {
-  console.log(process.env);
-
   const userContext = useContext(UserContext);
   const { setUserData } = userContext;
 
   const [ userInputData, setUserInputData ] = useState(null);
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!userInputData.username || !userInputData.password) return;
-    axios.post('/api/users/login', {
-      username: userInputData.username,
-      email: userInputData.email,
-      password: userInputData.password,
-    }).then(res => {
-      const data = res.data;
-      localStorage.setItem('token', JSON.stringify(data));
-      setUserData(data);
+    const result = await API.login(userInputData);
+    if (result) {
+      setUserData(result);
       navigate('/');
-    }).catch(err => {
-      console.log(err);
-    });
+    } else {
+      console.log('login error');
+    }
   }
 
   function handleChange(e) {

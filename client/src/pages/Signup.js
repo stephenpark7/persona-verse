@@ -3,33 +3,32 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import API from '../lib/api';
 import './Signup.css';
-import axios from 'axios';
 
 export default function Signup() {
   const [ userData, setUserData ] = useState(null);
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!userData.username || !userData.email || !userData.password) return;
-    axios.post('/api/users/signup', {
-      username: userData.username,
-      email: userData.email,
-      password: userData.password,
-    }).then(() => {
+    const result = await API.register(userData);
+    if (result) {
+      // setUserData(result);
       navigate('/');
-    }).catch(err => {
-      console.log(err.response.data);
-    });
+    } else {
+      console.log('signup error');
+    }
   }
 
   function handleChange(e) {
     let target = e.target;
     let value = target.value;
     let name = target.name;
-    setUserData({...userData,
-      [name]: value,
+    setUserData({
+      ...userData,
+      [ name ]: value,
     });
   }
 
