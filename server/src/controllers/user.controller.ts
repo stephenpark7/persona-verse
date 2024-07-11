@@ -3,7 +3,6 @@ import { User } from '../models';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import jwt from 'jsonwebtoken';
-import { Model } from 'sequelize';
 
 interface CustomRequest extends Request {
   userId?: string;

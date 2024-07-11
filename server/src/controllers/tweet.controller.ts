@@ -16,18 +16,22 @@ export const create = async (req: CustomRequest, res: Response) => {
     const tweet = await Tweet.create({
       UserId: parseInt(req.userId as string),
       message: message,
-      likes: 0
+      likes: 0,
     });
-    res.status(200).json({ data: tweet });
+    res.status(200).json({ data: {
+      message: tweet.getDataValue('message'),
+      likes: tweet.getDataValue('likes'),
+      createdAt: tweet.getDataValue('createdAt'),
+    } });
   } catch (error) {
-    res.status(500).json({ error: 'Error creating tweet.' });
+    res.status(500).json({ error: 'Error posting tweet.' });
   }
 };
 
 export const get = async (req: CustomRequest, res: Response) => {
   try {
     const tweets = await Tweet.findAll({
-      attributes: ['message', 'likes'],
+      attributes: ['message', 'likes', 'createdAt'],
       where: {
         UserId: req.userId,
       },
