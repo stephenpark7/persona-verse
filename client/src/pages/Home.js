@@ -7,9 +7,9 @@ import TweetContainer from '../components/TweetContainer';
 export default function Home() {
   const { isLoggedIn, logout } = UserContextHook();
 
-  const handleLogout = () => {
+  function handleLogout() {
     logout();
-  };
+  }
 
   return (
     <Container>

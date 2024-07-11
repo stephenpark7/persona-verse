@@ -10,26 +10,23 @@ export default function Signup() {
   const [ userData, setUserData ] = useState(null);
   const navigate = useNavigate();
 
-  async function handleSubmit(e) {
+  async function handleFormSubmit(e) {
     e.preventDefault();
     if (!userData.username || !userData.email || !userData.password) return;
     const result = await API.register(userData);
     if (result) {
-      // setUserData(result);
+      // TODO: automatic login
       navigate('/');
     } else {
       console.log('signup error');
     }
   }
 
-  function handleChange(e) {
+  function handleInputTextChange(e) {
     let target = e.target;
     let value = target.value;
     let name = target.name;
-    setUserData({
-      ...userData,
-      [ name ]: value,
-    });
+    setUserData({ ...userData, [ name ]: value });
   }
 
   return (
@@ -37,23 +34,18 @@ export default function Signup() {
       <Row className='my-5'>
         <Col>
           <h1>Sign up</h1>
-          <Form onSubmit={handleSubmit}>
-
+          <Form onSubmit={handleFormSubmit}>
             <Form.Group className='mt-3 mb-3'>
-              <Form.Control type='text' name='username' placeholder='Username' onChange={handleChange} required />
+              <Form.Control type='text' name='username' placeholder='Username' onChange={handleInputTextChange} required />
             </Form.Group>
-
             <Form.Group className='mt-3 mb-3'>
-              <Form.Control type='email' name='email' placeholder='Email' onChange={handleChange} required />
+              <Form.Control type='email' name='email' placeholder='Email' onChange={handleInputTextChange} required />
             </Form.Group>
-
             <Form.Group className='mb-3'>
-              <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} autoComplete='password' required />
+              <Form.Control type='password' name='password' placeholder='Password' onChange={handleInputTextChange} autoComplete='password' required />
             </Form.Group>
-
             <Button variant='primary' type='submit'>Sign up</Button>{' '}
             <Link to='/'><Button variant='primary'>Go Back</Button></Link>
-
           </Form>
         </Col>
       </Row>

@@ -8,11 +8,11 @@ import API from '../lib/api';
 import './Signup.css';
 
 export default function Login() {
-  const { setUserData } = UserContextHook();
-  const [ formData, setformData ] = useState(null);
   const navigate = useNavigate();
+  const { setUserData } = UserContextHook();
+  const [ formData, setformData ] = useState(undefined);
 
-  async function handleSubmit(e) {
+  async function handleFormSubmit(e) {
     e.preventDefault();
     if (!formData.username || !formData.password) return;
     const result = await API.login(formData);
@@ -24,7 +24,7 @@ export default function Login() {
     }
   }
 
-  function handleChange(e) {
+  function handleTextInputChange(e) {
     let target = e.target;
     let value = target.value;
     let name = target.name;
@@ -36,12 +36,12 @@ export default function Login() {
       <Row className='my-5'>
         <Col>
           <h1>Log in</h1>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleFormSubmit}>
             <Form.Group className='mt-3 mb-3'>
-              <Form.Control type='text' name='username' placeholder='Username' onChange={handleChange} required />
+              <Form.Control type='text' name='username' placeholder='Username' onChange={handleTextInputChange} required />
             </Form.Group>
             <Form.Group className='mb-3'>
-              <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} autoComplete='password' required />
+              <Form.Control type='password' name='password' placeholder='Password' onChange={handleTextInputChange} autoComplete='password' required />
             </Form.Group>
             <Button variant='primary' type='submit'>Log in</Button>{' '}
             <Link to='/'><Button variant='primary'>Go Back</Button></Link>

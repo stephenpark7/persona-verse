@@ -8,39 +8,41 @@ const userContext = {
 
 const UserContext = createContext(userContext);
 
-export const UserContextHook = () => {
+export function UserContextHook() {
   const [ userData, setUserData ] = useState(userContext);
 
-  useEffect(() => {
+  useEffect(function() {
     const token = localStorage.getItem('token');
     if (token) {
       setUserData(JSON.parse(token));
     }
   }, []);
 
-  const isLoggedIn = useMemo(() => {
+  const isLoggedIn = useMemo(function() {
     return userData.username !== null;
   }, [ userData ]);
 
-  const logout = () => {
+  const logout = function() {
     localStorage.removeItem('token');
     setUserData(userContext);
   };
 
   return { userData, setUserData, isLoggedIn, logout };
-};
+}
 
-export const UserContextWrapper = ({ children }) => {
+export function UserContextWrapper({ children }) {
   const { userData, setUserData } = UserContextHook();
 
-  const contextValue = useMemo(() => ({
-    userData,
-    setUserData,
-  }), [ userData, setUserData ]);
+  const contextValue = useMemo(function() {
+    return {
+      userData,
+      setUserData,
+    };
+  }, [ userData, setUserData ]);
 
   return (
     <UserContext.Provider value={contextValue}>
       {children}
     </UserContext.Provider>
   );
-};
+}
