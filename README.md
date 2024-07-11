@@ -37,6 +37,3 @@ Build Docker Image and Run in Detached Mode: \
 `npm run docker-start` \
 Stop Docker Containers: \
 `npm run docker-stop`
-Restart Docker Containers: \
-`npm run docker-restart`
-
