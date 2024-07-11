@@ -5,4 +5,8 @@ TODO:
       ☐ Stricter types
   ☐ Add react-toastify
   ☐ Change from Sequelize to TypeORM
+  ☐ Pagination
+  ☐ JWT with refresh token and secure cookie
+  ☐ CSS Animations on tweet post
+  ☐ Dark mode
   ✔ Dockerize app @done(24-07-10 03:06)
