@@ -34,6 +34,9 @@ Run Client: \
 
 4. **Docker Setup**: \
 Build Docker Image and Run in Detached Mode: \
-`npm run docker-up` \
+`npm run docker-start` \
 Stop Docker Containers: \
-`npm run docker-down`
+`npm run docker-stop`
+Restart Docker Containers: \
+`npm run docker-restart`
+
