@@ -1,5 +1,5 @@
 import { DataTypes, Model, ModelAttributeColumnOptions } from 'sequelize';
-import { sequelize, User } from '.';
+import { sequelize, User } from './index';
 
 interface TweetAttributes {
   id?: number;
@@ -27,38 +27,25 @@ class Tweet extends Model<TweetAttributes> implements TweetAttributes {
   public createdAtOptions!: ModelAttributeColumnOptions<Tweet>;
   public UserIdOptions!: ModelAttributeColumnOptions<Tweet>;
 
-  constructor() {
-    super();
-
-    this.messageOptions = {
-      type: DataTypes.STRING,
-      allowNull: false,
-    };
-
-    this.likesOptions = {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    };
-
-    this.createdAtOptions = {
-      type: DataTypes.DATE,
-      allowNull: false,
-    };
-
-    this.UserIdOptions = {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    };
-
+  static initModel() {
     Tweet.init({
-      id: this.idOptions,
-      message: this.messageOptions,
-      likes: this.likesOptions,
-      createdAt: this.createdAtOptions,
-      UserId: this.UserIdOptions,
-    }, { sequelize });
-
-    Tweet.belongsTo(User);
+      message: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      likes: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      UserId: ''
+    }, {
+      sequelize,
+    });
   }
 }
 

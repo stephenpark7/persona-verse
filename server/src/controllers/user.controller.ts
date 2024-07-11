@@ -3,7 +3,7 @@ import { User } from '../models';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import jwt from 'jsonwebtoken';
-import { DataTypes, StringDataTypeConstructor } from 'sequelize';
+import { Model } from 'sequelize';
 
 interface CustomRequest extends Request {
   userId?: string;
@@ -59,14 +59,14 @@ export const login = async (req: CustomRequest, res: Response) => {
     return res.status(404).json({ error: 'User not found.' });
   }
 
-  const isAuthenticated = await bcrypt.compare(password, userData?.password?.toString() ?? '');
+  const isAuthenticated = await bcrypt.compare(password, userData.getPassword());
 
   if (isAuthenticated) {
-    const token = jwt.sign({ id: userData.id }, jwtSecret, {
+    const token = jwt.sign({ id: userData.getId() }, jwtSecret, {
       expiresIn: 86400 // 24 hours
     });
     res.status(200).json({
-      id: userData.id,
+      id: userData.getId(),
       username: username,
       accessToken: token
     });

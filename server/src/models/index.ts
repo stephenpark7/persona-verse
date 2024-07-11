@@ -1,9 +1,6 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-import { DataTypes, Sequelize, Options } from 'sequelize';
-import Tweet from './tweet.model';
+import { Sequelize, Options } from 'sequelize';
 import User from './user.model';
+import Tweet from './tweet.model';
 
 const sequelizeOptions: Options = {
   database: process.env.DB_NAME,
@@ -22,30 +19,22 @@ const sequelizeOptions: Options = {
 
 const sequelize = new Sequelize(sequelizeOptions);
 
-User.init(
-  {
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    displayName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  }, { sequelize },
-);
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
 
-sequelize.sync();
+    User.initModel();
+    Tweet.initModel();
+
+    User.hasMany(Tweet);
+    Tweet.belongsTo(User);
+
+    await sequelize.sync();
+  } catch (error) {
+    console.error('Error occurred:', error);
+  }
+})();
 
 export {
   sequelize,
@@ -57,16 +46,6 @@ export {
 // db.Tweet = require("./tweet.model")(sequelize, Sequelize);
 // db.User.hasMany(db.Tweet);
 // db.Tweet.belongsTo(db.User);
-
-// (async () => {
-//   try {
-//     await sequelize.authenticate();
-//     console.log('Connection has been established successfully.');
-//   }
-//   catch (error) {
-//     console.error('Unable to connect to the database:', error);
-//   }
-// })();
 
 process.on('SIGINT', function () {
   sequelize.close();
