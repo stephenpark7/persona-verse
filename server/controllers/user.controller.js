@@ -58,14 +58,14 @@ exports.login = async (req, res) => {
 
   // Check for missing fields
   if (!username || !password) {
-    res.status(400).send('Missing field(s)');
+    res.status(400).json({ error: 'Missing field(s)' });
     return;
   }
 
   // Get user data
   const userData = await User.findOne({ where: { username: username } });
   if (userData === null) {
-    res.status(400).send('Username does not exist.');
+    res.status(400).json({ error: 'User not found.' });
     return;
   }
 
@@ -80,6 +80,6 @@ exports.login = async (req, res) => {
       accessToken: token
     });
   } else {
-    res.status(400).send('Incorrect password.');
+    res.status(400).json({ error: 'Invalid password.' });
   }
 }

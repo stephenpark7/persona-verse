@@ -4,7 +4,7 @@ const Tweet = db.Tweet;
 // Create tweet
 exports.create = async (req, res) => {
   const { message } = req.body;
-
+console.log(message);
   if (message.length === 0) return;
 
   // Save tweet to database
@@ -14,9 +14,9 @@ exports.create = async (req, res) => {
       message: message,
       likes: 0
     });
-    res.status(200).send(tweet);
+    res.status(200).json({ data: tweet })
   } catch {
-    res.status(400).send('Failed to create a tweet.');
+    res.status(200).json({ error: 'Error creating tweet.' });
   }
 }
 
@@ -36,8 +36,8 @@ exports.get = async (req, res) => {
       },
       order: [['createdAt', 'DESC']],
     });
-    res.status(200).json(tweets);
+    res.status(200).json({ data: tweets });
   } catch {
-    res.status(400).send('Failed to get tweets.');
+    res.status(200).json({ error: 'Error getting tweets.' })
   }
 }

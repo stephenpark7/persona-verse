@@ -58,7 +58,62 @@ async function register(data) {
   }
 }
 
+async function getTweets(token) {
+  try {
+    const response = await fetch(`${url}/api/tweets/get`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.error) {
+        throw new Error(responseData.error);
+      }
+      return responseData;
+    } else {
+      throw new Error(response);
+    }
+  }
+  catch(err) {
+    // TODO: getTweets error logic
+    console.log(err);
+    return false;
+  }
+}
+
+async function postTweet(token, data) {
+  try {
+    const response = await fetch(`${url}/api/tweets/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.error) {
+        throw new Error(responseData.error);
+      }
+      return responseData;
+    } else {
+      throw new Error(response);
+    }
+  }
+  catch(err) {
+    // TODO: sendTweet error logic
+    console.log(err);
+    return false;
+  }
+}
+
 export default {
   login,
   register,
+  getTweets,
+  postTweet,
 };

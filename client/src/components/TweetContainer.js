@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
-
-import { UserContext } from '../UserContext';
 import Tweet from '../components/Tweet';
+import API from '../lib/api';
+import { UserContext } from '../UserContext';
 
 export default function TweetContainer() {
   const userContext = useContext(UserContext);
@@ -17,48 +17,35 @@ export default function TweetContainer() {
     setTweetText(e.target.value);
   }
 
-  function handleSubmitTweet() {
+  async function handleSubmitTweet() {
     if (tweetMessage.length === 0) return;
-    axios({
-      method: 'post',
-      url: '/api/tweets/create',
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': userData.accessToken,
-      },
-      data: {
-        message: tweetMessage,
-      },
-    }).then(res => {
+    const result = await API.postTweet(userData.accessToken, {
+      message: tweetMessage,
+    });
+    if (result.error) {
+      console.log('API error');
+    } else if (result.data) {
       setTweetText('');
-      const newTweet = res.data;
+      const newTweet = result.data;
       newTweet.User = {
         username: userData.username,
         display_name: userData.display_name,
       }
       setTweetData([ newTweet, ...tweetData ]);
-    }).catch(err => {
-      console.log(err); //.response.data
-    });
+    } else {
+      console.log('Unexpected error');
+    }
   }
 
-  const fetchData = useCallback(() => {
-    axios({
-      method: 'get',
-      url: '/api/tweets/get',
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': userData.accessToken,
-      },
-    }).then(res => {
-      const tweetData = res.data;
-      console.log(tweetData);
-      setTweetData(tweetData);
-    }).catch(err => {
-      console.log(err);
-    });
+  const fetchData = useCallback(async () => {
+    const result = await API.getTweets(userData.accessToken);
+    if (result.error) {
+      console.log('API error');
+    } else if (result.data) {
+      setTweetData(result.data);
+    } else {
+      console.log('Unexpected error');
+    }
   }, [ userData ]);
 
   useEffect(() => {
