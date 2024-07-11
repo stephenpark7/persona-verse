@@ -15,5 +15,15 @@
     "docker-client-logs": "docker-compose logs twitter_react_app -f"
   },
   "author": "Stephen Park",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.10",
+    "ts-jest": "^29.2.2",
+    "typescript": "^5.5.3"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ]
 }

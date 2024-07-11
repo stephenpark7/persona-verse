@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node dist/index.js",
+    "dev": "nodemon dist/index.js",
+    "build-tsc": "tsc"
   },
   "author": "Stephen Park",
   "license": "ISC",
@@ -24,6 +25,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
     "eslint": "^9.6.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.8.0",
