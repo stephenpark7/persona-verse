@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import { UserContextWrapper } from './contexts/UserContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { UserContext } from './UserContext';
-
 function App() {
-  const [ userData, setUserData ] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) setUserData(JSON.parse(token));
-  }, []);
-
   return (
-    <UserContext.Provider value={{ userData, setUserData }}>
+    <UserContextWrapper>
       <Router>
         <Routes>
           <Route path='/signup' element={<Signup />} />
@@ -24,7 +16,7 @@ function App() {
           <Route path='/' element={<Home />} />
         </Routes>
       </Router>
-    </UserContext.Provider>
+    </UserContextWrapper>
   );
 }
 

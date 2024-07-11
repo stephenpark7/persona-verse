@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { UserContext } from '../UserContext';
+import { UserContextHook } from '../contexts/UserContext';
 import TweetContainer from '../components/TweetContainer';
 
 export default function Home() {
-  const { userData, setUserData } = useContext(UserContext);
+  const { isLoggedIn, logout } = UserContextHook();
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Use removeItem instead of setItem to remove token
-    setUserData(null);
+    logout();
   };
 
   return (
@@ -17,7 +16,7 @@ export default function Home() {
       <Row className='my-5'>
         <Col>
           <h1>Twitter</h1>
-          {!userData ? (
+          {!isLoggedIn ? (
             <>
               <p>Create an account or log in.</p>
               <Link to='/signup'>
