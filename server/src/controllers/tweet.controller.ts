@@ -1,6 +1,6 @@
 import { Response } from 'express';
-import { Tweet } from '../models';
 import { AuthenticatedRequest, CreateRequestBody } from '../interfaces';
+import { Tweet } from '../models';
 
 export const create = async (req: AuthenticatedRequest, res: Response) => {
   const requestBody: CreateRequestBody = req.body;

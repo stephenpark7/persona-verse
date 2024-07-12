@@ -1,16 +1,12 @@
 import { Request, Response } from 'express';
-import { User } from '../models';
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
-import jwt from 'jsonwebtoken';
-
-interface CustomRequest extends Request {
-  userId?: string;
-}
+import { User } from '../models';
 
 const jwtSecret = process.env.JWT_SECRET || 'secret';
 
-export const create = async (req: CustomRequest, res: Response) => {
+export const create = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
@@ -45,7 +41,7 @@ export const create = async (req: CustomRequest, res: Response) => {
   }
 };
 
-export const login = async (req: CustomRequest, res: Response) => {
+export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
