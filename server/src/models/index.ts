@@ -42,11 +42,6 @@ export {
   Tweet,
 };
 
-// db.User = require("./user.model")(sequelize, Sequelize);
-// db.Tweet = require("./tweet.model")(sequelize, Sequelize);
-// db.User.hasMany(db.Tweet);
-// db.Tweet.belongsTo(db.User);
-
 process.on('SIGINT', function () {
   sequelize.close();
 });
