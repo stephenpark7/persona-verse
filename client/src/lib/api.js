@@ -2,34 +2,6 @@ const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
 
-async function login(data) {
-  try {
-    const response = await fetch(`${url}/api/users/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.ok) {
-      const responseData = await response.json();
-      if (responseData.error) {
-        throw new Error(responseData.error);
-      }
-      localStorage.setItem('token', JSON.stringify(responseData));
-      // TODO: set user data in state (move logic from Signup.js)
-      return responseData;
-    } else {
-      throw new Error(response);
-    }
-  }
-  catch(err) {
-    // TODO: login error logic
-    console.log(err);
-    return false;
-  }
-}
-
 async function register(data) {
   try {
     const response = await fetch(`${url}/api/users/signup`, {
@@ -53,6 +25,63 @@ async function register(data) {
   }
   catch(err) {
     // TODO: register error logic
+    console.log(err);
+    return false;
+  }
+}
+
+async function login(data, setUserData, navigate) {
+  try {
+    const response = await fetch(`${url}/api/users/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.error) {
+        throw new Error(responseData.error);
+      }
+      localStorage.setItem('token', JSON.stringify(responseData));
+      setUserData(responseData);
+      navigate('/');
+      // TODO: set user data in state (move logic from Signup.js)
+      return responseData;
+    } else {
+      throw new Error(response);
+    }
+  }
+  catch(err) {
+    // TODO: login error logic
+    console.log(err);
+    return false;
+  }
+}
+
+async function logout(token) {
+  try {
+    const response = await fetch(`${url}/api/users/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+    });
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.error) {
+        throw new Error(responseData.error);
+      }
+      localStorage.removeItem('token');
+      return responseData;
+    } else {
+      throw new Error(response);
+    }
+  }
+  catch(err) {
+    // TODO: logout error logic
     console.log(err);
     return false;
   }
@@ -114,6 +143,7 @@ async function postTweet(token, data) {
 export default {
   login,
   register,
+  logout,
   getTweets,
   postTweet,
 };

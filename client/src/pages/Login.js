@@ -15,13 +15,7 @@ export default function Login() {
   async function handleFormSubmit(e) {
     e.preventDefault();
     if (!formData.username || !formData.password) return;
-    const result = await API.login(formData);
-    if (result) {
-      setUserData(result);
-      navigate('/');
-    } else {
-      console.log('login error');
-    }
+    API.login(formData, setUserData, navigate);
   }
 
   function handleTextInputChange(e) {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, createContext } from 'react';
+import API from '../lib/api';
 
 const userContext = {
   id: null,
@@ -22,9 +23,12 @@ export function UserContextHook() {
     return userData.username !== null;
   }, [ userData ]);
 
-  const logout = function() {
-    localStorage.removeItem('token');
-    setUserData(userContext);
+  const logout = async function() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      await API.logout(token);
+      setUserData(userContext);
+    }
   };
 
   return { userData, setUserData, isLoggedIn, logout };

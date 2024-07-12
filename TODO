@@ -1,4 +1,5 @@
 TODO:
+  ☐ Use Redux for data store
   ☐ Add typescript
     ☐ Frontend
     ✔ Backend @done(24-07-11 04:39)
