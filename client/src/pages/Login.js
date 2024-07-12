@@ -12,7 +12,7 @@ export default function Login() {
   const { setUserData } = UserContextHook();
   const [ formData, setformData ] = useState(undefined);
 
-  async function handleFormSubmit(e) {
+  function handleFormSubmit(e) {
     e.preventDefault();
     if (!formData.username || !formData.password) return;
     API.login(formData, setUserData, navigate);

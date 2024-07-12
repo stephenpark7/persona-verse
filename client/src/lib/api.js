@@ -16,8 +16,7 @@ async function register(data) {
       if (responseData.error) {
         throw new Error(responseData.error);
       }
-      // localStorage.setItem('token', JSON.stringify(responseData));
-      // TODO: set user data in state (move logic from Signup.js)
+      // TODO: sign up should automatically log in
       return responseData;
     } else {
       throw new Error(response);
@@ -47,8 +46,6 @@ async function login(data, setUserData, navigate) {
       localStorage.setItem('token', JSON.stringify(responseData));
       setUserData(responseData);
       navigate('/');
-      // TODO: set user data in state (move logic from Signup.js)
-      return responseData;
     } else {
       throw new Error(response);
     }
@@ -56,7 +53,6 @@ async function login(data, setUserData, navigate) {
   catch(err) {
     // TODO: login error logic
     console.log(err);
-    return false;
   }
 }
 
