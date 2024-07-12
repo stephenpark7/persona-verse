@@ -1,5 +1,5 @@
-import { DataTypes, Model, ModelAttributeColumnOptions } from 'sequelize';
-import { sequelize, Tweet } from './index';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from './index';
 
 class User extends Model {
   getId(): number {

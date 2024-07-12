@@ -1,12 +1,17 @@
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({
+  path: '.env.development.local',
+  debug: process.env.NODE_ENV === 'development',
+});
 
 import express from 'express';
 import path from 'path';
-import cors from 'cors';
 
 import users from './api/users';
 import tweets from './api/tweets';
+
+import cors from 'cors';
+import corsMiddleware from './middlewares/cors';
 
 const app = express();
 
@@ -14,16 +19,9 @@ const SERVER_PORT = process.env.SERVER_PORT || 3000;
 const PRODUCTION_MODE = process.env.NODE_ENV === 'production';
 
 app.use(cors());
+app.use(corsMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// TODO: Add CORS headers
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   next();
-// });
 
 app.use('/api/users', users);
 app.use('/api/tweets', tweets);

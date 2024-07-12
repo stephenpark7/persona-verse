@@ -1,5 +1,5 @@
-import { DataTypes, Model, ModelAttributeColumnOptions } from 'sequelize';
-import { sequelize, User } from './index';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from './index';
 
 class Tweet extends Model {
   static initModel() {
