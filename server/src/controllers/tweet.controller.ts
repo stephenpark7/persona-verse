@@ -1,12 +1,11 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { Tweet } from '../models';
+import { AuthenticatedRequest, CreateRequestBody } from '../interfaces';
 
-interface CustomRequest extends Request {
-  userId?: string;
-}
-
-export const create = async (req: CustomRequest, res: Response) => {
-  const { message } = req.body;
+export const create = async (req: AuthenticatedRequest, res: Response) => {
+  const requestBody: CreateRequestBody = req.body;
+  const message: string = requestBody?.message ?? '';
+  const userId = req.userId;
 
   if (message.length === 0) {
     return res.status(400).json({ error: 'Message cannot be empty.' });
@@ -14,7 +13,7 @@ export const create = async (req: CustomRequest, res: Response) => {
 
   try {
     const tweet = await Tweet.create({
-      UserId: parseInt(req.userId as string),
+      UserId: userId,
       message: message,
       likes: 0,
     });
@@ -28,7 +27,7 @@ export const create = async (req: CustomRequest, res: Response) => {
   }
 };
 
-export const get = async (req: CustomRequest, res: Response) => {
+export const get = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const tweets = await Tweet.findAll({
       attributes: ['message', 'likes', 'createdAt'],
