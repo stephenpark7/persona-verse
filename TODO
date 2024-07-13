@@ -1,4 +1,5 @@
 TODO:
+  ☐ Refactor npm scripts (use args)
   ☐ Use Redux for data store
   ☐ Add typescript
     ☐ Frontend

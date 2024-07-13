@@ -12,7 +12,7 @@ services:
     networks:
       - backend
     volumes:
-      - .:/app
+      - .:/app/server
       - /app/client/node_modules
     command: bash -c "npm run client"
   node_app:
@@ -30,7 +30,7 @@ services:
     networks:
       - backend
     volumes:
-      - .:/app
+      - .:/app/client
       - /app/server/node_modules
     command: bash -c "npm run server"
   db:

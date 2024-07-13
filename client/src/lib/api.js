@@ -2,7 +2,7 @@ const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
 
-async function register(data) {
+async function register(data, navigate) {
   try {
     const response = await fetch(`${url}/api/users/signup`, {
       method: 'POST',
@@ -17,7 +17,7 @@ async function register(data) {
         throw new Error(responseData.error);
       }
       // TODO: sign up should automatically log in
-      return responseData;
+      navigate('/');
     } else {
       throw new Error(response);
     }
@@ -25,7 +25,6 @@ async function register(data) {
   catch(err) {
     // TODO: register error logic
     console.log(err);
-    return false;
   }
 }
 

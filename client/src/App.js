@@ -1,23 +1,35 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { UserContextWrapper } from './contexts/UserContext';
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+const pages = [
+  {
+    path: '/signup',
+    element: <Signup />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/',
+    element: <Home />,
+  },
+];
+
+const router = createBrowserRouter(pages);
+
+export default function App() {
   return (
     <UserContextWrapper>
-      <Router>
-        <Routes>
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={<Home />} />
-        </Routes>
-      </Router>
+      <RouterProvider router={router} />
+      <ToastContainer />
     </UserContextWrapper>
   );
 }
-
-export default App;

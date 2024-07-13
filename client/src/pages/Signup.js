@@ -10,16 +10,10 @@ export default function Signup() {
   const [ userData, setUserData ] = useState(null);
   const navigate = useNavigate();
 
-  async function handleFormSubmit(e) {
+  function handleFormSubmit(e) {
     e.preventDefault();
     if (!userData.username || !userData.email || !userData.password) return;
-    const result = await API.register(userData);
-    if (result) {
-      // TODO: automatic login
-      navigate('/');
-    } else {
-      console.log('signup error');
-    }
+    API.register(userData);
   }
 
   function handleInputTextChange(e) {

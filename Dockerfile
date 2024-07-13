@@ -11,7 +11,7 @@ WORKDIR /app/server
 
 COPY server/package.json server/package-lock.json .
 
-RUN npm install
+RUN npm install --prefix .
 
 COPY server .
 
@@ -21,8 +21,10 @@ COPY client/package.json client/package-lock.json .
 
 COPY client .
 
-RUN npm install
+RUN npm install --prefix .
 
 WORKDIR /app
+
+RUN npm install
 
 EXPOSE 3000 3001
