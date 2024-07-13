@@ -3,15 +3,15 @@ import { AuthenticatedRequest, CreateRequestBody } from '../interfaces';
 import { Tweet } from '../models';
 
 export const create = async (req: AuthenticatedRequest, res: Response) => {
-  const requestBody: CreateRequestBody = req.body;
-  const message: string = requestBody?.message ?? '';
-  const userId = req.userId;
-
-  if (message.length === 0) {
-    return res.status(400).json({ error: 'Message cannot be empty.' });
-  }
-
   try {
+    const requestBody: CreateRequestBody = req.body;
+    const message: string = requestBody?.message ?? '';
+    const userId = req.userId;
+  
+    if (message.length === 0) {
+      return res.status(400).json({ error: 'Message cannot be empty.' });
+    }
+
     const tweet = await Tweet.create({
       UserId: userId,
       message: message,

@@ -2,22 +2,17 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 
 class RevokedToken extends Model {
-  // getId(): number {
-  //   return this.getDataValue('id')
-  // }
-
-  // getPassword(): string {
-  //   return this.getDataValue('password');
-  // }
+  getJti(): number {
+    return this.getDataValue('jti')
+  }
 
   static initModel() {
     RevokedToken.init({
-      token: {
-        type: DataTypes.STRING,
+      jti: {
+        type: DataTypes.UUID,
         allowNull: false,
         unique: true,
       },
-      
     }, { sequelize });
   }
 }

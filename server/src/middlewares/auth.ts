@@ -18,6 +18,7 @@ const auth = async (req: AuthenticatedRequest, res: Response, next: NextFunction
       return res.status(401).json({ message: 'Unauthorized.' });
     }
     req.userId = (decoded as JwtPayload).id;
+    req.token = token;
     next();
   });
 }

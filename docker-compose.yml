@@ -12,8 +12,7 @@ services:
     networks:
       - backend
     volumes:
-      - .:/app/server
-      - /app/client/node_modules
+      - .:/app
     command: bash -c "npm run client"
   node_app:
     build:
@@ -30,8 +29,7 @@ services:
     networks:
       - backend
     volumes:
-      - .:/app/client
-      - /app/server/node_modules
+      - .:/app
     command: bash -c "npm run server"
   db:
     image: postgres:latest

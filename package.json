@@ -15,5 +15,8 @@
     "docker-client-logs": "docker-compose logs twitter_react_app -f"
   },
   "author": "Stephen Park",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "postcss-flexbugs-fixes": "^5.0.2"
+  }
 }
