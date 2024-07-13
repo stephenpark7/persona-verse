@@ -2,14 +2,6 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 
 class User extends Model {
-  getId(): number {
-    return this.getDataValue('id')
-  }
-
-  getPassword(): string {
-    return this.getDataValue('password');
-  }
-
   static initModel() {
     User.init({
       id: {
@@ -29,13 +21,20 @@ class User extends Model {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
     }, { sequelize });
+  }
+
+  public getId(): number {
+    return this.getDataValue('id')
+  }
+
+  public getPassword(): string {
+    return this.getDataValue('password');
   }
 }
 

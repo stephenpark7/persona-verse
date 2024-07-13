@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { RevokedToken } from '../models';
 
 const secret = process.env.JWT_SECRET || 'secret';
 
@@ -14,7 +15,12 @@ function generateRefreshToken(payload: any) {
   return token;
 }
 
+function generateRevokedToken(userId: number) {
+  RevokedToken.create({ UserId: userId });
+}
+
 export {
   generateAccessToken,
   generateRefreshToken,
+  generateRevokedToken,
 };
