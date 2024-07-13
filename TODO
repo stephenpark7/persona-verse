@@ -1,6 +1,6 @@
 TODO:
   ☐ Add revoked tokens for log out
-    ☐ Add refersh tokens
+    ☐ Add refersh token route
   ☐ Refactor npm scripts (use args)
   ☐ Use Redux for data store
   ☐ Add typescript

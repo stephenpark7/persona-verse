@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import { RevokedToken, User } from '../models';
 import { AuthenticatedRequest } from '../interfaces';
+import { generateAccessToken, generateRefreshToken } from '../utils/jwt';
 
 export const create = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -58,15 +58,20 @@ export const login = async (req: Request, res: Response) => {
   if (!isAuthenticated) {
     return res.status(401).json({ message: 'Invalid username/password.' });
   }
+
   const payload = { id: user.getId() };
-  const secret = process.env.JWT_SECRET || 'secret';
-  const options = { expiresIn: '1h' };
-  const token = jwt.sign(payload, secret, options);
+  const accessToken = generateAccessToken(payload);
+  const refreshToken = generateRefreshToken(payload);
+
+  if (req.session) {
+    req.session.refreshToken = refreshToken;
+  }
 
   res.status(200).json({
     id: user.getId(),
     username: username,
-    accessToken: token
+    accessToken: accessToken,
+    expiresAt: Date.now() + 3600000,
   });
 };
 
@@ -80,7 +85,7 @@ export const logout = async (req: AuthenticatedRequest, res: Response) => {
 
     const user: User | null = await User.findOne({ where: { id: userId } });
 
-    const revokedToken = RevokedToken.create({ User: user });
+    const revokedToken = RevokedToken.create({ UserId: userId });
 
     res.status(200).json({ message: 'Logged out.' });
   } catch (error) {

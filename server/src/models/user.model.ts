@@ -12,6 +12,11 @@ class User extends Model {
 
   static initModel() {
     User.init({
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
