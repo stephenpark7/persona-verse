@@ -71,11 +71,19 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: AuthenticatedRequest, res: Response) => {
-  const { token, userId } = req;
+  try {
+    const { token, userId } = req;
 
-  // const user: User | null = await User.findOne({ where: { id: userId} });
+    if (!token || !userId) {
+      return res.status(400).json({ message: 'Missing field(s)' });
+    }
 
-  // const revokedToken = RevokedToken.create({ jti: token, User: user });
+    const user: User | null = await User.findOne({ where: { id: userId } });
 
-  res.status(200).json({ message: 'Logged out.' });
+    const revokedToken = RevokedToken.create({ User: user });
+
+    res.status(200).json({ message: 'Logged out.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging out.' });
+  }
 };

@@ -8,10 +8,10 @@ class RevokedToken extends Model {
 
   static initModel() {
     RevokedToken.init({
-      jti: {
+      id: {
         type: DataTypes.UUID,
-        allowNull: false,
-        unique: true,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
       },
     }, { sequelize });
   }

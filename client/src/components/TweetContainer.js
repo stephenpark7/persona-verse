@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Tweet from '../components/Tweet';
 import API from '../lib/api';
 import { UserContextHook } from '../contexts/UserContext';
+import { showToast } from '../utils/toast';
 
 export default function TweetContainer() {
   const { userData, isLoggedIn } = UserContextHook();
@@ -18,13 +19,11 @@ export default function TweetContainer() {
   }, [ isLoggedIn ]);
 
   async function fetchData() {
-    const result = await API.getTweets(userData.accessToken);
-    if (result.error) {
-      console.log('API error');
-    } else if (result.data) {
+    try {
+      const result = await API.getTweets(userData.accessToken);
       setTweetData(result.data);
-    } else {
-      console.log('Unexpected error');
+    } catch(err) {
+      showToast(err.message);
     }
   }
 
@@ -38,6 +37,7 @@ export default function TweetContainer() {
       message: postTweetMessage,
     });
     if (result.error) {
+      // TODO: handle error
       console.log('API error');
     } else if (result.data) {
       setPostTweetMessage('');

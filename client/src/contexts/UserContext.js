@@ -17,14 +17,14 @@ export function UserContextHook() {
     if (token) {
       setUserData(JSON.parse(token));
     }
-  }, []);
+  }, [ localStorage.getItem('token') ]);
 
   const isLoggedIn = useMemo(function() {
     return userData.username !== null;
   }, [ userData ]);
 
   const logout = async function() {
-    const token = localStorage.getItem('token');
+    const token = userData.accessToken;
     if (token) {
       await API.logout(token);
       setUserData(userContext);

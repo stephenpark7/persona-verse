@@ -9,7 +9,7 @@ export const create = async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.userId;
   
     if (message.length === 0) {
-      return res.status(400).json({ error: 'Message cannot be empty.' });
+      return res.status(400).json({ message: 'Message cannot be empty.' });
     }
 
     const tweet = await Tweet.create({
@@ -23,7 +23,7 @@ export const create = async (req: AuthenticatedRequest, res: Response) => {
       createdAt: tweet.getDataValue('createdAt'),
     } });
   } catch (error) {
-    res.status(500).json({ error: 'Error posting tweet.' });
+    res.status(500).json({ message: 'Error posting tweet.' });
   }
 };
 
@@ -42,6 +42,6 @@ export const get = async (req: AuthenticatedRequest, res: Response) => {
     });
     res.status(200).json({ data: tweets });
   } catch (error) {
-    res.status(500).json({ error: 'Error getting tweets.' });
+    res.status(500).json({ message: 'Error getting tweets.' });
   }
 };

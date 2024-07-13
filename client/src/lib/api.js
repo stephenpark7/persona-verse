@@ -59,6 +59,7 @@ async function logout(token) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
     });
 
@@ -85,20 +86,17 @@ async function getTweets(token) {
         'x-access-token': token,
       },
     });
-    if (response.ok) {
-      const responseData = await response.json();
-      if (responseData.error) {
-        throw new Error(responseData.error);
-      }
-      return responseData;
-    } else {
-      throw new Error(response);
+
+    const responseData = await response.json();
+    if (response.status !== 200) {
+      throw new Error(responseData.message);
     }
+
+    return responseData;
   }
   catch(err) {
-    // TODO: getTweets error logic
-    console.log(err);
-    return false;
+    showToast(err.message);
+    throw err;
   }
 }
 
