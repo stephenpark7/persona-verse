@@ -1,4 +1,5 @@
 TODO:
+  ☐ Add revoked tokens for log out
   ☐ Refactor npm scripts (use args)
   ☐ Use Redux for data store
   ☐ Add typescript
@@ -12,3 +13,4 @@ TODO:
   ☐ CSS Animations on tweet post
   ☐ Dark mode
   ✔ Dockerize app @done(24-07-10 03:06)
+  ✔ Failed to fetch bug for log out @done(24-07-13 12:08)

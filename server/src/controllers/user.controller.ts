@@ -73,11 +73,9 @@ export const login = async (req: Request, res: Response) => {
 export const logout = async (req: AuthenticatedRequest, res: Response) => {
   const { token, userId } = req;
 
-  const user: User | null = await User.findOne({ where: { id: userId} });
+  // const user: User | null = await User.findOne({ where: { id: userId} });
 
-  const revokedToken = RevokedToken.create({ jti: token, User: user });
-
-  console.log('abc');
+  // const revokedToken = RevokedToken.create({ jti: token, User: user });
 
   res.status(200).json({ message: 'Logged out.' });
 };
