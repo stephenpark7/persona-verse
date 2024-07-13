@@ -10,20 +10,20 @@ export const create = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
-    return res.status(400).json({ error: 'Missing field(s)' });
+    return res.status(400).json({ message: 'Missing field(s)' });
   }
 
   if (!validator.isAlphanumeric(username)) {
-    return res.status(400).json({ error: 'Username must contain only alphanumeric characters.' });
+    return res.status(400).json({ message: 'Username must contain only alphanumeric characters.' });
   }
 
   if (!validator.isEmail(email)) {
-    return res.status(400).json({ error: 'Invalid email address.' });
+    return res.status(400).json({ message: 'Invalid email address.' });
   }
 
   const userData = await User.findOne({ where: { username: username } });
   if (userData !== null) {
-    return res.status(400).json({ error: 'Username already in use.' });
+    return res.status(400).json({ message: 'Username already in use.' });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,7 +37,7 @@ export const create = async (req: Request, res: Response) => {
     });
     res.status(201).json({ message: 'Account created.' });
   } catch (error) {
-    res.status(500).json({ error: 'Error creating account.' });
+    res.status(500).json({ message: 'Error creating account.' });
   }
 };
 
@@ -45,13 +45,13 @@ export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'Missing field(s)' });
+    return res.status(400).json({ message: 'Missing field(s)' });
   }
 
   const userData: User | null = await User.findOne({ where: { username: username } });
 
   if (userData === null) {
-    return res.status(404).json({ error: 'User not found.' });
+    return res.status(404).json({ message: 'User not found.' });
   }
 
   const isAuthenticated = await bcrypt.compare(password, userData.getPassword());
@@ -66,7 +66,7 @@ export const login = async (req: Request, res: Response) => {
       accessToken: token
     });
   } else {
-    return res.status(401).json({ error: 'Invalid password.' });
+    return res.status(401).json({ message: 'Invalid username/password.' });
   }
 };
 

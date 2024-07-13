@@ -1,3 +1,5 @@
+import { showToast } from '../utils/toast';
+
 const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
@@ -5,27 +7,24 @@ const url = `http://${hostname}:${port}`;
 async function register(data, navigate) {
   try {
     const response = await fetch(`${url}/api/users/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.ok) {
-      const responseData = await response.json();
-      if (responseData.error) {
-        throw new Error(responseData.error);
-      }
-      // TODO: sign up should automatically log in
-      navigate('/');
-    } else {
-      throw new Error(response);
-    }
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  const responseData = await response.json();
+  if (response.status !== 201) {
+    throw new Error(responseData.message);
   }
-  catch(err) {
-    // TODO: register error logic
-    console.log(err);
-  }
+
+  showToast('User registered successfully.');
+  navigate('/login');
+}
+catch(err) {
+  showToast(err.message);
+}
 }
 
 async function login(data, setUserData, navigate) {
@@ -37,21 +36,20 @@ async function login(data, setUserData, navigate) {
       },
       body: JSON.stringify(data),
     });
-    if (response.ok) {
-      const responseData = await response.json();
-      if (responseData.error) {
-        throw new Error(responseData.error);
-      }
-      localStorage.setItem('token', JSON.stringify(responseData));
-      setUserData(responseData);
-      navigate('/');
-    } else {
-      throw new Error(response);
+
+    const responseData = await response.json();
+    if (response.status !== 200) {
+      throw new Error(responseData.message);
     }
+
+    localStorage.setItem('token', JSON.stringify(responseData));
+    setUserData(responseData);
+
+    showToast('Logged in successfully.');
+    navigate('/');
   }
   catch(err) {
-    // TODO: login error logic
-    console.log(err);
+    showToast(err.message);
   }
 }
 
@@ -61,24 +59,20 @@ async function logout(token) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-access-token': token,
       },
     });
-    if (response.ok) {
-      const responseData = await response.json();
-      if (responseData.error) {
-        throw new Error(responseData.error);
-      }
-      localStorage.removeItem('token');
-      return responseData;
-    } else {
-      throw new Error(response);
+
+    const responseData = await response.json();
+    if (response.status !== 200) {
+      throw new Error(responseData.message);
     }
+
+    localStorage.removeItem('token');
+
+    showToast('Logged out successfully.');
   }
   catch(err) {
-    // TODO: logout error logic
-    console.log(err);
-    return false;
+    showToast(err.message);
   }
 }
 

@@ -13,7 +13,7 @@ export default function Signup() {
   function handleFormSubmit(e) {
     e.preventDefault();
     if (!userData.username || !userData.email || !userData.password) return;
-    API.register(userData);
+    API.register(userData, navigate);
   }
 
   function handleInputTextChange(e) {
