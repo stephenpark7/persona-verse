@@ -4,6 +4,11 @@ import { sequelize } from './index';
 class Tweet extends Model {
   static initModel() {
     Tweet.init({
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       message: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -17,7 +22,6 @@ class Tweet extends Model {
         allowNull: false,
         defaultValue: DataTypes.NOW,
       },
-      UserId: ''
     }, {
       sequelize,
     });

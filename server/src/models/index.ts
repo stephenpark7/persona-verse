@@ -2,6 +2,7 @@ import { Sequelize, Options } from 'sequelize';
 import User from './user.model';
 import Tweet from './tweet.model';
 import RevokedToken from './revokedToken.model';
+import RefreshToken from './refreshToken.model';
 
 const sequelizeOptions: Options = {
   database: process.env.DB_NAME,
@@ -15,6 +16,7 @@ const sequelizeOptions: Options = {
     min: 0,
     idle: 10000
   },
+  // sync: { force: true },
 };
 
 const sequelize = new Sequelize(sequelizeOptions);
@@ -27,11 +29,14 @@ const sequelize = new Sequelize(sequelizeOptions);
     User.initModel();
     Tweet.initModel();
     RevokedToken.initModel();
+    RefreshToken.initModel();
 
     User.hasMany(Tweet);
     User.hasMany(RevokedToken);
+    User.hasMany(RefreshToken);
     Tweet.belongsTo(User);
     RevokedToken.belongsTo(User);
+    RefreshToken.belongsTo(User);
 
     await sequelize.sync();
   } catch (error) {
@@ -44,6 +49,7 @@ export {
   User,
   Tweet,
   RevokedToken,
+  RefreshToken,
 };
 
 process.on('SIGINT', function () {

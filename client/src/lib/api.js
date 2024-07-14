@@ -1,3 +1,4 @@
+import { userContext } from '../contexts/UserContext';
 import { showToast } from '../utils/toast';
 
 const hostname = process.env.API_HOST_NAME;
@@ -35,6 +36,7 @@ async function login(data, setUserData, navigate) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+      include: 'credentials',
     });
 
     const responseData = await response.json();
@@ -49,6 +51,7 @@ async function login(data, setUserData, navigate) {
     navigate('/');
   }
   catch(err) {
+    // TODO: hide error messages on production
     showToast(err.message);
   }
 }
@@ -59,7 +62,9 @@ async function logout(token) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token.accessToken,
       },
+      include: 'credentials',
     });
 
     const responseData = await response.json();
@@ -82,23 +87,20 @@ async function getTweets(token) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'x-access-token': token,
+        'x-access-token': token.accessToken,
       },
     });
-    if (response.ok) {
-      const responseData = await response.json();
-      if (responseData.error) {
-        throw new Error(responseData.error);
-      }
-      return responseData;
-    } else {
-      throw new Error(response);
+
+    const responseData = await response.json();
+    if (response.status !== 200) {
+      throw new Error(responseData.message);
     }
+
+    return responseData;
   }
   catch(err) {
-    // TODO: getTweets error logic
-    console.log(err);
-    return false;
+    showToast(err.message);
+    return null;
   }
 }
 

@@ -3,13 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { UserContextHook } from '../contexts/UserContext';
+import { useUserContext } from '../contexts/UserContext';
 import API from '../lib/api';
 import './Signup.css';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setUserData } = UserContextHook();
+  const { setUserData } = useUserContext();
   const [ formData, setformData ] = useState(undefined);
 
   function handleFormSubmit(e) {

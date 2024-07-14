@@ -1,5 +1,7 @@
 TODO:
   ☐ Add revoked tokens for log out
+    ☐ Add refersh token route
+    ☐ Auto sign out on clientside if token is expired
   ☐ Refactor npm scripts (use args)
   ☐ Use Redux for data store
   ☐ Add typescript

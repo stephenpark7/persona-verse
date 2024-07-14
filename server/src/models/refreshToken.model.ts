@@ -1,9 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './index';
 
-class RevokedToken extends Model {
+class RefreshToken extends Model {
   static initModel() {
-    RevokedToken.init({
+    RefreshToken.init({
       jti: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -12,9 +12,9 @@ class RevokedToken extends Model {
     }, { sequelize });
   }
 
-  public getJti(): number {
+  public getJti(): string {
     return this.getDataValue('jti')
   }
 }
 
-export default RevokedToken;
+export default RefreshToken;
