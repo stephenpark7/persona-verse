@@ -4,7 +4,7 @@ import { ToastContainer, Bounce } from 'react-toastify';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import { UserContextWrapper } from './contexts/UserContext';
+import { UserContextProvider } from './contexts/UserContext';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -27,7 +27,7 @@ const router = createBrowserRouter(pages);
 
 export default function App() {
   return (
-    <UserContextWrapper>
+    <UserContextProvider>
       <RouterProvider router={router} />
       <ToastContainer
         position="top-right"
@@ -42,6 +42,6 @@ export default function App() {
         theme="light"
         transition={Bounce}
       />
-    </UserContextWrapper>
+    </UserContextProvider>
   );
 }

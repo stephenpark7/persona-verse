@@ -1,3 +1,4 @@
+import { userContext } from '../contexts/UserContext';
 import { showToast } from '../utils/toast';
 
 const hostname = process.env.API_HOST_NAME;
@@ -35,6 +36,7 @@ async function login(data, setUserData, navigate) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+      include: 'credentials',
     });
 
     const responseData = await response.json();
@@ -49,6 +51,7 @@ async function login(data, setUserData, navigate) {
     navigate('/');
   }
   catch(err) {
+    // TODO: hide error messages on production
     showToast(err.message);
   }
 }
@@ -59,8 +62,9 @@ async function logout(token) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-access-token': token,
+        'x-access-token': token.accessToken,
       },
+      include: 'credentials',
     });
 
     const responseData = await response.json();
@@ -83,7 +87,7 @@ async function getTweets(token) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'x-access-token': token,
+        'x-access-token': token.accessToken,
       },
     });
 
@@ -96,7 +100,7 @@ async function getTweets(token) {
   }
   catch(err) {
     showToast(err.message);
-    throw err;
+    return null;
   }
 }
 

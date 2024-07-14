@@ -1,22 +1,22 @@
 import { Request } from 'express';
+import { JwtPayload } from 'jsonwebtoken';
+import { DataTypes } from 'sequelize';
 
 export interface AuthenticatedRequest extends Request {
-  userId?: string;
   token?: string;
+  userId?: number;
 };
 
 export interface CreateRequestBody {
-  message?: string;
-};
-
-export interface TokenPayload {
-  id: number;
-  username: string;
-  accessToken: string;
-  jti: string;
+  message: string;
 };
 
 export interface LoginParams {
   username: string;
   password: string;
+};
+
+export interface JWTPayload extends JwtPayload {
+  jti?: string;
+  userId?: number;
 };

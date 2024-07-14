@@ -1,22 +1,19 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { UserContextHook } from '../contexts/UserContext';
+import { useUserContext } from '../contexts/UserContext';
 import TweetContainer from '../components/TweetContainer';
+import LogoutButton from '../components/LogoutButton';
 
 export default function Home() {
-  const { isLoggedIn, logout } = UserContextHook();
-
-  function handleLogout() {
-    logout();
-  }
+  const { userData } = useUserContext();
 
   return (
     <Container>
       <Row className='my-5'>
         <Col>
           <h1>Twitter</h1>
-          {!isLoggedIn ? (
+          {!userData ? (
             <>
               <p>Create an account or log in.</p>
               <Link to='/signup'>
@@ -31,7 +28,7 @@ export default function Home() {
               <TweetContainer />
               {/* <p>Welcome {userData.username}!</p> */}
               <br />
-              <Button variant="primary" onClick={handleLogout}>Log out</Button>
+             <LogoutButton />
             </>
           )}
         </Col>

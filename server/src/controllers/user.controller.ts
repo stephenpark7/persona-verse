@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { RevokedToken, User } from '../models';
-import { AuthenticatedRequest, LoginParams } from '../interfaces';
+import { AuthenticatedRequest, JWTPayload, LoginParams } from '../interfaces';
 import { validateUsername, validateEmail, validatePassword, usernameAlreadyExists, missingFields } from '../utils/validation';
-import { generateAccessToken, generateRefreshToken, generateRevokedToken } from '../utils/jwt';
+import { generateAccessToken, generateRefreshToken, generateRevokedToken, decodeToken } from '../utils/jwt';
 import bcrypt from '../utils/bcrypt';
 
 export const create = async (req: Request, res: Response) => {
@@ -59,34 +59,44 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json({ message: 'Invalid username/password.' });
   }
 
-  const payload = { id: user.getId() };
+  const payload: JWTPayload = { userId: user.getId() };
   const accessToken = generateAccessToken(payload);
-  const refreshToken = generateRefreshToken(payload);
+  const refreshToken = await generateRefreshToken(payload.userId!);
 
   if (req.session) {
-    req.session.refreshToken = refreshToken;
+    req.session.token = refreshToken;
   }
 
   res.status(200).json({
     id: user.getId(),
     username: username,
-    accessToken: accessToken,
-    expiresAt: Date.now() + 3600000,
+    accessToken: accessToken.token,
+    expiresAt: new Date(accessToken.expiresAt),
   });
 };
 
 export const logout = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const { token, userId } = req;
+    const { userId } = req;
 
-    if (!token || !userId) {
-      return res.status(400).json({ message: 'Missing field(s)' });
+    if (!userId) {
+      return res.status(400).json({ message: 'Missing userId.' });
     }
 
     const user: User | null = await User.findOne({ where: { id: userId } });
 
     if (user === null) {
       return res.status(404).json({ message: 'User not found.' });
+    }
+
+    if (req.session && req.session.token) {
+      const decodedToken = await decodeToken(req.session.token);
+      const jti = decodedToken.jti;
+      const revokedToken = await RevokedToken.findOne({ where: { jti: jti } });
+      if (revokedToken) {
+        return res.status(400).json({ message: 'Token already revoked.' });
+      }
+      await req.session.destroy();
     }
 
     generateRevokedToken(user.getId());

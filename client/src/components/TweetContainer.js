@@ -1,29 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Tweet from '../components/Tweet';
 import API from '../lib/api';
-import { UserContextHook } from '../contexts/UserContext';
+import { useUserContext } from '../contexts/UserContext';
 import { showToast } from '../utils/toast';
+import { useOnMountUnsafe } from '../utils';
 
 export default function TweetContainer() {
-  const { userData, isLoggedIn } = UserContextHook();
+  const { userData, isLoggedIn } = useUserContext();
 
   const [ postTweetMessage, setPostTweetMessage ] = useState('');
   const [ tweetData, setTweetData ] = useState(undefined);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchData();
-    }
-  }, [ isLoggedIn ]);
+  useOnMountUnsafe(fetchData);
 
   async function fetchData() {
-    try {
-      const result = await API.getTweets(userData.accessToken);
+    const result = await API.getTweets(userData);
+    if (result) {
       setTweetData(result.data);
-    } catch(err) {
-      showToast(err.message);
     }
   }
 
