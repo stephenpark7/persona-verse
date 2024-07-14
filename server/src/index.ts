@@ -9,6 +9,7 @@ import path from 'path';
 
 import users from './api/users';
 import tweets from './api/tweets';
+import refresh from './api/refresh';
 
 import cors from 'cors';
 import corsMiddleware from './middlewares/cors';
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/users', users);
 app.use('/api/tweets', tweets);
+app.use('/api', refresh);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));

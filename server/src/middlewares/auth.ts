@@ -2,7 +2,7 @@ import { NextFunction, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import jwt from 'jsonwebtoken';
 import { AuthenticatedRequest } from '../interfaces';
-import { RevokedToken } from '../models';
+// import { RevokedToken } from '../models';
 import { JWTPayload } from '../interfaces';
 
 async function auth (req: AuthenticatedRequest, res: Response, next: NextFunction) {
@@ -27,8 +27,7 @@ async function auth (req: AuthenticatedRequest, res: Response, next: NextFunctio
     }
 
     req.userId = decodedToken.userId;
-
-    // const decodedToken = decoded as JWTPayload;
+    next();
     // const jti = decodedToken.jti;
 
     // if (jti === null) {
@@ -46,7 +45,6 @@ async function auth (req: AuthenticatedRequest, res: Response, next: NextFunctio
     // }
 
     // req.userId = decodedToken.userId;
-    next();
   });
 }
 

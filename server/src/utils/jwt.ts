@@ -4,12 +4,12 @@ import { JWTPayload } from '../interfaces';
 import { DataTypes } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
 
-const secret = process.env.JWT_SECRET || 'secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 function generateAccessToken(payload: object) {
   const options = { expiresIn: '1h' };
   const expiresAt = Date.now() + 60 * 60 * 1000;
-  const token = jwt.sign(payload, secret, options);
+  const token = jwt.sign(payload, JWT_SECRET, options);
   return { token: token, expiresAt: expiresAt } ;
 }
 
@@ -21,13 +21,13 @@ async function generateRefreshToken(userId: number) {
     jti: jti,
     userId: userId,
   }
-  const token = jwt.sign(payload, secret, options);
+  const token = jwt.sign(payload, JWT_SECRET, options);
   return token;
 }
 
 function decodeToken(token: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    jwt.verify(token, secret, (err, decoded) => {
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
       if (err) {
         reject(err);
       } else {
