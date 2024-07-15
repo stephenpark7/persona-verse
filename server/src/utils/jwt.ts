@@ -12,7 +12,7 @@ function generateAccessToken(payload: JWTPayload) {
 }
 
 function generateRefreshToken(payload: JWTPayload) {
-  const options = { expiresIn: '1s' };
+  const options = { expiresIn: '7d' };
   const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
   const jti = uuidv4();
   return jwt.sign({ ...payload, jti, expiresAt }, JWT_SECRET, options);
