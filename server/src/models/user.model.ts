@@ -36,6 +36,10 @@ class User extends Model {
   public getPassword(): string {
     return this.getDataValue('password');
   }
+
+  public getUsername(): string {  
+    return this.getDataValue('username');
+  }
 }
 
 export default User;
