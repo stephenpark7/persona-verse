@@ -1,54 +1,34 @@
 import jwt from 'jsonwebtoken';
-import { RefreshToken, RevokedToken } from '../models';
-import { JWTPayload } from '../interfaces';
-import { DataTypes } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
+import { JWTPayload } from '../interfaces';
+import { RevokedToken } from '../models';
 
-const secret = process.env.JWT_SECRET || 'secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
-function generateAccessToken(payload: object) {
+function generateAccessToken(payload: JWTPayload) {
   const options = { expiresIn: '1h' };
   const expiresAt = Date.now() + 60 * 60 * 1000;
-  const token = jwt.sign(payload, secret, options);
-  return { token: token, expiresAt: expiresAt } ;
+  return jwt.sign({ ...payload, expiresAt }, JWT_SECRET, options);
 }
 
-async function generateRefreshToken(userId: number) {
-  const options = { expiresIn: '7d' };
+function generateRefreshToken(payload: JWTPayload) {
+  const options = { expiresIn: '1s' };
+  const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
   const jti = uuidv4();
-  // await RefreshToken.create({ jti, UserId: userId });
-  const payload: JWTPayload = {
-    jti: jti,
-    userId: userId,
-  }
-  const token = jwt.sign(payload, secret, options);
-  return token;
+  return jwt.sign({ ...payload, jti, expiresAt }, JWT_SECRET, options);
 }
 
-function decodeToken(token: string): Promise<any> {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, secret, (err, decoded) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(decoded);
-      }
-    });
-  });
+async function generateRevokedToken(userId: number) {
+  return await RevokedToken.create({ UserId: userId });
 }
 
-function generateRevokedToken(userId: number) {
-  RevokedToken.create({ UserId: userId });
+function verifyToken(token: string): JWTPayload {
+  return jwt.verify(token, JWT_SECRET) as JWTPayload;
 }
 
-function getUserFromToken(token: string) {
-  const decodedToken: JWTPayload = jwt.decode(token) as JWTPayload;
-  return decodedToken.userId;
-}
-
-export {
+export default {
   generateAccessToken,
   generateRefreshToken,
   generateRevokedToken,
-  decodeToken,
+  verifyToken,
 };

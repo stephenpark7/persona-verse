@@ -23,6 +23,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-webpack-plugin": "^4.2.0",
+    "fetch-intercept": "^2.4.0",
     "file-loader": "^6.2.0",
     "fs-extra": "^11.2.0",
     "globals": "^15.8.0",
@@ -55,6 +56,7 @@
     "webpack": "^5.92.1",
     "webpack-dev-server": "^5.0.4",
     "webpack-manifest-plugin": "^5.0.0",
+    "whatwg-fetch": "^3.6.20",
     "workbox-webpack-plugin": "^7.1.0"
   },
   "scripts": {
