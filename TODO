@@ -1,5 +1,5 @@
 TODO:
-  ☐ Use express-sessions and not cookie-sessions
+  ☐ Update client to support backend changes
   ☐ Add revoked tokens for log out
     ☐ Add refersh token route
     ☐ Auto sign out on clientside if token is expired
