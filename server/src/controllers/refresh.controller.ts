@@ -1,37 +1,51 @@
 import { Response } from 'express';
-import { decodeToken, generateAccessToken } from '../utils/jwt';
+import JWT from '../utils/jwt';
 import { AuthenticatedRequest } from '../interfaces';
-import { RevokedToken, Tweet, User } from '../models';
+import { RevokedToken, User } from '../models';
 
 export const refresh = async (req: AuthenticatedRequest, res: Response) => {
-  const token = req?.session?.token;
-  
-  if (token === null) {
-    return res.status(500).json({ message: 'Session not found.' });
-  }
-
   try {
-    const decodedToken = await decodeToken(token);
-    const userId = decodedToken.id;
+    const token = req.session?.token;
+  
+    if (token === null) {
+      return res.status(500).json({ message: 'Session not found.' });
+    }
 
-    const user = await User.findOne({ where: { id: userId } });
+    const decodedToken = JWT.verifyToken(token);
+    const { userId, jti } = decodedToken;
+
+    if (userId === null) {
+      return res.status(401).json({ message: 'Token does not have a userId.' });
+    }
+
+    if (jti === null) {
+      return res.status(401).json({ message: 'Token does not have a jti.' });
+    }
+
+    const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: 'No user found.' });
     }
 
-    const revokedToken = await RevokedToken.findOne({ where: { jti: decodedToken.jti } });
+    const revokedToken = await RevokedToken.findByPk(jti);
     if (revokedToken !== null) {
       return res.status(401).json({ message: 'Token revoked.' });
     }
 
-    if (decodedToken.userId === null) {
-      return res.status(401).json({ message: 'Token does not have a userId.' });
+    const payload = {
+      userId: user.getId(),
+      username: user.getUsername(),
+    };
+
+    const accessToken = JWT.generateAccessToken(payload);
+
+    if (accessToken === null) {
+      return res.status(500).json({ message: 'Error generating token.' });
     }
 
-    const accessToken = generateAccessToken({ id: userId });
-    res.status(200).json({ token: accessToken.token, expiresAt: accessToken.expiresAt });
+    res.status(200).json(accessToken);
   } catch (error) {
-    const errorMessage = process.env.NODE_ENV === 'development' ? `${error}` : '';
+    const errorMessage = process.env.NODE_ENV === 'development' ? ` ${error}` : '';
     res.status(500).json({ message: `Failed to refresh token.${errorMessage}` });
   }
 };

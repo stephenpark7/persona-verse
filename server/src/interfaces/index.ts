@@ -17,6 +17,8 @@ export interface LoginParams {
 };
 
 export interface JWTPayload extends JwtPayload {
+  userId: number;
+  username: string;
+  expiresAt?: number;
   jti?: string;
-  userId?: number;
 };
