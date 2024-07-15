@@ -1,5 +1,7 @@
-import { userContext } from '../contexts/UserContext';
+import * as fetchIntercept from 'fetch-intercept';
+// import { userContext } from '../contexts/UserContext';
 import { showToast } from '../utils/toast';
+import { toast } from 'react-toastify';
 
 const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
@@ -8,24 +10,24 @@ const url = `http://${hostname}:${port}`;
 async function register(data, navigate) {
   try {
     const response = await fetch(`${url}/api/users/signup`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-  const responseData = await response.json();
-  if (response.status !== 201) {
-    throw new Error(responseData.message);
+    const responseData = await response.json();
+    if (response.status !== 201) {
+      throw new Error(responseData.message);
+    }
+
+    showToast('User registered successfully.');
+    navigate('/login');
   }
-
-  showToast('User registered successfully.');
-  navigate('/login');
-}
-catch(err) {
-  showToast(err.message);
-}
+  catch (err) {
+    showToast(err.message);
+  }
 }
 
 async function login(data, setUserData, navigate) {
@@ -50,7 +52,7 @@ async function login(data, setUserData, navigate) {
     showToast('Logged in successfully.');
     navigate('/');
   }
-  catch(err) {
+  catch (err) {
     // TODO: hide error messages on production
     showToast(err.message);
   }
@@ -76,10 +78,60 @@ async function logout(token) {
 
     showToast('Logged out successfully.');
   }
-  catch(err) {
+  catch (err) {
     showToast(err.message);
   }
 }
+
+const unregister = fetchIntercept.register({
+  request: function (url, config) {
+    config.headers = config.headers || {};
+    return [ url, config ];
+  },
+  requestError: function (error) {
+    return Promise.reject(error);
+  },
+  response: async function (response) {
+    if (response.status === 401) {
+      const baseUrl = `http://${process.env.API_HOST_NAME}:${process.env.API_PORT}/api`;
+      const refreshUrl = `${baseUrl}/refresh`;
+
+      try {
+        const refreshResponse = await fetch(refreshUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          include: 'credentials',
+        });
+
+        if (refreshResponse.ok) {
+          const refreshData = await refreshResponse.json();
+          localStorage.setItem('token', refreshData.token);
+          const originalRequestConfig = {
+            ...response.config,
+            headers: {
+              ...response.config.headers,
+              'x-access-token': `${refreshData.token}`,
+            },
+          };
+          return fetch(response.url, originalRequestConfig);
+        } else {
+          toast.error('Please log in again.');
+          localStorage.removeItem('token');
+          setUserData(null);
+        }
+      } catch (error) {
+        console.error('Error refreshing token:', error);
+        // Handle error
+      }
+    }
+    return response; // Return the original response if not 401
+  },
+  responseError: function (error) {
+    return Promise.reject(error);
+  },
+});
 
 async function getTweets(token) {
   try {
@@ -92,13 +144,15 @@ async function getTweets(token) {
     });
 
     const responseData = await response.json();
+    
     if (response.status !== 200) {
       throw new Error(responseData.message);
     }
 
+    unregister();
     return responseData;
   }
-  catch(err) {
+  catch (err) {
     showToast(err.message);
     return null;
   }
@@ -124,7 +178,7 @@ async function postTweet(token, data) {
       throw new Error(response);
     }
   }
-  catch(err) {
+  catch (err) {
     // TODO: sendTweet error logic
     console.log(err);
     return false;
