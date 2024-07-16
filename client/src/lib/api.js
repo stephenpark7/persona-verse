@@ -146,6 +146,7 @@ async function getTweets(token) {
     if (response.status !== 200) {
       throw new Error(responseData.message);
     }
+
     return responseData;
   }
   catch (err) {
@@ -164,15 +165,14 @@ async function postTweet(token, data) {
       },
       body: JSON.stringify(data),
     });
-    if (response.ok) {
-      const responseData = await response.json();
-      if (responseData.error) {
-        throw new Error(responseData.error);
-      }
-      return responseData;
-    } else {
-      throw new Error(response);
+
+    const responseData = await response.json();
+    
+    if (response.status !== 200) {
+      throw new Error(responseData.message);
     }
+
+    return responseData;
   }
   catch (err) {
     toast.error(err.message);

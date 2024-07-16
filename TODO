@@ -1,7 +1,9 @@
 TODO:
   ☐ Add revoked tokens for log out
     ✔ Add refresh token route @done(24-07-16 03:48)
+    ☐ Refresh token on clientside
     ☐ Auto sign out on clientside if token is expired
+  ☐ Forgot your password
   ☐ Refactor npm scripts (use args)
   ☐ Use Redux for data store
   ☐ Add typescript

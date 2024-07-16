@@ -1,6 +1,6 @@
 import cors from './cors';
 import cookies from './cookies';
-import router from './routes';
+import router from './router';
 
 export default {
   cors,
