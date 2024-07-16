@@ -1,4 +1,5 @@
 TODO:
+  ☐ Add test for refresh token
   ☐ Add revoked tokens for log out
     ✔ Add refresh token route @done(24-07-16 03:48)
     ☐ Refresh token on clientside
