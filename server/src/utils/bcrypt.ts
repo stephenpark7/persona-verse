@@ -10,5 +10,5 @@ const compare = async (password: string, hash: string): Promise<boolean> => {
 
 export default {
   hash,
-  compare
+  compare,
 };

@@ -1,17 +1,37 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import prettierConfig from "eslint-config-prettier";
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint'
+import globals from 'globals';
+import prettierConfig from 'eslint-config-prettier';
+import jest from 'eslint-plugin-jest';
 
-const jsFilesConfig = { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } };
-const globalsConfig = { languageOptions: { globals: { ...globals.browser, ...globals.node } } };
-const recommendedConfig = pluginJs.configs.recommended;
-
-const eolLastConfig = { rules: { 'eol-last': ['error', 'always'] } };
-
-export default [
-  jsFilesConfig,
-  globalsConfig,
-  recommendedConfig,
-  eolLastConfig,
-  prettierConfig,
-];
+export default tseslint.config({
+  files: [ 'src/**/*.ts', '*.js', '*.mjs' ],
+  languageOptions: {
+    globals: { 
+      ...globals.browser, 
+      ...globals.node,
+      ...globals.jest,
+    },
+    sourceType: 'module',
+  },
+  extends: [
+    eslint.configs.recommended,
+    ...tseslint.configs.recommended,
+    jest.configs.recommended.plugins.jest,
+    prettierConfig,
+  ],
+  plugins: {
+    jest: jest,
+  },
+  rules: {
+    'array-bracket-spacing': [ 'error', 'always' ],
+    'eol-last': [ 'error', 'always' ],
+    'quotes': [ 'error', 'single' ],
+    'comma-dangle': [ 'error', 'always-multiline' ],
+    'jest/no-disabled-tests': 'warn',
+    'jest/no-focused-tests': 'error',
+    'jest/no-identical-title': 'error',
+    'jest/prefer-to-have-length': 'warn',
+    'jest/valid-expect': 'error',
+  },
+});
