@@ -35,8 +35,9 @@ export const create = async (req: Request, res: Response) => {
     });
 
     res.status(201).json({ message: 'Account created successfully.' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error creating account.' });
+  } catch (error: unknown) {
+    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
+    res.status(500).json({ message: `Error creating account.${errorMessage}` })
   }
 };
 
@@ -110,8 +111,8 @@ export const logout = async (req: AuthenticatedRequest, res: Response) => {
     await JWT.generateRevokedToken(userId);
     req.session = null;
     res.status(200).json({ message: 'Logged out.' });
-  } catch (error: Error | any) {
-    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error.message}` : '';
+  } catch (error: unknown) {
+    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
     res.status(500).json({ message: errorMessage });
   }
 };

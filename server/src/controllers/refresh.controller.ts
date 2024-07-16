@@ -44,7 +44,7 @@ export const refresh = async (req: AuthenticatedRequest, res: Response) => {
     }
 
     res.status(200).json(accessToken);
-  } catch (error) {
+  } catch (error: unknown) {
     const errorMessage = process.env.NODE_ENV === 'development' ? ` ${error}` : '';
     res.status(500).json({ message: `Failed to refresh token.${errorMessage}` });
   }

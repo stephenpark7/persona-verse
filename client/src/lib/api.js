@@ -119,7 +119,7 @@ async function logout() {
 //           localStorage.removeItem('token');
 //           setUserData(null);
 //         }
-//       } catch (error) {
+//       } catch (error: unknown) {
 //         console.error('Error refreshing token:', error);
 //         // Handle error
 //       }
