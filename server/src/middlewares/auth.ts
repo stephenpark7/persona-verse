@@ -7,7 +7,7 @@ import { statusUnauthorized } from '../utils/request';
 
 async function auth (req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const headers = req.headers as IncomingHttpHeaders;
-  const token = headers['x-access-token'] as string;
+  const token = headers['authorization']?.split(' ')[1];
   const secret: jwt.Secret = process.env.JWT_SECRET as jwt.Secret;
 
   if (!token) {

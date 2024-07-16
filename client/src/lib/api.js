@@ -110,7 +110,7 @@ async function logout() {
 //             ...response.config,
 //             headers: {
 //               ...response.config.headers,
-//               'x-access-token': `${refreshData.token}`,
+//               'Authorization': `${refreshData.token}`,
 //             },
 //           };
 //           return fetch(response.url, originalRequestConfig);
@@ -137,7 +137,7 @@ async function getTweets(token) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'x-access-token': token,
+        'Authorization': `Bearer ${token}`,
       },
     });
 
@@ -161,7 +161,7 @@ async function postTweet(token, data) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-access-token': token,
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     });

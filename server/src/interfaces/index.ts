@@ -1,6 +1,5 @@
 import { Request } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
-import { DataTypes } from 'sequelize';
 
 export interface AuthenticatedRequest extends Request {
   token?: string;
