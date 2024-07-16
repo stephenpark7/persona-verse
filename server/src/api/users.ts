@@ -3,6 +3,8 @@ import { create, login, logout } from '../controllers/user.controller';
 
 const router = express.Router();
 
+router.use('users', router);
+
 router.post('/signup', async (req: Request, res: Response) => {
   await create(req, res);
 });
