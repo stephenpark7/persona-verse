@@ -5,6 +5,7 @@ import Tweet from '../components/Tweet';
 import API from '../lib/api';
 import { useUserContext } from '../contexts/UserContext';
 import { useOnMountUnsafe } from '../utils';
+import { toast } from 'react-toastify';
 
 export default function TweetContainer() {
   const { userData } = useUserContext();
@@ -27,22 +28,21 @@ export default function TweetContainer() {
 
   async function handlePostTweet() {
     if (postTweetMessage.length === 0) return;
-    const result = await API.postTweet(userData.accessToken, {
+
+    const result = await API.postTweet(userData.token, {
       message: postTweetMessage,
     });
-    if (result.error) {
-      // TODO: handle error
-      console.log('API error');
-    } else if (result.data) {
+    if (result) {
       setPostTweetMessage('');
       const newTweet = result.data;
       newTweet.User = {
-        username: userData.username,
-        display_name: userData.display_name,
+        username: userData.payload.username,
+        display_name: userData.payload.username, // TODO: display name
       }
       setTweetData([ newTweet, ...tweetData ]);
+      toast.success('Tweet posted');
     } else {
-      console.log('Unexpected error');
+      toast.error('Failed to post tweet');
     }
   }
 
