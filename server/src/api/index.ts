@@ -5,8 +5,14 @@ import refresh from '../api/refresh';
 
 const router = express.Router();
 
-router.use('/', users);
-router.use('/', tweets);
-router.use('/', refresh);
+const routes = {
+  '/users': users,
+  '/tweets': tweets,
+  '/refresh': refresh
+};
+
+for (let [ path, handler ] of Object.entries(routes)) {
+  router.use(path, handler);
+}
 
 export default router;

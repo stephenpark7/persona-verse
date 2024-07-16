@@ -5,8 +5,6 @@ import auth from '../middlewares/auth';
 
 const router = express.Router();
 
-router.use('/tweets', router);
-
 router.post('/create', auth, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   await create(req, res);
 });
