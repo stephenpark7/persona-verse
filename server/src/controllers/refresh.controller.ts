@@ -5,20 +5,20 @@ import { RevokedToken, User } from '../models';
 
 export const refresh = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const token = req.session?.token;
+    const token = req.session?.refreshToken;
   
-    if (token === null) {
+    if (token == null) {
       return res.status(500).json({ message: 'Session not found.' });
     }
 
     const decodedToken = JWT.verifyToken(token);
     const { userId, jti } = decodedToken;
 
-    if (userId === null) {
+    if (userId == null) {
       return res.status(401).json({ message: 'Token does not have a userId.' });
     }
 
-    if (jti === null) {
+    if (jti == null) {
       return res.status(401).json({ message: 'Token does not have a jti.' });
     }
 
@@ -28,7 +28,7 @@ export const refresh = async (req: AuthenticatedRequest, res: Response) => {
     }
 
     const revokedToken = await RevokedToken.findByPk(jti);
-    if (revokedToken !== null) {
+    if (revokedToken != null) {
       return res.status(401).json({ message: 'Token revoked.' });
     }
 
@@ -39,7 +39,7 @@ export const refresh = async (req: AuthenticatedRequest, res: Response) => {
 
     const accessToken = JWT.generateAccessToken(payload);
 
-    if (accessToken === null) {
+    if (accessToken == null) {
       return res.status(500).json({ message: 'Error generating token.' });
     }
 

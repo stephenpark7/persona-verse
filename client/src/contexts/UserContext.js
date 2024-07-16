@@ -4,15 +4,20 @@ import API from '../lib/api';
 export const UserContext = createContext(null);
 
 export function UserContextProvider({ children }) {
-  const [ userData, setUserData ] = useState(localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null);
+  const [ userData, setUserData ] = useState(getLocalStorageToken());
+
+  function getLocalStorageToken() {
+    const token = localStorage.getItem('token');
+    return token ? JSON.parse(token) : null;
+  }
 
   const isLoggedIn = useMemo(() => userData !== null, [ userData ]);
   
   const logout = useCallback(async () => {
-    // console.log(contextValue);
-    await API.logout(userData || JSON.parse(localStorage.getItem('token')));
-    setUserData(null);
-    localStorage.removeItem('token');
+    if (await API.logout()) {
+      setUserData(null);
+      localStorage.removeItem('token');
+    }
   }, []);
 
   const contextValue = useMemo(() => ({

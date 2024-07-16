@@ -14,7 +14,6 @@ export default function Login() {
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    if (!formData.username || !formData.password) return;
     API.login(formData, setUserData, navigate);
   }
 

@@ -8,14 +8,27 @@ const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 function generateAccessToken(payload: JWTPayload) {
   const options = { expiresIn: '1h' };
   const expiresAt = Date.now() + 60 * 60 * 1000;
-  return jwt.sign({ ...payload, expiresAt }, JWT_SECRET, options);
+  const token = jwt.sign({ ...payload, expiresAt }, JWT_SECRET, options);
+  return {
+    token,
+    expiresAt,
+    payload
+  };
 }
 
 function generateRefreshToken(payload: JWTPayload) {
   const options = { expiresIn: '7d' };
   const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
   const jti = uuidv4();
-  return jwt.sign({ ...payload, jti, expiresAt }, JWT_SECRET, options);
+  const token = jwt.sign({ ...payload, jti, expiresAt }, JWT_SECRET, options);
+  return {
+    token,
+    expiresAt,
+    payload: {
+      ...payload,
+      jti
+    }
+  };
 }
 
 async function generateRevokedToken(userId: number) {

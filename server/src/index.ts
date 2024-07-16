@@ -18,8 +18,6 @@ import cookieSession from 'cookie-session';
 
 const app = express();
 
-app.use(cors());
-app.use(corsMiddleware);
 app.use(cookieSession({
   name: 'session',
   secret: process.env.COOKIE_SECRET,
@@ -32,6 +30,9 @@ app.use(cookieSession({
   signed: true,
   overwrite: true,
 }));
+
+// app.use(cors());
+app.use(corsMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

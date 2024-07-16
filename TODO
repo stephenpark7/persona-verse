@@ -1,7 +1,7 @@
 TODO:
-  ☐ Update client to support backend changes
+  ✔ Update client to support backend changes @done(24-07-16 03:48)
   ☐ Add revoked tokens for log out
-    ☐ Add refersh token route
+    ✔ Add refresh token route @done(24-07-16 03:48)
     ☐ Auto sign out on clientside if token is expired
   ☐ Refactor npm scripts (use args)
   ☐ Use Redux for data store

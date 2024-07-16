@@ -49,7 +49,7 @@ export const login = async (req: Request, res: Response) => {
 
   const user = await User.findOne({ where: { username: username } });
 
-  if (user === null) {
+  if (user == null) {
     return res.status(404).json({ message: 'User not found.' });
   }
 
@@ -67,49 +67,51 @@ export const login = async (req: Request, res: Response) => {
   const accessToken = JWT.generateAccessToken(payload);
   const refreshToken = JWT.generateRefreshToken(payload!);
 
-  if (accessToken === null || refreshToken === null) {
+  if (accessToken == null || refreshToken == null) {
     return res.status(500).json({ message: 'Error generating tokens.' });
   }
 
-  if (req.session !== undefined && req.session !== null) {
-    req.session.token = refreshToken;
-  }
+  req.session = {
+    refreshToken: refreshToken
+  };
 
   res.status(200).json(accessToken);
 };
 
 export const logout = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const { userId, session } = req;
-    const { token } = session as JWTPayload;
+    const { session } = req;
+    const { refreshToken } = session as JWTPayload;
 
-    if (userId === undefined || userId === null) {
-      return res.status(400).json({ message: 'Missing userId.' });
+    if (refreshToken == null) {
+      return res.status(400).json({ message: 'Missing token.' });
+    }
+
+    const { jti, userId } = JWT.verifyToken(refreshToken.token);
+
+    if (jti == null) {
+      return res.status(400).json({ message: 'Token does not have a jti.' });
+    }
+
+    if (userId == null) {
+      return res.status(400).json({ message: 'Token does not have a userId.' });
     }
 
     const user = await User.findByPk(userId);
 
-    if (user === null) {
+    if (user == null) {
       return res.status(404).json({ message: 'User not found.' });
     }
 
-    if (token === null) {
-      return res.status(400).json({ message: 'Missing token.' });
-    }
-
-    const { jti } = JWT.verifyToken(token);
-    if (jti === null) {
-      return res.status(400).json({ message: 'Token does not have a jti.' });
-    }
-
-    if (await RevokedToken.findByPk(jti) !== null) {
+    if (await RevokedToken.findByPk(jti) != null) {
       return res.status(400).json({ message: 'Token already revoked.' });
     }
   
     await JWT.generateRevokedToken(userId);
-    await token.destroy();
+    req.session = null;
     res.status(200).json({ message: 'Logged out.' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error logging out.' });
+  } catch (error: Error | any) {
+    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error.message}` : '';
+    res.status(500).json({ message: errorMessage });
   }
 };
