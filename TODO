@@ -1,7 +1,6 @@
 TODO:
-  ☐ Use express-sessions and not cookie-sessions
   ☐ Add revoked tokens for log out
-    ☐ Add refersh token route
+    ✔ Add refresh token route @done(24-07-16 03:48)
     ☐ Auto sign out on clientside if token is expired
   ☐ Refactor npm scripts (use args)
   ☐ Use Redux for data store
@@ -9,11 +8,12 @@ TODO:
     ☐ Frontend
     ✔ Backend @done(24-07-11 04:39)
       ☐ Stricter types
-  ☐ Add react-toastify
-  ☐ Change from Sequelize to TypeORM
   ☐ Pagination
-  ☐ JWT with refresh token and secure cookie
   ☐ CSS Animations on tweet post
   ☐ Dark mode
+  ☐ Change from Sequelize to TypeORM
   ✔ Dockerize app @done(24-07-10 03:06)
   ✔ Failed to fetch bug for log out @done(24-07-13 12:08)
+  ✔ Update client to support backend changes @done(24-07-16 03:48)
+  ✔ Add react-toastify @done(24-07-16 05:06)
+  ✔ JWT with refresh token and secure cookie @done(24-07-16 05:06)

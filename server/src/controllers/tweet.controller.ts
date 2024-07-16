@@ -23,8 +23,9 @@ export const create = async (req: AuthenticatedRequest, res: Response) => {
       likes: 0,
       createdAt: tweet.getDataValue('createdAt'),
     } });
-  } catch (error) {
-    res.status(500).json({ message: 'Error posting tweet.' });
+;  } catch (error: unknown) {
+    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
+    res.status(500).json({ message: `Error posting tweet.${errorMessage}` })
   }
 };
 
@@ -42,7 +43,7 @@ export const get = async (req: AuthenticatedRequest, res: Response) => {
       order: [ [ 'createdAt', 'DESC' ] ],
     });
     res.status(200).json({ data: tweets });
-  } catch (error) {
+  } catch (error: unknown) {
     const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
     res.status(500).json({ message: `Error getting tweets.${errorMessage}` });
   }

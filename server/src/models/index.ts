@@ -39,7 +39,7 @@ const sequelize = new Sequelize(sequelizeOptions);
     RefreshToken.belongsTo(User);
 
     await sequelize.sync();
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error occurred:', error);
   }
 })();

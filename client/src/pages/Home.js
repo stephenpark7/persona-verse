@@ -26,7 +26,7 @@ export default function Home() {
           ) : (
             <>
               <TweetContainer />
-              {/* <p>Welcome {userData.username}!</p> */}
+              <p>Welcome {userData.payload.username}!</p>
               <br />
              <LogoutButton />
             </>
