@@ -4,7 +4,7 @@ import { refresh } from '../controllers/refresh.controller';
 
 const router = express.Router();
 
-router.post('/refresh', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+router.post('/', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   await refresh(req, res);
 });
 

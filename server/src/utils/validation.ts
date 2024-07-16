@@ -14,11 +14,11 @@ function validatePassword(password: string): boolean {
 }
 
 async function usernameAlreadyExists(username: string): Promise<boolean> {
-  return await User.findOne({ where: { username: username } }) !== null;
+  return await User.findOne({ where: { username: username } }) != null;
 }
 
 function missingFields(...fields: string[]): boolean {
-  return fields.some(field => field === undefined || field?.length === 0);
+  return fields.some(field => field == null || field?.length === 0);
 }
 
 export default {
