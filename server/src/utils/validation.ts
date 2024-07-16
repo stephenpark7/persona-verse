@@ -26,5 +26,5 @@ export default {
   validateEmail,
   validatePassword,
   usernameAlreadyExists,
-  missingFields
+  missingFields,
 };

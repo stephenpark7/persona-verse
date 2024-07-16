@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config({
-  path: `.env.development.local`,
+  path: '.env.development.local',
   debug: process.env.NODE_ENV === 'development',
 });
 

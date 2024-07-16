@@ -12,7 +12,7 @@ function generateAccessToken(payload: JWTPayload) {
   return {
     token,
     expiresAt,
-    payload
+    payload,
   };
 }
 
@@ -26,8 +26,8 @@ function generateRefreshToken(payload: JWTPayload) {
     expiresAt,
     payload: {
       ...payload,
-      jti
-    }
+      jti,
+    },
   };
 }
 

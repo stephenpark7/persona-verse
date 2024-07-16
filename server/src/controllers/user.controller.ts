@@ -18,7 +18,7 @@ export const create = async (req: Request, res: Response) => {
     }
   
     if (!Validator.validatePassword(password)) {
-      return res.status(400).json({ message: `Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.` });
+      return res.status(400).json({ message: 'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.' });
     }
   
     if (await Validator.usernameAlreadyExists(username)) {
@@ -31,7 +31,7 @@ export const create = async (req: Request, res: Response) => {
       username: username,
       email: email,
       password: hashedPassword,
-      displayName: username
+      displayName: username,
     });
 
     res.status(201).json({ message: 'Account created successfully.' });
@@ -73,7 +73,7 @@ export const login = async (req: Request, res: Response) => {
   }
 
   req.session = {
-    refreshToken: refreshToken
+    refreshToken: refreshToken,
   };
 
   res.status(200).json(accessToken);

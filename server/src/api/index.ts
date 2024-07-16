@@ -8,10 +8,10 @@ const router = express.Router();
 const routes = {
   '/users': users,
   '/tweets': tweets,
-  '/refresh': refresh
+  '/refresh': refresh,
 };
 
-for (let [ path, handler ] of Object.entries(routes)) {
+for (const [ path, handler ] of Object.entries(routes)) {
   router.use(path, handler);
 }
 

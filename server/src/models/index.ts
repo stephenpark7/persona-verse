@@ -14,7 +14,7 @@ const sequelizeOptions: Options = {
   pool: {
     max: 5,
     min: 0,
-    idle: 10000
+    idle: 10000,
   },
   // sync: { force: true },
 };
