@@ -11,7 +11,6 @@ import users from './api/users';
 import tweets from './api/tweets';
 import refresh from './api/refresh';
 
-import cors from 'cors';
 import corsMiddleware from './middlewares/cors';
 
 import cookieSession from 'cookie-session';
@@ -31,7 +30,6 @@ app.use(cookieSession({
   overwrite: true,
 }));
 
-// app.use(cors());
 app.use(corsMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
