@@ -8,7 +8,7 @@ import { useOnMountUnsafe } from '../utils';
 import { toast } from 'react-toastify';
 
 export default function TweetContainer() {
-  const { userData } = useUserContext();
+  const { userData, isLoggedIn } = useUserContext();
 
   const [ postTweetMessage, setPostTweetMessage ] = useState('');
   const [ tweetData, setTweetData ] = useState(undefined);
@@ -16,14 +16,11 @@ export default function TweetContainer() {
   useOnMountUnsafe(fetchData);
 
   async function fetchData() {
+    if (!isLoggedIn) return;
     const result = await API.getTweets(userData.token);
     if (result) {
       setTweetData(result.data);
     }
-  }
-
-  function handlePostTweetTextInputChange(e) {
-    setPostTweetMessage(e.target.value);
   }
 
   async function handlePostTweet() {

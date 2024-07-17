@@ -1,24 +1,41 @@
-import React, { useState, useEffect, useMemo, createContext, useContext, useCallback } from 'react';
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { useOnMountUnsafe, getLocalStorageToken } from '../utils';
 import API from '../lib/api';
 
 export const UserContext = createContext(null);
 
 export function UserContextProvider({ children }) {
-  const [ userData, setUserData ] = useState(getLocalStorageToken());
+  const localStorageToken = getLocalStorageToken();
+  const [ userData, setUserData ] = useState(localStorageToken);
 
-  function getLocalStorageToken() {
-    const token = localStorage.getItem('token');
-    return token ? JSON.parse(token) : null;
-  }
+  const tokenIsExpired = useMemo(() => {
+    if (!userData) {
+      return true;
+    }
+    const dateNow = Date.now();
+    const expiresAt = parseInt(userData.expiresAt) * 1000;
+    return dateNow >= expiresAt;
+  }, [ userData ]);
 
-  const isLoggedIn = useMemo(() => userData !== null, [ userData ]);
+  const isLoggedIn = userData !== null && !tokenIsExpired;
+
+  useOnMountUnsafe(() => {
+    async function refresh() {
+      if (userData !== null && tokenIsExpired) {
+        API.refreshToken(setUserData);
+      }
+    }
+    refresh();
+  }, [ userData, setUserData, tokenIsExpired ]);
+
+  // const isLoggedIn = useMemo(() => userData !== null && !tokenIsExpired, [ userData, setUserData, tokenIsExpired ]);
   
   const logout = useCallback(async () => {
     if (await API.logout()) {
-      setUserData(null);
       localStorage.removeItem('token');
+      setUserData(null);
     }
-  }, []);
+  }, [ setUserData ]);
 
   const contextValue = useMemo(() => ({
     userData,
@@ -37,48 +54,3 @@ export function UserContextProvider({ children }) {
 export function useUserContext() {
   return useContext(UserContext);
 }
-
-// import React, { useState, useEffect, useMemo, createContext, useCallback } from 'react';
-// import API from '../lib/api';
-
-// export const userContext = {
-//   id: null,
-//   username: null,
-//   accessToken: null,
-// };
-
-// const UserContext = createContext(userContext);
-
-// export function UserContextHook() {
-//   const [ userData, setUserData ] = useState(localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null);
-
-//   const isLoggedIn = useMemo(function() {
-//     return userData !== null;
-//   }, [ userData ]);
-  
-//   const logout = useCallback(async function() {
-//     await API.logout(userData, setUserData);
-//     setUserData(userContext);
-//   }, [ userData, setUserData ]);
-
-//   return { userData, setUserData, isLoggedIn, logout };
-// }
-
-// export function UserContextWrapper({ children }) {
-//   const { userData, setUserData, isLoggedIn, logout } = UserContextHook();
-
-//   const contextValue = useMemo(function() {
-//     return {
-//       userData,
-//       setUserData,
-//       isLoggedIn,
-//       logout,
-//     };
-//   }, [ userData, setUserData, isLoggedIn, logout ]);
-
-//   return (
-//     <UserContext.Provider value={contextValue}>
-//       {children}
-//     </UserContext.Provider>
-//   );
-// }

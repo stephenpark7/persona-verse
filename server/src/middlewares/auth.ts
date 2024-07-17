@@ -20,7 +20,7 @@ async function auth (req: AuthenticatedRequest, res: Response, next: NextFunctio
     }
 
     const decodedToken = decoded as JWTPayload;
-    if (decodedToken.userId == null) {
+    if (decodedToken.userId === undefined || decodedToken.userId === null) {
       return statusUnauthorized(res, 'Token does not have a userId.');
     }
 

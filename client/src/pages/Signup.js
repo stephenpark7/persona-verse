@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -7,20 +7,23 @@ import API from '../lib/api';
 import './Signup.css';
 
 export default function Signup() {
-  const [ userData, setUserData ] = useState(null);
+  const [ formData, setFormData ] = useState(null);
   const navigate = useNavigate();
 
-  function handleFormSubmit(e) {
+  async function handleFormSubmit(e) {
     e.preventDefault();
-    if (!userData.username || !userData.email || !userData.password) return;
-    API.register(userData, navigate);
+    if (!formData.username || !formData.email || !formData.password) return;
+    const data = await API.register(formData, navigate);
+    if (data) {
+      await API.login(data, setFormData, navigate, false);
+    }
   }
 
   function handleInputTextChange(e) {
     let target = e.target;
     let value = target.value;
     let name = target.name;
-    setUserData({ ...userData, [ name ]: value });
+    setFormData({ ...formData, [ name ]: value });
   }
 
   return (
