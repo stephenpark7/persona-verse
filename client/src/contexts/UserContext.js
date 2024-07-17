@@ -1,24 +1,23 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import { useOnMountUnsafe } from '../utils';
+import { useOnMountUnsafe, getLocalStorageToken } from '../utils';
 import API from '../lib/api';
-import { toast } from 'react-toastify';
 
 export const UserContext = createContext(null);
 
 export function UserContextProvider({ children }) {
-  const [ userData, setUserData ] = useState(getLocalStorageToken());
-
-  function getLocalStorageToken() {
-    const token = localStorage.getItem('token');
-    return token ? JSON.parse(token) : null;
-  }
+  const localStorageToken = getLocalStorageToken();
+  const [ userData, setUserData ] = useState(localStorageToken);
 
   const tokenIsExpired = useMemo(() => {
-    if (!userData) return true;
+    if (!userData) {
+      return true;
+    }
     const dateNow = Date.now();
     const expiresAt = parseInt(userData.expiresAt) * 1000;
     return dateNow >= expiresAt;
-  }, [ userData, setUserData ]);
+  }, [ userData ]);
+
+  const isLoggedIn = userData !== null && !tokenIsExpired;
 
   useOnMountUnsafe(() => {
     async function refresh() {
@@ -29,7 +28,7 @@ export function UserContextProvider({ children }) {
     refresh();
   }, [ userData, setUserData, tokenIsExpired ]);
 
-  const isLoggedIn = userData !== null && !tokenIsExpired;
+  // const isLoggedIn = useMemo(() => userData !== null && !tokenIsExpired, [ userData, setUserData, tokenIsExpired ]);
   
   const logout = useCallback(async () => {
     if (await API.logout()) {

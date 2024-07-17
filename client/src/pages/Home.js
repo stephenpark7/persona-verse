@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useUserContext, isLoggedIn } from '../contexts/UserContext';
+import { useUserContext } from '../contexts/UserContext';
 import TweetContainer from '../components/TweetContainer';
 import LogoutButton from '../components/LogoutButton';
 
@@ -26,7 +26,7 @@ export default function Home() {
           ) : (
             <>
               <TweetContainer />
-              <p>Welcome {userData?.payload.username}!</p>
+              <p>Welcome {userData?.payload?.username}!</p>
               <br />
              <LogoutButton />
             </>

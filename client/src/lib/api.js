@@ -1,5 +1,4 @@
 import * as fetchIntercept from 'fetch-intercept';
-import { userContext } from '../contexts/UserContext';
 import { toast } from 'react-toastify';
 
 const hostname = process.env.API_HOST_NAME;
@@ -23,14 +22,22 @@ async function register(data, navigate) {
     }
 
     toast.success('User registered successfully.');
+
+    // Automatically log in the user after registration
+    // login(data, UserContextProvider.setUserData, navigate);
     navigate('/login');
+    return {
+      username: data.username,
+      password: data.password,
+    };
   }
   catch (err) {
     toast.error(err.message, { autoClose: 5000 });
+    return null;
   }
 }
 
-async function login(data, setUserData, navigate) {
+async function login(data, setUserData, navigate, showToast = true) {
   try {
     const response = await fetch(`${url}/api/users/login`, {
       method: 'POST',
@@ -50,7 +57,9 @@ async function login(data, setUserData, navigate) {
     localStorage.setItem('token', JSON.stringify(responseData));
     setUserData(responseData);
 
-    toast.success('Logged in successfully.');
+    if (showToast) {
+      toast.success('Logged in successfully.');
+    }
     navigate('/');
   }
   catch (err) {

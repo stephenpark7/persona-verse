@@ -34,4 +34,25 @@ export default tseslint.config({
     'jest/prefer-to-have-length': 'warn',
     'jest/valid-expect': 'error',
   },
+}, {
+  files: [ '*.json' ],
+  languageOptions: {
+    globals: { 
+      ...globals.browser, 
+      ...globals.node,
+      ...globals.jest,
+    },
+    sourceType: 'module',
+  },
+  extends: [
+    eslint.configs.recommended,
+    ...tseslint.configs.recommended,
+    prettierConfig,
+  ],
+  rules: {
+    'array-bracket-spacing': [ 'error', 'always' ],
+    'eol-last': [ 'error', 'always' ],
+    'quotes': [ 'error', 'double' ],
+    'comma-dangle': [ 'error', 'never' ],
+  },
 });
