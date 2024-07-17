@@ -11,14 +11,21 @@ export function UserContextProvider({ children }) {
     return token ? JSON.parse(token) : null;
   }
 
-  const isLoggedIn = useMemo(() => userData !== null, [ userData ]);
+  const tokenIsExpired = useMemo(() => {
+    if (!userData) return true;
+    const dateNow = Date.now();
+    const expiresAt = parseInt(userData.expiresAt) * 1000;
+    return dateNow >= expiresAt;
+  }, [ userData ]);
+
+  const isLoggedIn = useMemo(() => userData !== null && !tokenIsExpired, [ userData ]);
   
   const logout = useCallback(async () => {
     if (await API.logout()) {
-      setUserData(null);
       localStorage.removeItem('token');
+      setUserData(null);
     }
-  }, []);
+  }, [ setUserData ]);
 
   const contextValue = useMemo(() => ({
     userData,
