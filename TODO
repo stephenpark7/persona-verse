@@ -18,5 +18,6 @@ TODO:
   ✔ Dockerize app @done(24-07-10 03:06)
   ✔ Failed to fetch bug for log out @done(24-07-13 12:08)
   ✔ Update client to support backend changes @done(24-07-16 03:48)
+  
   ✔ Add react-toastify @done(24-07-16 05:06)
   ✔ JWT with refresh token and secure cookie @done(24-07-16 05:06)
