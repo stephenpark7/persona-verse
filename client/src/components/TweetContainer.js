@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Tweet from '../components/Tweet';
@@ -8,32 +8,31 @@ import { useOnMountUnsafe } from '../utils';
 import { toast } from 'react-toastify';
 
 export default function TweetContainer() {
-  const { userData } = useUserContext();
+  const textRef = React.useRef(null);
+  const { userData, isLoggedIn } = useUserContext();
 
-  const [ postTweetMessage, setPostTweetMessage ] = useState('');
   const [ tweetData, setTweetData ] = useState(undefined);
 
   useOnMountUnsafe(fetchData);
 
   async function fetchData() {
+    if (!isLoggedIn) return;
     const result = await API.getTweets(userData.token);
     if (result) {
       setTweetData(result.data);
     }
   }
 
-  function handlePostTweetTextInputChange(e) {
-    setPostTweetMessage(e.target.value);
-  }
-
   async function handlePostTweet() {
-    if (postTweetMessage.length === 0) return;
+    const message = textRef.current.value;
+
+    if (message.length === 0) return;
 
     const result = await API.postTweet(userData.token, {
-      message: postTweetMessage,
+      message: message,
     });
     if (result) {
-      setPostTweetMessage('');
+      textRef.current.value = '';
       const newTweet = result.data;
       newTweet.User = {
         username: userData.payload.username,
@@ -49,8 +48,8 @@ export default function TweetContainer() {
   return (
     <Form>
       <Form.Group className='mt-3 mb-3'>
-        <Form.Control type='text' name='username' placeholder={'What\'s happening?'}
-          value={postTweetMessage} onChange={handlePostTweetTextInputChange} required />
+        <Form.Control ref={textRef} type='text' name='username' placeholder={'What\'s happening?'}
+          defaultValue={''} required />
       </Form.Group>
       <Button variant="primary" onClick={handlePostTweet}>Tweet</Button>
       <br /><br />

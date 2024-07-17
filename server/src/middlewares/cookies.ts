@@ -1,10 +1,10 @@
 import cookieSession from 'cookie-session';
 
-if (process.env.COOKIE_SECRET == null) {
+if (process.env.COOKIE_SECRET === undefined) {
   throw new Error('COOKIE_SECRET is not set');
 }
 
-if (process.env.COOKIE_MAX_AGE == null) {
+if (process.env.COOKIE_MAX_AGE === undefined) {
   throw new Error('COOKIE_MAX_AGE is not set');
 }
 

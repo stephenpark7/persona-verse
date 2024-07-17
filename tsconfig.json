@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "CommonJS",
+    "target": "ES6",
+    "module": "NodeNext",
+    "lib": [ "ES6" ],
     "strict": true,
-    "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@my-scope/*": ["/*"]
-    },
-    "outDir": "dist"
+    "baseUrl": "./",
+    "outDir": "dist",
+    "jsx": "react"
   },
-  "include": ["client/**/*", "server/**/*"],
+  "include": [ "client/**/*", "server/**/*" ],
 }

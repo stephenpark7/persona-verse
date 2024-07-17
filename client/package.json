@@ -26,7 +26,6 @@
     "fetch-intercept": "^2.4.0",
     "file-loader": "^6.2.0",
     "fs-extra": "^11.2.0",
-    "globals": "^15.8.0",
     "html-webpack-plugin": "^5.6.0",
     "jest": "^29.7.0",
     "jest-watch-typeahead": "^2.2.2",
@@ -129,5 +128,15 @@
       "jest-watch-typeahead/testname"
     ],
     "resetMocks": true
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "@types/jest": "^29.5.12",
+    "@types/mocha": "^10.0.7",
+    "@types/react-dom": "^18.3.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^28.6.0",
+    "globals": "^15.8.0",
+    "typescript-eslint": "^7.16.1"
   }
 }

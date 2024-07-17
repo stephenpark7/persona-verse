@@ -18,7 +18,7 @@ async function usernameAlreadyExists(username: string): Promise<boolean> {
 }
 
 function missingFields(...fields: string[]): boolean {
-  return fields.some(field => field == null || field?.length === 0);
+  return fields.some(field => field === undefined || field === null || field?.length === 0);
 }
 
 export default {

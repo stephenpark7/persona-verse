@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { TrashFill } from 'react-bootstrap-icons';
+// import { TrashFill } from 'react-bootstrap-icons';
 import './Tweet.css';
 
 export default function Tweet({ data }) {

@@ -1,10 +1,9 @@
-import express, { Response } from 'express';
-import { AuthenticatedRequest } from '../interfaces';
+import express, { Request, Response } from 'express';
 import { refresh } from '../controllers/refresh.controller';
 
 const router = express.Router();
 
-router.post('/', async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+router.post('/', async (req: Request, res: Response): Promise<void> => {
   await refresh(req, res);
 });
 
