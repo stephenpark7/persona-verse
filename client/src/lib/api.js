@@ -133,54 +133,57 @@ async function postTweet(token, data) {
   }
 }
 
-// fetchIntercept.register({
-//   request: function (url, config) {
-//     config.headers = config.headers || {};
-//     return [ url, config ];
-//   },
-//   requestError: function (error) {
-//     return Promise.reject(error);
-//   },
-//   response: async function (response) {
-//     if (response.status === 401 && !response.url.endsWith('/login')) {
-//       const baseUrl = `http://${process.env.API_HOST_NAME}:${process.env.API_PORT}/api`;
-//       const refreshUrl = `${baseUrl}/refresh`;
+fetchIntercept.register({
+  request: function (url, config) {
+    config.headers = config.headers || {};
+    return [ url, config ];
+  },
+  requestError: function (error) {
+    return Promise.reject(error);
+  },
+  response: async function (response) {
+    if (response.status === 401 && !response.url.endsWith('/login')) {
+      try {
+        const refreshResponse = await fetch(`${url}/api/refresh`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        });
+    
+        const refreshResponseData = await refreshResponse.json();
 
-//       try {
-//         const refreshResponse = await fetch(refreshUrl, {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           credentials: 'include',
-//         });
+        if (!refreshResponse.ok) {
+          toast.error(refreshResponseData.message);
+          // setUserData(null);
+          localStorage.removeItem('token');
+          return null;
+        }
 
-//         if (refreshResponse.ok) {
-//           const refreshData = await refreshResponse.json();
-//           localStorage.setItem('token', refreshData.token);
-//           const originalRequestConfig = {
-//             ...response.config,
-//             headers: {
-//               ...response.config.headers,
-//               'Authorization': `${refreshData.token}`,
-//             },
-//           };
-//           return fetch(response.url, originalRequestConfig);
-//         } else {
-//           toast.error('Please log in again.');
-//           localStorage.removeItem('token');
-//           setUserData(null);
-//         }
-//       } catch (error) {
-//         console.error('Error refreshing token:', error);
-//       }
-//     }
-//     return response; // Return the original response if not 401
-//   },
-//   responseError: function (error) {
-//     return Promise.reject(error);
-//   },
-// });
+        if (process.env.NODE_ENV === 'development') {
+          toast.success('Token refreshed.');
+        }
+
+        // setUserData(responseData);
+        localStorage.setItem('token', JSON.stringify(refreshResponseData));
+        const originalRequestConfig = {
+          headers: {
+            'Authorization': `Bearer ${refreshResponseData.token}`,
+          },
+        };
+
+        return fetch(response.url, originalRequestConfig);
+      } catch (error) {
+        console.error('Error refreshing token:', error);
+      }
+    }
+    return response; // Return the original response if not 401
+  },
+  responseError: function (error) {
+    return Promise.reject(error);
+  },
+});
 
 async function refreshToken(setUserData) {
   try {
@@ -195,7 +198,7 @@ async function refreshToken(setUserData) {
     const responseData = await response.json();
 
     if (!response.ok) {
-      toast.error('Please log in again.');
+      toast.error(responseData.message);
       setUserData(null);
       localStorage.removeItem('token');
       return;
@@ -205,8 +208,8 @@ async function refreshToken(setUserData) {
       toast.success('Token refreshed.');
     }
 
-    localStorage.setItem('token', JSON.stringify(responseData));
     setUserData(responseData);
+    localStorage.setItem('token', JSON.stringify(responseData));
   }
   catch (error) {
     toast.error('Error refreshing token.');
