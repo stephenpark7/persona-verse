@@ -18,9 +18,9 @@ export default function Login() {
   }
 
   function handleTextInputChange(e) {
-    let target = e.target;
-    let value = target.value;
-    let name = target.name;
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
     setformData({ ...formData, [ name ]: value });
   }
 

@@ -2,9 +2,30 @@ import React, { createContext, useCallback, useContext, useMemo, useState } from
 import { useOnMountUnsafe, getLocalStorageToken } from '../utils';
 import API from '../lib/api';
 
-export const UserContext = createContext(null);
+interface UserData {
+  username: string;
+  email: string;
+  expiresAt: string;
+  token: string;
+}
 
-export function UserContextProvider({ children }) {
+interface UserContextValue {
+  userData: UserData | null;
+  setUserData: React.Dispatch<React.SetStateAction<UserData | null>>;
+  isLoggedIn: boolean;
+  logout: () => Promise<void>;
+}
+
+const defaultUserContextValue: UserContextValue = {
+  userData: null,
+  setUserData: () => {},
+  isLoggedIn: false,
+  logout: async () => {},
+};
+
+export const UserContext = createContext(defaultUserContextValue);
+
+export function UserContextProvider({ children }: { children: React.ReactNode }) {
   const localStorageToken = getLocalStorageToken();
   const [ userData, setUserData ] = useState(localStorageToken);
 
@@ -26,10 +47,8 @@ export function UserContextProvider({ children }) {
       }
     }
     refresh();
-  }, [ userData, setUserData, tokenIsExpired ]);
+  });
 
-  // const isLoggedIn = useMemo(() => userData !== null && !tokenIsExpired, [ userData, setUserData, tokenIsExpired ]);
-  
   const logout = useCallback(async () => {
     if (await API.logout()) {
       localStorage.removeItem('token');
@@ -45,7 +64,7 @@ export function UserContextProvider({ children }) {
   }), [ userData, isLoggedIn, logout ]);
 
   return (
-    <UserContext.Provider value={contextValue}>
+    <UserContext.Provider value={contextValue as UserContextValue}>
       {children}
     </UserContext.Provider>
   );

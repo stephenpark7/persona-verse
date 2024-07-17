@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 import { ToastContainer, Bounce } from 'react-toastify';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -8,7 +8,7 @@ import { UserContextProvider } from './contexts/UserContext';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const pages = [
+const pages: RouteObject[] = [
   {
     path: '/signup',
     element: <Signup />,
@@ -25,7 +25,7 @@ const pages = [
 
 const router = createBrowserRouter(pages);
 
-export default function App() {
+export default function App(): JSX.Element {
   return (
     <UserContextProvider>
       <RouterProvider router={router} />
