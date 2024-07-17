@@ -1,17 +1,28 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import Form from 'react-bootstrap/Form'; // Import FormControlElement type from react-bootstrap
 import API from '../lib/api';
 import './Signup.css';
 
-export default function Signup() {
-  const [ formData, setFormData ] = useState(null);
+interface FormData {
+  username: string;
+  email: string;
+  password: string;
+};
+
+const Signup: React.FC = () => {
+  const [ formData, setFormData ] = useState<FormData>({
+    username: '',
+    email: '',
+    password: '',
+  });
   const navigate = useNavigate();
 
-  async function handleFormSubmit(e) {
+  async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
+    if (!formData) return;
     if (!formData.username || !formData.email || !formData.password) return;
     const data = await API.register(formData, navigate);
     if (data) {
@@ -19,10 +30,10 @@ export default function Signup() {
     }
   }
 
-  function handleInputTextChange(e) {
-    let target = e.target;
-    let value = target.value;
-    let name = target.name;
+  function handleInputTextChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
     setFormData({ ...formData, [ name ]: value });
   }
 
@@ -48,4 +59,6 @@ export default function Signup() {
       </Row>
     </Container>
   )
-}
+};
+
+export default Signup;
