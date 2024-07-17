@@ -1,5 +1,5 @@
 import * as fetchIntercept from 'fetch-intercept';
-// import { userContext } from '../contexts/UserContext';
+import { userContext } from '../contexts/UserContext';
 import { toast } from 'react-toastify';
 
 const hostname = process.env.API_HOST_NAME;
@@ -17,7 +17,8 @@ async function register(data, navigate) {
     });
 
     const responseData = await response.json();
-    if (response.status !== 201) {
+
+    if (!response.ok) {
       throw new Error(responseData.message);
     }
 
@@ -41,7 +42,8 @@ async function login(data, setUserData, navigate) {
     });
 
     const responseData = await response.json();
-    if (response.status !== 200) {
+
+    if (!response.ok) {
       throw new Error(responseData.message);
     }
 
@@ -67,13 +69,63 @@ async function logout() {
     });
 
     const responseData = await response.json();
-    if (response.status !== 200) {
+
+    if (!response.ok) {
       throw new Error(responseData.message);
     }
 
     localStorage.removeItem('token');
     toast.success('Logged out successfully.');
     return true;
+  }
+  catch (err) {
+    toast.error(err.message);
+    return false;
+  }
+}
+
+async function getTweets(token) {
+  try {
+    const response = await fetch(`${url}/api/tweets/get`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    const responseData = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(responseData.message);
+    }
+
+    return responseData;
+  }
+  catch (err) {
+    toast.error(err.message);
+    return null;
+  }
+}
+
+async function postTweet(token, data) {
+  try {
+    const response = await fetch(`${url}/api/tweets/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message);
+    }
+
+    return responseData;
   }
   catch (err) {
     toast.error(err.message);
@@ -100,7 +152,7 @@ async function logout() {
 //           headers: {
 //             'Content-Type': 'application/json',
 //           },
-//           include: 'credentials',
+//           credentials: 'include',
 //         });
 
 //         if (refreshResponse.ok) {
@@ -119,9 +171,8 @@ async function logout() {
 //           localStorage.removeItem('token');
 //           setUserData(null);
 //         }
-//       } catch (error: unknown) {
+//       } catch (error) {
 //         console.error('Error refreshing token:', error);
-//         // Handle error
 //       }
 //     }
 //     return response; // Return the original response if not 401
@@ -131,52 +182,35 @@ async function logout() {
 //   },
 // });
 
-async function getTweets(token) {
+async function refreshToken(setUserData) {
   try {
-    const response = await fetch(`${url}/api/tweets/get`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-
-    const responseData = await response.json();
-    
-    if (response.status !== 200) {
-      throw new Error(responseData.message);
-    }
-
-    return responseData;
-  }
-  catch (err) {
-    toast.error(err.message);
-    return null;
-  }
-}
-
-async function postTweet(token, data) {
-  try {
-    const response = await fetch(`${url}/api/tweets/create`, {
+    const response = await fetch(`${url}/api/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify(data),
+      credentials: 'include',
     });
 
     const responseData = await response.json();
-    
-    if (response.status !== 200) {
-      throw new Error(responseData.message);
+
+    if (!response.ok) {
+      toast.error('Please log in again.');
+      setUserData(null);
+      localStorage.removeItem('token');
+      return;
     }
 
-    return responseData;
+    if (process.env.NODE_ENV === 'development') {
+      toast.success('Token refreshed.');
+    }
+
+    localStorage.setItem('token', JSON.stringify(responseData));
+    setUserData(responseData);
   }
-  catch (err) {
-    toast.error(err.message);
-    return false;
+  catch (error) {
+    toast.error('Error refreshing token.');
+    console.error('Error refreshing token:', error);
   }
 }
 
@@ -186,4 +220,5 @@ export default {
   logout,
   getTweets,
   postTweet,
+  refreshToken,
 };

@@ -1,5 +1,7 @@
-import React, { useState, useMemo, createContext, useContext, useCallback } from 'react';
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { useOnMountUnsafe } from '../utils';
 import API from '../lib/api';
+import { toast } from 'react-toastify';
 
 export const UserContext = createContext(null);
 
@@ -16,9 +18,18 @@ export function UserContextProvider({ children }) {
     const dateNow = Date.now();
     const expiresAt = parseInt(userData.expiresAt) * 1000;
     return dateNow >= expiresAt;
-  }, [ userData ]);
+  }, [ userData, setUserData ]);
 
-  const isLoggedIn = useMemo(() => userData !== null && !tokenIsExpired, [ userData ]);
+  useOnMountUnsafe(() => {
+    async function refresh() {
+      if (userData !== null && tokenIsExpired) {
+        API.refreshToken(setUserData);
+      }
+    }
+    refresh();
+  }, [ userData, setUserData, tokenIsExpired ]);
+
+  const isLoggedIn = userData !== null && !tokenIsExpired;
   
   const logout = useCallback(async () => {
     if (await API.logout()) {

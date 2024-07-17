@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { RevokedToken, User } from '../models';
-import { AuthenticatedRequest, JWTPayload, LoginParams } from '../interfaces';
+import { JWTPayload, LoginParams } from '../interfaces';
 import Validator from '../utils/validation';
 import JWT from '../utils/jwt';
 import BCrypt from '../utils/bcrypt';
@@ -50,7 +50,7 @@ export const login = async (req: Request, res: Response) => {
 
   const user = await User.findOne({ where: { username: username } });
 
-  if (user == null) {
+  if (!user) {
     return res.status(404).json({ message: 'User not found.' });
   }
 
@@ -68,7 +68,7 @@ export const login = async (req: Request, res: Response) => {
   const accessToken = JWT.generateAccessToken(payload);
   const refreshToken = JWT.generateRefreshToken(payload!);
 
-  if (accessToken == null || refreshToken == null) {
+  if (!accessToken || !refreshToken) {
     return res.status(500).json({ message: 'Error generating tokens.' });
   }
 
@@ -79,37 +79,39 @@ export const login = async (req: Request, res: Response) => {
   res.status(200).json(accessToken);
 };
 
-export const logout = async (req: AuthenticatedRequest, res: Response) => {
+export const logout = async (req: Request, res: Response) => {
   try {
     const { session } = req;
     const { refreshToken } = session as JWTPayload;
 
-    if (refreshToken == null) {
+    if (!refreshToken) {
       return res.status(400).json({ message: 'Missing token.' });
     }
 
     const { jti, userId } = JWT.verifyToken(refreshToken.token);
 
-    if (jti == null) {
+    if (!jti) {
       return res.status(400).json({ message: 'Token does not have a jti.' });
     }
 
-    if (userId == null) {
+    if (userId === undefined || userId === null) {
       return res.status(400).json({ message: 'Token does not have a userId.' });
     }
 
     const user = await User.findByPk(userId);
 
-    if (user == null) {
+    if (!user) {
       return res.status(404).json({ message: 'User not found.' });
     }
 
-    if (await RevokedToken.findByPk(jti) != null) {
+    if (!(await RevokedToken.findByPk(jti))) {
       return res.status(400).json({ message: 'Token already revoked.' });
     }
   
     await JWT.generateRevokedToken(userId);
+
     req.session = null;
+
     res.status(200).json({ message: 'Logged out.' });
   } catch (error: unknown) {
     const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';

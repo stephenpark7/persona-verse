@@ -1,35 +1,35 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import JWT from '../utils/jwt';
-import { AuthenticatedRequest } from '../interfaces';
 import { RevokedToken, User } from '../models';
+import { JWTPayload } from '../interfaces';
 
-export const refresh = async (req: AuthenticatedRequest, res: Response) => {
+export const refresh = async (req: Request, res: Response) => {
   try {
-    const token = req.session?.refreshToken;
+    const { session } = req;
+    const { refreshToken } = session as JWTPayload;
   
-    if (token == null) {
+    if (!refreshToken) {
       return res.status(500).json({ message: 'Session not found.' });
     }
 
-    const decodedToken = JWT.verifyToken(token);
-    const { userId, jti } = decodedToken;
+    const { jti, userId } = JWT.verifyToken(refreshToken.token);
 
-    if (userId == null) {
-      return res.status(401).json({ message: 'Token does not have a userId.' });
-    }
-
-    if (jti == null) {
+    if (!jti) {
       return res.status(401).json({ message: 'Token does not have a jti.' });
     }
 
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'No user found.' });
+    if (userId === undefined || userId === null) {
+      return res.status(401).json({ message: 'Token does not have a userId.' });
     }
 
-    const revokedToken = await RevokedToken.findByPk(jti);
-    if (revokedToken != null) {
-      return res.status(401).json({ message: 'Token revoked.' });
+    const user = await User.findByPk(userId);
+  
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    if (!(await RevokedToken.findByPk(jti))) {
+      return res.status(400).json({ message: 'Token already revoked.' });
     }
 
     const payload = {
@@ -39,7 +39,7 @@ export const refresh = async (req: AuthenticatedRequest, res: Response) => {
 
     const accessToken = JWT.generateAccessToken(payload);
 
-    if (accessToken == null) {
+    if (!accessToken) {
       return res.status(500).json({ message: 'Error generating token.' });
     }
 

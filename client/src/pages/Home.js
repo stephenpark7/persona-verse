@@ -13,7 +13,7 @@ export default function Home() {
       <Row className='my-5'>
         <Col>
           <h1>Twitter</h1>
-          {isLoggedIn ? (
+          {!isLoggedIn ? (
             <>
               <p>Create an account or log in.</p>
               <Link to='/signup'>
@@ -26,7 +26,7 @@ export default function Home() {
           ) : (
             <>
               <TweetContainer />
-              <p>Welcome {userData.payload.username}!</p>
+              <p>Welcome {userData?.payload.username}!</p>
               <br />
              <LogoutButton />
             </>
