@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Tweet from './Tweet';
-import API from '../lib/api';
+import API from '../api';
 import { useUserContext } from '../contexts/UserContext';
-import { useOnMountUnsafe } from '../utils';
+import { useOnMountUnsafe } from '../hooks';
 import { toast } from 'react-toastify';
 import { TweetParamsData } from '../interfaces';
 
@@ -17,6 +17,7 @@ export default function TweetContainer() {
 
   async function fetchData() {
     if (!isLoggedIn) return;
+
     await API.getTweets(userData, setTweetData);
   }
 
@@ -47,7 +48,10 @@ export default function TweetContainer() {
       <br /><br />
       <h2>Tweets</h2>
       {tweetData && tweetData.map((data, idx) =>
-        <Tweet key={idx} data={data} />,
+        <Tweet 
+          key={idx} 
+          {...data}
+        />,
       )}
     </Form>
   );

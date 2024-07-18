@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useUserContext } from '../contexts/UserContext';
-import API from '../lib/api';
+import API from '../api';
 import './Signup.css';
 import { FormData } from '../interfaces';
 

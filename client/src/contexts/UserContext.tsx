@@ -1,6 +1,7 @@
 import React, { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react';
-import { useOnMountUnsafe, getLocalStorageToken } from '../utils';
-import API from '../lib/api';
+import { getLocalStorageToken } from '../utils';
+import { useOnMountUnsafe } from '../hooks';
+import API from '../api';
 import { UserData, UserContext as UserContextInterface } from '../interfaces';
 
 export const UserContext = createContext<UserContextInterface>({

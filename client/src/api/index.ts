@@ -123,14 +123,15 @@ async function getTweets(
     });
 
     const responseData = await response.json();
-    
+
     if (!response.ok) {
       throw new Error(responseData.message);
     }
 
-    if (process.env.NODE_ENV === 'development') {
-      toast.success('Tweets loaded.');
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //   toast.success('Tweets loaded.');
+    // }
+
     setTweetData(responseData.data);
   }
   catch (err: unknown) {
