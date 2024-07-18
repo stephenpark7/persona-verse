@@ -1,4 +1,4 @@
-import React, { createContext, PropsWithChildren, useCallback, useContext, useMemo, useState } from 'react';
+import React, { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react';
 import { useOnMountUnsafe, getLocalStorageToken } from '../utils';
 import API from '../lib/api';
 import { UserData, UserContext as UserContextInterface } from '../interfaces';
@@ -14,16 +14,21 @@ export function UserContextProvider({ children } : PropsWithChildren) {
   const localStorageToken = getLocalStorageToken();
   const [ userData, setUserData ] = useState<UserData>(localStorageToken);
 
-  const tokenIsExpired = useMemo(() => {
+  const tokenIsExpired = function() {
     if (!userData) {
       return true;
     }
     const dateNow = Date.now();
     const expiresAt = parseInt(userData.expiresAt) * 1000;
     return dateNow >= expiresAt;
-  }, [ userData ]);
+  }();
 
-  const isLoggedIn = userData !== null && !tokenIsExpired;
+  async function logout() {
+    if (await API.logout()) {
+      localStorage.removeItem('token');
+      setUserData(null);
+    }
+  }
 
   useOnMountUnsafe(async () => {
     async function refresh() {
@@ -34,12 +39,7 @@ export function UserContextProvider({ children } : PropsWithChildren) {
     refresh();
   });
 
-  const logout = useCallback(async () => {
-    if (await API.logout()) {
-      localStorage.removeItem('token');
-      setUserData(null);
-    }
-  }, [ setUserData ]);
+  const isLoggedIn = userData !== null && !tokenIsExpired;
 
   const contextValue = useMemo(() => ({
     userData,

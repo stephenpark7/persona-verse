@@ -1,6 +1,6 @@
 import * as fetchIntercept from 'fetch-intercept';
 import { toast } from 'react-toastify';
-import { FormData, SetUserData } from '../interfaces';
+import { FormData, PostTweetParams, SetUserData, TweetParams, TweetParamsData, UserData, UserParams } from '../interfaces';
 import { NavigateFunction } from 'react-router-dom';
 
 const hostname = process.env.API_HOST_NAME;
@@ -94,8 +94,14 @@ async function logout() {
   }
 }
 
-async function getTweets(token: string) {
+async function getTweets(userData: UserData, setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>) {
   try {
+    if (!userData) {
+      throw new Error('User data is missing.');
+    }
+
+    const token = userData.token;
+    
     const response = await fetch(`${url}/api/tweets/get`, {
       method: 'GET',
       headers: {
@@ -110,18 +116,26 @@ async function getTweets(token: string) {
       throw new Error(responseData.message);
     }
 
-    return responseData;
+    if (process.env.NODE_ENV === 'development') {
+      toast.success('Tweets loaded.');
+    }
+    setTweetData(responseData.data);
   }
   catch (err: unknown) {
     if (err instanceof Error) {
       toast.error(err.message);
-      return null;
     }
   }
 }
 
-async function postTweet(token: string, payload: string) {
+async function postTweet(userData: UserData, payload: PostTweetParams, tweetData: TweetParamsData, setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>) {
   try {
+    if (!userData) {
+      throw new Error('User data is missing.');
+    }
+
+    const token = userData.token;
+
     const response = await fetch(`${url}/api/tweets/create`, {
       method: 'POST',
       headers: {
@@ -137,21 +151,27 @@ async function postTweet(token: string, payload: string) {
       throw new Error(responseData.message);
     }
 
-    return responseData;
+    function addUserDataToTweet(responseData: {
+      data: TweetParams;
+    }, userParams: UserParams): TweetParams {
+      const { data } = responseData;
+      data.User = {
+        username: userParams.payload.username,
+        displayName: userParams.payload.displayName,
+      };
+      return data;
+    }
+
+    const enrichedData = addUserDataToTweet(responseData, userData);
+    toast.success('Tweet posted.');
+    setTweetData([ enrichedData, ...tweetData! ]);
   }
   catch (err: unknown) {
     if (err instanceof Error) {
       toast.error(err.message);
-      return false;
     }
   }
 }
-
-// type AsyncWrapper<T extends (...args: any) => any> = (...args: Parameters<T>) => Promise<ReturnType<T>>;
-
-// type Register = (response: fetchIntercept.FetchInterceptorResponse) => fetchIntercept.FetchInterceptor;
-
-// type Asynced = AsyncWrapper<Register>;
 
 fetchIntercept.register({
   request: function (url, config) {
