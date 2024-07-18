@@ -7,7 +7,11 @@ const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
 
-async function register(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction): Promise<void> {
+async function register(
+  formData: FormData, 
+  setUserData: SetUserData, 
+  navigate: NavigateFunction,
+): Promise<void> {
   try {
     const response = await fetch(`${url}/api/users/signup`, {
       method: 'POST',
@@ -34,7 +38,12 @@ async function register(formData: FormData, setUserData: SetUserData, navigate: 
   }
 }
 
-async function login(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction, showToast: boolean = true) {
+async function login(
+  formData: FormData, 
+  setUserData: SetUserData, 
+  navigate: NavigateFunction, 
+  showToast: boolean = true,
+) {
   try {
     const response = await fetch(`${url}/api/users/login`, {
       method: 'POST',
@@ -94,7 +103,10 @@ async function logout() {
   }
 }
 
-async function getTweets(userData: UserData, setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>) {
+async function getTweets(
+  userData: UserData, 
+  setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>,
+) {
   try {
     if (!userData) {
       throw new Error('User data is missing.');
@@ -128,7 +140,12 @@ async function getTweets(userData: UserData, setTweetData: React.Dispatch<React.
   }
 }
 
-async function postTweet(userData: UserData, payload: PostTweetParams, tweetData: TweetParamsData, setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>) {
+async function postTweet(
+  userData: UserData, 
+  payload: PostTweetParams, 
+  tweetData: TweetParamsData, 
+  setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>,
+) {
   try {
     if (!userData) {
       throw new Error('User data is missing.');
@@ -170,6 +187,40 @@ async function postTweet(userData: UserData, payload: PostTweetParams, tweetData
     if (err instanceof Error) {
       toast.error(err.message);
     }
+  }
+}
+
+async function refreshToken(
+  setUserData: SetUserData,
+) {
+  try {
+    const response = await fetch(`${url}/api/refresh`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      toast.error(responseData.message);
+      setUserData(null);
+      localStorage.removeItem('token');
+      return;
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      toast.success('Token refreshed.');
+    }
+
+    setUserData(responseData);
+    localStorage.setItem('token', JSON.stringify(responseData));
+  }
+  catch (error) {
+    toast.error('Error refreshing token.');
+    console.error('Error refreshing token:', error);
   }
 }
 
@@ -230,38 +281,6 @@ fetchIntercept.register({
     return Promise.reject(error);
   },
 });
-
-async function refreshToken(setUserData: SetUserData) {
-  try {
-    const response = await fetch(`${url}/api/refresh`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      toast.error(responseData.message);
-      setUserData(null);
-      localStorage.removeItem('token');
-      return;
-    }
-
-    if (process.env.NODE_ENV === 'development') {
-      toast.success('Token refreshed.');
-    }
-
-    setUserData(responseData);
-    localStorage.setItem('token', JSON.stringify(responseData));
-  }
-  catch (error) {
-    toast.error('Error refreshing token.');
-    console.error('Error refreshing token:', error);
-  }
-}
 
 export default {
   login,
