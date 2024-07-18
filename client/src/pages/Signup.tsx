@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import API from '../lib/api';
+import API from '../api';
 import { useUserContext } from '../contexts/UserContext';
 import { FormData } from '../interfaces';
 import './Signup.css';

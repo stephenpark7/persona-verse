@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Tweet from './Tweet';
-import API from '../lib/api';
+import API from '../api';
 import { useUserContext } from '../contexts/UserContext';
-import { useOnMountUnsafe } from '../utils';
+import { useOnMountUnsafe } from '../hooks';
 import { toast } from 'react-toastify';
 import { TweetParamsData } from '../interfaces';
 
