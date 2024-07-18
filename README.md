@@ -6,15 +6,17 @@ This project was built with Create React App and then ejected to understand its 
 
 ## Tech Stack
 
-- Postgres
-- Express.js
-- Node.js
 - React
+- Node.js
+- Express.js
+- PostgreSQL
 - Sequelize
-- Babel
 - Webpack
+- Babel
 - ESLint
 - Stylelint
+- TypeScript
+- Jest
 - Docker
 
 ## Setup Instructions
@@ -23,8 +25,8 @@ This project was built with Create React App and then ejected to understand its 
 Update the .env file in the server folder to suit your database configuration needs.
 
 2. **Install Dependencies**: \
-Run the following command to install dependencies for both client and server: \
-`npm run install-deps`
+While in root, run the following command to install dependencies for both client and server: \
+`npm run install`
 
 3. **Run Application**: \
 Run Server: \
@@ -36,4 +38,6 @@ Run Client: \
 Build Docker Image and Run in Detached Mode: \
 `npm run docker-start` \
 Stop Docker Containers: \
-`npm run docker-stop`
+`npm run docker-stop` \
+Restart Docker Containers: \
+`npm run docker-restart`
