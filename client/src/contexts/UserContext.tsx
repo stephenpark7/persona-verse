@@ -15,6 +15,7 @@ export const UserContext = createContext(defaultUserContextValue);
 export function UserContextProvider({ children }: { children: React.ReactNode }) {
   const localStorageToken = getLocalStorageToken();
   const [ userData, setUserData ] = useState<UserData>(localStorageToken);
+  console.log(userData);
 
   const tokenIsExpired = useMemo(() => {
     if (!userData) {

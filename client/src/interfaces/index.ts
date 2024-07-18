@@ -5,10 +5,14 @@ export interface FormData {
 };
 
 export interface User {
-  username: string;
-  email: string;
-  expiresAt: string;
   token: string;
+  expiresAt: string;
+  payload: JWTPayload;
+}
+
+export interface JWTPayload {
+  userId: number;
+  username: string;
 }
 
 export interface UserContext {
@@ -19,5 +23,4 @@ export interface UserContext {
 };
 
 export type UserData = User | null;
-export type SetUserData = React.Dispatch<React.SetStateAction<User | null>>;
-
+export type SetUserData = React.Dispatch<React.SetStateAction<UserData>>;
