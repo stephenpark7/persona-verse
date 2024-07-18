@@ -1,22 +1,14 @@
 TODO:
-  ☐ Add typescript to frontend @started(24-07-18 02:27)
   ☐ Add test for refresh token
-  ☐ Add revoked tokens for log out
-    ✔ Add refresh token route @done(24-07-16 03:48)
-    ✔ Refresh token on clientside @done(24-07-17 03:31)
-    ☐ Auto sign out on clientside if token is expired
+  ☐ Add other tests
+  ☐ Use Redux for data store
+  ☐ Auto sign out on clientside if token is expired
   ☐ Forgot your password
   ☐ Refactor npm scripts (use args)
-  ☐ Use Redux for data store
-  ☐ Add typescript
-    ☐ Frontend
-    ✔ Backend @done(24-07-11 04:39)
-      ☐ Stricter types
   ☐ Pagination
   ☐ CSS Animations on tweet post
   ☐ Dark mode
-  ☐ Change from Sequelize to TypeORM
-DONE:
+  ☐ Migrate DB from Sequelize to TypeORM
   ✔ Dockerize app @done(24-07-10 03:06)
   ✔ Failed to fetch bug for log out @done(24-07-13 12:08)
   ✔ Update client to support backend changes @done(24-07-16 03:48)
@@ -26,3 +18,10 @@ DONE:
     ✔ It will trying to get tweets, but it will fail because the user is not logged in @done(24-07-17 06:13)
     ✔ It will also try to refresh the token, but it will fail because the user is not logged in @done(24-07-17 06:13)
     ✔ Fix bug, doesn't redirect auto login after register, doesn't show tweets @done(24-07-17 23:53)
+  ✔ Add typescript to frontend @started(24-07-18 02:27) @done(24-07-18 06:52) @lasted(4h25m45s)
+  ✔ Add typescript @done(24-07-18 06:54)
+    ✔ Frontend @done(24-07-18 06:53)
+    ✔ Backend @done(24-07-11 04:39)
+  ✔ Add revoked tokens for log out @done(24-07-18 06:55)
+    ✔ Add refresh token route @done(24-07-16 03:48)
+    ✔ Refresh token on clientside @done(24-07-17 03:31)
