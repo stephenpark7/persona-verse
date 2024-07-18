@@ -2,16 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form'; // Import FormControlElement type from react-bootstrap
+import Form from 'react-bootstrap/Form';
 import API from '../lib/api';
 import './Signup.css';
 import { useUserContext } from '../contexts/UserContext';
-
-interface FormData {
-  username: string;
-  email: string;
-  password: string;
-};
+import { FormData } from '../interfaces';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();

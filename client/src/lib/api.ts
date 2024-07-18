@@ -1,11 +1,13 @@
 import * as fetchIntercept from 'fetch-intercept';
 import { toast } from 'react-toastify';
+import { FormData, SetUserData } from '../interfaces';
+import { NavigateFunction } from 'react-router-dom';
 
 const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
 
-async function register(formData, setUserData, navigate) {
+async function register(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction): Promise<void> {
   try {
     const response = await fetch(`${url}/api/users/signup`, {
       method: 'POST',
@@ -23,21 +25,16 @@ async function register(formData, setUserData, navigate) {
 
     toast.success('User registered successfully.');
 
-    // Automatically log in the user after registration
     login(formData, setUserData, navigate);
-    navigate('/login');
-    return {
-      username: formData.username,
-      password: formData.password,
-    };
   }
-  catch (err) {
-    toast.error(err.message, { autoClose: 5000 });
-    return null;
+  catch (err: unknown) {
+    if (err instanceof Error) {
+      toast.error(err.message, { autoClose: 5000 });
+    }
   }
 }
 
-async function login(data, setUserData, navigate, showToast = true) {
+async function login(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction, showToast: boolean = true) {
   try {
     const response = await fetch(`${url}/api/users/login`, {
       method: 'POST',
@@ -45,7 +42,7 @@ async function login(data, setUserData, navigate, showToast = true) {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify(data),
+      body: JSON.stringify(formData),
     });
 
     const responseData = await response.json();
@@ -62,8 +59,10 @@ async function login(data, setUserData, navigate, showToast = true) {
     }
     navigate('/');
   }
-  catch (err) {
-    toast.error(err.message);
+  catch (err: unknown) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+    }
   }
 }
 
@@ -87,13 +86,15 @@ async function logout() {
     toast.success('Logged out successfully.');
     return true;
   }
-  catch (err) {
-    toast.error(err.message);
-    return false;
+  catch (err: unknown) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+      return false;
+    }
   }
 }
 
-async function getTweets(token) {
+async function getTweets(token: string) {
   try {
     const response = await fetch(`${url}/api/tweets/get`, {
       method: 'GET',
@@ -111,13 +112,15 @@ async function getTweets(token) {
 
     return responseData;
   }
-  catch (err) {
-    toast.error(err.message);
-    return null;
+  catch (err: unknown) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+      return null;
+    }
   }
 }
 
-async function postTweet(token, data) {
+async function postTweet(token: string, payload: string) {
   try {
     const response = await fetch(`${url}/api/tweets/create`, {
       method: 'POST',
@@ -125,7 +128,7 @@ async function postTweet(token, data) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
 
     const responseData = await response.json();
@@ -136,11 +139,19 @@ async function postTweet(token, data) {
 
     return responseData;
   }
-  catch (err) {
-    toast.error(err.message);
-    return false;
+  catch (err: unknown) {
+    if (err instanceof Error) {
+      toast.error(err.message);
+      return false;
+    }
   }
 }
+
+// type AsyncWrapper<T extends (...args: any) => any> = (...args: Parameters<T>) => Promise<ReturnType<T>>;
+
+// type Register = (response: fetchIntercept.FetchInterceptorResponse) => fetchIntercept.FetchInterceptor;
+
+// type Asynced = AsyncWrapper<Register>;
 
 fetchIntercept.register({
   request: function (url, config) {
@@ -150,7 +161,7 @@ fetchIntercept.register({
   requestError: function (error) {
     return Promise.reject(error);
   },
-  response: async function (response) {
+  response: async function (response): Promise<fetchIntercept.FetchInterceptorResponse> {
     if (response.status === 401 && !response.url.endsWith('/login')) {
       try {
         const refreshResponse = await fetch(`${url}/api/refresh`, {
@@ -160,20 +171,20 @@ fetchIntercept.register({
           },
           credentials: 'include',
         });
-    
+  
         const refreshResponseData = await refreshResponse.json();
-
+  
         if (!refreshResponse.ok) {
           toast.error(refreshResponseData.message);
           // setUserData(null);
           localStorage.removeItem('token');
-          return null;
+          throw new Error('Token refresh failed.'); // Throw an error instead of returning null
         }
-
+  
         if (process.env.NODE_ENV === 'development') {
           toast.success('Token refreshed.');
         }
-
+  
         // setUserData(responseData);
         localStorage.setItem('token', JSON.stringify(refreshResponseData));
         const originalRequestConfig = {
@@ -181,8 +192,14 @@ fetchIntercept.register({
             'Authorization': `Bearer ${refreshResponseData.token}`,
           },
         };
-
-        return fetch(response.url, originalRequestConfig);
+  
+        return new Promise((resolve, reject) => {
+          const returnResponse = fetch(response.url, originalRequestConfig) as Promise<fetchIntercept.FetchInterceptorResponse>;
+          if (!returnResponse) {
+            reject(new Error('Token refresh failed.'));
+          }
+          resolve(returnResponse);
+        });
       } catch (error) {
         console.error('Error refreshing token:', error);
       }
@@ -194,7 +211,7 @@ fetchIntercept.register({
   },
 });
 
-async function refreshToken(setUserData) {
+async function refreshToken(setUserData: SetUserData) {
   try {
     const response = await fetch(`${url}/api/refresh`, {
       method: 'POST',
