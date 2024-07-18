@@ -13,7 +13,6 @@ export const UserContext = createContext<UserContextInterface>({
 export function UserContextProvider({ children } : PropsWithChildren) {
   const localStorageToken = getLocalStorageToken();
   const [ userData, setUserData ] = useState<UserData>(localStorageToken);
-  console.log(userData);
 
   const tokenIsExpired = useMemo(() => {
     if (!userData) {
