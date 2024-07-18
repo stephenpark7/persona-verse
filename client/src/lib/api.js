@@ -5,14 +5,14 @@ const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
 
-async function register(data, navigate) {
+async function register(formData, setUserData, navigate) {
   try {
     const response = await fetch(`${url}/api/users/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(formData),
     });
 
     const responseData = await response.json();
@@ -24,11 +24,11 @@ async function register(data, navigate) {
     toast.success('User registered successfully.');
 
     // Automatically log in the user after registration
-    // login(data, UserContextProvider.setUserData, navigate);
+    login(formData, setUserData, navigate);
     navigate('/login');
     return {
-      username: data.username,
-      password: data.password,
+      username: formData.username,
+      password: formData.password,
     };
   }
   catch (err) {

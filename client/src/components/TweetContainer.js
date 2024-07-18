@@ -36,7 +36,7 @@ export default function TweetContainer() {
       const newTweet = result.data;
       newTweet.User = {
         username: userData.payload.username,
-        display_name: userData.payload.username, // TODO: display name
+        displayName: userData.payload.displayName, // TODO: display name
       }
       setTweetData([ newTweet, ...tweetData ]);
       toast.success('Tweet posted');

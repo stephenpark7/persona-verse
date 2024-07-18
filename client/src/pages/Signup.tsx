@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'; // Import FormControlElement type from react-bootstrap
 import API from '../lib/api';
 import './Signup.css';
+import { useUserContext } from '../contexts/UserContext';
 
 interface FormData {
   username: string;
@@ -13,21 +14,19 @@ interface FormData {
 };
 
 const Signup: React.FC = () => {
+  const navigate = useNavigate();
+  const { setUserData } = useUserContext();
   const [ formData, setFormData ] = useState<FormData>({
     username: '',
     email: '',
     password: '',
   });
-  const navigate = useNavigate();
 
-  async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
+  function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     if (!formData) return;
     if (!formData.username || !formData.email || !formData.password) return;
-    const data = await API.register(formData, navigate);
-    if (data) {
-      await API.login(data, setFormData, navigate, false);
-    }
+    API.register(formData, setUserData, navigate);
   }
 
   function handleInputTextChange(e: React.ChangeEvent<HTMLInputElement>): void {

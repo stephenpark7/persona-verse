@@ -5,7 +5,7 @@ import './Tweet.css';
 
 export default function Tweet({ data }) {
 
-  const displayName = data.User.display_name;
+  const displayName = data.User.displayName;
   const username = data.User.username;
   const tweetDate = moment(data.createdAt, 'YYYY-MM-DD').format('MMM D');
   const text = data.message;

@@ -1,5 +1,4 @@
 TODO:
-
   ☐ Add test for refresh token
   ☐ Add revoked tokens for log out
     ✔ Add refresh token route @done(24-07-16 03:48)
@@ -25,3 +24,4 @@ DONE:
   ✔ Fix bug where you try to sign up with an existing username, then go back @done(24-07-17 06:12)
     ✔ It will trying to get tweets, but it will fail because the user is not logged in @done(24-07-17 06:13)
     ✔ It will also try to refresh the token, but it will fail because the user is not logged in @done(24-07-17 06:13)
+    ✔ Fix bug, doesn't redirect auto login after register, doesn't show tweets @done(24-07-17 23:53)
