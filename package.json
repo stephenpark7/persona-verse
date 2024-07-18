@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "install-deps": "cd client && npm install && cd ../server && npm install ",
-    "client": "cd client && npm start",
+    "client": "cd client && npm run dev",
     "server": "cd server && npm run dev",
     "docker-build": "docker-compose build",
     "docker-start": "docker-compose up -d",

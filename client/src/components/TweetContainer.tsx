@@ -47,7 +47,10 @@ export default function TweetContainer() {
       <br /><br />
       <h2>Tweets</h2>
       {tweetData && tweetData.map((data, idx) =>
-        <Tweet key={idx} data={data} />,
+        <Tweet 
+          key={idx} 
+          {...data}
+        />,
       )}
     </Form>
   );

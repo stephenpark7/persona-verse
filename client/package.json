@@ -66,7 +66,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "build-tsc": "tsc"
+    "build-tsc": "tsc",
+    "dev": "tsc-watch --outDir ./dist --onSuccess \"node scripts/start.js\""
   },
   "browserslist": {
     "production": [
@@ -132,6 +133,7 @@
     "resetMocks": true
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@eslint/js": "^9.7.0",
     "@types/jest": "^29.5.12",
     "@types/mocha": "^10.0.7",
@@ -140,6 +142,7 @@
     "eslint-plugin-jest": "^28.6.0",
     "globals": "^15.8.0",
     "stylelint": "^16.7.0",
+    "tsc-watch": "^6.2.0",
     "typescript-eslint": "^7.16.1"
   }
 }
