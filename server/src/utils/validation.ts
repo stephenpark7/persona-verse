@@ -17,6 +17,10 @@ async function usernameAlreadyExists(username: string): Promise<boolean> {
   return await User.findOne({ where: { username: username } }) != null;
 }
 
+async function emailAlreadyExists(email: string): Promise<boolean> {
+  return await User.findOne({ where: { email: email } }) != null;
+}
+
 function missingFields(...fields: string[]): boolean {
   return fields.some(field => field === undefined || field === null || field?.length === 0);
 }
@@ -26,5 +30,6 @@ export default {
   validateEmail,
   validatePassword,
   usernameAlreadyExists,
+  emailAlreadyExists,
   missingFields,
 };

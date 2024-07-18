@@ -4,30 +4,25 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import API from '../lib/api';
-import './Signup.css';
 import { useUserContext } from '../contexts/UserContext';
 import { FormData } from '../interfaces';
+import './Signup.css';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
   const { setUserData } = useUserContext();
-  const [ formData, setFormData ] = useState<FormData>({
-    username: '',
-    email: '',
-    password: '',
-  });
+  const [ formData, setFormData ] = useState<FormData>(null);
 
   function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    if (!formData) return;
-    if (!formData.username || !formData.email || !formData.password) return;
+    if (!formData) {
+      return;
+    }
     API.register(formData, setUserData, navigate);
   }
 
   function handleInputTextChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+    const { value, name } = e.target;
     setFormData({
       ...formData,
       [ name ]: value,
