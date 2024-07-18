@@ -1,12 +1,12 @@
-
 import React from 'react';
-export interface FormData {
+
+interface FormDataParams {
   username: string;
   email: string;
   password: string;
 };
 
-export interface User {
+interface UserParams {
   token: string;
   expiresAt: string;
   payload: JWTPayload;
@@ -24,5 +24,6 @@ export interface UserContext {
   logout: () => Promise<void>;
 };
 
-export type UserData = User | null;
+export type FormData = FormDataParams | null;
+export type UserData = UserParams | null;
 export type SetUserData = React.Dispatch<React.SetStateAction<UserData>>;

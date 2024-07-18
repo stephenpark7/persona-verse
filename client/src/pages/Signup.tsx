@@ -28,7 +28,10 @@ const Signup: React.FC = () => {
     const target = e.target;
     const value = target.value;
     const name = target.name;
-    setFormData({ ...formData, [ name ]: value });
+    setFormData({
+      ...formData,
+      [ name ]: value,
+    } as FormData);
   }
 
   return (
