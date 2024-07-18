@@ -1,18 +1,16 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import React, { createContext, PropsWithChildren, useCallback, useContext, useMemo, useState } from 'react';
 import { useOnMountUnsafe, getLocalStorageToken } from '../utils';
 import API from '../lib/api';
-import { UserData, UserContext as UserContextT } from '../interfaces';
+import { UserData, UserContext as UserContextInterface } from '../interfaces';
 
-const defaultUserContextValue: UserContextT = {
+export const UserContext = createContext<UserContextInterface>({
   userData: null,
   setUserData: () => {},
   isLoggedIn: false,
   logout: async () => {},
-};
+});
 
-export const UserContext = createContext(defaultUserContextValue);
-
-export function UserContextProvider({ children }: { children: React.ReactNode }) {
+export function UserContextProvider({ children } : PropsWithChildren) {
   const localStorageToken = getLocalStorageToken();
   const [ userData, setUserData ] = useState<UserData>(localStorageToken);
   console.log(userData);
@@ -52,7 +50,7 @@ export function UserContextProvider({ children }: { children: React.ReactNode })
   }), [ userData, isLoggedIn, logout ]);
 
   return (
-    <UserContext.Provider value={contextValue as UserContextT}>
+    <UserContext.Provider value={contextValue as UserContextInterface}>
       {children}
     </UserContext.Provider>
   );

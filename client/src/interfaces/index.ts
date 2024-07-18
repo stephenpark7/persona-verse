@@ -1,3 +1,5 @@
+
+import React from 'react';
 export interface FormData {
   username: string;
   email: string;
@@ -8,12 +10,12 @@ export interface User {
   token: string;
   expiresAt: string;
   payload: JWTPayload;
-}
+};
 
 export interface JWTPayload {
   userId: number;
   username: string;
-}
+};
 
 export interface UserContext {
   userData: UserData;
