@@ -25,7 +25,7 @@ export function UserContextProvider({ children } : PropsWithChildren) {
 
   const isLoggedIn = userData !== null && !tokenIsExpired;
 
-  useOnMountUnsafe(() => {
+  useOnMountUnsafe(async () => {
     async function refresh() {
       if (userData !== null && tokenIsExpired) {
         API.refreshToken(setUserData);
