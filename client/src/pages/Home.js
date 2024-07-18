@@ -25,9 +25,8 @@ export default function Home() {
             </>
           ) : (
             <>
-              <TweetContainer />
               <p>Welcome {userData?.payload?.username}!</p>
-              <br />
+              <TweetContainer />
              <LogoutButton />
             </>
           )}
