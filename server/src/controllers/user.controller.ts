@@ -24,6 +24,10 @@ export const create = async (req: Request, res: Response) => {
     if (await Validator.usernameAlreadyExists(username)) {
       return res.status(400).json({ message: 'Username already in use.' });
     }
+
+    if (await Validator.emailAlreadyExists(email)) {
+      return res.status(400).json({ message: 'Email address already in use.' });
+    }
   
     const hashedPassword = await BCrypt.hash(password);
 

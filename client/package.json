@@ -51,6 +51,7 @@
     "semver": "^7.6.2",
     "source-map-loader": "^5.0.0",
     "style-loader": "^4.0.0",
+    "stylelint-config-standard": "^36.0.1",
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.92.1",
     "webpack-dev-server": "^5.0.4",
@@ -61,10 +62,13 @@
   "scripts": {
     "postinstall": "patch-package",
     "lint": "eslint && npx stylelint \"**/*.css\"",
+    "tsc": "tsc",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "build-tsc": "tsc"
+    "build-tsc": "tsc",
+    "dev": "tsc-watch --outDir ./dist --onSuccess \"node scripts/start.js\"",
+    "docker-logs": "docker-compose logs -f"
   },
   "browserslist": {
     "production": [
@@ -130,6 +134,7 @@
     "resetMocks": true
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@eslint/js": "^9.7.0",
     "@types/jest": "^29.5.12",
     "@types/mocha": "^10.0.7",
@@ -137,6 +142,8 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jest": "^28.6.0",
     "globals": "^15.8.0",
+    "stylelint": "^16.7.0",
+    "tsc-watch": "^6.2.0",
     "typescript-eslint": "^7.16.1"
   }
 }

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
-export async function useOnMountUnsafe(effect) {
-  const initialized = useRef(false);
+export async function useOnMountUnsafe(effect: () => Promise<void>): Promise<void> {
+  const initialized = useRef<boolean>(false);
 
   useEffect(() => {
     async function asyncUseEffect() {
@@ -12,9 +12,4 @@ export async function useOnMountUnsafe(effect) {
     }
     asyncUseEffect();
   }, []);
-}
-
-export function getLocalStorageToken() {
-  const token = localStorage.getItem('token');
-  return token ? JSON.parse(token) : null;
 }

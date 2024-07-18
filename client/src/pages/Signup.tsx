@@ -2,39 +2,31 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form'; // Import FormControlElement type from react-bootstrap
-import API from '../lib/api';
+import Form from 'react-bootstrap/Form';
+import API from '../api';
+import { useUserContext } from '../contexts/UserContext';
+import { FormData } from '../interfaces';
 import './Signup.css';
 
-interface FormData {
-  username: string;
-  email: string;
-  password: string;
-};
-
 const Signup: React.FC = () => {
-  const [ formData, setFormData ] = useState<FormData>({
-    username: '',
-    email: '',
-    password: '',
-  });
   const navigate = useNavigate();
+  const { setUserData } = useUserContext();
+  const [ formData, setFormData ] = useState<FormData>(null);
 
-  async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
+  function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    if (!formData) return;
-    if (!formData.username || !formData.email || !formData.password) return;
-    const data = await API.register(formData, navigate);
-    if (data) {
-      await API.login(data, setFormData, navigate, false);
+    if (!formData) {
+      return;
     }
+    API.register(formData, setUserData, navigate);
   }
 
   function handleInputTextChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-    setFormData({ ...formData, [ name ]: value });
+    const { value, name } = e.target;
+    setFormData({
+      ...formData,
+      [ name ]: value,
+    } as FormData);
   }
 
   return (
