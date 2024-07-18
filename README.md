@@ -1,43 +1,35 @@
 # Twitter Clone
 
-A Twitter clone, for learning purposes.
-
-This project was built with Create React App and then ejected to understand its inner workings.
+This monorepo contains a Twitter clone application built using modern web technologies. The project demonstrates a full-stack implementation with a focus on a scalable and maintainable architecture.
 
 ## Tech Stack
 
-- React
-- Node.js
-- Express.js
-- PostgreSQL
-- Sequelize
-- Webpack
-- Babel
-- ESLint
-- Stylelint
-- TypeScript
-- Jest
-- Docker
+- Front-end: React, TypeScript, Webpack, Babel
+- Back-end: Node.js, Express.js, Sequelize
+- Database: PostgreSQL
+- Testing: Jest
+- Linting: ESLint, Stylelint
+- Containerization: Docker
 
 ## Setup Instructions
 
 1. **Update Environment Variables**: \
-Update the .env file in the server folder to suit your database configuration needs.
+Modify the .env file in the server folder to match your database configuration.
 
 2. **Install Dependencies**: \
-While in root, run the following command to install dependencies for both client and server: \
+From the root directory, install dependencies for both client and server: \
 `npm run install`
 
 3. **Run Application**: \
-Run Server: \
+Start the server: \
 `npm run server` \
-Run Client: \
+Start the client: \
 `npm run client`
 
 4. **Docker Setup**: \
-Build Docker Image and Run in Detached Mode: \
+Build the Docker image and run it in detached mode: \
 `npm run docker-start` \
-Stop Docker Containers: \
+Stop Docker containers: \
 `npm run docker-stop` \
-Restart Docker Containers: \
+Restart Docker containers: \
 `npm run docker-restart`
