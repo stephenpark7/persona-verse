@@ -17,6 +17,7 @@ export default function TweetContainer() {
 
   async function fetchData() {
     if (!isLoggedIn) return;
+
     await API.getTweets(userData, setTweetData);
   }
 
