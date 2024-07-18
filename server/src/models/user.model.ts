@@ -14,11 +14,12 @@ class User extends Model {
         allowNull: false,
         unique: true,
       },
-      displayName: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
-      email: {
+      displayName: {
         type: DataTypes.STRING,
         allowNull: false,
       },

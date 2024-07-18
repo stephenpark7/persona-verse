@@ -5,7 +5,7 @@ import { useUserContext } from '../contexts/UserContext';
 import TweetContainer from '../components/TweetContainer';
 import LogoutButton from '../components/LogoutButton';
 
-export default function Home() {
+const Home: React.FC = () => {
   const { userData, isLoggedIn } = useUserContext();
 
   return (
@@ -34,4 +34,6 @@ export default function Home() {
       </Row>
     </Container>
   );
-}
+};
+
+export default Home;

@@ -6,22 +6,30 @@ import Form from 'react-bootstrap/Form';
 import { useUserContext } from '../contexts/UserContext';
 import API from '../lib/api';
 import './Signup.css';
+import { FormData } from '../interfaces';
 
-export default function Login() {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setUserData } = useUserContext();
-  const [ formData, setformData ] = useState(undefined);
+  const [ formData, setFormData ] = useState<FormData>({
+    username: '',
+    email: '',
+    password: '',
+  });
 
-  function handleFormSubmit(e) {
+  function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     API.login(formData, setUserData, navigate);
   }
 
-  function handleTextInputChange(e) {
+  function handleTextInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const target = e.target;
     const value = target.value;
     const name = target.name;
-    setformData({ ...formData, [ name ]: value });
+    setFormData({
+      ...formData,
+      [ name ]: value,
+    } as FormData);
   }
 
   return (
@@ -44,3 +52,5 @@ export default function Login() {
     </Container>
   )
 }
+
+export default Login;

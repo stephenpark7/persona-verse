@@ -1,12 +1,12 @@
-
 import React from 'react';
-export interface FormData {
+
+interface FormDataParams {
   username: string;
   email: string;
   password: string;
 };
 
-export interface User {
+export interface UserParams {
   token: string;
   expiresAt: string;
   payload: JWTPayload;
@@ -15,6 +15,7 @@ export interface User {
 export interface JWTPayload {
   userId: number;
   username: string;
+  displayName: string;
 };
 
 export interface UserContext {
@@ -24,5 +25,21 @@ export interface UserContext {
   logout: () => Promise<void>;
 };
 
-export type UserData = User | null;
+export interface PostTweetParams {
+  message: string;
+};
+
+export interface TweetParams extends Iterable<TweetParams> {
+  [Symbol.iterator](): IterableIterator<TweetParams>;
+  id: number;
+  message: string;
+  User: {
+    username: string;
+    displayName: string;
+  };
+};
+
+export type FormData = FormDataParams | null;
+export type UserData = UserParams | null;
 export type SetUserData = React.Dispatch<React.SetStateAction<UserData>>;
+export type TweetParamsData = TweetParams[] | null;
