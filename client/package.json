@@ -2,6 +2,15 @@
   "name": "twitter-clone-client",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "postinstall": "patch-package",
+    "lint": "eslint && npx stylelint \"**/*.css\"",
+    "tsc": "tsc",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "dev": "tsc-watch --outDir ./dist --onSuccess \"node scripts/start.js\"",
+  },
   "dependencies": {
     "@babel/eslint-parser": "^7.24.7",
     "@babel/preset-react": "^7.24.7",
@@ -58,17 +67,6 @@
     "webpack-manifest-plugin": "^5.0.0",
     "whatwg-fetch": "^3.6.20",
     "workbox-webpack-plugin": "^7.1.0"
-  },
-  "scripts": {
-    "postinstall": "patch-package",
-    "lint": "eslint && npx stylelint \"**/*.css\"",
-    "tsc": "tsc",
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "build-tsc": "tsc",
-    "dev": "tsc-watch --outDir ./dist --onSuccess \"node scripts/start.js\"",
-    "docker-logs": "docker-compose logs -f"
   },
   "browserslist": {
     "production": [
