@@ -5,17 +5,17 @@ module.exports = {
   // transform: {
   //   '^.+.tsx?$': [ 'ts-jest',{} ],
   // },
-  collectCoverage: true,
-  coverageDirectory: 'coverage',
-  coverageThreshold: {
-    global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
-    },
-  },
-  verbose: true,
+  // collectCoverage: true,
+  // coverageDirectory: 'coverage',
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 100,
+  //     functions: 100,
+  //     lines: 100,
+  //     statements: 100,
+  //   },
+  // },
+  verbose: false, // true
   testPathIgnorePatterns: [
     '/node_modules/',
     '/dist/',

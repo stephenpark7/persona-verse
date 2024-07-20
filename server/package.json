@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
     "build": "tsc",
-    "test": "jest"
+    "test": "NODE_ENV=test jest"
   },
   "author": "Stephen Park",
   "license": "ISC",
