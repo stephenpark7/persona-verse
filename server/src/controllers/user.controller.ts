@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { RevokedToken, User } from '../models';
+import { RevokedToken, User } from '../db';
 import { JWTPayload, LoginParams } from '../interfaces';
 import Validator from '../utils/validation';
 import JWT from '../utils/jwt';
@@ -58,14 +58,14 @@ export const login = async (req: Request, res: Response) => {
     return res.status(404).json({ message: 'User not found.' });
   }
 
-  const isAuthenticated = await BCrypt.compare(password, user.getPassword());
+  const isAuthenticated = await BCrypt.compare(password, user.get('password') as string);
 
   if (!isAuthenticated) {
     return res.status(401).json({ message: 'Invalid username/password.' });
   }
 
   const payload: JWTPayload = { 
-    userId: user.getId(),
+    userId: parseInt(user.get('id') as string),
     username: username,
   };
 

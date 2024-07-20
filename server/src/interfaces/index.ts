@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
+import { User, Tweet, RevokedToken, RefreshToken } from '../db';
 
 export interface AuthenticatedRequest extends Request {
   token?: string;
@@ -20,4 +21,11 @@ export interface JWTPayload extends JwtPayload {
   username: string;
   expiresAt?: number;
   jti?: string;
+};
+
+export interface Sequelize {
+  User: typeof User;
+  Tweet: typeof Tweet;
+  RevokedToken: typeof RevokedToken;
+  RefreshToken: typeof RefreshToken;
 };

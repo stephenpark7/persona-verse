@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import JWT from '../utils/jwt';
-import { RevokedToken, User } from '../models';
+import { RevokedToken, User } from '../db';
 import { JWTPayload } from '../interfaces';
 import { sendUnauthorizedResponse } from '../utils/request';
 
@@ -34,8 +34,8 @@ export const refresh = async (req: Request, res: Response) => {
     }
 
     const payload = {
-      userId: user.getId(),
-      username: user.getUsername(),
+      userId: parseInt(user.get('id') as string),
+      username: user.get('username') as string,
     };
 
     const accessToken = JWT.generateAccessToken(payload);

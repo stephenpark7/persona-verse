@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { JWTPayload } from '../interfaces';
-import { RevokedToken } from '../models';
+import { RevokedToken } from '../db';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 

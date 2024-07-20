@@ -5,7 +5,7 @@ import prettierConfig from 'eslint-config-prettier';
 import jest from 'eslint-plugin-jest';
 
 export default tseslint.config({
-  files: [ 'src/**/*.ts', '*.js', '*.mjs' ],
+  files: [ '*.ts', '*.js', '*.mjs' ],
   languageOptions: {
     globals: { 
       ...globals.browser, 
@@ -55,4 +55,6 @@ export default tseslint.config({
     'quotes': [ 'error', 'double' ],
     'comma-dangle': [ 'error', 'never' ],
   },
+},{
+  ignores: [ 'coverage', 'dist', 'node_modules' ],
 });

@@ -1,20 +1,15 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from './index';
+import { DataTypes, Sequelize } from 'sequelize';
 
-class RefreshToken extends Model {
-  static initModel() {
-    RefreshToken.init({
-      jti: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-      },
-    }, { sequelize });
-  }
+const RefreshToken = (sequelize: Sequelize) => {
+  return sequelize.define('RefreshToken', {
+    jti: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+  });
+};
 
-  public getJti(): string {
-    return this.getDataValue('jti')
-  }
-}
-
-export default RefreshToken;
+export {
+  RefreshToken,
+};

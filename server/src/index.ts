@@ -1,15 +1,13 @@
 import express from 'express';
 import ENV from './utils/env';
-import middleware from './middlewares';
+import { cors, cookies, router } from './middleware';
 
 const app = express();
-
-app.use(middleware.cors);
+app.use(cors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(middleware.cookies);
-
-app.use('/', middleware.router);
+app.use(cookies);
+app.use('/', router);
 
 if (process.env.NODE_ENV === 'development') {
   app.listen(ENV.SERVER_PORT, () => {
