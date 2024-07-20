@@ -4,29 +4,20 @@ import { sequelize, setupDB } from '../db';
 
 describe('POST /api/users/signup', () => {
   beforeAll(async () => {
-    try {
-      await setupDB();
-      await sequelize.drop();
-      await sequelize.sync();
-    } catch (error: unknown) {
-      throw new Error(`Unable to reset database: ${error}`);
-    }
+    await setupDB();
   });
 
-  test('It should respond to the POST method with a unique user', async () => {
+  test('it should return a 201 status code and a message', async () => {
     const response = await request(app).post('/api/users/signup').send({
       username: 'testUser',
       email: 'test@example.com',
       password: 'TestPassword1!',
     });
     expect(response.statusCode).toBe(201);
+    expect(response.body.message).toBe('Account created successfully.');
   });
 
   afterAll(async () => {
-    try {
-      await sequelize.close();
-    } catch (error: unknown) {
-      throw new Error(`Unable to drop tables: ${error}`);
-    }
+    await sequelize.close();
   });
 });

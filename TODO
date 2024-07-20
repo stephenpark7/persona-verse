@@ -1,4 +1,5 @@
 TODO:
+  ☐ Only show one message after registering (no need to tell them that they logged in successfully)
   ☐ Add test for refresh token
   ☐ Add other tests
   ☐ Use Redux for data store

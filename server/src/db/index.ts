@@ -1,59 +1,36 @@
-import { Sequelize, Options, Model, ModelStatic } from 'sequelize';
+import { sequelize, sequelizeOptions } from './sequelize';
+import { ModelData } from '../interfaces';
 import Models from '../models';
 
-const sequelizeOptions: Options = {
-  database: `${process.env.DB_NAME}_${process.env.NODE_ENV}`,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
-  dialect: 'postgres',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000,
-  },
-  // logging: false,
-};
+async function setupDB(): Promise<void> {
+  await sequelize.authenticate();
 
-const sequelize = new Sequelize(sequelizeOptions);
+  User = Models.User(sequelize);
+  Tweet = Models.Tweet(sequelize);
+  RevokedToken = Models.RevokedToken(sequelize);
+  RefreshToken = Models.RefreshToken(sequelize);
 
-type UserModel = ModelStatic<Model>;
+  User.hasMany(Tweet);
+  User.hasMany(RevokedToken);
+  User.hasMany(RevokedToken);
 
-let User: UserModel;
-let Tweet: UserModel;
-let RevokedToken: UserModel;
-let RefreshToken: UserModel;
+  Tweet.belongsTo(User);
 
-// if (process.env.NODE_ENV === 'development') {
-//   (async () => {
-//     await setupDB();
-//   })();
-// }
+  RevokedToken.belongsTo(User);
+  RefreshToken.belongsTo(User);
 
-async function setupDB() {
-  try {
-    await sequelize.authenticate();
-
-    User = Models.User(sequelize);
-    Tweet = Models.Tweet(sequelize);
-    RevokedToken = Models.RevokedToken(sequelize);
-    RefreshToken = Models.RefreshToken(sequelize);
-
-    User.hasMany(Tweet);
-    User.hasMany(RevokedToken);
-    User.hasMany(RevokedToken);
-    Tweet.belongsTo(User);
-    RevokedToken.belongsTo(User);
-    RefreshToken.belongsTo(User);
-
-    if (process.env.NODE_ENV === 'development') {
-      await sequelize.sync();
-    }
-  } catch (error: unknown) {
-    console.error('Error occurred:', error);
+  if (process.env.NODE_ENV === 'test') {
+    await sequelize.sync({ force: true });
+    return;
   }
+  
+  await sequelize.sync();
 }
+
+let User: ModelData;
+let Tweet: ModelData;
+let RevokedToken: ModelData;
+let RefreshToken: ModelData;
 
 export {
   sequelize,
@@ -65,6 +42,6 @@ export {
   RefreshToken,
 };
 
-// process.on('SIGINT', function () {
-//   sequelize.close();
-// });
+process.on('SIGINT', function () {
+  sequelize.close();
+});

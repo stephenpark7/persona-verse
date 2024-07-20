@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
+import { Model, ModelStatic } from 'sequelize';
 import { User, Tweet, RevokedToken, RefreshToken } from '../db';
 
 export interface AuthenticatedRequest extends Request {
@@ -29,3 +30,5 @@ export interface Sequelize {
   RevokedToken: typeof RevokedToken;
   RefreshToken: typeof RefreshToken;
 };
+
+export type ModelData = ModelStatic<Model>;
