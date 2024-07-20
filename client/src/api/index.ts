@@ -175,7 +175,7 @@ async function postTweet(
       const { data } = responseData;
       data.User = {
         username: userParams.payload.username,
-        displayName: userParams.payload.displayName,
+        displayName: userParams.payload.displayName ? userParams.payload.displayName : userParams.payload.username,
       };
       return data;
     }
