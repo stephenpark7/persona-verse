@@ -1,12 +1,32 @@
-import { describe, it, expect } from '@jest/globals';
+import request from 'supertest';
+import app from '../app';
+import { sequelize, setupDB } from '../db';
 
-describe('Your Test Suite', () => {
-  it('should do something', () => {
-	// Arrange
+describe('POST /api/users/signup', () => {
+  beforeAll(async () => {
+    try {
+      await setupDB();
+      await sequelize.drop();
+      await sequelize.sync();
+    } catch (error: unknown) {
+      throw new Error(`Unable to reset database: ${error}`);
+    }
+  });
 
-	// Act
+  test('It should respond to the POST method with a unique user', async () => {
+    const response = await request(app).post('/api/users/signup').send({
+      username: 'testUser',
+      email: 'test@example.com',
+      password: 'TestPassword1!',
+    });
+    expect(response.statusCode).toBe(201);
+  });
 
-	// Assert
-	expect(true).toBe(true);
+  afterAll(async () => {
+    try {
+      await sequelize.close();
+    } catch (error: unknown) {
+      throw new Error(`Unable to drop tables: ${error}`);
+    }
   });
 });

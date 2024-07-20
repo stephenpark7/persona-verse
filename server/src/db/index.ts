@@ -2,7 +2,7 @@ import { Sequelize, Options, Model, ModelStatic } from 'sequelize';
 import Models from '../models';
 
 const sequelizeOptions: Options = {
-  database: process.env.DB_NAME,
+  database: `${process.env.DB_NAME}_${process.env.NODE_ENV}`,
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
@@ -13,26 +13,27 @@ const sequelizeOptions: Options = {
     min: 0,
     idle: 10000,
   },
-  // sync: { force: true },
+  // logging: false,
 };
 
 const sequelize = new Sequelize(sequelizeOptions);
 
 type UserModel = ModelStatic<Model>;
 
-var User: UserModel;
-var Tweet: UserModel;
-var RevokedToken: UserModel;
-var RefreshToken: UserModel;
+let User: UserModel;
+let Tweet: UserModel;
+let RevokedToken: UserModel;
+let RefreshToken: UserModel;
 
-(async () => {
-  await setupDB(sequelize)
-})();
+// if (process.env.NODE_ENV === 'development') {
+//   (async () => {
+//     await setupDB();
+//   })();
+// }
 
-async function setupDB(sequelize: Sequelize) {
+async function setupDB() {
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
 
     User = Models.User(sequelize);
     Tweet = Models.Tweet(sequelize);
@@ -46,7 +47,9 @@ async function setupDB(sequelize: Sequelize) {
     RevokedToken.belongsTo(User);
     RefreshToken.belongsTo(User);
 
-    await sequelize.sync();
+    if (process.env.NODE_ENV === 'development') {
+      await sequelize.sync();
+    }
   } catch (error: unknown) {
     console.error('Error occurred:', error);
   }
@@ -62,6 +65,6 @@ export {
   RefreshToken,
 };
 
-process.on('SIGINT', function () {
-  sequelize.close();
-});
+// process.on('SIGINT', function () {
+//   sequelize.close();
+// });
