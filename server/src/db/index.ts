@@ -1,6 +1,10 @@
-import { sequelize, sequelizeOptions } from './sequelize';
-import { ModelData } from '../interfaces';
+import {
+  sequelize,
+  models,
+} from './sequelize';
 import Models from '../models';
+
+let { User, Tweet, RevokedToken, RefreshToken } = models;
 
 async function setupDB(): Promise<void> {
   await sequelize.authenticate();
@@ -27,21 +31,11 @@ async function setupDB(): Promise<void> {
   await sequelize.sync();
 }
 
-let User: ModelData;
-let Tweet: ModelData;
-let RevokedToken: ModelData;
-let RefreshToken: ModelData;
-
 export {
   sequelize,
-  sequelizeOptions,
   setupDB,
   User,
   Tweet,
   RevokedToken,
   RefreshToken,
 };
-
-process.on('SIGINT', function () {
-  sequelize.close();
-});

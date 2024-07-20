@@ -32,3 +32,10 @@ export interface Sequelize {
 };
 
 export type ModelData = ModelStatic<Model>;
+
+export interface Models {
+  User: ModelData;
+  Tweet: ModelData;
+  RevokedToken: ModelData;
+  RefreshToken: ModelData;
+}

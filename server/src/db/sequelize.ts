@@ -1,4 +1,12 @@
 import { Sequelize, Options } from 'sequelize';
+import { Models, ModelData } from '../interfaces';
+
+const models: Models = {
+  User: {} as ModelData,
+  Tweet: {} as ModelData,
+  RevokedToken: {} as ModelData,
+  RefreshToken: {} as ModelData,
+};
 
 const sequelizeOptions: Options = {
   database: `${process.env.DB_NAME}_${process.env.NODE_ENV}`,
@@ -16,7 +24,11 @@ const sequelizeOptions: Options = {
 
 const sequelize = new Sequelize(sequelizeOptions);
 
+process.on('SIGINT', () => {
+  sequelize.close();
+});
+
 export {
   sequelize,
-  sequelizeOptions,
+  models,
 };
