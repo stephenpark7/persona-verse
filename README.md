@@ -28,8 +28,4 @@ Start the client: \
 
 4. **Docker Setup**: \
 Build the Docker image and run it in detached mode: \
-`npm run docker-start` \
-Stop Docker containers: \
-`npm run docker-stop` \
-Restart Docker containers: \
-`npm run docker-restart`
+`docker-compose up -d` \

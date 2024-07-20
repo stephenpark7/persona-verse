@@ -4,13 +4,9 @@
   "description": "Twitter clone using Node.js, Express.js, React, and PostgreSQL.",
   "main": "index.js",
   "scripts": {
-    "install": "cd client && npm install && cd ../server && npm install ",
+    "install": "cd client && npm install --force && cd ../server && npm install --force",
     "client": "cd client && npm run dev",
-    "server": "cd server && npm run dev",
-    "docker-build": "docker-compose build",
-    "docker-start": "docker-compose up -d",
-    "docker-stop": "docker-compose down",
-    "docker-restart": "docker-compose restart"
+    "server": "cd server && npm run dev"
   },
   "author": "Stephen Park",
   "license": "ISC"

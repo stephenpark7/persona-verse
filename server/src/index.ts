@@ -11,6 +11,10 @@ app.use(middleware.cookies);
 
 app.use('/', middleware.router);
 
-app.listen(ENV.SERVER_PORT, () => {
-  console.log('Server started at port ' + ENV.SERVER_PORT);
-});
+if (process.env.NODE_ENV === 'development') {
+  app.listen(ENV.SERVER_PORT, () => {
+    console.log('Server started at port ' + ENV.SERVER_PORT);
+  });
+}
+
+export default app;

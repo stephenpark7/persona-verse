@@ -2,34 +2,35 @@ import { Request, Response } from 'express';
 import JWT from '../utils/jwt';
 import { RevokedToken, User } from '../models';
 import { JWTPayload } from '../interfaces';
+import { sendUnauthorizedResponse } from '../utils/request';
 
 export const refresh = async (req: Request, res: Response) => {
   try {
     const { session } = req;
     const { refreshToken } = session as JWTPayload;
-  
+
     if (!refreshToken) {
-      return res.status(500).json({ message: 'Session not found.' });
+      return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
     }
 
     const { jti, userId } = JWT.verifyToken(refreshToken.token);
 
     if (!jti) {
-      return res.status(401).json({ message: 'Token does not have a jti.' });
+      return sendUnauthorizedResponse(res, 'Token does not have a jti.', 401);
     }
 
     if (userId === undefined || userId === null) {
-      return res.status(401).json({ message: 'Token does not have a userId.' });
+      return sendUnauthorizedResponse(res, 'Token does not have a userId.', 401);
     }
 
     const user = await User.findByPk(userId);
-  
+
     if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
+      return sendUnauthorizedResponse(res, 'User not found.', 401);
     }
 
     if (await RevokedToken.findByPk(jti)) {
-      return res.status(400).json({ message: 'Token already revoked.' });
+      return sendUnauthorizedResponse(res, 'Refresh token is revoked.', 401);
     }
 
     const payload = {
@@ -40,12 +41,11 @@ export const refresh = async (req: Request, res: Response) => {
     const accessToken = JWT.generateAccessToken(payload);
 
     if (!accessToken) {
-      return res.status(500).json({ message: 'Error generating token.' });
+      return sendUnauthorizedResponse(res, 'Failed to generate access token.', 400);
     }
 
     res.status(200).json(accessToken);
   } catch (error: unknown) {
-    const errorMessage = process.env.NODE_ENV === 'development' ? ` ${error}` : '';
-    res.status(500).json({ message: `Failed to refresh token.${errorMessage}` });
+    return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 400);
   }
 };
