@@ -1,19 +1,26 @@
+import { ModelDefinitions } from 'src/interfaces';
 import { sequelize } from './sequelize';
 import Models from '../models';
-// import { ModelDefinitions } from '../interfaces';
 
-// const models = {
-//   User: User.initModel(sequelize),
-//   Tweet: Tweet.initModel(sequelize),
-//   RevokedToken: RevokedToken.initModel(sequelize),
-//   RefreshToken: RefreshToken.initModel(sequelize),
-// } as ModelDefinitions;
+const db = () => {
+  const {
+    User,
+    Tweet,
+    RevokedToken,
+    RefreshToken,
+  } = {
+    User: Models.User.initModel(sequelize),
+    Tweet: Models.Tweet.initModel(sequelize),
+    RevokedToken: Models.RevokedToken.initModel(sequelize),
+    RefreshToken: Models.RefreshToken.initModel(sequelize),
+  } as ModelDefinitions;
 
-const db = (() => {
-  const User = Models.User.initModel(sequelize);
-  const Tweet = Models.Tweet.initModel(sequelize);
-  const RevokedToken = Models.RevokedToken.initModel(sequelize);
-  const RefreshToken = Models.RefreshToken.initModel(sequelize);
+  const models = {
+    User,
+    Tweet,
+    RevokedToken,
+    RefreshToken,
+  };
 
   async function setupDB(): Promise<void> {
     await sequelize.authenticate();
@@ -21,29 +28,20 @@ const db = (() => {
     User.hasMany(Tweet);
     User.hasMany(RevokedToken);
     User.hasMany(RevokedToken);
-  
+
     Tweet.belongsTo(User);
     RevokedToken.belongsTo(User);
     RefreshToken.belongsTo(User);
-  
+
     await syncDB();
   }
-  
-  const models = (() => {
-    return {
-      User,
-      Tweet,
-      RevokedToken,
-      RefreshToken,
-    };
-  })();
-  
+
   async function syncDB(): Promise<void> {
     if (process.env.NODE_ENV === 'test') {
       await sequelize.sync({ force: true });
       return;
     }
-    
+
     await sequelize.sync();
   }
 
@@ -52,6 +50,6 @@ const db = (() => {
     setupDB,
     models,
   };
-})();
+};
 
-export default db;
+export default db();
