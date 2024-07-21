@@ -1,20 +1,21 @@
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from './index';
+import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
 
 class RevokedToken extends Model {
-  static initModel() {
-    RevokedToken.init({
-      jti: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-      },
-    }, { sequelize });
-  }
+  static model: ModelStatic<Model>;
 
-  public getJti(): number {
-    return this.getDataValue('jti')
+  static definition = {
+    jti: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+  };
+
+  static initModel(sequelize: Sequelize): ModelStatic<Model> {
+    return sequelize.define('RevokedToken', RevokedToken.definition);
   }
 }
 
-export default RevokedToken;
+export {
+  RevokedToken,
+};

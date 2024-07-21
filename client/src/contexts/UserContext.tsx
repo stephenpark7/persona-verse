@@ -25,10 +25,7 @@ export function UserContextProvider({ children } : PropsWithChildren) {
   }();
 
   async function logout() {
-    if (await API.logout()) {
-      localStorage.removeItem('token');
-      setUserData(null);
-    }
+    await API.logout(setUserData);
   }
 
   useOnMountUnsafe(async () => {

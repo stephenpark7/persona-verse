@@ -1,7 +1,7 @@
 import express from 'express';
-import users from '../api/users';
-import tweets from '../api/tweets';
-import refresh from '../api/refresh';
+import users from './users.api';
+import tweets from './tweets.api';
+import refresh from './refresh.api';
 
 const router = express.Router();
 

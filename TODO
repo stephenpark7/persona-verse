@@ -1,8 +1,8 @@
 TODO:
+  ☐ Refactor backend @started(24-07-20 21:05)
   ☐ Add test for refresh token
   ☐ Add other tests
   ☐ Use Redux for data store
-  ☐ Auto sign out on clientside if token is expired
   ☐ Forgot your password
   ☐ Refactor npm scripts (use args)
   ☐ Pagination
@@ -25,3 +25,5 @@ TODO:
   ✔ Add revoked tokens for log out @done(24-07-18 06:55)
     ✔ Add refresh token route @done(24-07-16 03:48)
     ✔ Refresh token on clientside @done(24-07-17 03:31)
+  ✔ Only show one message after registering (no need to tell them that they logged in successfully) @done(24-07-21 02:56)
+  ✔ Auto sign out on clientside if token is expired @done(24-07-21 02:56)

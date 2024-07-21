@@ -1,5 +1,8 @@
 import validator from 'validator';
-import { User } from '../models';
+import db from '../db';
+
+const { models } = db;
+const { User } = models;
 
 function validateUsername(username: string): boolean {
   return validator.isAlphanumeric(username);

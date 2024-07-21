@@ -1,6 +1,9 @@
 import { Response } from 'express';
 import { AuthenticatedRequest, CreateRequestBody } from '../interfaces';
-import { Tweet } from '../models';
+import db from '../db';
+
+const { models } = db;
+const { Tweet } = models;
 
 export const create = async (req: AuthenticatedRequest, res: Response) => {
   try {
@@ -12,7 +15,7 @@ export const create = async (req: AuthenticatedRequest, res: Response) => {
       return res.status(400).json({ requestBodyMessage: 'Message cannot be empty.' });
     }
 
-    const tweet: Tweet = await Tweet.create({
+    const tweet = await Tweet.create({
       UserId: userId,
       message: requestBodyMessage,
       likes: 0,
