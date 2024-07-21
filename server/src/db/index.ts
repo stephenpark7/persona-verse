@@ -4,6 +4,9 @@ import {
 } from './sequelize';
 import Models from '../models';
 
+// TODO: refactor this file
+// and sequelize.ts
+
 let { User, Tweet, RevokedToken, RefreshToken } = models;
 
 async function setupDB(): Promise<void> {

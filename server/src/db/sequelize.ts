@@ -1,12 +1,7 @@
 import { Sequelize, Options } from 'sequelize';
-import { Models, ModelData } from '../interfaces';
+import { Models } from '../interfaces';
 
-const models: Models = {
-  User: {} as ModelData,
-  Tweet: {} as ModelData,
-  RevokedToken: {} as ModelData,
-  RefreshToken: {} as ModelData,
-};
+const models = {} as Models;
 
 const sequelizeOptions: Options = {
   database: `${process.env.DB_NAME}_${process.env.NODE_ENV}`,
