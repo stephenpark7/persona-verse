@@ -8,8 +8,10 @@ module.exports = {
     "ts-jest": {
       transformerConfig: {
         transformIgnorePatterns: [
+          "<rootDir>/build/",
+          "<rootDir>/dist/",
           "<rootDir>/node_modules/",
-          "jest-runner",
+          "<rootDir>/scripts/",
         ],
       },
     },
@@ -18,6 +20,7 @@ module.exports = {
     "<rootDir>/build/",
     "<rootDir>/dist/",
     "<rootDir>/node_modules/",
+    "<rootDir>/scripts/",
   ],
   testEnvironment: 'jsdom',
   moduleNameMapper: {

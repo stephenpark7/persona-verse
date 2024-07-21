@@ -2,7 +2,10 @@ import request from 'supertest';
 import app from '../app';
 import db from '../db';
 
-const { sequelize, setupDB } = db;
+const {
+  sequelize,
+  setupDB,
+} = db;
 
 describe('POST /api/users/signup', () => {
   beforeAll(async () => {
