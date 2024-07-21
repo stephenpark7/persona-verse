@@ -1,15 +1,8 @@
 import { ModelDefinitions } from 'src/interfaces';
 import { sequelize } from './sequelize';
-import Models from '../models';
+import { User, Tweet, RevokedToken, RefreshToken } from '../models';
 
 const db = () => {
-  const models: ModelDefinitions = {
-    User: Models.User.initModel(sequelize),
-    Tweet: Models.Tweet.initModel(sequelize),
-    RevokedToken: Models.RevokedToken.initModel(sequelize),
-    RefreshToken: Models.RefreshToken.initModel(sequelize),
-  }
-
   async function setupDB(): Promise<void> {
     await sequelize.authenticate();
 
@@ -39,6 +32,13 @@ const db = () => {
 
     await sequelize.sync();
   }
+
+  const models: ModelDefinitions = {
+    User: User.initModel(sequelize),
+    Tweet: Tweet.initModel(sequelize),
+    RevokedToken: RevokedToken.initModel(sequelize),
+    RefreshToken: RefreshToken.initModel(sequelize),
+  };
 
   return {
     sequelize,

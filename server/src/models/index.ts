@@ -3,7 +3,7 @@ import { Tweet } from './tweet.model';
 import { RevokedToken } from './revokedToken.model';
 import { RefreshToken } from './refreshToken.model';
 
-export default { 
+export { 
   User,
   Tweet,
   RevokedToken,
