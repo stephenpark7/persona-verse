@@ -6,7 +6,8 @@
   "scripts": {
     "install": "cd client && npm install --force && cd ../server && npm install --force",
     "client": "cd client && npm run dev",
-    "server": "cd server && npm run dev"
+    "server": "cd server && npm run dev",
+    "test": "cd client && npm run test && cd ../server && npm run test"
   },
   "author": "Stephen Park",
   "license": "ISC"
