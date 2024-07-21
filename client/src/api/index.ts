@@ -192,7 +192,7 @@ async function postTweet(
 }
 
 async function refreshToken(
-  setUserData: SetUserData,
+  setUserData?: SetUserData,
 ) {
   try {
     const response = await fetch(`${url}/api/refresh`, {
@@ -207,7 +207,7 @@ async function refreshToken(
 
     if (!response.ok) {
       toast.error(responseData.message);
-      setUserData(null);
+      if (setUserData) setUserData(null);
       localStorage.removeItem('token');
       return;
     }
@@ -216,12 +216,12 @@ async function refreshToken(
       toast.success('Token refreshed.');
     }
 
-    setUserData(responseData);
+    if (setUserData) setUserData(responseData);
     localStorage.setItem('token', JSON.stringify(responseData));
+    return responseData;
   }
   catch (error) {
-    toast.error('Error refreshing token.');
-    console.error('Error refreshing token:', error);
+    toast.error('Session expired. Please log in again.');
   }
 }
 
@@ -236,32 +236,11 @@ fetchIntercept.register({
   response: async function (response): Promise<fetchIntercept.FetchInterceptorResponse> {
     if (response.status === 401 && !response.url.endsWith('/login')) {
       try {
-        const refreshResponse = await fetch(`${url}/api/refresh`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-  
-        const refreshResponseData = await refreshResponse.json();
-  
-        if (!refreshResponse.ok) {
-          toast.error(refreshResponseData.message);
-          // setUserData(null);
-          localStorage.removeItem('token');
-          throw new Error('Token refresh failed.'); // Throw an error instead of returning null
-        }
-  
-        if (process.env.NODE_ENV === 'development') {
-          toast.success('Token refreshed.');
-        }
-  
-        // setUserData(responseData);
-        localStorage.setItem('token', JSON.stringify(refreshResponseData));
+        const responseData = await refreshToken();
+
         const originalRequestConfig = {
           headers: {
-            'Authorization': `Bearer ${refreshResponseData.token}`,
+            'Authorization': `Bearer ${responseData.token}`,
           },
         };
   
@@ -273,10 +252,10 @@ fetchIntercept.register({
           resolve(returnResponse);
         });
       } catch (error) {
-        console.error('Error refreshing token:', error);
+        toast.error('Session expired. Please log in again.');
       }
     }
-    return response; // Return the original response if not 401
+    return response;
   },
   responseError: function (error) {
     return Promise.reject(error);

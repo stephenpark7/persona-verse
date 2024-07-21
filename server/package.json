@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "tsc-watch --onSuccess \"node dist/server.js\"",
-    "build": "tsc",
-    "test": "NODE_ENV=test jest"
+    "build": "npm run lint && tsc",
+    "test": "NODE_ENV=test jest",
+    "lint": "eslint"
   },
   "author": "Stephen Park",
   "license": "ISC",

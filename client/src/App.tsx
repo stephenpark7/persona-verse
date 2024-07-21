@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 import { ToastContainer, Bounce } from 'react-toastify';
 import Home from './pages/Home';
@@ -8,24 +8,24 @@ import { UserContextProvider } from './contexts/UserContext';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const pages: RouteObject[] = [
-  {
-    path: '/signup',
-    element: <Signup />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/',
-    element: <Home />,
-  },
-];
+const App: React.FC = (): ReactNode => {
+  const pages: RouteObject[] = [
+    {
+      path: '/signup',
+      element: <Signup />,
+    },
+    {
+      path: '/login',
+      element: <Login />,
+    },
+    {
+      path: '/',
+      element: <Home />,
+    },
+  ];
+  
+  const router = createBrowserRouter(pages);
 
-const router = createBrowserRouter(pages);
-
-export default function App(): JSX.Element {
   return (
     <UserContextProvider>
       <RouterProvider router={router} />
@@ -44,4 +44,6 @@ export default function App(): JSX.Element {
       />
     </UserContextProvider>
   );
-}
+};
+
+export default App;
