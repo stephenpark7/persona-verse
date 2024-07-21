@@ -1,14 +1,20 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
 
-const RevokedToken = (sequelize: Sequelize) => {
-  return sequelize.define('RevokedToken', {
+class RevokedToken extends Model {
+  static model: ModelStatic<Model>;
+
+  static definition = {
     jti: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-  });
-};
+  };
+
+  static initModel(sequelize: Sequelize): ModelStatic<Model> {
+    return sequelize.define('RevokedToken', RevokedToken.definition);
+  }
+}
 
 export {
   RevokedToken,

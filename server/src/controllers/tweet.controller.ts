@@ -1,6 +1,9 @@
 import { Response } from 'express';
 import { AuthenticatedRequest, CreateRequestBody } from '../interfaces';
-import { Tweet } from '../db';
+import db from '../db';
+
+const { models } = db;
+const { Tweet } = models;
 
 export const create = async (req: AuthenticatedRequest, res: Response) => {
   try {

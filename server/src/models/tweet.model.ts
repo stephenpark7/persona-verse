@@ -1,7 +1,7 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
 
-const Tweet = (sequelize: Sequelize) => {
-  return sequelize.define('Tweet', {
+class Tweet extends Model {
+  static definition = {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -20,8 +20,12 @@ const Tweet = (sequelize: Sequelize) => {
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
-  });
-};
+  };
+
+  static initModel(sequelize: Sequelize): ModelStatic<Model> {
+    return sequelize.define('Tweet', Tweet.definition);
+  }
+}
 
 export {
   Tweet,

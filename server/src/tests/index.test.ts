@@ -1,6 +1,8 @@
 import request from 'supertest';
 import app from '../app';
-import { sequelize, setupDB } from '../db';
+import db from '../db';
+
+const { sequelize, setupDB } = db;
 
 describe('POST /api/users/signup', () => {
   beforeAll(async () => {

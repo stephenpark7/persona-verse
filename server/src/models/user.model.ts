@@ -1,7 +1,9 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
 
-const User = (sequelize: Sequelize) => {
-  return sequelize.define('User', {
+class User extends Model {
+  static model: ModelStatic<Model>;
+
+  static definition = {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -25,8 +27,12 @@ const User = (sequelize: Sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  });
-};
+  };
+
+  static initModel(sequelize: Sequelize): ModelStatic<Model> {
+    return sequelize.define('User', User.definition);
+  }
+}
 
 export {
   User,

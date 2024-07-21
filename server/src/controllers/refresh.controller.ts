@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
 import JWT from '../utils/jwt';
-import { RevokedToken, User } from '../db';
+import db from '../db';
 import { JWTPayload } from '../interfaces';
 import { sendUnauthorizedResponse } from '../utils/request';
+
+const { models } = db;
+const { User, RevokedToken } = models;
 
 export const refresh = async (req: Request, res: Response) => {
   try {

@@ -1,9 +1,12 @@
 import { Request, Response } from 'express';
-import { RevokedToken, User } from '../db';
+import db from '../db';
 import { JWTPayload, LoginParams } from '../interfaces';
 import Validator from '../utils/validation';
 import JWT from '../utils/jwt';
 import BCrypt from '../utils/bcrypt';
+
+const { models } = db;
+const { User, RevokedToken } = models;
 
 export const create = async (req: Request, res: Response) => {
   try {
