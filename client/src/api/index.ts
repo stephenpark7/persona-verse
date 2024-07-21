@@ -29,7 +29,7 @@ async function register(
 
     toast.success('User registered successfully.');
 
-    login(formData, setUserData, navigate);
+    login(formData, setUserData, navigate, false);
   }
   catch (err: unknown) {
     if (err instanceof Error) {
@@ -75,7 +75,9 @@ async function login(
   }
 }
 
-async function logout() {
+async function logout(
+  setUserData: SetUserData,
+): Promise<void> {
   try {
     const response = await fetch(`${url}/api/users/logout`, {
       method: 'POST',
@@ -92,13 +94,12 @@ async function logout() {
     }
 
     localStorage.removeItem('token');
+    setUserData(null);
     toast.success('Logged out successfully.');
-    return true;
   }
   catch (err: unknown) {
     if (err instanceof Error) {
       toast.error(err.message);
-      return false;
     }
   }
 }
@@ -127,10 +128,6 @@ async function getTweets(
     if (!response.ok) {
       throw new Error(responseData.message);
     }
-
-    // if (process.env.NODE_ENV === 'development') {
-    //   toast.success('Tweets loaded.');
-    // }
 
     setTweetData(responseData.data);
   }
