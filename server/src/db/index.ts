@@ -3,27 +3,22 @@ import { sequelize } from './sequelize';
 import Models from '../models';
 
 const db = () => {
-  const {
-    User,
-    Tweet,
-    RevokedToken,
-    RefreshToken,
-  } = {
+  const models: ModelDefinitions = {
     User: Models.User.initModel(sequelize),
     Tweet: Models.Tweet.initModel(sequelize),
     RevokedToken: Models.RevokedToken.initModel(sequelize),
     RefreshToken: Models.RefreshToken.initModel(sequelize),
-  } as ModelDefinitions;
-
-  const models = {
-    User,
-    Tweet,
-    RevokedToken,
-    RefreshToken,
-  };
+  }
 
   async function setupDB(): Promise<void> {
     await sequelize.authenticate();
+
+    const {
+      User,
+      Tweet,
+      RevokedToken,
+      RefreshToken,
+    }: ModelDefinitions = models;
 
     User.hasMany(Tweet);
     User.hasMany(RevokedToken);
