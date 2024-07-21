@@ -8,8 +8,8 @@ const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
 
 async function register(
-  formData: FormData, 
-  setUserData: SetUserData, 
+  formData: FormData,
+  setUserData: SetUserData,
   navigate: NavigateFunction,
 ): Promise<void> {
   try {
@@ -39,11 +39,11 @@ async function register(
 }
 
 async function login(
-  formData: FormData, 
-  setUserData: SetUserData, 
-  navigate: NavigateFunction, 
+  formData: FormData,
+  setUserData: SetUserData,
+  navigate: NavigateFunction,
   showToast: boolean = true,
-) {
+): Promise<void> {
   try {
     const response = await fetch(`${url}/api/users/login`, {
       method: 'POST',
@@ -66,6 +66,7 @@ async function login(
     if (showToast) {
       toast.success('Logged in successfully.');
     }
+
     navigate('/');
   }
   catch (err: unknown) {
@@ -105,16 +106,16 @@ async function logout(
 }
 
 async function getTweets(
-  userData: UserData, 
+  userData: UserData,
   setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>,
-) {
+): Promise<void> {
   try {
     if (!userData) {
       throw new Error('User data is missing.');
     }
 
     const token = userData.token;
-    
+
     const response = await fetch(`${url}/api/tweets/get`, {
       method: 'GET',
       headers: {
@@ -139,11 +140,11 @@ async function getTweets(
 }
 
 async function postTweet(
-  userData: UserData, 
-  payload: PostTweetParams, 
-  tweetData: TweetParamsData, 
+  userData: UserData,
+  payload: PostTweetParams,
+  tweetData: TweetParamsData,
   setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>,
-) {
+): Promise<void> {
   try {
     if (!userData) {
       throw new Error('User data is missing.');
@@ -166,9 +167,10 @@ async function postTweet(
       throw new Error(responseData.message);
     }
 
-    function addUserDataToTweet(responseData: {
-      data: TweetParams;
-    }, userParams: UserParams): TweetParams {
+    function addUserDataToTweet(
+      responseData: { data: TweetParams }, 
+      userParams: UserParams,
+    ): TweetParams {
       const { data } = responseData;
       data.User = {
         username: userParams.payload.username,
@@ -178,8 +180,8 @@ async function postTweet(
     }
 
     const enrichedData = addUserDataToTweet(responseData, userData);
-    toast.success('Tweet posted.');
     setTweetData([ enrichedData, ...tweetData! ]);
+    toast.success('Tweet posted.');
   }
   catch (err: unknown) {
     if (err instanceof Error) {
@@ -190,7 +192,7 @@ async function postTweet(
 
 async function refreshToken(
   setUserData?: SetUserData,
-) {
+): Promise<UserData | void> {
   try {
     const response = await fetch(`${url}/api/refresh`, {
       method: 'POST',
@@ -204,16 +206,16 @@ async function refreshToken(
 
     if (!response.ok) {
       toast.error(responseData.message);
-      if (setUserData) setUserData(null);
+      if (setUserData) {
+        setUserData(null);
+      }
       localStorage.removeItem('token');
       return;
     }
 
-    if (process.env.NODE_ENV === 'development') {
-      toast.success('Token refreshed.');
+    if (setUserData) {
+      setUserData(responseData);
     }
-
-    if (setUserData) setUserData(responseData);
     localStorage.setItem('token', JSON.stringify(responseData));
     return responseData;
   }
@@ -231,28 +233,31 @@ fetchIntercept.register({
     return Promise.reject(error);
   },
   response: async function (response): Promise<fetchIntercept.FetchInterceptorResponse> {
-    if (response.status === 401 && !response.url.endsWith('/login')) {
-      try {
-        const responseData = await refreshToken();
-
-        const originalRequestConfig = {
-          headers: {
-            'Authorization': `Bearer ${responseData.token}`,
-          },
-        };
-  
-        return new Promise((resolve, reject) => {
-          const returnResponse = fetch(response.url, originalRequestConfig) as Promise<fetchIntercept.FetchInterceptorResponse>;
-          if (!returnResponse) {
-            reject(new Error('Token refresh failed.'));
-          }
-          resolve(returnResponse);
-        });
-      } catch (error) {
-        toast.error('Session expired. Please log in again.');
-      }
+    if (response.status !== 401 || response.url.endsWith('/login')) {
+      return response;
     }
-    return response;
+    try {
+      const responseData = await refreshToken();
+
+      if (!responseData) {
+        throw new Error('Error refreshing token.');
+      }
+
+      const returnResponse = fetch(response.url, {
+        headers: {
+          'Authorization': `Bearer ${responseData.token}`,
+        },
+      }) as Promise<fetchIntercept.FetchInterceptorResponse>;
+
+      if (!returnResponse) {
+        throw new Error('Error communicating with server.');
+      }
+
+      return returnResponse;
+    } catch (error) {
+      toast.error('Session expired. Please log in again.');
+      return response;
+    }
   },
   responseError: function (error) {
     return Promise.reject(error);
