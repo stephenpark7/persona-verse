@@ -1,13 +1,13 @@
 import {
   sequelize,
-  models,
 } from './sequelize';
 import Models from '../models';
+import { ModelDefinitions } from '../interfaces';
 
 // TODO: refactor this file
 // and sequelize.ts
 
-let { User, Tweet, RevokedToken, RefreshToken } = models;
+let { User, Tweet, RevokedToken, RefreshToken } = {} as ModelDefinitions;
 
 async function setupDB(): Promise<void> {
   await sequelize.authenticate();

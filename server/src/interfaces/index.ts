@@ -23,7 +23,7 @@ export interface JWTPayload extends JwtPayload {
   jti?: string;
 };
 
-export interface Models {
+export interface ModelDefinitions {
   User: ModelStatic<Model>;
   Tweet: ModelStatic<Model>;
   RevokedToken: ModelStatic<Model>;

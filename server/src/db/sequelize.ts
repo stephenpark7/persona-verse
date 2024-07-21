@@ -1,7 +1,4 @@
 import { Sequelize, Options } from 'sequelize';
-import { Models } from '../interfaces';
-
-const models = {} as Models;
 
 const sequelizeOptions: Options = {
   database: `${process.env.DB_NAME}_${process.env.NODE_ENV}`,
@@ -25,5 +22,4 @@ process.on('SIGINT', () => {
 
 export {
   sequelize,
-  models,
 };
