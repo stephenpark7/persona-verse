@@ -9,34 +9,34 @@ const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
 
-// Utility function for API calls
 async function apiCall(endpoint: string, formData: FormData, options?: RequestInit): Promise<EnhancedHTTPResponse> {
   const response = await fetch(`${url}/api/users/${endpoint}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(formData ?? {}),
     ...options,
   });
 
   const responseData = await response.json();
 
   if (!response.ok) {
-    throw new Error(responseData.message);
+    if (responseData.message) {
+      throw new Error(responseData.message);
+    }
+    throw new Error('An unexpected error occurred.');
   }
 
   return responseData;
 }
 
-// Error handling function
 function handleError(err: unknown, autoClose?: number): void {
   if (err instanceof Error) {
     toast.error(err.message, { autoClose });
   }
 }
 
-// Refactored register function
 async function register(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction): Promise<void> {
   try {
     const responseData = await apiCall('signup', formData);
@@ -49,7 +49,6 @@ async function register(formData: FormData, setUserData: SetUserData, navigate: 
   }
 }
 
-// Refactored login function
 async function login(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction, showToast: boolean = true): Promise<void> {
   try {
     const responseData = await apiCall('login', formData, { credentials: 'include' });
@@ -67,32 +66,20 @@ async function login(formData: FormData, setUserData: SetUserData, navigate: Nav
   }
 }
 
-async function logout(
-  setUserData: SetUserData,
-): Promise<void> {
+async function logout(setUserData: SetUserData, navigate: NavigateFunction, showToast: boolean = true): Promise<void> {
   try {
-    const response = await fetch(`${url}/api/users/logout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      throw new Error(responseData.message);
-    }
+    const responseData = await apiCall('logout', null, { credentials: 'include' });
 
     localStorage.removeItem('token');
     setUserData(null);
-    toast.success('Logged out successfully.');
-  }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message);
+
+    if (showToast) {
+      toast.success(responseData.message);
     }
+
+    navigate('/login');
+  } catch (err) {
+    handleError(err);
   }
 }
 

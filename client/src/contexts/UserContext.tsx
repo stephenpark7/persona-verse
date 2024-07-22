@@ -3,6 +3,7 @@ import { getLocalStorageToken } from '../utils';
 import { useOnMountUnsafe } from '../hooks';
 import API from '../api';
 import { UserData, UserContext as UserContextInterface } from '../interfaces';
+import { NavigateFunction } from 'react-router-dom';
 
 export const UserContext = createContext<UserContextInterface>({
   userData: null,
@@ -24,8 +25,8 @@ export function UserContextProvider({ children } : PropsWithChildren) {
     return dateNow >= expiresAt;
   }();
 
-  async function logout() {
-    await API.logout(setUserData);
+  async function logout(navigate: NavigateFunction) {
+    await API.logout(setUserData, navigate);
   }
 
   useOnMountUnsafe(async () => {

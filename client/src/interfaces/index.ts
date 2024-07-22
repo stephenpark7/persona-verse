@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigateFunction } from 'react-router-dom';
 
 export interface HTTPResponse {
   message?: string;
@@ -28,7 +29,7 @@ export interface UserContext {
   userData: UserData;
   setUserData: SetUserData;
   isLoggedIn: boolean;
-  logout: () => Promise<void>;
+  logout: (navigate: NavigateFunction) => Promise<void>;
 };
 
 export interface PostTweetParams {
