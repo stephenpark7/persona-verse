@@ -3,32 +3,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import API from '../api';
-import { useUserContext } from '../contexts/UserContext';
+import { useUserContext } from '../contexts';
 import { RequestBody } from '../interfaces';
+import { submitForm, updateForm } from '../utils';
+import API from '../api';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-
   const { setUserData } = useUserContext();
-
   const [ formData, setFormData ] = useState<RequestBody>({
     username: '',
     password: '',
   });
 
-  function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): void {
-    e.preventDefault();
-    API.login(formData, setUserData, navigate);
+  function handleFormChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    updateForm(e, formData, setFormData);
   }
 
-  function handleTextInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    const { value, name } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    } as RequestBody);
-  }
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    submitForm(e, formData, API.login, setUserData, navigate);
+  };
 
   return (
     <Container>
@@ -37,10 +31,10 @@ const Login: React.FC = () => {
           <h1>Log in</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Group className='mt-3 mb-3'>
-              <Form.Control type='text' name='username' placeholder='Username' onChange={handleTextInputChange} required />
+              <Form.Control type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
             </Form.Group>
             <Form.Group className='mb-3'>
-              <Form.Control type='password' name='password' placeholder='Password' onChange={handleTextInputChange} autoComplete='password' required />
+              <Form.Control type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
             </Form.Group>
             <Button variant='primary' type='submit'>Log in</Button>{' '}
             <Link to='/'><Button variant='primary'>Go Back</Button></Link>
