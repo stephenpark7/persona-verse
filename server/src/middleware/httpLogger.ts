@@ -1,13 +1,13 @@
 import winston from 'winston';
 import expressWinston from 'express-winston';
-// import { Request, Response } from 'express';
 
-// const logFormat = winston.format.printf(function(info) {
-//   const date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-//   const infoLevel = info.level.toUpperCase();
-//   const message = JSON.stringify(info.message, null, 4);
-//   return `${date} [${infoLevel}] - ${message}\n`;
-// });
+const logFormat = winston.format.printf((info) => {
+  const {
+    timestamp, level, message, ...args
+  } = info;
+  const ts = timestamp.slice(0, 19).replace('T', ' ');
+  return `${ts} [${level}]: ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ''}`;
+});
 
 const httpLogger = () => {
   return expressWinston.logger({
@@ -17,14 +17,12 @@ const httpLogger = () => {
     ],
     format: winston.format.combine(
       winston.format.colorize(),
-      winston.format.json(),
-      winston.format.prettyPrint(),
-      // logFormat,
+      winston.format.timestamp(),
+      winston.format.align(),
+      logFormat,
     ),
     level: 'info',
-    // msg: '{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}',
     expressFormat: true,
-    colorize: true,
     meta: true,
   });
 };
