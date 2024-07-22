@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import API from '../api';
 import { useUserContext } from '../contexts/UserContext';
 import { RequestBody } from '../interfaces';
-import './Signup.css';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
