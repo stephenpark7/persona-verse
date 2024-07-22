@@ -2,10 +2,23 @@ import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
 
 export interface HTTPResponse {
-  message?: string;
+  message: string;
+  user: UserParams;
+  tweet: TweetParamsData;
+  tweets: TweetParams[];
 };
 
-export type EnhancedHTTPResponse = HTTPResponse & UserParams;
+
+export interface TweetParams extends Iterable<TweetParams> {
+  [Symbol.iterator](): IterableIterator<TweetParams>;
+  id?: number;
+  message: string;
+  createdAt: string;
+  User: {
+    username: string;
+    displayName: string;
+  };
+};
 
 interface FormDataParams {
   username: string;
@@ -36,18 +49,7 @@ export interface PostTweetParams {
   message: string;
 };
 
-export interface TweetParams extends Iterable<TweetParams> {
-  [Symbol.iterator](): IterableIterator<TweetParams>;
-  id?: number;
-  message: string;
-  createdAt: string;
-  User: {
-    username: string;
-    displayName: string;
-  };
-};
-
-export type FormData = FormDataParams | null;
+export type FormData = FormDataParams | PostTweetParams | null;
 export type UserData = UserParams | null;
 export type SetUserData = React.Dispatch<React.SetStateAction<UserData>>;
-export type TweetParamsData = TweetParams[] | null;
+export type TweetParamsData = TweetParams | null;
