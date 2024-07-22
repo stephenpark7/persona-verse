@@ -1,5 +1,11 @@
 import React from 'react';
 
+export interface HTTPResponse {
+  message?: string;
+};
+
+export type EnhancedHTTPResponse = HTTPResponse & UserParams;
+
 interface FormDataParams {
   username: string;
   email: string;

@@ -1,64 +1,58 @@
 import * as fetchIntercept from 'fetch-intercept';
 import { toast } from 'react-toastify';
-import { FormData, PostTweetParams, SetUserData, TweetParams, TweetParamsData, UserData, UserParams } from '../interfaces';
+import { FormData, PostTweetParams, SetUserData, TweetParams, TweetParamsData, UserData, UserParams,
+  EnhancedHTTPResponse,
+ } from '../interfaces';
 import { NavigateFunction } from 'react-router-dom';
 
 const hostname = process.env.API_HOST_NAME;
 const port = process.env.API_PORT;
 const url = `http://${hostname}:${port}`;
 
-async function register(
-  formData: FormData,
-  setUserData: SetUserData,
-  navigate: NavigateFunction,
-): Promise<void> {
-  try {
-    const response = await fetch(`${url}/api/users/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+// Utility function for API calls
+async function apiCall(endpoint: string, formData: FormData, options?: RequestInit): Promise<EnhancedHTTPResponse> {
+  const response = await fetch(`${url}/api/users/${endpoint}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+    ...options,
+  });
 
-    const responseData = await response.json();
+  const responseData = await response.json();
 
-    if (!response.ok) {
-      throw new Error(responseData.message);
-    }
-
-    toast.success('User registered successfully.');
-
-    login(formData, setUserData, navigate, false);
+  if (!response.ok) {
+    throw new Error(responseData.message);
   }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message, { autoClose: 5000 });
-    }
+
+  return responseData;
+}
+
+// Error handling function
+function handleError(err: unknown, autoClose?: number): void {
+  if (err instanceof Error) {
+    toast.error(err.message, { autoClose });
   }
 }
 
-async function login(
-  formData: FormData,
-  setUserData: SetUserData,
-  navigate: NavigateFunction,
-  showToast: boolean = true,
-): Promise<void> {
+// Refactored register function
+async function register(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction): Promise<void> {
   try {
-    const response = await fetch(`${url}/api/users/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify(formData),
-    });
+    const responseData = await apiCall('signup', formData);
 
-    const responseData = await response.json();
+    toast.success(responseData.message);
 
-    if (!response.ok) {
-      throw new Error(responseData.message);
-    }
+    await login(formData, setUserData, navigate, false);
+  } catch (err) {
+    handleError(err, 5000);
+  }
+}
+
+// Refactored login function
+async function login(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction, showToast: boolean = true): Promise<void> {
+  try {
+    const responseData = await apiCall('login', formData, { credentials: 'include' });
 
     localStorage.setItem('token', JSON.stringify(responseData));
     setUserData(responseData);
@@ -68,11 +62,8 @@ async function login(
     }
 
     navigate('/');
-  }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message);
-    }
+  } catch (err) {
+    handleError(err);
   }
 }
 
