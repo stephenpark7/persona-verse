@@ -1,13 +1,13 @@
 import { NavigateFunction } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
-  FormData,
+  RequestBody,
   SetUserData,
 } from '../interfaces';
 import { apiCall, handleError } from './index';
 
 async function register(
-  formData: FormData,
+  formData: RequestBody,
   setUserData: SetUserData,
   navigate: NavigateFunction,
   showToast: boolean = true,
@@ -28,7 +28,7 @@ async function register(
   }
 }
 
-async function login(formData: FormData, setUserData: SetUserData, navigate: NavigateFunction, showToast: boolean = true): Promise<void> {
+async function login(formData: RequestBody, setUserData: SetUserData, navigate: NavigateFunction, showToast: boolean = true): Promise<void> {
   try {
     const responseData = await apiCall('POST', 'users', 'login', formData, { credentials: 'include' });
 

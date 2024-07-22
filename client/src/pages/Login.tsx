@@ -3,17 +3,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useUserContext } from '../contexts/UserContext';
 import API from '../api';
+import { useUserContext } from '../contexts/UserContext';
+import { RequestBody } from '../interfaces';
 import './Signup.css';
-import { FormData } from '../interfaces';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+
   const { setUserData } = useUserContext();
-  const [ formData, setFormData ] = useState<FormData>({
+
+  const [ formData, setFormData ] = useState<RequestBody>({
     username: '',
-    email: '',
     password: '',
   });
 
@@ -23,13 +24,11 @@ const Login: React.FC = () => {
   }
 
   function handleTextInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+    const { value, name } = e.target;
     setFormData({
       ...formData,
-      [ name ]: value,
-    } as FormData);
+      [name]: value,
+    } as RequestBody);
   }
 
   return (

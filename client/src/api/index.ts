@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { FormData, HTTPResponse } from '../interfaces';
+import { RequestBody, HTTPResponse } from '../interfaces';
 import { register, login, logout } from './users';
 import { getTweets, postTweet } from './tweets';
 import { refreshToken } from './refresh';
@@ -9,7 +9,7 @@ export async function apiCall(
   method: string,
   controller: string,
   action: string,
-  body: FormData, // TODO: rename this
+  body: RequestBody,
   options?: RequestInit,
   headers?: Record<string, string>,
 ): Promise<HTTPResponse> {

@@ -1,54 +1,23 @@
-import React from 'react';
-import { NavigateFunction } from 'react-router-dom';
+import { UserContext, UserParams } from './user';
+import {
+  HTTPResponse,
+  UsersSignupParams,
+  UsersLoginParams,
+  TweetPostParams,
+} from './api';
+import { TweetParams } from './tweet';
 
-export interface HTTPResponse {
-  message: string;
-  user: UserParams;
-  tweet: TweetParams;
-  tweets: TweetParams[];
+type RequestBody = UsersSignupParams | UsersLoginParams | TweetPostParams | null;
+type UserData = UserParams | null;
+type SetUserData = React.Dispatch<React.SetStateAction<UserData>>;
+
+export {
+  RequestBody,
+  TweetPostParams,
+  UserContext,
+  UserData,
+  UserParams,
+  SetUserData,
+  HTTPResponse,
+  TweetParams,
 };
-
-
-export interface TweetParams extends Iterable<TweetParams> {
-  [Symbol.iterator](): IterableIterator<TweetParams>;
-  id?: number;
-  message: string;
-  createdAt: string;
-  User: {
-    username: string;
-    displayName: string;
-  };
-};
-
-interface FormDataParams {
-  username: string;
-  email: string;
-  password: string;
-};
-
-export interface UserParams {
-  token: string;
-  expiresAt: string;
-  payload: JWTPayload;
-};
-
-export interface JWTPayload {
-  userId: number;
-  username: string;
-  displayName: string;
-};
-
-export interface UserContext {
-  userData: UserData;
-  setUserData: SetUserData;
-  isLoggedIn: boolean;
-  logout: (navigate: NavigateFunction) => Promise<void>;
-};
-
-export interface PostTweetParams {
-  message: string;
-};
-
-export type FormData = FormDataParams | PostTweetParams | null;
-export type UserData = UserParams | null;
-export type SetUserData = React.Dispatch<React.SetStateAction<UserData>>;

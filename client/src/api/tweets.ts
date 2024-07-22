@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import {
-  PostTweetParams,
+  TweetPostParams,
   TweetParams,
   UserData,
   UserParams,
@@ -30,7 +30,7 @@ async function getTweets(
 
 async function postTweet(
   userData: UserData,
-  payload: PostTweetParams,
+  payload: TweetPostParams,
   tweetData: TweetParams[],
   setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
 ): Promise<void> {

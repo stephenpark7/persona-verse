@@ -5,19 +5,22 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import API from '../api';
 import { useUserContext } from '../contexts/UserContext';
-import { FormData } from '../interfaces';
+import { RequestBody } from '../interfaces';
 import './Signup.css';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
+
   const { setUserData } = useUserContext();
-  const [ formData, setFormData ] = useState<FormData>(null);
+
+  const [ formData, setFormData ] = useState<RequestBody>({
+    username: '',
+    email: '',
+    password: '',
+  });
 
   function handleFormSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    if (!formData) {
-      return;
-    }
     API.register(formData, setUserData, navigate);
   }
 
@@ -25,8 +28,8 @@ const Signup: React.FC = () => {
     const { value, name } = e.target;
     setFormData({
       ...formData,
-      [ name ]: value,
-    } as FormData);
+      [name]: value,
+    } as RequestBody);
   }
 
   return (
