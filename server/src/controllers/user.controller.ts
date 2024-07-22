@@ -8,7 +8,7 @@ import BCrypt from '../utils/bcrypt';
 const { models } = db;
 const { User, RevokedToken } = models;
 
-export const create = async (req: Request, res: Response) => {
+export const create = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { username, email, password } = req.body;
 
@@ -41,11 +41,9 @@ export const create = async (req: Request, res: Response) => {
       displayName: username,
     });
 
-    res.status(201).json({ message: 'Account created successfully.' });
+    return res.status(201).json({ message: 'Account created successfully.' });
   } catch (error: unknown) {
-    console.log(error);
-    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
-    res.status(500).json({ message: `Error creating account.${errorMessage}` })
+    return res.status(500).json({ message: 'Error creating account.' })
   }
 };
 
