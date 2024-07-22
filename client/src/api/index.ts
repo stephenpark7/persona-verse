@@ -5,6 +5,7 @@ import { getTweets, postTweet } from './tweets';
 import { refreshToken } from './refresh';
 import useFetchIntercept from './fetchIntercept';
 
+// TODO: use object destructuring instead of using multiple arguments
 export async function apiCall(
   method: string,
   controller: string,
