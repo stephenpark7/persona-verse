@@ -1,7 +1,7 @@
 import * as fetchIntercept from 'fetch-intercept';
 import { toast } from 'react-toastify';
 import {
-  FormData, PostTweetParams, SetUserData, TweetParams, TweetParamsData, UserData, UserParams,
+  FormData, PostTweetParams, SetUserData, TweetParams, UserData, UserParams,
   HTTPResponse,
 } from '../interfaces';
 import { NavigateFunction } from 'react-router-dom';
@@ -102,7 +102,7 @@ async function logout(setUserData: SetUserData, navigate: NavigateFunction, show
 
 async function getTweets(
   userData: UserData,
-  setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData[]>>,
+  setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
 ): Promise<void> {
   try {
     if (!userData) {
@@ -125,8 +125,8 @@ async function getTweets(
 async function postTweet(
   userData: UserData,
   payload: PostTweetParams,
-  tweetData: TweetParamsData[],
-  setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData[]>>,
+  tweetData: TweetParams[],
+  setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
 ): Promise<void> {
   try {
     if (!userData) {
@@ -193,7 +193,7 @@ async function refreshToken(
     }
 
     localStorage.removeItem('token');
-    
+
     if (err instanceof Error) {
       toast.error(err.message);
     }

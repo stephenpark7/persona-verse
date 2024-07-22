@@ -4,7 +4,7 @@ import { NavigateFunction } from 'react-router-dom';
 export interface HTTPResponse {
   message: string;
   user: UserParams;
-  tweet: TweetParamsData;
+  tweet: TweetParams;
   tweets: TweetParams[];
 };
 
@@ -52,4 +52,3 @@ export interface PostTweetParams {
 export type FormData = FormDataParams | PostTweetParams | null;
 export type UserData = UserParams | null;
 export type SetUserData = React.Dispatch<React.SetStateAction<UserData>>;
-export type TweetParamsData = TweetParams | null;
