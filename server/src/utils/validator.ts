@@ -13,6 +13,9 @@ function validateEmail(email: string): boolean {
 }
 
 function validatePassword(password: string): boolean {
+  if (process.env.NODE_ENV === 'development') {
+    return true;
+  }
   return validator.isStrongPassword(password);
 }
 

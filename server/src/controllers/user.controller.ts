@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import db from '../db';
 import { JWTPayload, LoginParams } from '../interfaces';
-import Validator from '../utils/validation';
+import Validator from '../utils/validator';
 import JWT from '../utils/jwt';
 import BCrypt from '../utils/bcrypt';
 
