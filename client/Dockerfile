@@ -9,7 +9,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh | ba
 
 WORKDIR /app/client
 
-COPY package.json package-lock.json .
+COPY package.json package-lock.json ./
 
 RUN npm install --force
 
