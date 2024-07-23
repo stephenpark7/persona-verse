@@ -10,7 +10,7 @@ async function refreshToken(
   try {
     const responseData = await apiCall('POST', 'refresh', '', null, { credentials: 'include' });
 
-    const userData = responseData.user;
+    const userData = responseData.accessToken;
 
     if (!userData) {
       throw new Error('User data is missing.');

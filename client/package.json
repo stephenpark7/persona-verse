@@ -9,6 +9,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --watchAll=false",
+    "test:watch": "node scripts/test.js",
     "dev": "tsc-watch --outDir ./dist --onSuccess \"node scripts/start.js\""
   },
   "dependencies": {

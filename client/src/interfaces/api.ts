@@ -8,6 +8,7 @@ export interface HTTPResponse {
   user: UserParams;
   tweet: TweetParams;
   tweets: TweetParams[];
+  accessToken: UserParams;
 };
 
 export interface UsersSignupParams {
