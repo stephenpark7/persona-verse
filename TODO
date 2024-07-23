@@ -1,20 +1,20 @@
-TODO:
-  ☐ Use Vite for frontend
-  ☐ Refactor backend @started(24-07-20 21:05)
-  ☐ Refactor frontend @started(24-07-20 21:15)
-  ☐ Testing:
-    ☐ Add test for refresh token
+In Progress:
   ☐ Add Redux for data store
+To-Do:
+  ☐ Add profile page
+    ☐ Add profile picture
+      ☐ Add bio
+      ☐ Add settings
+        ☐ Add Dark mode
   ☐ Add Forgot your password
   ☐ Add Pagination for tweets/get
   ☐ Add CSS Animations on tweets/create
-  ☐ Add profile page
-    ☐ Add profile picture
-    ☐ Add bio
-    ☐ Add settings
-      ☐ Add Dark mode
+  ☐ Add test for refresh token
+  ☐ Refactor backend @started(24-07-20 21:05)
+  ☐ Refactor frontend @started(24-07-20 21:15)
+  ☐ Use Vite for frontend
   ☐ Migrate DB from Sequelize to TypeORM
-[DONE]
+Done:
   ✔ Dockerize app @done(24-07-10 03:06)
   ✔ Failed to fetch bug for log out @done(24-07-13 12:08)
   ✔ Update client to support backend changes @done(24-07-16 03:48)
