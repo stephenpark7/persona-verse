@@ -10,6 +10,7 @@ To-Do:
   ☐ Add Pagination for tweets/get
   ☐ Add CSS Animations on tweets/create
   ☐ Add test for refresh token
+  ☐ Amend commit messages to be more descriptive
   ☐ Refactor backend @started(24-07-20 21:05)
   ☐ Refactor frontend @started(24-07-20 21:15)
   ☐ Use Vite for frontend
