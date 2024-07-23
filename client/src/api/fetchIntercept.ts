@@ -23,9 +23,12 @@ const useFetchIntercept = (): void => {
         }
 
         const returnResponse = fetch(response.url, {
+          method: response.request.method,
           headers: {
             'Authorization': `Bearer ${responseData.token}`,
+            ...response.request.headers,
           },
+          body: response.request.body ? JSON.stringify(response.request.body) : null,
         }) as Promise<fetchIntercept.FetchInterceptorResponse>;
 
         if (!returnResponse) {
