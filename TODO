@@ -1,4 +1,5 @@
 In Progress:
+  ☐ Jest tests for local storage
   ☐ Fix issue where it fails to resend the request after getting a new token
 To-Do:
   ☐ Add Redux for data store
