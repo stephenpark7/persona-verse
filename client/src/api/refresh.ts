@@ -8,6 +8,7 @@ async function refreshToken(
   setUserData?: SetUserData,
 ): Promise<UserData | void> {
   try {
+    console.log('asdasdasdasdsadasdasd');
     const responseData = await apiCall('POST', 'refresh', '', null, { credentials: 'include' });
 
     const userData = responseData.accessToken;

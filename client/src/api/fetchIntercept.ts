@@ -22,20 +22,8 @@ const useFetchIntercept = (): void => {
           throw new Error('Error refreshing token.');
         }
 
-        const returnResponse = fetch(response.url, {
-          method: response.request.method,
-          headers: {
-            'Authorization': `Bearer ${responseData.token}`,
-            ...response.request.headers,
-          },
-          body: response.request.body ? JSON.stringify(response.request.body) : null,
-        }) as Promise<fetchIntercept.FetchInterceptorResponse>;
-
-        if (!returnResponse) {
-          throw new Error('Error communicating with server.');
-        }
-
-        return returnResponse;
+        response.headers.set('Authorization', `Bearer ${responseData.token}`);
+        return response;
       } catch (error) {
         toast.error('Session expired. Please log in again.');
         return response;

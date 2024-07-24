@@ -1,6 +1,7 @@
 In Progress:
-  ☐ Add Redux for data store
+  ☐ Fix issue where it fails to resend the request after getting a new token
 To-Do:
+  ☐ Add Redux for data store
   ☐ Add profile page
     ☐ Add profile picture
       ☐ Add bio
@@ -16,6 +17,7 @@ To-Do:
   ☐ Use Vite for frontend
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Fix issue where fetch intercept uses old token @done(24-07-24 05:46)
   ✔ Dockerize app @done(24-07-10 03:06)
   ✔ Failed to fetch bug for log out @done(24-07-13 12:08)
   ✔ Update client to support backend changes @done(24-07-16 03:48)
