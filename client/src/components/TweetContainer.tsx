@@ -6,18 +6,18 @@ import API from '../api';
 import { useUserContext } from '../contexts/UserContext';
 import { useOnMountUnsafe } from '../hooks';
 import { toast } from 'react-toastify';
-import { TweetParamsData } from '../interfaces';
+import { TweetParams } from '../interfaces';
 
 export default function TweetContainer() {
   const textRef = React.useRef<HTMLInputElement>(null);
   const { userData, isLoggedIn } = useUserContext();
-  const [ tweetData, setTweetData ] = useState<TweetParamsData>(null);
+  const [ tweetData, setTweetData ] = useState<TweetParams[]>([]);
 
   useOnMountUnsafe(fetchData);
 
   async function fetchData() {
-    if (!isLoggedIn) return;
-
+    if (!isLoggedIn || !userData) return;
+    
     await API.getTweets(userData, setTweetData);
   }
 
@@ -47,9 +47,9 @@ export default function TweetContainer() {
       <Button variant="primary" onClick={handlePostTweet}>Tweet</Button>
       <br /><br />
       <h2>Tweets</h2>
-      {tweetData && tweetData.map((data, idx) =>
+      {tweetData && tweetData.map((data: TweetParams, idx: React.Key) =>
         <Tweet 
-          key={idx} 
+          key={idx}
           {...data}
         />,
       )}

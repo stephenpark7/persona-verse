@@ -1,268 +1,50 @@
-import * as fetchIntercept from 'fetch-intercept';
 import { toast } from 'react-toastify';
-import { FormData, PostTweetParams, SetUserData, TweetParams, TweetParamsData, UserData, UserParams } from '../interfaces';
-import { NavigateFunction } from 'react-router-dom';
+import { RequestBody, HTTPResponse } from '../interfaces';
+import { register, login, logout } from './users';
+import { getTweets, postTweet } from './tweets';
+import { refreshToken } from './refresh';
+import useFetchIntercept from './fetchIntercept';
 
-const hostname = process.env.API_HOST_NAME;
-const port = process.env.API_PORT;
-const url = `http://${hostname}:${port}`;
+// TODO: use object destructuring instead of using multiple arguments
+export async function apiCall(
+  method: string,
+  controller: string,
+  action: string,
+  body: RequestBody,
+  options?: RequestInit,
+  headers?: Record<string, string>,
+): Promise<HTTPResponse> {
+  const hostname = process.env.API_HOST_NAME;
+  const port = process.env.API_PORT;
+  const url = `http://${hostname}:${port}`;
 
-async function register(
-  formData: FormData,
-  setUserData: SetUserData,
-  navigate: NavigateFunction,
-): Promise<void> {
-  try {
-    const response = await fetch(`${url}/api/users/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+  const response = await fetch(`${url}/api/${controller}/${action}`, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    body: body ? JSON.stringify(body) : null,
+    ...options,
+  });
 
-    const responseData = await response.json();
+  const responseData: HTTPResponse = await response.json();
 
-    if (!response.ok) {
-      throw new Error(responseData.message);
-    }
-
-    toast.success('User registered successfully.');
-
-    login(formData, setUserData, navigate, false);
+  if (!response.ok) {
+    const errorMessage = responseData?.message ?? 'An unexpected error occurred.';
+    throw new Error(errorMessage);
   }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message, { autoClose: 5000 });
-    }
+
+  return responseData;
+}
+
+export function handleError(err: unknown, autoClose?: number): void {
+  if (err instanceof Error) {
+    toast.error(err.message, { autoClose });
   }
 }
 
-async function login(
-  formData: FormData,
-  setUserData: SetUserData,
-  navigate: NavigateFunction,
-  showToast: boolean = true,
-): Promise<void> {
-  try {
-    const response = await fetch(`${url}/api/users/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify(formData),
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      throw new Error(responseData.message);
-    }
-
-    localStorage.setItem('token', JSON.stringify(responseData));
-    setUserData(responseData);
-
-    if (showToast) {
-      toast.success('Logged in successfully.');
-    }
-
-    navigate('/');
-  }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message);
-    }
-  }
-}
-
-async function logout(
-  setUserData: SetUserData,
-): Promise<void> {
-  try {
-    const response = await fetch(`${url}/api/users/logout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      throw new Error(responseData.message);
-    }
-
-    localStorage.removeItem('token');
-    setUserData(null);
-    toast.success('Logged out successfully.');
-  }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message);
-    }
-  }
-}
-
-async function getTweets(
-  userData: UserData,
-  setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>,
-): Promise<void> {
-  try {
-    if (!userData) {
-      throw new Error('User data is missing.');
-    }
-
-    const token = userData.token;
-
-    const response = await fetch(`${url}/api/tweets/get`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      throw new Error(responseData.message);
-    }
-
-    setTweetData(responseData.data);
-  }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message);
-    }
-  }
-}
-
-async function postTweet(
-  userData: UserData,
-  payload: PostTweetParams,
-  tweetData: TweetParamsData,
-  setTweetData: React.Dispatch<React.SetStateAction<TweetParamsData>>,
-): Promise<void> {
-  try {
-    if (!userData) {
-      throw new Error('User data is missing.');
-    }
-
-    const token = userData.token;
-
-    const response = await fetch(`${url}/api/tweets/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      throw new Error(responseData.message);
-    }
-
-    function addUserDataToTweet(
-      responseData: { data: TweetParams }, 
-      userParams: UserParams,
-    ): TweetParams {
-      const { data } = responseData;
-      data.User = {
-        username: userParams.payload.username,
-        displayName: userParams.payload.displayName ? userParams.payload.displayName : userParams.payload.username,
-      };
-      return data;
-    }
-
-    const enrichedData = addUserDataToTweet(responseData, userData);
-    setTweetData([ enrichedData, ...tweetData! ]);
-    toast.success('Tweet posted.');
-  }
-  catch (err: unknown) {
-    if (err instanceof Error) {
-      toast.error(err.message);
-    }
-  }
-}
-
-async function refreshToken(
-  setUserData?: SetUserData,
-): Promise<UserData | void> {
-  try {
-    const response = await fetch(`${url}/api/refresh`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      toast.error(responseData.message);
-      if (setUserData) {
-        setUserData(null);
-      }
-      localStorage.removeItem('token');
-      return;
-    }
-
-    if (setUserData) {
-      setUserData(responseData);
-    }
-    localStorage.setItem('token', JSON.stringify(responseData));
-    return responseData;
-  }
-  catch (error) {
-    toast.error('Session expired. Please log in again.');
-  }
-}
-
-fetchIntercept.register({
-  request: function (url, config) {
-    config.headers = config.headers || {};
-    return [ url, config ];
-  },
-  requestError: function (error) {
-    return Promise.reject(error);
-  },
-  response: async function (response): Promise<fetchIntercept.FetchInterceptorResponse> {
-    if (response.status !== 401 || response.url.endsWith('/login')) {
-      return response;
-    }
-    try {
-      const responseData = await refreshToken();
-
-      if (!responseData) {
-        throw new Error('Error refreshing token.');
-      }
-
-      const returnResponse = fetch(response.url, {
-        headers: {
-          'Authorization': `Bearer ${responseData.token}`,
-        },
-      }) as Promise<fetchIntercept.FetchInterceptorResponse>;
-
-      if (!returnResponse) {
-        throw new Error('Error communicating with server.');
-      }
-
-      return returnResponse;
-    } catch (error) {
-      toast.error('Session expired. Please log in again.');
-      return response;
-    }
-  },
-  responseError: function (error) {
-    return Promise.reject(error);
-  },
-});
+useFetchIntercept();
 
 export default {
   login,

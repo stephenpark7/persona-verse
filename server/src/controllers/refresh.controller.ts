@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
-import JWT from '../utils/jwt';
-import db from '../db';
 import { JWTPayload } from '../interfaces';
 import { sendUnauthorizedResponse } from '../utils/request';
+import JWT from '../utils/jwt';
+import db from '../db';
 
 const { models } = db;
 const { User, RevokedToken } = models;
 
 export const refresh = async (req: Request, res: Response) => {
   try {
-    const { session } = req;
-    const { refreshToken } = session as JWTPayload;
+    const { refreshToken } = req.session as JWTPayload;
 
     if (!refreshToken) {
       return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
@@ -47,7 +46,10 @@ export const refresh = async (req: Request, res: Response) => {
       return sendUnauthorizedResponse(res, 'Failed to generate access token.', 400);
     }
 
-    res.status(200).json(accessToken);
+    res.status(200).json({
+      message: 'Token refreshed.',
+      accessToken: accessToken,
+    });
   } catch (error: unknown) {
     return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 400);
   }

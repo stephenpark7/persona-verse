@@ -26,7 +26,7 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy'
   },
-  // setupFiles: ["<rootDir>/test/setup.ts"],
+  setupFiles: ["<rootDir>/src/tests/setupTests.ts"],
   // setupFilesAfterEnv: ["<rootDir>/jest-setup-after-env.js"],
   // moduleFileExtensions: [ 'js', 'jsx', 'ts', 'tsx', ],
   // moduleDirectories: [ 'node_modules', 'build', 'dist', ],

@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 import db from '../db';
 import { JWTPayload, LoginParams } from '../interfaces';
-import Validator from '../utils/validation';
+import Validator from '../utils/validator';
 import JWT from '../utils/jwt';
 import BCrypt from '../utils/bcrypt';
 
 const { models } = db;
 const { User, RevokedToken } = models;
 
-export const create = async (req: Request, res: Response) => {
+export const create = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { username, email, password } = req.body;
 
@@ -41,50 +41,55 @@ export const create = async (req: Request, res: Response) => {
       displayName: username,
     });
 
-    res.status(201).json({ message: 'Account created successfully.' });
+    return res.status(201).json({ message: 'Account created successfully.' });
   } catch (error: unknown) {
-    console.log(error);
-    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
-    res.status(500).json({ message: `Error creating account.${errorMessage}` })
+    return res.status(500).json({ message: 'Error creating account.' })
   }
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { username, password }: LoginParams  = req.body;
+  try {
+    const { username, password }: LoginParams  = req.body;
 
-  if (Validator.missingFields(username, password)) {
-    return res.status(400).json({ message: 'Missing field(s).' });
+    if (Validator.missingFields(username, password)) {
+      return res.status(400).json({ message: 'Missing field(s).' });
+    }
+  
+    const user = await User.findOne({ where: { username: username } });
+  
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+  
+    const isAuthenticated = await BCrypt.compare(password, user.get('password') as string);
+  
+    if (!isAuthenticated) {
+      return res.status(401).json({ message: 'Invalid username/password.' });
+    }
+  
+    const payload: JWTPayload = { 
+      userId: parseInt(user.get('id') as string),
+      username: username,
+    };
+  
+    const accessToken = JWT.generateAccessToken(payload);
+    const refreshToken = JWT.generateRefreshToken(payload!);
+  
+    if (!accessToken || !refreshToken) {
+      return res.status(500).json({ message: 'Error generating tokens.' });
+    }
+  
+    req.session = {
+      refreshToken: refreshToken,
+    };
+  
+    res.status(200).json({
+      message: 'Logged in successfully.',
+      user: accessToken,
+    });
+  } catch (error: unknown) {
+    res.status(500).json({ message: 'Error logging in.' });
   }
-
-  const user = await User.findOne({ where: { username: username } });
-
-  if (!user) {
-    return res.status(404).json({ message: 'User not found.' });
-  }
-
-  const isAuthenticated = await BCrypt.compare(password, user.get('password') as string);
-
-  if (!isAuthenticated) {
-    return res.status(401).json({ message: 'Invalid username/password.' });
-  }
-
-  const payload: JWTPayload = { 
-    userId: parseInt(user.get('id') as string),
-    username: username,
-  };
-
-  const accessToken = JWT.generateAccessToken(payload);
-  const refreshToken = JWT.generateRefreshToken(payload!);
-
-  if (!accessToken || !refreshToken) {
-    return res.status(500).json({ message: 'Error generating tokens.' });
-  }
-
-  req.session = {
-    refreshToken: refreshToken,
-  };
-
-  res.status(200).json(accessToken);
 };
 
 export const logout = async (req: Request, res: Response) => {
