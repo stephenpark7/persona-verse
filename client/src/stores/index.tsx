@@ -1,5 +1,5 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useCallback } from 'react';
 import { Provider } from 'react-redux';
 import { JWT } from 'src/interfaces';
 import API from '../api';
@@ -8,32 +8,38 @@ import { JWTWrapper } from 'src/interfaces/user';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const useJWT = () => {
-  let jwt = useSelector((state: JWTWrapper) => state.jwt.value);
-  if (!jwt) {
-    const localStorageToken = localStorage.getItem('token');
-    if (localStorageToken) jwt = JSON.parse(localStorageToken);
-    if (jwt) store.dispatch(set(jwt));
-  }
-  const dispatch = useDispatch();
+  const storedJwt = useSelector((state: JWTWrapper) => state.jwt.user);
+  const token = localStorage.getItem('token');
+  const [ jwt, setJWT ] = React.useState<JWT>(storedJwt ?? JSON.parse(token as string));
+
+  useCallback(() => {
+    if (!storedJwt) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const data = JSON.parse(token);
+        store.dispatch(set(data));
+        setJWT(data);
+      }
+    }
+  }, [ storedJwt ]);
+
   return { 
     jwt,
-    dispatch,
+    dispatch: useDispatch(),
   };
 };
-
-const initialState: JWT = null;
 
 const jwt = createSlice({
   name: 'jwt',
   initialState: {
-    value: initialState,
+    user: null,
   },
   reducers: {
     set: (state, action) => {
-      state.value = action.payload;
+      state.user = action.payload;
     },
     clear: (state) => {
-      state.value = initialState;      
+      state.user = null;      
     },
   },
 });
@@ -66,7 +72,7 @@ export function userStore() {
   // const localStorageJwt = localStorage.getItem('token') ?? null;
   // const userData = store.getState().jwt.value ?? JSON.parse(localStorageJwt as string);
   return {
-    userData: store.getState().jwt.value,
+    userData: store.getState().jwt.user,
     setUserData: (data: JWT) => store.dispatch(set(data)),
     isLoggedIn: store.getState() !== null,
     logout: logout,

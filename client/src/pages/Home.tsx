@@ -25,7 +25,7 @@ const Home: React.FC = () => {
 
     return (
       <>
-        <p>Welcome !</p>
+        <p>Welcome {jwt.payload.displayName ?? jwt.payload.username}!</p>
         <TweetContainer />
         <LogoutButton />
       </>

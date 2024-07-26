@@ -6,7 +6,7 @@ export type JWT = null | {
 
 export type JWTWrapper = {
   jwt: {
-    value: JWT;
+    user: JWT;
   }
 };
 export interface JWTPayload {
