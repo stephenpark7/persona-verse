@@ -2,14 +2,13 @@ import { toast } from 'react-toastify';
 import {
   TweetPostParams,
   TweetParams,
-  UserData,
-  UserParams,
+  JWT,
   HTTPResponse,
 } from '../interfaces';
 import { apiCall, handleError } from './index';
 
 async function getTweets(
-  userData: UserData,
+  userData: JWT,
   setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
 ): Promise<void> {
   try {
@@ -29,7 +28,7 @@ async function getTweets(
 }
 
 async function postTweet(
-  userData: UserData,
+  userData: JWT,
   payload: TweetPostParams,
   tweetData: TweetParams[],
   setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
@@ -46,7 +45,7 @@ async function postTweet(
 
     function addUserDataToTweet(
       responseData: HTTPResponse,
-      userParams: UserParams,
+      userParams: JWT,
     ): TweetParams {
       const { tweet } = responseData;
 
@@ -55,8 +54,8 @@ async function postTweet(
       }
 
       tweet.User = {
-        username: userParams.payload.username,
-        displayName: userParams.payload.displayName ? userParams.payload.displayName : userParams.payload.username,
+        username: userParams!.payload.username,
+        displayName: userParams!.payload.displayName ? userParams!.payload.displayName : userParams!.payload.username,
       };
 
       return tweet;

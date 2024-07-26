@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
-import { RequestBody, SetUserData } from 'src/interfaces';
+import { RequestBody } from 'src/interfaces';
 import { APIFunction } from 'src/interfaces/api';
 
 export function getLocalStorageToken() {
@@ -11,11 +11,10 @@ export async function submitForm(
   e: React.FormEvent<HTMLFormElement>, 
   formData: RequestBody, 
   apiFunction: APIFunction, 
-  setUserData: SetUserData, 
   navigate: NavigateFunction,
 ): Promise<void> {
   e.preventDefault();
-  await apiFunction(formData, setUserData, navigate);
+  await apiFunction(formData, navigate);
 }
 
 export function updateForm(

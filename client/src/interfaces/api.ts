@@ -1,14 +1,14 @@
-import { UserParams } from './user';
+import { JWT } from './user';
 import { TweetParams } from './tweet';
-import { RequestBody, SetUserData } from '.';
+import { RequestBody } from '.';
 import { NavigateFunction } from 'react-router-dom';
 
 export interface HTTPResponse {
   message: string;
-  user: UserParams;
+  user: JWT;
   tweet: TweetParams;
   tweets: TweetParams[];
-  accessToken: UserParams;
+  accessToken: JWT;
 };
 
 export interface UsersSignupParams {
@@ -27,5 +27,5 @@ export interface TweetPostParams {
 };
 
 export interface APIFunction {
-  (formData: RequestBody, setUserData: SetUserData, navigate: NavigateFunction, showToast?: boolean, autoLogin?: boolean): Promise<void>;
+  (formData: RequestBody, navigate: NavigateFunction, showToast?: boolean, autoLogin?: boolean): Promise<void>;
 };

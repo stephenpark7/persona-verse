@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 import { ToastContainer, Bounce } from 'react-toastify';
+import { UserStoreProvider } from './stores';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import { UserContextProvider } from './contexts/UserContext';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -27,7 +27,7 @@ const App: React.FC = (): ReactNode => {
   const router = createBrowserRouter(pages);
 
   return (
-    <UserContextProvider>
+    <UserStoreProvider>
       <RouterProvider router={router} />
       <ToastContainer
         position="top-right"
@@ -42,7 +42,7 @@ const App: React.FC = (): ReactNode => {
         theme="light"
         transition={Bounce}
       />
-    </UserContextProvider>
+    </UserStoreProvider>
   );
 };
 

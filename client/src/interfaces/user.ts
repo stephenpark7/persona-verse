@@ -1,19 +1,14 @@
-import { NavigateFunction } from 'react-router-dom';
-import { UserData, SetUserData } from './index';
-
-export interface UserContext {
-  userData: UserData;
-  setUserData: SetUserData;
-  isLoggedIn: boolean;
-  logout: (navigate: NavigateFunction) => Promise<void>;
-};
-
-export interface UserParams {
+export type JWT = null | {
   token: string;
   expiresAt: string;
   payload: JWTPayload;
 };
 
+export type JWTWrapper = {
+  jwt: {
+    value: JWT;
+  }
+};
 export interface JWTPayload {
   userId: number;
   username: string;

@@ -1,14 +1,13 @@
 import {
   SetUserData,
-  UserData,
+  JWT,
 } from '../interfaces';
 import { apiCall, handleError } from './index';
 
 async function refreshToken(
   setUserData?: SetUserData,
-): Promise<UserData | void> {
+): Promise<JWT | void> {
   try {
-    console.log('asdasdasdasdsadasdasd');
     const responseData = await apiCall('POST', 'refresh', '', null, { credentials: 'include' });
 
     const userData = responseData.accessToken;

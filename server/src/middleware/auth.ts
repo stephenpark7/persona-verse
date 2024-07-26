@@ -16,6 +16,9 @@ async function auth(req: AuthenticatedRequest, res: Response, next: NextFunction
 
   jwt.verify(token, secret, async (err, decoded) => {
     if (err) {
+      if (err.name === 'TokenExpiredError') {
+        return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
+      }
       return sendUnauthorizedResponse(res, err.message, 401);
     }
 

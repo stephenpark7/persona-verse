@@ -3,20 +3,20 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Tweet from './Tweet';
 import API from '../api';
-import { useUserContext } from '../contexts/UserContext';
+import { userStore } from '../stores';
 import { useOnMountUnsafe } from '../hooks';
 import { toast } from 'react-toastify';
 import { TweetParams } from '../interfaces';
 
 export default function TweetContainer() {
   const textRef = React.useRef<HTMLInputElement>(null);
-  const { userData, isLoggedIn } = useUserContext();
+  const { userData, isLoggedIn } = userStore();
   const [ tweetData, setTweetData ] = useState<TweetParams[]>([]);
 
   useOnMountUnsafe(fetchData);
 
   async function fetchData() {
-    if (!isLoggedIn || !userData) return;
+    if (!isLoggedIn) return;
     
     await API.getTweets(userData, setTweetData);
   }
