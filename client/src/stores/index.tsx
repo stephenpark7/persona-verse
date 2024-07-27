@@ -1,10 +1,11 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
-import React, { PropsWithChildren, useCallback, useState } from 'react';
+import React, { PropsWithChildren, useEffect} from 'react';
 import { Provider } from 'react-redux';
-import { JWT } from 'src/interfaces';
 import API from '../api';
 import { JWTWrapper } from 'src/interfaces/user';
 import { useSelector, useDispatch } from 'react-redux';
+import { useOnMountUnsafe } from 'src/hooks';
+import { isTokenRefreshablePath } from 'src/utils';
 
 const jwtSlice = createSlice({
   name: 'jwt',
@@ -43,70 +44,69 @@ export const useJWT = () => {
 
   const isLoggedIn = () => jwt !== null;
 
-  // useCallback(() => {
-  //   if (!jwt) {
-  //     console.log('storedJwt is null');
-  //     const token = localStorage.getItem('token');
-  //     if (token) {
-  //       const data = JSON.parse(token);
-  //       store.dispatch(set(data));
-  //       setJWT(data);
-  //     }
-  //   }
-  // }, [ jwt ]);
+  useOnMountUnsafe(() => {
+    if (!jwt) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const data = JSON.parse(token);
+        dispatch(set(data));
+      }
+    }
+  });
 
-  const { fetch: originalFetch } = window;
+  window.fetch = new Proxy(window.fetch, {
+    apply: async (originalFetch, that, args) => {
+      if (!jwt) return Reflect.apply(originalFetch, that, args);
 
-  window.fetch = async (...args): Promise<Response> => {
-    const [ resource, config = {} ] = args;
+      const [resource, config = {}] = args;
+      const url = resource.toString();
 
-    const url = resource.toString();
+      const ignoredPaths = [
+        '/api/users/signup',
+        '/api/users/login',
+        '/api/users/logout',
+        '/api/refresh',
+      ];
 
-    const ignoredPaths = [
-      '/api/users/signup',
-      '/api/users/login',
-      '/api/users/logout',
-      '/api/refresh',
-    ];
+      const isPathRefreshable = (url: string) => !ignoredPaths.some(path => url.endsWith(path));
 
-    const isPathRefreshable = (url: string) => !ignoredPaths.some(path => url.endsWith(path));
-
-    if (url.includes('/api/') && isPathRefreshable(url)) {
-      if (jwt) {
+      if (url.includes('/api/') && isPathRefreshable(url)) {
         config.headers = {
           ...config.headers,
           Authorization: `Bearer ${jwt.token}`,
         };
+
         try {
-          const response = await originalFetch(resource, config);
+          let response = await Reflect.apply(originalFetch, that, [resource, config]);
           if (response.status === 401) {
             const data = await API.refreshToken();
             if (data) {
-              store.dispatch(set(data));
+              dispatch(set(data));
               config.headers = {
                 ...config.headers,
                 Authorization: `Bearer ${data.token}`,
               };
-              return await originalFetch(resource, config);
+              response = await Reflect.apply(originalFetch, that, [resource, config]);
             } else {
-              throw new Error('Error refreshing token.');
+              throw new Error('Failed to refresh token.');
             }
           }
           return response;
-        }
-        catch (error: unknown) {
+        } catch (error) {
           clearUserData();
           throw new Error('Error refreshing token.');
         }
       }
-    }
-    return originalFetch(resource, config);
-  };
+
+      return Reflect.apply(originalFetch, that, args);
+    },
+  });
 
   return {
     jwt,
     dispatch,
     isLoggedIn,
+    clearUserData,
   };
 };
 
@@ -115,6 +115,6 @@ export const clearUserData = () => {
   store.dispatch(clear());
 };
 
-store.subscribe(() => {
-  console.log(store.getState());
-});
+// store.subscribe(() => {
+//   console.log(store.getState());
+// });

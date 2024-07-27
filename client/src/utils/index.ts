@@ -28,3 +28,14 @@ export function updateForm(
     [ name ]: value,
   } as RequestBody);
 }
+
+export function isTokenRefreshablePath(url: string) {
+  const ignoredPaths = [
+    '/api/users/signup',
+    '/api/users/login',
+    '/api/users/logout',
+    '/api/refresh',
+  ];
+
+  return url.includes('/api/') && !ignoredPaths.some(path => url.endsWith(path));
+}
