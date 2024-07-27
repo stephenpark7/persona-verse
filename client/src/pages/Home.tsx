@@ -5,11 +5,11 @@ import { useJWT } from '../stores';
 import TweetContainer from '../components/TweetContainer';
 import LogoutButton from '../components/LogoutButton';
 
-const Home: React.FC = () => {
-  const { jwt } = useJWT();
+const Home: React.FC = (): React.JSX.Element => {
+  const { jwt, isLoggedIn } = useJWT();
 
   function renderBodyContent() {
-    if (!jwt) {
+    if (!isLoggedIn) {
       return (
         <>
           <p>Create an account or log in.</p>
@@ -25,7 +25,7 @@ const Home: React.FC = () => {
 
     return (
       <>
-        <p>Welcome {jwt.payload.displayName ?? jwt.payload.username}!</p>
+        <p>Welcome {jwt?.user?.payload.displayName ?? jwt?.user?.payload.username}!</p>
         <TweetContainer />
         <LogoutButton />
       </>

@@ -1,20 +1,45 @@
 import { NavigateFunction } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
-  JWT,
   RequestBody,
 } from '../interfaces';
 import { apiCall, handleError } from './index';
-import { store, set, clear, clearUserData } from '../stores/';
+import { store, set, clearUserData } from '../stores/';
+import { JsonResponse, Register } from 'src/interfaces/api';
 
-async function register(
-  formData: RequestBody,
-  navigate: NavigateFunction,
-  showToast: boolean = true,
-  autoLogin: boolean = true,
+async function register({
+  formData,
+  navigate,
+  showToast = true,
+  autoLogin = true,
+}: Register
 ): Promise<void> {
   try {
-    const responseData = await apiCall('POST', 'users', 'signup', formData);
+    const responseData = await apiCall({
+      method: 'POST',
+      controller: 'users',
+      action: 'signup',
+      body: formData,
+    });
+
+    if (showToast) {
+      toast.success(responseData.message);
+    }
+
+    if (autoLogin) {
+      await login(formData, navigate, false);
+    }
+  } catch (err) {
+    handleError(err, 5000);
+  }
+}
+  try {
+    const responseData = await apiCall({
+      method: 'POST',
+      controller: 'users',
+      action: 'signup',
+      body: formData,
+    });
 
     if (showToast) {
       toast.success(responseData.message);
@@ -30,10 +55,19 @@ async function register(
 
 async function login(formData: RequestBody, navigate: NavigateFunction, showToast: boolean = true): Promise<void> {
   try {
-    const responseData = await apiCall('POST', 'users', 'login', formData, { credentials: 'include' });
+    const responseData: JsonResponse = await apiCall({
+      method: 'POST',
+      controller: 'users',
+      action: 'login',
+      body: formData,
+      options: { credentials: 'include' },
+    });
 
-    localStorage.setItem('token', JSON.stringify(responseData.user));
-    store.dispatch(set(responseData.user));
+    const { jwt } = responseData;
+
+     localStorage.setItem('jwt', JSON.stringify(user));
+
+    store.dispatch(set(user));
 
     if (showToast) {
       toast.success(responseData.message);
@@ -46,12 +80,17 @@ async function login(formData: RequestBody, navigate: NavigateFunction, showToas
 }
 
 async function logout(
-  jwt: JWT,
   navigate: NavigateFunction,
   showToast: boolean = true,
 ): Promise<void> {
   try {
-    const responseData = await apiCall('POST', 'users', 'logout', null, { credentials: 'include' });
+    const responseData = await apiCall({
+      method: 'POST',
+      controller: 'users',
+      action: 'logout',
+      body: null,
+      options: { credentials: 'include' },
+    });
 
     clearUserData();
 

@@ -1,24 +1,20 @@
 import { toast } from 'react-toastify';
-import { RequestBody, HTTPResponse } from '../interfaces';
+import { JsonResponse, ApiCall } from '../interfaces/api';
+import { refreshToken } from './refresh';
 import { register, login, logout } from './users';
 import { getTweets, postTweet } from './tweets';
-import { refreshToken } from './refresh';
-// import useFetchIntercept from './fetchIntercept';
 
-// TODO: use object destructuring instead of using multiple arguments
-export async function apiCall(
-  method: string,
-  controller: string,
-  action: string,
-  body: RequestBody,
-  options?: RequestInit,
-  headers?: Record<string, string>,
-): Promise<HTTPResponse> {
-  const hostname = process.env.API_HOST_NAME;
+function apiUrl(controller: string, action: string): string {
+  const protocol = process.env.API_PROTOCOL;
   const port = process.env.API_PORT;
-  const url = `http://${hostname}:${port}`;
+  const hostName = process.env.API_HOST_NAME;
+  return `${protocol}://${hostName}:${port}/api/${controller}/${action}`;
+}
 
-  const response = await fetch(`${url}/api/${controller}/${action}`, {
+async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
+  const { method, controller, action, body, options, headers } = params;
+
+  const response: Response = await fetch(apiUrl(controller, action), {
     method: method,
     headers: {
       'Content-Type': 'application/json',
@@ -28,14 +24,18 @@ export async function apiCall(
     ...options,
   });
 
-  const responseData: HTTPResponse = await response.json();
+  const jsonResponse: JsonResponse = await response.json();
 
   if (!response.ok) {
-    const errorMessage = responseData?.message ?? 'An unexpected error occurred.';
+    const errorMessage: string = jsonResponse.message ?? 'An unexpected error occurred.';
     throw new Error(errorMessage);
   }
 
-  return responseData;
+  return jsonResponse;
+}
+
+export async function apiCall(params: ApiCall): Promise<JsonResponse> {
+  return await sendHttpRequest(params);
 }
 
 export function handleError(err: unknown, autoClose?: number): void {
@@ -43,8 +43,6 @@ export function handleError(err: unknown, autoClose?: number): void {
     toast.error(err.message, { autoClose });
   }
 }
-
-// useFetchIntercept();
 
 export default {
   login,

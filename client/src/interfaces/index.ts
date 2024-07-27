@@ -1,6 +1,5 @@
 import { JWT } from './user';
 import {
-  HTTPResponse,
   UsersSignupParams,
   UsersLoginParams,
   TweetPostParams,
@@ -15,6 +14,5 @@ export {
   TweetPostParams,
   JWT,
   SetUserData,
-  HTTPResponse,
   TweetParams,
 };

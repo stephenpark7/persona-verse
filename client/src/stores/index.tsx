@@ -1,52 +1,59 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit'
-import React, { PropsWithChildren, useEffect} from 'react';
-import { Provider } from 'react-redux';
-import API from '../api';
-import { JWTWrapper } from 'src/interfaces/user';
+import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux';
-import { useOnMountUnsafe } from 'src/hooks';
-import { isTokenRefreshablePath } from 'src/utils';
+import { State, User } from 'src/interfaces/user';
+import API from '../api';
+import { useOnMountUnsafe } from '../../src/hooks';
+// import { JWTWrapper, JWT } from '../../src/interfaces/user';
 
-const jwtSlice = createSlice({
-  name: 'jwt',
-  initialState: {
-    user: null,
-  },
+// const setReducer: CaseReducer<JWTWrapper, PayloadAction<JWTWrapper>> = (state, action) => {
+//   state = action.payload;
+// };
+
+// const clearReducer: CaseReducer<JWTWrapper, PayloadAction<JWTWrapper>> = (state, action) => {
+//   state.jwt.user = null;
+// };
+
+const initialState: User = {
+  value: null,
+};
+
+const userSlice = createSlice({
+  name: 'user',
+  initialState: initialState,
   reducers: {
-    set: (state, action) => {
-      state.user = action.payload;
+    set: (state, action: PayloadAction<State>): void => {
+      state.value = action.payload;
     },
-    clear: (state) => {
-      state.user = null;
+    clear: (state): void => {
+      state.value = null;
     },
   },
 });
 
-export const { set, clear } = jwtSlice.actions;
+export const { set, clear } = userSlice.actions;
 
 export const store = configureStore({
   reducer: {
-    jwt: jwtSlice.reducer,
+    user: userSlice.reducer,
   },
 });
 
-export function UserStoreProvider({ children }: PropsWithChildren) {
-  return (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
-}
 
-export const useJWT = () => {
-  const jwt = useSelector((state: JWTWrapper) => state.jwt.user);
+export const clearUserData = () => {
+  localStorage.removeItem('token');
+  const dispatch = useDispatch();
+  dispatch(clear());
+};
+
+export const useUserState = () => {
+  const userState = useSelector((state: State) => state);
   const dispatch = useDispatch();
 
-  const isLoggedIn = () => jwt !== null;
+  const isLoggedIn = !!(userState);
 
-  useOnMountUnsafe(() => {
-    if (!jwt) {
-      const token = localStorage.getItem('token');
+  useOnMountUnsafe(function setLocalStorageToken() {
+    if (!userState) {
+      const token =  localStorage.getItem('jwt');
       if (token) {
         const data = JSON.parse(token);
         dispatch(set(data));
@@ -56,9 +63,9 @@ export const useJWT = () => {
 
   window.fetch = new Proxy(window.fetch, {
     apply: async (originalFetch, that, args) => {
-      if (!jwt) return Reflect.apply(originalFetch, that, args);
+      if (!userState) return Reflect.apply(originalFetch, that, args);
 
-      const [resource, config = {}] = args;
+      const [ resource, config = {} ] = args;
       const url = resource.toString();
 
       const ignoredPaths = [
@@ -73,11 +80,11 @@ export const useJWT = () => {
       if (url.includes('/api/') && isPathRefreshable(url)) {
         config.headers = {
           ...config.headers,
-          Authorization: `Bearer ${jwt.token}`,
+          Authorization: `Bearer ${userState.jwt.token}`,
         };
 
         try {
-          let response = await Reflect.apply(originalFetch, that, [resource, config]);
+          let response = await Reflect.apply(originalFetch, that, [ resource, config ]);
           if (response.status === 401) {
             const data = await API.refreshToken();
             if (data) {
@@ -86,7 +93,7 @@ export const useJWT = () => {
                 ...config.headers,
                 Authorization: `Bearer ${data.token}`,
               };
-              response = await Reflect.apply(originalFetch, that, [resource, config]);
+              response = await Reflect.apply(originalFetch, that, [ resource, config ]);
             } else {
               throw new Error('Failed to refresh token.');
             }
@@ -110,11 +117,6 @@ export const useJWT = () => {
   };
 };
 
-export const clearUserData = () => {
-  localStorage.removeItem('token');
-  store.dispatch(clear());
-};
-
-// store.subscribe(() => {
-//   console.log(store.getState());
-// });
+store.subscribe(() => {
+  console.log(store.getState());
+});

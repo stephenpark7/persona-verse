@@ -3,13 +3,34 @@ import { TweetParams } from './tweet';
 import { RequestBody } from '.';
 import { NavigateFunction } from 'react-router-dom';
 
-export interface HTTPResponse {
+export interface JsonResponse {
   message: string;
-  user: JWT;
+  jwt: JWT;
   tweet: TweetParams;
   tweets: TweetParams[];
-  accessToken: JWT;
 };
+
+export interface ApiCall {
+  method: string,
+  controller: string,
+  action: string,
+  body: RequestBody,
+  options?: RequestInit,
+  headers?: Record<string, string>,
+}
+
+//
+
+export interface Register {
+  formData: RequestBody,
+  navigate: NavigateFunction,
+  showToast: boolean,
+  autoLogin: boolean,
+}
+
+//
+
+
 
 export interface UsersSignupParams {
   username: string;
@@ -29,3 +50,8 @@ export interface TweetPostParams {
 export interface APIFunction {
   (formData: RequestBody, navigate: NavigateFunction, showToast?: boolean, autoLogin?: boolean): Promise<void>;
 };
+
+//
+
+// expot interface RequestURL {
+  

@@ -3,7 +3,7 @@ import { RequestBody } from 'src/interfaces';
 import { APIFunction } from 'src/interfaces/api';
 
 export function getLocalStorageToken() {
-  const token = localStorage.getItem('token');
+  const token =  localStorage.getItem('jwt');
   return token ? JSON.parse(token) : null;
 }
 

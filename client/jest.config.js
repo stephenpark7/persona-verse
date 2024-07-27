@@ -2,7 +2,7 @@
 module.exports = {
   preset: 'ts-jest',
   transform: {
-    "^.+\\.(js|jsx|ts|tsx)$": "ts-jest",
+    "^.+\\.test.(js|jsx|ts|tsx)$": "ts-jest",
   },
   globals: {
     "ts-jest": {
