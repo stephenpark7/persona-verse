@@ -4,15 +4,15 @@ import {
   RequestBody,
 } from '../interfaces';
 import { apiCall, handleError } from './index';
-import { store, set, clearUserData } from '../stores/';
-import { JsonResponse, Register } from 'src/interfaces/api';
+import { store, set, clearUserData } from '../stores';
+import { JsonResponse, Login, Register } from 'src/interfaces/api';
 
 async function register({
   formData,
   navigate,
   showToast = true,
   autoLogin = true,
-}: Register ): Promise<void> {
+}: Register): Promise<void> {
   try {
     const responseData = await apiCall({
       method: 'POST',
@@ -26,14 +26,22 @@ async function register({
     }
 
     if (autoLogin) {
-      await login(formData, navigate, false);
+      await login({
+        formData,
+        navigate,
+        showToast: false,
+      });
     }
   } catch (err) {
     handleError(err, 5000);
   }
 }
 
-async function login(formData: RequestBody, navigate: NavigateFunction, showToast: boolean = true): Promise<void> {
+async function login({
+  formData,
+  navigate,
+  showToast,
+}: Login): Promise<void> {
   try {
     const responseData: JsonResponse = await apiCall({
       method: 'POST',
@@ -45,9 +53,9 @@ async function login(formData: RequestBody, navigate: NavigateFunction, showToas
 
     const { jwt } = responseData;
 
-     localStorage.setItem('jwt', JSON.stringify(user));
+    localStorage.setItem('jwt', JSON.stringify(jwt));
 
-    store.dispatch(set(user));
+    store.dispatch(set({ jwt: jwt }));
 
     if (showToast) {
       toast.success(responseData.message);

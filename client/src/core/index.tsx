@@ -1,6 +1,6 @@
 import { Provider } from './Provider';
 import { Router } from './Router';
-import { Toast } from './Toast.js';
+import { Toast } from './Toast';
 
 export {
   Provider,

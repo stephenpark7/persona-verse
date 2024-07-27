@@ -1,20 +1,23 @@
-import { NavigateFunction } from 'react-router-dom';
+// import { NavigateFunction } from 'react-router-dom';
 import { RequestBody } from 'src/interfaces';
-import { APIFunction } from 'src/interfaces/api';
+import { SubmitForm } from 'src/interfaces/api';
 
 export function getLocalStorageToken() {
   const token =  localStorage.getItem('jwt');
   return token ? JSON.parse(token) : null;
 }
 
-export async function submitForm(
-  e: React.FormEvent<HTMLFormElement>, 
-  formData: RequestBody, 
-  apiFunction: APIFunction, 
-  navigate: NavigateFunction,
-): Promise<void> {
+export async function submitForm({
+  e,
+  formData,
+  apiFunction,
+  navigate,
+}: SubmitForm): Promise<void> {
   e.preventDefault();
-  await apiFunction(formData, navigate);
+  await apiFunction({
+    formData,
+    navigate,
+  });
 }
 
 export function updateForm(

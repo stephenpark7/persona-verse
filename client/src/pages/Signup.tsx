@@ -20,7 +20,12 @@ const Signup: React.FC = () => {
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    submitForm(e, formData, API.register, navigate);
+    submitForm({
+      e,
+      formData,
+      apiFunction: API.register,
+      navigate,
+    });
   };
 
   return (

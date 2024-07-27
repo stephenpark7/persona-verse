@@ -1,22 +1,27 @@
 import { toast } from 'react-toastify';
 import {
-  TweetPostParams,
   TweetParams,
   JWT,
-  HTTPResponse,
 } from '../interfaces';
-import { apiCall, handleError } from './index';
+import { apiCall, handleError } from './';
+import { GetTweets, JsonResponse, PostTweet } from '../interfaces/api';
 
-async function getTweets(
-  userData: JWT,
-  setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
-): Promise<void> {
+async function getTweets({
+  userData,
+  setTweetData,
+}: GetTweets): Promise<void> {
   try {
     if (!userData) {
       throw new Error('User data is missing.');
     }
 
-    const responseData = await apiCall('GET', 'tweets', 'get', null, {});
+    const responseData = await apiCall({
+      method: 'GET',
+      controller: 'tweets',
+      action: 'get',
+      body: null,
+      options: {},
+    });
 
     setTweetData(responseData.tweets);
   }
@@ -25,24 +30,30 @@ async function getTweets(
   }
 }
 
-async function postTweet(
-  userData: JWT,
-  payload: TweetPostParams,
-  tweetData: TweetParams[],
-  setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
-): Promise<void> {
+async function postTweet({
+  userData,
+  payload,
+  tweetData,
+  setTweetData,
+}: PostTweet): Promise<void> {
   try {
     if (!userData) {
       throw new Error('User data is missing.');
     }
 
-    const responseData = await apiCall('POST', 'tweets', 'create', payload, {}, {
-      'Authorization': `Bearer ${userData.token}`,
+    const responseData = await apiCall({
+      method: 'POST',
+      controller: 'tweets',
+      action: 'create',
+      body: payload,
+      options: {},
+      headers: {
+        'Authorization': `Bearer ${userData.token}`,
+      },
     });
 
-
     function addUserDataToTweet(
-      responseData: HTTPResponse,
+      responseData: JsonResponse,
       userParams: JWT,
     ): TweetParams {
       const { tweet } = responseData;

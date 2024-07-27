@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useJWT } from '../stores';
+import { useUserState } from '../stores';
 import TweetContainer from '../components/TweetContainer';
 import LogoutButton from '../components/LogoutButton';
 
 const Home: React.FC = (): React.JSX.Element => {
-  const { jwt, isLoggedIn } = useJWT();
+  const { userState, isLoggedIn } = useUserState();
 
   function renderBodyContent() {
-    if (!isLoggedIn) {
+    if (!isLoggedIn || !userState.jwt?.payload) {
       return (
         <>
           <p>Create an account or log in.</p>
@@ -25,7 +25,7 @@ const Home: React.FC = (): React.JSX.Element => {
 
     return (
       <>
-        <p>Welcome {jwt?.user?.payload.displayName ?? jwt?.user?.payload.username}!</p>
+        <p>Welcome {userState.jwt.payload.displayName ?? userState.jwt.payload.username}!</p>
         <TweetContainer />
         <LogoutButton />
       </>

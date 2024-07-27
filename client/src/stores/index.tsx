@@ -1,6 +1,6 @@
 import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux';
-import { State, User } from 'src/interfaces/user';
+import { JWT, State, User } from 'src/interfaces/user';
 import API from '../api';
 import { useOnMountUnsafe } from '../../src/hooks';
 // import { JWTWrapper, JWT } from '../../src/interfaces/user';
@@ -55,7 +55,7 @@ export const useUserState = () => {
     if (!userState) {
       const token =  localStorage.getItem('jwt');
       if (token) {
-        const data = JSON.parse(token);
+        const data: State = JSON.parse(token);
         dispatch(set(data));
       }
     }
@@ -86,9 +86,9 @@ export const useUserState = () => {
         try {
           let response = await Reflect.apply(originalFetch, that, [ resource, config ]);
           if (response.status === 401) {
-            const data = await API.refreshToken();
+            const data: JWT = await API.refreshToken() as JWT;
             if (data) {
-              dispatch(set(data));
+              dispatch(set({ jwt: data }));
               config.headers = {
                 ...config.headers,
                 Authorization: `Bearer ${data.token}`,
@@ -110,7 +110,7 @@ export const useUserState = () => {
   });
 
   return {
-    jwt,
+    userState,
     dispatch,
     isLoggedIn,
     clearUserData,

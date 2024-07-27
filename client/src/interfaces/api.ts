@@ -24,13 +24,36 @@ export interface ApiCall {
 export interface Register {
   formData: RequestBody,
   navigate: NavigateFunction,
-  showToast: boolean,
-  autoLogin: boolean,
+  showToast?: boolean | undefined,
+  autoLogin?: boolean | undefined,
+}
+
+export interface Login {
+  formData: RequestBody,
+  navigate: NavigateFunction,
+  showToast?: boolean | undefined,
+}
+
+export interface GetTweets {
+  userData: JWT,
+  setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
+}
+
+export interface PostTweet {
+  userData: JWT,
+  payload: TweetPostParams,
+  tweetData: TweetParams[],
+  setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
 }
 
 //
 
-
+export interface SubmitForm {
+  e: React.FormEvent<HTMLFormElement>,
+  formData: RequestBody,
+  apiFunction: ApiFunction,
+  navigate: NavigateFunction,
+}
 
 export interface UsersSignupParams {
   username: string;
@@ -47,11 +70,6 @@ export interface TweetPostParams {
   message: string;
 };
 
-export interface APIFunction {
-  (formData: RequestBody, navigate: NavigateFunction, showToast?: boolean, autoLogin?: boolean): Promise<void>;
-};
+export type ApiFunction = ({ ...args }: Register | Login) => Promise<void>;
 
-//
-
-// expot interface RequestURL {
-  
+export type ApiCallback = (params: ApiCall) => Promise<void>;

@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 import { JsonResponse, ApiCall } from '../interfaces/api';
-import { refreshToken } from './refresh';
-import { register, login, logout } from './users';
-import { getTweets, postTweet } from './tweets';
+import { refreshToken } from './refresh.api';
+import { register, login, logout } from './users.api';
+import { getTweets, postTweet } from './tweets.api';
 
 function apiUrl(controller: string, action: string): string {
   const protocol = process.env.API_PROTOCOL;

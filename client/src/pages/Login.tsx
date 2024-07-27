@@ -19,7 +19,12 @@ const Login: React.FC = () => {
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    submitForm(e, formData, API.login, navigate);
+    submitForm({
+      e,
+      formData,
+      apiFunction: API.login,
+      navigate,
+    });
   };
 
   return (

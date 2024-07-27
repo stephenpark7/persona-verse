@@ -1,4 +1,4 @@
-import { refreshToken } from '../../api/refresh';
+import { refreshToken } from '../../api/refresh.api';
 
 jest.mock('../../api/refresh', () => ({
   refreshToken: jest.fn(),
