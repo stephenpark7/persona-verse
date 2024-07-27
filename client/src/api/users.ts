@@ -1,10 +1,11 @@
 import { NavigateFunction } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
+  JWT,
   RequestBody,
 } from '../interfaces';
 import { apiCall, handleError } from './index';
-import { store, set, clear } from '../stores/';
+import { store, set, clear, clearUserData } from '../stores/';
 
 async function register(
   formData: RequestBody,
@@ -45,14 +46,14 @@ async function login(formData: RequestBody, navigate: NavigateFunction, showToas
 }
 
 async function logout(
+  jwt: JWT,
   navigate: NavigateFunction,
   showToast: boolean = true,
 ): Promise<void> {
   try {
     const responseData = await apiCall('POST', 'users', 'logout', null, { credentials: 'include' });
 
-    localStorage.removeItem('token');
-    store.dispatch(clear());
+    clearUserData();
 
     if (showToast) {
       toast.success(responseData.message);

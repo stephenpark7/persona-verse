@@ -1,13 +1,12 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
-import React, { PropsWithChildren, useCallback } from 'react';
+import React, { PropsWithChildren, useCallback, useState } from 'react';
 import { Provider } from 'react-redux';
 import { JWT } from 'src/interfaces';
 import API from '../api';
-import { NavigateFunction } from 'react-router-dom';
 import { JWTWrapper } from 'src/interfaces/user';
 import { useSelector, useDispatch } from 'react-redux';
 
-const jwt = createSlice({
+const jwtSlice = createSlice({
   name: 'jwt',
   initialState: {
     user: null,
@@ -22,11 +21,11 @@ const jwt = createSlice({
   },
 });
 
-export const { set, clear } = jwt.actions;
+export const { set, clear } = jwtSlice.actions;
 
 export const store = configureStore({
   reducer: {
-    jwt: jwt.reducer,
+    jwt: jwtSlice.reducer,
   },
 });
 
@@ -39,20 +38,22 @@ export function UserStoreProvider({ children }: PropsWithChildren) {
 }
 
 export const useJWT = () => {
-  const storedJwt = useSelector((state: JWTWrapper) => state.jwt.user);
-  const token = localStorage.getItem('token');
-  const [ jwt, setJWT ] = React.useState<JWT>(storedJwt ?? JSON.parse(token as string));
+  const jwt = useSelector((state: JWTWrapper) => state.jwt.user);
+  const dispatch = useDispatch();
 
-  useCallback(() => {
-    if (!storedJwt) {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const data = JSON.parse(token);
-        store.dispatch(set(data));
-        setJWT(data);
-      }
-    }
-  }, [ storedJwt ]);
+  const isLoggedIn = () => jwt !== null;
+
+  // useCallback(() => {
+  //   if (!jwt) {
+  //     console.log('storedJwt is null');
+  //     const token = localStorage.getItem('token');
+  //     if (token) {
+  //       const data = JSON.parse(token);
+  //       store.dispatch(set(data));
+  //       setJWT(data);
+  //     }
+  //   }
+  // }, [ jwt ]);
 
   const { fetch: originalFetch } = window;
 
@@ -68,11 +69,9 @@ export const useJWT = () => {
       '/api/refresh',
     ];
 
-    const isPathRefreshable = (url: string, paths: string[]): boolean => {
-      return !paths.some(path => url.endsWith(path));
-    };
+    const isPathRefreshable = (url: string) => !ignoredPaths.some(path => url.endsWith(path));
 
-    if (url.includes('/api/') && isPathRefreshable(url, ignoredPaths)) {
+    if (url.includes('/api/') && isPathRefreshable(url)) {
       if (jwt) {
         config.headers = {
           ...config.headers,
@@ -84,21 +83,19 @@ export const useJWT = () => {
             const data = await API.refreshToken();
             if (data) {
               store.dispatch(set(data));
-              setJWT(data);
               config.headers = {
                 ...config.headers,
                 Authorization: `Bearer ${data.token}`,
               };
-              const response = await originalFetch(resource, config);
-              return response;
+              return await originalFetch(resource, config);
             } else {
-              throw new Error;
+              throw new Error('Error refreshing token.');
             }
           }
           return response;
         }
         catch (error: unknown) {
-          clearUserData(setJWT);
+          clearUserData();
           throw new Error('Error refreshing token.');
         }
       }
@@ -108,32 +105,16 @@ export const useJWT = () => {
 
   return {
     jwt,
-    dispatch: useDispatch(),
-    isLoggedIn: jwt !== null,
+    dispatch,
+    isLoggedIn,
   };
 };
 
-export const clearUserData = (setJWT: React.Dispatch<React.SetStateAction<JWT>>) => {
+export const clearUserData = () => {
   localStorage.removeItem('token');
   store.dispatch(clear());
-  setJWT(null);
 };
 
-export async function logout(navigate: NavigateFunction) {
-  await API.logout(navigate);
-}
-
-// export function userStore() {
-//   // const localStorageJwt = localStorage.getItem('token') ?? null;
-//   // const userData = store.getState().jwt.value ?? JSON.parse(localStorageJwt as string);
-//   return {
-//     userData: store.getState().jwt.user,
-//     setUserData: (data: JWT) => store.dispatch(set(data)),
-//     isLoggedIn: store.getState() !== null,
-//     logout: logout,
-//   };
-// }
-
-// store.subscribe(() => {
-//   console.log(store.getState());
-// });
+store.subscribe(() => {
+  console.log(store.getState());
+});
