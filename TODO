@@ -1,5 +1,5 @@
 In Progress:
-  ✔ Fix issue with fetch intercept not working properly @started(24-07-26 06:59) @done(24-07-26 14:46) @lasted(7h47m29s)
+  ☐ Fix code while refactoring @started(24-07-27 04:55)
   ☐ Add Redux for data store @started(24-07-26 06:59)
   ☐ Jest tests for local storage
   ☐ Fix issue where it fails to resend the request after getting a new token
@@ -20,6 +20,7 @@ To-Do:
   ☐ Use Vite for frontend
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Fix issue with fetch intercept not working properly @started(24-07-26 06:59) @done(24-07-26 14:46) @lasted(7h47m29s)
   ✔ Fix issue where fetch intercept uses old token @done(24-07-24 05:46)
   ✔ Dockerize app @done(24-07-10 03:06)
   ✔ Failed to fetch bug for log out @done(24-07-13 12:08)

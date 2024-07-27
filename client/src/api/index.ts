@@ -35,6 +35,7 @@ async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
 }
 
 export async function apiCall(params: ApiCall): Promise<JsonResponse> {
+  // should handle error here instead of in each function
   return await sendHttpRequest(params);
 }
 

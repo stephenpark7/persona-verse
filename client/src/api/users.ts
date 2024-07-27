@@ -12,27 +12,7 @@ async function register({
   navigate,
   showToast = true,
   autoLogin = true,
-}: Register
-): Promise<void> {
-  try {
-    const responseData = await apiCall({
-      method: 'POST',
-      controller: 'users',
-      action: 'signup',
-      body: formData,
-    });
-
-    if (showToast) {
-      toast.success(responseData.message);
-    }
-
-    if (autoLogin) {
-      await login(formData, navigate, false);
-    }
-  } catch (err) {
-    handleError(err, 5000);
-  }
-}
+}: Register ): Promise<void> {
   try {
     const responseData = await apiCall({
       method: 'POST',
