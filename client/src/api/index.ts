@@ -3,8 +3,7 @@ import { RequestBody, HTTPResponse } from '../interfaces';
 import { register, login, logout } from './users';
 import { getTweets, postTweet } from './tweets';
 import { refreshToken } from './refresh';
-import useFetchIntercept from './fetchIntercept';
-import { clearUserData } from '../stores';
+// import useFetchIntercept from './fetchIntercept';
 
 // TODO: use object destructuring instead of using multiple arguments
 export async function apiCall(
@@ -33,8 +32,6 @@ export async function apiCall(
 
   if (!response.ok) {
     const errorMessage = responseData?.message ?? 'An unexpected error occurred.';
-    clearUserData();
-    localStorage.removeItem('token');
     throw new Error(errorMessage);
   }
 
@@ -47,7 +44,7 @@ export function handleError(err: unknown, autoClose?: number): void {
   }
 }
 
-useFetchIntercept();
+// useFetchIntercept();
 
 export default {
   login,

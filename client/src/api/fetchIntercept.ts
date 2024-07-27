@@ -1,129 +1,46 @@
-// import { toast } from 'react-toastify';
-import * as fetchIntercept from 'fetch-intercept';
-// import { refreshToken } from './refresh';
+// import { store, set, clearUserData } from '../stores';
+// import API from '../api';
 
-const useFetchIntercept = (): void => {
-  fetchIntercept.register({
-    request: function (url, config) {
-      config.headers = config.headers || {};
-      return [ url, config ];
-    },
-    requestError: function (error) {
-      return Promise.reject(error);
-    },
-    response: function (response) {
-      // if (response.status !== 401 || response.url.endsWith('/login')) {
-      //   return response;
-      // }
-      // try {
-      //   const responseData = refreshToken();
+// interface JWT {
+//   token: string;
+// }
 
-      //   if (!responseData) {
-      //     throw new Error('Error refreshing token.');
-      //   }
+// interface Config extends RequestInit {
+//   headers?: HeadersInit;
+// }
 
-      //   response.json = async () => responseData;
-      //   return response;
-      // } catch (error) {
-      //   toast.error('Session expired. Please log in again.');
-      //   return response;
-      // }
-      return response;
-    },
-    responseError: function (error) {
-      return Promise.reject(error);
-    },
-  })
-};
-
-export default useFetchIntercept;
-
-// import { toast } from 'react-toastify';
-// import * as fetchIntercept from 'fetch-intercept';
-// import { FetchInterceptorResponse } from 'fetch-intercept';
-// import { refreshToken } from './refresh';
-// // import { apiCall } from '.';
-
-// const useFetchIntercept = (): void => {
-//   fetchIntercept.register({
-//     request: function (url, config) {
-//       console.log(url, config);
-//       return [ url, config ];
-//     },
-//     requestError: function (error) {
-//       toast.error(error.message);
-//       return Promise.reject(error);
-//     },
-//     response: function (response): FetchInterceptorResponse {
+// export const fetchIntercept = async (originalFetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>, jwt: JWT | null, setJWT: React.Dispatch<React.SetStateAction<JWT>>) => (async (...args: [RequestInfo, Config?]): Promise<Response> => {
+//   const [ resource, config = {} ] = args;
+//   const url = resource.toString().replace(`http://${process.env.API_HOST_NAME}:${process.env.API_PORT}`, '');
+//   if (url.startsWith('/api') && !url.startsWith('/api/signup') && !url.startsWith('/api/login')) {
+//     if (jwt) {
+//       config.headers = {
+//         ...config.headers,
+//         Authorization: `Bearer ${jwt.token}`,
+//       };
 //       try {
-//         const clonedResponse = response.clone();
-
-//         if (response.status === 401 &&
-//           response.url.endsWith('/refresh')
-//         ) {
-//           throw new Error;
-//         }
-//         if (response.status !== 401 ||
-//           response.url.endsWith('/login') ||
-//           response.url.endsWith('/register')) {
-//           return response;
-//         }
+//         let response = await originalFetch(resource, config);
 //         if (response.status === 401) {
-//           // const json = () => refreshToken().then((res) => clonedResponse.json().then((data) => ({ ...data, 
-//           //   headers: {
-//           //     ...clonedResponse.headers,
-//           //     'Authorization': `Bearer ${res?.token}`,
-//           //   }}
-//           // )));
-//           const json = () =>
-//             clonedResponse
-//               .json()
-//               .then((data) => ({ ...data, headers: {
-//                 ...clonedResponse.headers,
-//                 'Authorization': `Bearer ${data.token}`,
-//               }}
-//             ));
-
-//           console.log(response);
-//           console.log(clonedResponse);
-//           return { ...response, headers: {
-//             ...response.headers,
-//             'Authorization': `Bearer ${response.token}`,
-//           } };
-
-//           // refreshToken().then((res) => {
-//           //   if (!res?.token) {
-//           //     throw new Error('Error refreshing token.');
-//           //   }
-//           //   const json = () => clonedResponse.json().then((data) => ({ ...data, headers: {
-//           //     ...response.headers,
-//           //     'Authorization': `Bearer ${res.token}`,
-//           //   }}));
-//           //   response.json = json;
-//           //   return response;
-//           //   // console.log(response);
-//           //   // const request = new Request(response.url, {
-//           //   //   headers: {
-//           //   //     ...response.headers,
-//           //   //     'Authorization': `Bearer ${res.token}`,
-//           //   //   },
-//           //   // });
-//           //   // console.log(request);
-//           //   // return request;
-//           // });
+//           const data = await API.refreshToken();
+//           if (data) {
+//             store.dispatch(set(data));
+//             setJWT(data);
+//             config.headers = {
+//               ...config.headers,
+//               Authorization: `Bearer ${data.token}`,
+//             };
+//             response = await originalFetch(resource, config);
+//             return response;
+//           } else {
+//             throw new Error('Error refreshing token.');
+//           }
 //         }
 //         return response;
-//       } catch (error) {
-//         toast.error('Session expired. Please log in again.');
-//         return response;
+//       } catch (error: unknown) {
+//         // clearUserData(setJWT);
+//         throw new Error('Error refreshing token.');
 //       }
-//     },
-//     responseError: function (error) {
-//       toast.error(error.message);
-//       return Promise.reject(error);
-//     },
-//   })
-// };
-
-// export default useFetchIntercept;
-
+//     }
+//   }
+//   return originalFetch(resource, config);
+// });

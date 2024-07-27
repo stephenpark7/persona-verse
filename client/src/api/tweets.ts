@@ -16,9 +16,7 @@ async function getTweets(
       throw new Error('User data is missing.');
     }
 
-    const responseData = await apiCall('GET', 'tweets', 'get', null, {}, {
-      'Authorization': `Bearer ${userData.token}`,
-    });
+    const responseData = await apiCall('GET', 'tweets', 'get', null, {});
 
     setTweetData(responseData.tweets);
   }

@@ -1,8 +1,10 @@
 In Progress:
+  ✔ Fix issue with fetch intercept not working properly @started(24-07-26 06:59) @done(24-07-26 14:46) @lasted(7h47m29s)
+  ☐ Add Redux for data store @started(24-07-26 06:59)
   ☐ Jest tests for local storage
   ☐ Fix issue where it fails to resend the request after getting a new token
 To-Do:
-  ☐ Add Redux for data store
+  ☐ Use React query for fetching data and caching
   ☐ Add profile page
     ☐ Add profile picture
       ☐ Add bio
