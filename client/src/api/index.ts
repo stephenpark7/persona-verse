@@ -30,14 +30,14 @@ async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
   // });
 
   const config: AxiosRequestConfig = {
-    baseURL: apiUrl(controller, action),
+    url: apiUrl(controller, action),
     headers: {
       'Content-Type': 'application/json',
     } as RawAxiosRequestHeaders,
     method,
     data: body,
-    // ...options,  
-    // ...headers,
+    ...options,  
+    ...headers,
   };
   
   const response: AxiosResponse = await axios.request(config);
@@ -53,7 +53,7 @@ async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
   // });
 
   // const jsonResponse: JsonResponse = await response.json();
-  console.log('response', response);
+  // console.log('response', response);
 
   if (response.statusText !== 'OK') {
     const errorMessage: string = response.data.message ?? 'An unexpected error occurred.';

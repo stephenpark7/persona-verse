@@ -8,7 +8,7 @@ async function refreshToken(): Promise<JWT | void> {
       method: 'POST',
       controller: 'refresh',
       action: '',
-      // options: { withCredentials: true },
+      options: { withCredentials: true },
     });
 
     const { jwt } = responseData;
@@ -17,8 +17,7 @@ async function refreshToken(): Promise<JWT | void> {
       throw new Error('JWT data is missing.');
     }
 
-    // store.dispatch(setJwt(jwt));
-
+    store.dispatch(setJwt(jwt));
     return jwt;
   }
   catch (err: unknown) {
