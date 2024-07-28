@@ -14,7 +14,7 @@ This monorepo contains a Twitter clone application built using modern web techno
 ## Setup Instructions
 
 1. **Update Environment Variables**: \
-Modify the .env file in the server folder to match your database configuration.
+Modify the .env files in the client/server folders to match your configuration.
 
 2. **Install Dependencies**: \
 From the root directory, install dependencies for both client and server: \
@@ -28,4 +28,4 @@ Start the client: \
 
 4. **Docker Setup**: \
 Build the Docker image and run it in detached mode: \
-`docker-compose up -d` \
+`docker-compose up -d`
