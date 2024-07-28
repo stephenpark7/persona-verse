@@ -9,7 +9,7 @@ const Home: React.FC = (): React.JSX.Element => {
   const { userState, isLoggedIn } = useUserState();
 
   function renderBodyContent() {
-    if (!isLoggedIn || !userState.jwt?.payload) {
+    if (!isLoggedIn) {
       return (
         <>
           <p>Create an account or log in.</p>
@@ -25,7 +25,7 @@ const Home: React.FC = (): React.JSX.Element => {
 
     return (
       <>
-        <p>Welcome {userState.jwt.payload.displayName ?? userState.jwt.payload.username}!</p>
+        <p>Welcome {userState!.payload.displayName ?? userState!.payload.username}!</p>
         <TweetContainer />
         <LogoutButton />
       </>

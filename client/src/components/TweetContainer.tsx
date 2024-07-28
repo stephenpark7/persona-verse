@@ -19,7 +19,7 @@ export default function TweetContainer() {
     if (!isLoggedIn) return;
     
     await API.getTweets({
-      userData: userState.jwt,
+      userData: userState,
       setTweetData,
     });
   }
@@ -37,7 +37,7 @@ export default function TweetContainer() {
     textRef.current.value = '';
 
     await API.postTweet({
-      userData: userState.jwt,
+      userData: userState,
       payload: { message: message },
       tweetData,
       setTweetData,

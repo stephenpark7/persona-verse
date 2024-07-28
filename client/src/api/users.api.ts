@@ -1,11 +1,8 @@
 import { NavigateFunction } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import {
-  RequestBody,
-} from '../interfaces';
+import { JsonResponse, Login, Register } from 'src/interfaces/api';
 import { apiCall, handleError } from './index';
 import { store, set, clearUserData } from '../stores';
-import { JsonResponse, Login, Register } from 'src/interfaces/api';
 
 async function register({
   formData,

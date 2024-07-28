@@ -24,7 +24,7 @@ export type User = {
 };
 
 export type State = {
-  jwt: JWT;
+  jwt: JWT | null;
 };
 
 export type JWT = {

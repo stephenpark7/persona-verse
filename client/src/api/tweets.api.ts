@@ -30,6 +30,8 @@ async function getTweets({
   }
 }
 
+// Refactor to use fetch intercept
+// instead of passing in JWT`
 async function postTweet({
   userData,
   payload,

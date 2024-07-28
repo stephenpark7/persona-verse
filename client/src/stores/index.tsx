@@ -14,7 +14,9 @@ import { useOnMountUnsafe } from '../../src/hooks';
 // };
 
 const initialState: User = {
-  value: null,
+  value: {
+    jwt: null,
+  },
 };
 
 const userSlice = createSlice({
@@ -46,17 +48,21 @@ export const clearUserData = () => {
 };
 
 export const useUserState = () => {
-  const userState = useSelector((state: State) => state);
+  const userState = useSelector((state: State) => state.jwt);
   const dispatch = useDispatch();
 
   const isLoggedIn = !!(userState);
+  console.log('userState', userState);
+  console.log('isLoggedIn', isLoggedIn);
 
   useOnMountUnsafe(function setLocalStorageToken() {
     if (!userState) {
+      console.log('userState is null');
       const token =  localStorage.getItem('jwt');
       if (token) {
         const data: State = JSON.parse(token);
         dispatch(set(data));
+        console.log('data', data);
       }
     }
   });
@@ -80,7 +86,7 @@ export const useUserState = () => {
       if (url.includes('/api/') && isPathRefreshable(url)) {
         config.headers = {
           ...config.headers,
-          Authorization: `Bearer ${userState.jwt.token}`,
+          Authorization: `Bearer ${userState.token}`,
         };
 
         try {

@@ -88,6 +88,7 @@ function getClientEnvironment(publicUrl) {
         // It is defined here so it is available in the webpackHotDevClient.
         FAST_REFRESH: process.env.FAST_REFRESH !== 'false',
         // Add other environment variables to the client environment here.
+        API_PROTOCOL: process.env.API_PROTOCOL,
         API_HOST_NAME: process.env.API_HOST_NAME,
         API_PORT: process.env.API_PORT,
       },

@@ -35,12 +35,12 @@ export interface Login {
 }
 
 export interface GetTweets {
-  userData: JWT,
+  userData: JWT | null,
   setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
 }
 
 export interface PostTweet {
-  userData: JWT,
+  userData: JWT | null,
   payload: TweetPostParams,
   tweetData: TweetParams[],
   setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
