@@ -1,4 +1,7 @@
 In Progress:
+  ☐ Adding loading spinners
+  ☐ Update TODO
+  ☐ Update README
   ☐ Check token is expired on client before sending a request
   ☐ Fix code while refactoring @started(24-07-27 04:55)
   ☐ Add Redux for data store @started(24-07-26 06:59)
