@@ -3,6 +3,7 @@ import { JsonResponse, ApiCall } from '../interfaces/api';
 import { refreshToken } from './refresh.api';
 import { register, login, logout } from './users.api';
 import { getTweets, postTweet } from './tweets.api';
+import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 
 function apiUrl(controller: string, action: string): string {
   const protocol = process.env.API_PROTOCOL;
@@ -14,29 +15,64 @@ function apiUrl(controller: string, action: string): string {
 async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
   const { method, controller, action, body, options, headers } = params;
 
-  const response: Response = await fetch(apiUrl(controller, action), {
-    method: method,
+  // const response: Response = await fetch(apiUrl(controller, action), {
+  //   method: method,
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     ...headers,
+  //   },
+  //   body: body ? JSON.stringify(body) : null,
+  //   ...options,
+  // });
+
+  // const client = axios.create({
+  //   baseURL: apiUrl(controller, action),
+  // });
+
+  const config: AxiosRequestConfig = {
+    url: apiUrl(controller, action),
     headers: {
       'Content-Type': 'application/json',
-      ...headers,
-    },
-    body: body ? JSON.stringify(body) : null,
-    ...options,
-  });
+    } as RawAxiosRequestHeaders,
+    method,
+    data: body,
+    ...options,  
+    ...headers,
+  };
+  
+  const response: AxiosResponse = await axios.request(config);
 
-  const jsonResponse: JsonResponse = await response.json();
+  //   url: apiUrl(controller, action),
+  //   method,
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     ...headers,
+  //   },
+  //   data: body,
+  //   ...options,
+  // });
 
-  if (!response.ok) {
-    const errorMessage: string = jsonResponse.message ?? 'An unexpected error occurred.';
+  // const jsonResponse: JsonResponse = await response.json();
+  // console.log('response', response);
+
+  if (response.statusText !== 'OK') {
+    const errorMessage: string = response.data.message ?? 'An unexpected error occurred.';
     throw new Error(errorMessage);
   }
 
-  return jsonResponse;
+  return response.data;
 }
 
 export async function apiCall(params: ApiCall): Promise<JsonResponse> {
-  // should handle error here instead of in each function
-  return await sendHttpRequest(params);
+  try {
+    return await sendHttpRequest(params);
+  }
+  catch (err: unknown) {
+    handleError(err);
+    return {
+      message: 'An unexpected error occurred.',
+    };
+  }
 }
 
 export function handleError(err: unknown, autoClose?: number): void {
@@ -45,7 +81,7 @@ export function handleError(err: unknown, autoClose?: number): void {
   }
 }
 
-export default {
+export {
   login,
   register,
   logout,

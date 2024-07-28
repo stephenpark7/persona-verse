@@ -1,8 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
+import { Home, Login, Signup } from '../pages';
 
 const pages: RouteObject[] = [
   {

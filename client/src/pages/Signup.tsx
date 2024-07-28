@@ -5,9 +5,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { RequestBody } from '../interfaces';
 import { submitForm, updateForm } from '../utils';
-import API from '../api';
+import { register } from '../api';
 
-const Signup: React.FC = () => {
+export const Signup: React.FC = () => {
   const navigate = useNavigate();
   const [ formData, setFormData ] = useState<RequestBody>({
     username: '',
@@ -23,7 +23,7 @@ const Signup: React.FC = () => {
     submitForm({
       e,
       formData,
-      apiFunction: API.register,
+      apiFunction: register,
       navigate,
     });
   };
@@ -49,7 +49,5 @@ const Signup: React.FC = () => {
         </Col>
       </Row>
     </Container>
-  )
+  );
 };
-
-export default Signup;

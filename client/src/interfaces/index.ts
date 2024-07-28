@@ -3,10 +3,10 @@ import {
   UsersSignupParams,
   UsersLoginParams,
   TweetPostParams,
+  TweetData,
 } from './api';
-import { TweetParams } from './tweet';
 
-type RequestBody = UsersSignupParams | UsersLoginParams | TweetPostParams | null;
+type RequestBody = UsersSignupParams | UsersLoginParams | TweetPostParams;
 type SetUserData = React.Dispatch<React.SetStateAction<JWT>>;
 
 export {
@@ -14,5 +14,5 @@ export {
   TweetPostParams,
   JWT,
   SetUserData,
-  TweetParams,
+  TweetData,
 };

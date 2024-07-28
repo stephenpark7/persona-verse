@@ -12,4 +12,4 @@ export const Provider = ({ children }: ProviderProps): React.JSX.Element => {
       {children}
     </ReactReduxProvider>
   );
-}
+};

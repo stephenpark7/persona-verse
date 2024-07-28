@@ -1,6 +1,5 @@
 In Progress:
-  ☐ Tweets dont get updated if we change users
-    ☐ Doesn't always update, inconsistent
+  ☐ Check token is expired on client before sending a request
   ☐ Fix code while refactoring @started(24-07-27 04:55)
   ☐ Add Redux for data store @started(24-07-26 06:59)
   ☐ Jest tests for local storage
@@ -22,6 +21,9 @@ To-Do:
   ☐ Use Vite for frontend
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Tweets dont get updated if we change users @started(24-07-28 04:52) @done(24-07-28 19:10) @lasted(14h18m39s)
+  ✔ To reproduce, log in as user 1, refresh, and quickly logut out and log in as user 2 @done(24-07-28 19:10)
+  ✔ Tweets/get will use the old user's token @done(24-07-28 19:10)
   ✔ Fix issue with fetch intercept not working properly @started(24-07-26 06:59) @done(24-07-26 14:46) @lasted(7h47m29s)
   ✔ Fix issue where fetch intercept uses old token @done(24-07-24 05:46)
   ✔ Dockerize app @done(24-07-10 03:06)

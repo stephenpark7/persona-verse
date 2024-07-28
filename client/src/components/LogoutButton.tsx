@@ -1,13 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import API from '../api';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../api';
 
-export default function LogoutButton() {
+export const LogoutButton: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();
 
   async function handleLogout() {
-    await API.logout(navigate);
+    await logout(navigate);
   }
 
   return (
@@ -16,4 +16,4 @@ export default function LogoutButton() {
       onClick={handleLogout}>Log out
     </Button>
   );
-}
+};

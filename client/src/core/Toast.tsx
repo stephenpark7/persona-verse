@@ -17,4 +17,4 @@ export const Toast: React.FC = () => {
       transition={Bounce}
     />
   );
-}
+};

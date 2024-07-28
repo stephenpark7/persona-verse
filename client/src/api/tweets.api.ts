@@ -1,37 +1,27 @@
 import { toast } from 'react-toastify';
 import {
-  TweetParams,
+  TweetData,
   JWT,
 } from '../interfaces';
 import { apiCall, handleError } from './';
-import { GetTweets, JsonResponse, PostTweet } from '../interfaces/api';
+import { SetTweetData, JsonResponse, PostTweet } from '../interfaces/api';
 
-async function getTweets({
-  userData,
-  setTweetData,
-}: GetTweets): Promise<void> {
-  try {
-    if (!userData) {
-      throw new Error('User data is missing.');
-    }
+async function getTweets(
+  setTweetData: SetTweetData,
+): Promise<void> {
+  const responseData: JsonResponse = await apiCall({
+    method: 'GET',
+    controller: 'tweets',
+    action: 'get',
+  });
 
-    const responseData = await apiCall({
-      method: 'GET',
-      controller: 'tweets',
-      action: 'get',
-      body: null,
-      options: {},
-    });
-
-    setTweetData(responseData.tweets);
+  if (!responseData.tweets) {
+    throw new Error('Tweet data is missing.');
   }
-  catch (err: unknown) {
-    handleError(err);
-  }
+
+  setTweetData(responseData.tweets);
 }
 
-// Refactor to use fetch intercept
-// instead of passing in JWT`
 async function postTweet({
   userData,
   payload,
@@ -48,16 +38,12 @@ async function postTweet({
       controller: 'tweets',
       action: 'create',
       body: payload,
-      options: {},
-      headers: {
-        'Authorization': `Bearer ${userData.token}`,
-      },
     });
 
     function addUserDataToTweet(
       responseData: JsonResponse,
       userParams: JWT,
-    ): TweetParams {
+    ): TweetData {
       const { tweet } = responseData;
 
       if (!tweet) {
