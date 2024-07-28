@@ -1,21 +1,32 @@
-import { NavigateFunction } from 'react-router-dom';
-import { RequestBody, SetUserData } from 'src/interfaces';
-import { APIFunction } from 'src/interfaces/api';
+import { RequestBody } from '../../src/interfaces';
+import { SubmitForm } from '../../src/interfaces/api';
+import { JWT, StateProperties } from '../../src/interfaces/user';
+import { setJwt, store } from '../../src/stores';
 
-export function getLocalStorageToken() {
-  const token = localStorage.getItem('token');
-  return token ? JSON.parse(token) : null;
+
+export function setLocalStorageToken(
+  state: StateProperties,
+): void {
+  if (state.jwt === null) {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      const jwt: JWT = JSON.parse(token);
+      store.dispatch(setJwt(jwt));
+    }
+  }
 }
 
-export async function submitForm(
-  e: React.FormEvent<HTMLFormElement>, 
-  formData: RequestBody, 
-  apiFunction: APIFunction, 
-  setUserData: SetUserData, 
-  navigate: NavigateFunction,
-): Promise<void> {
+export async function submitForm({
+  e,
+  formData,
+  apiFunction,
+  navigate,
+}: SubmitForm): Promise<void> {
   e.preventDefault();
-  await apiFunction(formData, setUserData, navigate);
+  await apiFunction({
+    formData,
+    navigate,
+  });
 }
 
 export function updateForm(
@@ -28,4 +39,15 @@ export function updateForm(
     ...formData,
     [ name ]: value,
   } as RequestBody);
+}
+
+export function isTokenRefreshablePath(url: string) {
+  const ignoredPaths = [
+    '/api/users/signup',
+    '/api/users/login',
+    '/api/users/logout',
+    '/api/refresh',
+  ];
+
+  return url.includes('/api/') && !ignoredPaths.some(path => url.endsWith(path));
 }

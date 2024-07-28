@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export async function useOnMountUnsafe(effect: () => Promise<void>): Promise<void> {
+export function useOnMountUnsafe(effect: () => Promise<void> | void): Promise<void> | void {
   const initialized = useRef<boolean>(false);
 
   useEffect(() => {

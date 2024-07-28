@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=development
+      - API_PROTOCOL=http
       - API_HOST_NAME=localhost
       - API_PORT=3001
     ports:
@@ -14,6 +15,8 @@ services:
       - backend
     volumes:
       - ./client:/app/client
+      - /app/client/node_modules
+      - /dev/null:/app/client/.env.development.local
     command: bash -c "npm run dev"
   node_app:
     container_name: node_app
@@ -43,7 +46,9 @@ services:
       - backend
     volumes:
       - ./server:/app/server
-
+      - /app/server/node_modules
+      - /dev/null:/app/server/.env.development.local
+      - /dev/null:/app/server/.env.test.local
     command: bash -c "npm run dev"
   db:
     container_name: postgres_db

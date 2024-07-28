@@ -1,16 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../contexts/UserContext';
 import { Button } from 'react-bootstrap';
+import API from '../api';
 
 export default function LogoutButton() {
   const navigate = useNavigate();
-  const { logout } = useUserContext();
+
+  async function handleLogout() {
+    await API.logout(navigate);
+  }
 
   return (
     <Button
       variant='primary'
-      onClick={() => logout(navigate)}>Log out
+      onClick={handleLogout}>Log out
     </Button>
   );
 }
