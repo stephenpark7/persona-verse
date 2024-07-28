@@ -8,10 +8,8 @@ import LogoutButton from '../components/LogoutButton';
 const Home: React.FC = (): React.JSX.Element => {
   const { userState, isLoggedIn } = useUserState();
 
-  // const displayName = userState.value.jwt?.payload?.username;
+  const displayName = userState.jwt?.payload?.username;
   
-  const displayName = 'temp';
-
   function renderBodyContent() {
     if (!isLoggedIn) {
       return (
