@@ -1,6 +1,6 @@
 import { NavigateFunction } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { JsonResponse, Login, Register } from 'src/interfaces/api';
+import { JsonResponse, Login, Register } from '../../src/interfaces/api';
 import { apiCall, handleError } from './index';
 import { store, setJwt, clearJwt } from '../stores';
 

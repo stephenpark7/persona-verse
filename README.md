@@ -8,7 +8,7 @@ This monorepo contains a Twitter clone application built using modern web techno
 - Back-end: Node.js, Express.js, Sequelize
 - Database: PostgreSQL
 - Testing: Jest
-- Linting: ESLint, Stylelint
+- Linting: ESLint, Prettier
 - Containerization: Docker
 
 ## Setup Instructions

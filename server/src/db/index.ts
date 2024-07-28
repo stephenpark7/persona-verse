@@ -1,4 +1,4 @@
-import { ModelDefinitions } from 'src/interfaces';
+import { ModelDefinitions } from '../../src/interfaces';
 import { sequelize } from './sequelize';
 import { User, Tweet, RevokedToken, RefreshToken } from '../models';
 

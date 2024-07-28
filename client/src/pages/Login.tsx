@@ -7,7 +7,7 @@ import { RequestBody } from '../interfaces';
 import { submitForm, updateForm } from '../utils';
 import API from '../api';
 
-const Login: React.FC = () => {
+export const Login: React.FC = () => {
   const navigate = useNavigate();
   const [ formData, setFormData ] = useState<RequestBody>({
     username: '',
@@ -47,5 +47,3 @@ const Login: React.FC = () => {
     </Container>
   )
 }
-
-export default Login;

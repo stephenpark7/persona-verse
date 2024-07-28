@@ -1,9 +1,9 @@
 import { createSlice, configureStore, Dispatch, UnknownAction } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux';
-import { JWT, State, StateProperties } from 'src/interfaces/user';
+import { JWT, State, StateProperties } from '../../src/interfaces/user';
 import API from '../api';
 import { useOnMountUnsafe } from '../../src/hooks';
-import { setLocalStorageToken } from 'src/utils';
+import { setLocalStorageToken } from '../../src/utils';
 import { setJwtReducer, clearJwtReducer } from './reducers';
 
 const initialState: State = {

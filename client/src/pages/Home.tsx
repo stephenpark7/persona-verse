@@ -5,7 +5,7 @@ import { useUserState } from '../stores';
 import TweetContainer from '../components/TweetContainer';
 import LogoutButton from '../components/LogoutButton';
 
-const Home: React.FC = (): React.JSX.Element => {
+export const Home: React.FC = (): React.JSX.Element => {
   const { userState, isLoggedIn } = useUserState();
 
   const displayName = userState.jwt?.payload?.username;
@@ -45,5 +45,3 @@ const Home: React.FC = (): React.JSX.Element => {
     </Container>
   );
 };
-
-export default Home;

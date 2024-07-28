@@ -7,7 +7,7 @@ import { RequestBody } from '../interfaces';
 import { submitForm, updateForm } from '../utils';
 import API from '../api';
 
-const Signup: React.FC = () => {
+export const Signup: React.FC = () => {
   const navigate = useNavigate();
   const [ formData, setFormData ] = useState<RequestBody>({
     username: '',
@@ -51,5 +51,3 @@ const Signup: React.FC = () => {
     </Container>
   )
 };
-
-export default Signup;
