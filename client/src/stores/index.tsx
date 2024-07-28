@@ -22,14 +22,13 @@ const userSlice = createSlice({
   },
 });
 
+const { setJwt, clearJwt } = userSlice.actions;
 
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
   },
 });
-
-const { setJwt, clearJwt } = userSlice.actions;
 
 const useUserState = () => {
   const userState: StateProperties = useSelector((state: ReturnType<typeof store.getState>) => state.user.value);
@@ -39,6 +38,7 @@ const useUserState = () => {
 
   useOnMountUnsafe(() => setLocalStorageToken(userState));
 
+  // TODO: modularize this
   window.fetch = new Proxy(window.fetch, {
     apply: async (originalFetch, that, args) => {
       if (!userState.jwt) return Reflect.apply(originalFetch, that, args);
@@ -98,15 +98,15 @@ const useUserState = () => {
   };
 };
 
-store.subscribe(() => {
-  console.log(store.getState());
-});
+// store.subscribe(() => {
+//   console.log(store.getState());
+// });
 
 export {
   initialState,
   userSlice,
   store,
-  useUserState,
   setJwt,
   clearJwt,
+  useUserState,
 };
