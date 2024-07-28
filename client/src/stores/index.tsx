@@ -1,62 +1,43 @@
-import { createSlice, configureStore, PayloadAction, Dispatch } from '@reduxjs/toolkit'
+import { createSlice, configureStore, Dispatch, UnknownAction } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux';
-import { JWT, State, User } from 'src/interfaces/user';
+import { JWT, State, StateProperties } from 'src/interfaces/user';
 import API from '../api';
 import { useOnMountUnsafe } from '../../src/hooks';
-import { useEffect } from 'react';
-// import { JWTWrapper, JWT } from '../../src/interfaces/user';
-
-// const setReducer: CaseReducer<JWTWrapper, PayloadAction<JWTWrapper>> = (state, action) => {
-//   state = action.payload;
-// };
-
-// const clearReducer: CaseReducer<JWTWrapper, PayloadAction<JWTWrapper>> = (state, action) => {
-//   state.jwt.user = null;
-// };
+import { setLocalStorageToken } from 'src/utils';
+import { setJwtReducer, clearJwtReducer } from './reducers';
 
 const initialState: State = {
   value: {
     jwt: null,
     history: null,
   },
-};
+}
 
 const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    setJwt: (state: State, action: PayloadAction<JWT>): void => {
-      state.value.jwt = action.payload;
-    },
-    clearJwt: (state: State): void => {
-      localStorage.removeItem('jwt');
-      state.value.jwt = null;
-    },
+    setJwt: setJwtReducer,
+    clearJwt: clearJwtReducer,
   },
 });
 
-export const { setJwt, clearJwt } = userSlice.actions;
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     user: userSlice.reducer,
   },
 });
 
-export const useUserState = () => {
-  const userState = useSelector((state: ReturnType<typeof store.getState>) => state.user.value);
-  const dispatch: Dispatch = useDispatch();
+const { setJwt, clearJwt } = userSlice.actions;
 
-  const isLoggedIn = !!(userState.jwt);
+const useUserState = () => {
+  const userState: StateProperties = useSelector((state: ReturnType<typeof store.getState>) => state.user.value);
+  const dispatch: Dispatch<UnknownAction> = useDispatch();
 
-  useOnMountUnsafe(function setLocalStorageToken() {
-    if (userState.jwt === null) {
-      const token = localStorage.getItem('jwt');
-      if (token) {
-        dispatch(setJwt(JSON.parse(token)));
-      }
-    }
-  });
+  const isLoggedIn = userState.jwt !== null;
+
+  useOnMountUnsafe(() => setLocalStorageToken(userState));
 
   window.fetch = new Proxy(window.fetch, {
     apply: async (originalFetch, that, args) => {
@@ -120,3 +101,12 @@ export const useUserState = () => {
 store.subscribe(() => {
   console.log(store.getState());
 });
+
+export {
+  initialState,
+  userSlice,
+  store,
+  useUserState,
+  setJwt,
+  clearJwt,
+};
