@@ -1,14 +1,17 @@
 import { createSlice, configureStore, Dispatch, UnknownAction } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
-import { JWT, State, StateProperties } from '../../src/interfaces/user';
+import { JWT, State } from '../../src/interfaces/user';
 import { refreshToken } from '../api';
 import { useOnMountUnsafe } from '../../src/hooks';
-import { setLocalStorageToken } from '../../src/utils';
 import { setJwtReducer, clearJwtReducer } from './reducers';
+import { useEffect } from 'react';
+import { JwtStorage } from 'src/utils/JwtStorage';
+import axios, { AxiosRequestHeaders } from 'axios';
+import { isTokenRefreshablePath } from 'src/utils';
 
 const initialState: State = {
   value: {
-    jwt: null,
+    jwt: JwtStorage.getAccessToken(),
     history: null,
   },
 };
@@ -31,68 +34,137 @@ const store = configureStore({
 });
 
 const useUserState = () => {
-  const userState: StateProperties = useSelector((state: ReturnType<typeof store.getState>) => state.user.value);
+  const jwt = useSelector((state: ReturnType<typeof store.getState>) => state.user.value.jwt);
   const dispatch: Dispatch<UnknownAction> = useDispatch();
 
-  const isLoggedIn = userState.jwt !== null;
+  const isLoggedIn = jwt !== null;
 
-  useOnMountUnsafe(() => setLocalStorageToken(userState));
+  axios.interceptors.request.use((config) => {
+    if (jwt === null) {
+      return config;
+    }
 
-  // TODO: modularize this
-  window.fetch = new Proxy(window.fetch, {
-    apply: async (originalFetch, that, args) => {
-      if (!userState.jwt) return Reflect.apply(originalFetch, that, args);
+    if (config.baseURL?.endsWith('/api/refresh/')) {
+      // config.withCredentials = true;
+      return config;
+    }
 
-      const [ resource, config = {} ] = args;
-      const url = resource.toString();
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${jwt.token}`,
+    } as AxiosRequestHeaders;
 
-      const ignoredPaths = [
-        '/api/users/signup',
-        '/api/users/login',
-        '/api/users/logout',
-        '/api/refresh',
-      ];
+    return config;
+  }, undefined, { synchronous: true });
 
-      const isPathRefreshable = (url: string) => !ignoredPaths.some(path => url.endsWith(path));
-
-      if (url.includes('/api/') && isPathRefreshable(url)) {
-
-      // console.log(originalFetch, that, args);
-
-        config.headers = {
-          ...config.headers,
-          Authorization: `Bearer ${userState.jwt.token}`,
+  axios.interceptors.response.use((response) => {
+    return response;
+  }, async (error) => {
+    if (error.response.status === 401 &&
+      isTokenRefreshablePath(error.config.baseURL)) {
+        console.log(error.config.baseURL);
+      const data: JWT = await refreshToken() as JWT;
+      if (data) {
+        dispatch(setJwt(data));
+        error.config = {
+          ...error.config,
+          withCredentials: true,
+          headers: {
+            ...error.config.headers,
+            Authorization: null,
+          },
         };
-
-        try {
-          let response = await Reflect.apply(originalFetch, that, [ resource, config ]);
-          if (response.status === 401) {
-            const data: JWT = await refreshToken() as JWT;
-            if (data) {
-              dispatch(setJwt(data));
-              config.headers = {
-                ...config.headers,
-                Authorization: `Bearer ${data.token}`,
-              };
-              response = await Reflect.apply(originalFetch, that, [ resource, config ]);
-            } else {
-              throw new Error('Failed to refresh token.');
-            }
-          }
-          return response;
-        } catch (error) {
-          // dispatch(clearJwt());
-          // clearUserData();
-          throw new Error('Error refreshing token.');
-        }
+        console.log(error.config);
+        return axios.request(error.config);
+      } else {
+        dispatch(clearJwt());
+        throw new Error('Failed to refresh token.');
       }
-
-      return Reflect.apply(originalFetch, that, args);
-    },
+    }
+    return Promise.reject(error);
   });
 
+  // console.log(jwt, isLoggedIn);
+  // console.log backtrace
+  // console.trace();
+
+  // if (JwtStorage.getAccessToken() === null) {
+  //   useOnMountUnsafe(() => JwtStorage.setAccessToken(jwt));
+  // }
+
+  // const originalFetch = window.fetch;
+
+  // useEffect(() => {
+  //   // This needs to be executed after userState is set
+  //   // so that the token is available with the latest value
+  //   // maybe use something like debounce to wait for the value to be set
+  //   // const controller = new AbortController();
+  //   // const signal = controller.signal;
+  //   async function fetchIntercept(jwt: JWT) {
+  //     console.log('fetchIntercept', jwt);
+  //     window.fetch = new Proxy(window.fetch, {
+  //       apply: async (originalFetch, that, args) => {
+  //         console.log('fetching', jwt);
+  //         if (jwt === null) {
+  //           console.log('fetching0', jwt);
+  //           return Reflect.apply(originalFetch, that, args);
+  //         }
+  //         console.log('fetching0.1', jwt);
+
+  //         const [ resource, config = {} ] = args;
+  //         const url = resource.toString();
+
+  //         const ignoredPaths = [
+  //           '/api/users/signup',
+  //           '/api/users/login',
+  //           '/api/users/logout',
+  //           '/api/refresh',
+  //         ];
+
+  //         const isPathRefreshable = (url: string) => !ignoredPaths.some(path => url.endsWith(path));
+
+  //         if (url.includes('/api/') && isPathRefreshable(url)) {
+  //           console.log('fetching1', jwt.token);
+  //           config.headers = {
+  //             ...config.headers,
+  //             Authorization: `Bearer ${jwt.token}`,
+  //           };
+  //           try {
+  //             let response = await Reflect.apply(originalFetch, that, [ resource, config ]);
+  //             console.log('fetching2', response, jwt.token);
+  //             if (response.status === 401) {
+  //             console.log('fetching3', jwt.token);
+  //               const data: JWT = await refreshToken() as JWT;
+  //               if (data) {
+  //                 dispatch(setJwt(data));
+  //                 config.headers = {
+  //                   ...config.headers,
+  //                   Authorization: `Bearer ${data.token}`,
+  //                 };
+  //                 console.log('fetching4', data.token);
+  //                 response = await Reflect.apply(originalFetch, that, [ resource, config ]);
+  //               } else {
+  //                 throw new Error('Failed to refresh token.');
+  //               }
+  //             }
+  //             return response;
+  //           } catch (error) {
+  //             dispatch(clearJwt());
+  //             throw new Error('Error refreshing token.');
+  //           }
+  //         }
+
+  //         return Reflect.apply(originalFetch, that, args);
+  //       },
+  //     });
+  //   };
+  //   fetchIntercept(jwt);
+  // }, [ jwt ]);
+
+  // console.log(originalFetch == window.fetch);
+
   return {
-    userState,
+    jwt,
     dispatch,
     isLoggedIn,
   };

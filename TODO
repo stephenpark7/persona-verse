@@ -1,6 +1,7 @@
 In Progress:
-  ☐ Tweets dont get updated if we change users
-    ☐ Doesn't always update, inconsistent
+  ☐ Tweets dont get updated if we change users @started(24-07-28 04:52)
+    ☐ To reproduce, log in as user 1, refresh, and quickly logut out and log in as user 2
+    ☐ Tweets/get will use the old user's token
   ☐ Fix code while refactoring @started(24-07-27 04:55)
   ☐ Add Redux for data store @started(24-07-26 06:59)
   ☐ Jest tests for local storage

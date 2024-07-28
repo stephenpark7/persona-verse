@@ -6,9 +6,9 @@ import { TweetContainer } from '../components/TweetContainer';
 import { LogoutButton } from '../components/LogoutButton';
 
 export const Home: React.FC = (): React.JSX.Element => {
-  const { userState, isLoggedIn } = useUserState();
+  const { jwt, isLoggedIn } = useUserState();
 
-  const displayName = userState.jwt?.payload?.username;
+  const displayName = jwt?.payload?.username;
   
   function renderBodyContent() {
     if (!isLoggedIn) {
@@ -28,7 +28,10 @@ export const Home: React.FC = (): React.JSX.Element => {
     return (
       <>
         <p>Welcome {displayName}!</p>
-        <TweetContainer />
+        <TweetContainer 
+          // jwt={jwt}
+          // isLoggedIn={isLoggedIn}
+        />
         <LogoutButton />
       </>
     );

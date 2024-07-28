@@ -2,9 +2,9 @@ import React from 'react';
 import moment from 'moment';
 // import { TrashFill } from 'react-bootstrap-icons';
 import './Tweet.css';
-import { TweetParams } from '../interfaces';
+import { TweetData } from '../interfaces';
 
-export const Tweet: React.FC<TweetParams> = ({ 
+export const Tweet: React.FC<TweetData> = ({ 
   message, 
   createdAt, 
   User,

@@ -45,14 +45,14 @@ async function login({
       controller: 'users',
       action: 'login',
       body: formData,
-      options: { credentials: 'include' },
+      options: { withCredentials: true },
     });
 
-    const { jwt } = responseData;
+    if (!responseData.jwt) {
+      throw new Error('JWT data is missing.');
+    }
 
-    localStorage.setItem('jwt', JSON.stringify(jwt));
-
-    store.dispatch(setJwt(jwt));
+    store.dispatch(setJwt(responseData.jwt));
 
     if (showToast) {
       toast.success(responseData.message);
@@ -73,8 +73,7 @@ async function logout(
       method: 'POST',
       controller: 'users',
       action: 'logout',
-      body: null,
-      options: { credentials: 'include' },
+      options: { withCredentials: true },
     });
 
     store.dispatch(clearJwt());

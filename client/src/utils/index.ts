@@ -1,20 +1,5 @@
 import { RequestBody } from '../../src/interfaces';
 import { SubmitForm } from '../../src/interfaces/api';
-import { JWT, StateProperties } from '../../src/interfaces/user';
-import { setJwt, store } from '../../src/stores';
-
-
-export function setLocalStorageToken(
-  state: StateProperties,
-): void {
-  if (state.jwt === null) {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      const jwt: JWT = JSON.parse(token);
-      store.dispatch(setJwt(jwt));
-    }
-  }
-}
 
 export async function submitForm({
   e,
@@ -43,10 +28,10 @@ export function updateForm(
 
 export function isTokenRefreshablePath(url: string) {
   const ignoredPaths = [
-    '/api/users/signup',
-    '/api/users/login',
-    '/api/users/logout',
-    '/api/refresh',
+    '/api/users/signup/',
+    '/api/users/login/',
+    '/api/users/logout/',
+    '/api/refresh/',
   ];
 
   return url.includes('/api/') && !ignoredPaths.some(path => url.endsWith(path));
