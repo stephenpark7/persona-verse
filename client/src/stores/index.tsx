@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { JwtStorage } from 'src/utils/JwtStorage';
 import axios, { AxiosRequestHeaders } from 'axios';
 import { isTokenRefreshablePath } from 'src/utils';
+import { response } from 'src/tests/mocks';
 
 const initialState: State = {
   value: {
@@ -45,7 +46,7 @@ const useUserState = () => {
     }
 
     if (config.baseURL?.endsWith('/api/refresh/')) {
-      // config.withCredentials = true;
+      config.withCredentials = true;
       return config;
     }
 
@@ -62,24 +63,36 @@ const useUserState = () => {
   }, async (error) => {
     if (error.response.status === 401 &&
       isTokenRefreshablePath(error.config.baseURL)) {
-        console.log(error.config.baseURL);
+      // console.log(error.config.baseURL);
       const data: JWT = await refreshToken() as JWT;
       if (data) {
         dispatch(setJwt(data));
-        error.config = {
-          ...error.config,
-          withCredentials: true,
-          headers: {
-            ...error.config.headers,
-            Authorization: null,
-          },
+        // fix bug where jwt loops endlessly
+        // problem is somewhere here prob
+        error.config.headers = {
+          ...error.config.headers,
+          Authorization: `Bearer ${data.token}`,
         };
-        console.log(error.config);
         return axios.request(error.config);
       } else {
         dispatch(clearJwt());
         throw new Error('Failed to refresh token.');
       }
+      // if (data) {
+      //   // dispatch(setJwt(data));
+      //   error.config = {
+      //     ...error.config,
+      //     headers: {
+      //       ...error.config.headers,
+      //       Authorization: null,
+      //     },
+      //   };
+      //   console.log(error.config);
+      //   return axios.request(error.config);
+      // } else {
+      //   dispatch(clearJwt());
+      //   throw new Error('Failed to refresh token.');
+      // }
     }
     return Promise.reject(error);
   });
