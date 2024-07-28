@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Tweet } from './Tweet';
-import { getTweets, postTweet } from '../api';
-import { useOnMountUnsafe } from '../hooks';
 import { toast } from 'react-toastify';
-import { useUserState } from '../stores';
 import { TweetData } from 'src/interfaces/api';
-
-// interface TweetContainerProps {
-//   jwt: JWT;
-//   isLoggedIn: boolean;
-// }
+import { useUserState } from '../stores';
+import { getTweets, postTweet } from '../api';
+import { Tweet } from './Tweet';
 
 export const TweetContainer: React.FC = (): React.JSX.Element => {
-// export const TweetContainer: React.FC<TweetContainerProps> = ({ jwt, isLoggedIn }): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
 
   const [ tweetData, setTweetData ] = useState<TweetData[]>([]);
@@ -27,21 +20,13 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
 
       await getTweets(setTweetData);
     }
+
     fetchData();
+    
     return () => {
       setTweetData([]);
     };
   }, []);
-
-  // useOnMountUnsafe(fetchData);
- 
-  // async function fetchData() {
-  //   if (!isLoggedIn) return;
-
-  //   await getTweets({
-  //     setTweetData,
-  //   });
-  // }
 
   async function handlePostTweet() {
     if (!isLoggedIn) return;
@@ -56,7 +41,7 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
     textRef.current.value = '';
 
     await postTweet({
-      userData: jwt,
+      jwt: jwt,
       payload: { message: message },
       tweetData,
       setTweetData,

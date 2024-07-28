@@ -15,45 +15,18 @@ function apiUrl(controller: string, action: string): string {
 async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
   const { method, controller, action, body, options, headers } = params;
 
-  // const response: Response = await fetch(apiUrl(controller, action), {
-  //   method: method,
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     ...headers,
-  //   },
-  //   body: body ? JSON.stringify(body) : null,
-  //   ...options,
-  // });
-
-  // const client = axios.create({
-  //   baseURL: apiUrl(controller, action),
-  // });
-
   const config: AxiosRequestConfig = {
     url: apiUrl(controller, action),
     headers: {
       'Content-Type': 'application/json',
+      ...headers,
     } as RawAxiosRequestHeaders,
     method,
     data: body,
     ...options,  
-    ...headers,
   };
   
   const response: AxiosResponse = await axios.request(config);
-
-  //   url: apiUrl(controller, action),
-  //   method,
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     ...headers,
-  //   },
-  //   data: body,
-  //   ...options,
-  // });
-
-  // const jsonResponse: JsonResponse = await response.json();
-  // console.log('response', response);
 
   if (response.statusText !== 'OK') {
     const errorMessage: string = response.data.message ?? 'An unexpected error occurred.';
@@ -78,6 +51,8 @@ export async function apiCall(params: ApiCall): Promise<JsonResponse> {
 export function handleError(err: unknown, autoClose?: number): void {
   if (err instanceof Error) {
     toast.error(err.message, { autoClose });
+  } else {
+    throw new Error('An unexpected error occurred.');
   }
 }
 

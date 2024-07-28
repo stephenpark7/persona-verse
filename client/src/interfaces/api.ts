@@ -1,5 +1,4 @@
 import { JWT } from './user';
-// import { TweetData } from './tweet';
 import { RequestBody } from '.';
 import { NavigateFunction } from 'react-router-dom';
 import { AxiosRequestHeaders, RawAxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
@@ -50,7 +49,7 @@ export interface Login {
 export type SetTweetData = React.Dispatch<React.SetStateAction<TweetData[]>>;
 
 export interface PostTweet {
-  userData: JWT | null,
+  jwt: JWT | null,
   payload: TweetPostParams,
   tweetData: TweetData[],
   setTweetData: React.Dispatch<React.SetStateAction<TweetData[]>>,
