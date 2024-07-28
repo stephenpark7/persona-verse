@@ -1,4 +1,4 @@
-import { PayloadAction, CaseReducer } from '@reduxjs/toolkit'
+import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
 import { JWT, State } from '../../src/interfaces/user';
 
 const setJwtReducer: CaseReducer<State, { payload: JWT; type: string; }> = (state: State, action: PayloadAction<JWT>) => {

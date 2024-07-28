@@ -1,7 +1,7 @@
-import { createSlice, configureStore, Dispatch, UnknownAction } from '@reduxjs/toolkit'
+import { createSlice, configureStore, Dispatch, UnknownAction } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
 import { JWT, State, StateProperties } from '../../src/interfaces/user';
-import API from '../api';
+import { refreshToken } from '../api';
 import { useOnMountUnsafe } from '../../src/hooks';
 import { setLocalStorageToken } from '../../src/utils';
 import { setJwtReducer, clearJwtReducer } from './reducers';
@@ -11,7 +11,7 @@ const initialState: State = {
     jwt: null,
     history: null,
   },
-}
+};
 
 const userSlice = createSlice({
   name: 'user',
@@ -67,7 +67,7 @@ const useUserState = () => {
         try {
           let response = await Reflect.apply(originalFetch, that, [ resource, config ]);
           if (response.status === 401) {
-            const data: JWT = await API.refreshToken() as JWT;
+            const data: JWT = await refreshToken() as JWT;
             if (data) {
               dispatch(setJwt(data));
               config.headers = {

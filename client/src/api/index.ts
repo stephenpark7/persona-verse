@@ -45,7 +45,7 @@ export function handleError(err: unknown, autoClose?: number): void {
   }
 }
 
-export default {
+export {
   login,
   register,
   logout,

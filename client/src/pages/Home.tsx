@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useUserState } from '../stores';
-import TweetContainer from '../components/TweetContainer';
-import LogoutButton from '../components/LogoutButton';
+import { TweetContainer } from '../components/TweetContainer';
+import { LogoutButton } from '../components/LogoutButton';
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { userState, isLoggedIn } = useUserState();

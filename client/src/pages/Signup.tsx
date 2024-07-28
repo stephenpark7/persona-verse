@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { RequestBody } from '../interfaces';
 import { submitForm, updateForm } from '../utils';
-import API from '../api';
+import { register } from '../api';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const Signup: React.FC = () => {
     submitForm({
       e,
       formData,
-      apiFunction: API.register,
+      apiFunction: register,
       navigate,
     });
   };
@@ -49,5 +49,5 @@ export const Signup: React.FC = () => {
         </Col>
       </Row>
     </Container>
-  )
+  );
 };

@@ -26,6 +26,7 @@ export default tseslint
     },
     rules: {
       'array-bracket-spacing': [ 'error', 'always' ],
+      'object-curly-spacing': [ 'error', 'always' ],
       'eol-last': [ 'error', 'always' ],
       'quotes': [ 'error', 'single' ],
       'comma-dangle': [ 'error', 'always-multiline' ],
@@ -33,6 +34,7 @@ export default tseslint
         'selector': 'ExportDefaultDeclaration',
         'message': 'Use named exports instead',
       } ],
+      'semi': [ 'error', 'always' ],
     },
   },
   {

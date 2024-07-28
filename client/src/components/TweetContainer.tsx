@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Tweet from './Tweet';
-import API from '../api';
+import { Tweet } from './Tweet';
+import { getTweets, postTweet } from '../api';
 import { useUserState } from '../stores';
 import { useOnMountUnsafe } from '../hooks';
 import { toast } from 'react-toastify';
 import { TweetParams } from '../interfaces';
 
-export default function TweetContainer() {
+export const TweetContainer: React.FC = (): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
   const { userState, isLoggedIn } = useUserState();
   const [ tweetData, setTweetData ] = useState<TweetParams[]>([]);
@@ -18,7 +18,7 @@ export default function TweetContainer() {
   async function fetchData() {
     if (!isLoggedIn) return;
     
-    await API.getTweets({
+    await getTweets({
       userData: userState.jwt,
       setTweetData,
     });
@@ -36,12 +36,22 @@ export default function TweetContainer() {
 
     textRef.current.value = '';
 
-    await API.postTweet({
+    await postTweet({
       userData: userState.jwt,
       payload: { message: message },
       tweetData,
       setTweetData,
     });
+  }
+
+  function renderTweets(): React.ReactNode | null {
+    if (!tweetData) return null;
+    return tweetData.map((data: TweetParams, idx: React.Key) =>
+      <Tweet 
+        key={idx}
+        {...data}
+      />,
+    );
   }
 
   return (
@@ -53,12 +63,7 @@ export default function TweetContainer() {
       <Button variant="primary" onClick={handlePostTweet}>Tweet</Button>
       <br /><br />
       <h2>Tweets</h2>
-      {tweetData && tweetData.map((data: TweetParams, idx: React.Key) =>
-        <Tweet 
-          key={idx}
-          {...data}
-        />,
-      )}
+      {renderTweets()}
     </Form>
   );
-}
+};

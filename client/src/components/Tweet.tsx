@@ -3,7 +3,8 @@ import moment from 'moment';
 // import { TrashFill } from 'react-bootstrap-icons';
 import './Tweet.css';
 import { TweetParams } from '../interfaces';
-const Tweet: React.FC<TweetParams> = ({ 
+
+export const Tweet: React.FC<TweetParams> = ({ 
   message, 
   createdAt, 
   User,
@@ -21,8 +22,5 @@ const Tweet: React.FC<TweetParams> = ({
       <span className='date'>{tweetDate}</span><br />
       <span className='text'>{text}</span>
     </div>
-  )
+  );
 };
-
-export default Tweet;
-
