@@ -2,7 +2,7 @@ import { NavigateFunction } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { JsonResponse, Login, Register } from 'src/interfaces/api';
 import { apiCall, handleError } from './index';
-import { store, set, clearUserData } from '../stores';
+import { store, setJwt, clearJwt } from '../stores';
 
 async function register({
   formData,
@@ -52,7 +52,7 @@ async function login({
 
     localStorage.setItem('jwt', JSON.stringify(jwt));
 
-    store.dispatch(set({ jwt: jwt }));
+    store.dispatch(setJwt(jwt));
 
     if (showToast) {
       toast.success(responseData.message);
@@ -77,7 +77,7 @@ async function logout(
       options: { credentials: 'include' },
     });
 
-    clearUserData();
+    store.dispatch(clearJwt());
 
     if (showToast) {
       toast.success(responseData.message);

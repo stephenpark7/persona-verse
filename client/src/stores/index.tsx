@@ -1,8 +1,9 @@
-import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, configureStore, PayloadAction, Dispatch } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux';
 import { JWT, State, User } from 'src/interfaces/user';
 import API from '../api';
 import { useOnMountUnsafe } from '../../src/hooks';
+import { useEffect } from 'react';
 // import { JWTWrapper, JWT } from '../../src/interfaces/user';
 
 // const setReducer: CaseReducer<JWTWrapper, PayloadAction<JWTWrapper>> = (state, action) => {
@@ -13,9 +14,10 @@ import { useOnMountUnsafe } from '../../src/hooks';
 //   state.jwt.user = null;
 // };
 
-const initialState: User = {
+const initialState: State = {
   value: {
     jwt: null,
+    history: null,
   },
 };
 
@@ -23,16 +25,17 @@ const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    set: (state, action: PayloadAction<State>): void => {
-      state.value = action.payload;
+    setJwt: (state: State, action: PayloadAction<JWT>): void => {
+      state.value.jwt = action.payload;
     },
-    clear: (state): void => {
-      state.value = null;
+    clearJwt: (state: State): void => {
+      localStorage.removeItem('jwt');
+      state.value.jwt = null;
     },
   },
 });
 
-export const { set, clear } = userSlice.actions;
+export const { setJwt, clearJwt } = userSlice.actions;
 
 export const store = configureStore({
   reducer: {
@@ -40,36 +43,24 @@ export const store = configureStore({
   },
 });
 
-
-export const clearUserData = () => {
-  localStorage.removeItem('token');
-  const dispatch = useDispatch();
-  dispatch(clear());
-};
-
 export const useUserState = () => {
-  const userState = useSelector((state: State) => state.jwt);
-  const dispatch = useDispatch();
+  const userState = useSelector((state: ReturnType<typeof store.getState>) => state.user.value);
+  const dispatch: Dispatch = useDispatch();
 
-  const isLoggedIn = !!(userState);
-  console.log('userState', userState);
-  console.log('isLoggedIn', isLoggedIn);
+  const isLoggedIn = !!(userState.jwt);
 
   useOnMountUnsafe(function setLocalStorageToken() {
-    if (!userState) {
-      console.log('userState is null');
-      const token =  localStorage.getItem('jwt');
+    if (userState.jwt === null) {
+      const token = localStorage.getItem('jwt');
       if (token) {
-        const data: State = JSON.parse(token);
-        dispatch(set(data));
-        console.log('data', data);
+        dispatch(setJwt(JSON.parse(token)));
       }
     }
   });
 
   window.fetch = new Proxy(window.fetch, {
     apply: async (originalFetch, that, args) => {
-      if (!userState) return Reflect.apply(originalFetch, that, args);
+      if (!userState.jwt) return Reflect.apply(originalFetch, that, args);
 
       const [ resource, config = {} ] = args;
       const url = resource.toString();
@@ -84,9 +75,12 @@ export const useUserState = () => {
       const isPathRefreshable = (url: string) => !ignoredPaths.some(path => url.endsWith(path));
 
       if (url.includes('/api/') && isPathRefreshable(url)) {
+
+      // console.log(originalFetch, that, args);
+
         config.headers = {
           ...config.headers,
-          Authorization: `Bearer ${userState.token}`,
+          Authorization: `Bearer ${userState.jwt.token}`,
         };
 
         try {
@@ -94,7 +88,7 @@ export const useUserState = () => {
           if (response.status === 401) {
             const data: JWT = await API.refreshToken() as JWT;
             if (data) {
-              dispatch(set({ jwt: data }));
+              dispatch(setJwt(data));
               config.headers = {
                 ...config.headers,
                 Authorization: `Bearer ${data.token}`,
@@ -106,7 +100,8 @@ export const useUserState = () => {
           }
           return response;
         } catch (error) {
-          clearUserData();
+          // dispatch(clearJwt());
+          // clearUserData();
           throw new Error('Error refreshing token.');
         }
       }
@@ -119,7 +114,6 @@ export const useUserState = () => {
     userState,
     dispatch,
     isLoggedIn,
-    clearUserData,
   };
 };
 

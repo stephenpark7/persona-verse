@@ -20,12 +20,25 @@
 // };
 
 export type User = {
-  value: State | null;
+  state: State;
 };
 
 export type State = {
-  jwt: JWT | null;
+  value: StateProperties;
 };
+
+export type StateProperties = {
+  jwt: JWT | null;
+  history: History | null;
+};
+
+export type History = {
+  [key: string]: string;
+};
+
+// export type State = {
+//   jwt: JWT | null;
+// };
 
 export type JWT = {
   token: string;

@@ -8,6 +8,10 @@ import LogoutButton from '../components/LogoutButton';
 const Home: React.FC = (): React.JSX.Element => {
   const { userState, isLoggedIn } = useUserState();
 
+  // const displayName = userState.value.jwt?.payload?.username;
+  
+  const displayName = 'temp';
+
   function renderBodyContent() {
     if (!isLoggedIn) {
       return (
@@ -25,7 +29,7 @@ const Home: React.FC = (): React.JSX.Element => {
 
     return (
       <>
-        <p>Welcome {userState!.payload.displayName ?? userState!.payload.username}!</p>
+        <p>Welcome {displayName}!</p>
         <TweetContainer />
         <LogoutButton />
       </>

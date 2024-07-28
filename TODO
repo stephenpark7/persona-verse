@@ -1,4 +1,6 @@
 In Progress:
+  ☐ Tweets dont get updated if we change users
+    ☐ Doesn't always update, inconsistent
   ☐ Fix code while refactoring @started(24-07-27 04:55)
   ☐ Add Redux for data store @started(24-07-26 06:59)
   ☐ Jest tests for local storage
