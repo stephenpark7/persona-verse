@@ -1,22 +1,35 @@
 import { JWT } from './user';
-import { TweetParams } from './tweet';
+// import { TweetData } from './tweet';
 import { RequestBody } from '.';
 import { NavigateFunction } from 'react-router-dom';
+import { AxiosRequestHeaders, RawAxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
 
-export interface JsonResponse {
+export interface JsonResponse
+         extends RefreshTokenResponse,
+                 GetTweetsResponse,
+                 PostTweetResponse {
   message: string;
-  jwt: JWT;
-  tweet: TweetParams;
-  tweets: TweetParams[];
+};
+
+export interface RefreshTokenResponse {
+  jwt?: JWT;
+};
+
+export interface GetTweetsResponse {
+  tweets?: TweetData[];
+};
+
+export interface PostTweetResponse {
+  tweet?: TweetData;
 };
 
 export interface ApiCall {
   method: string,
   controller: string,
   action: string,
-  body: RequestBody,
-  options?: RequestInit,
-  headers?: Record<string, string>,
+  body?: RequestBody,
+  options?: RawAxiosRequestConfig,
+  headers?: RawAxiosRequestHeaders | AxiosRequestHeaders,
 }
 
 //
@@ -34,17 +47,26 @@ export interface Login {
   showToast?: boolean | undefined,
 }
 
-export interface GetTweets {
-  userData: JWT | null,
-  setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
-}
+export type SetTweetData = React.Dispatch<React.SetStateAction<TweetData[]>>;
 
 export interface PostTweet {
   userData: JWT | null,
   payload: TweetPostParams,
-  tweetData: TweetParams[],
-  setTweetData: React.Dispatch<React.SetStateAction<TweetParams[]>>,
+  tweetData: TweetData[],
+  setTweetData: React.Dispatch<React.SetStateAction<TweetData[]>>,
 }
+
+export type TweetData = {
+  // extends Iterable<TweetData>
+  [Symbol.iterator](): IterableIterator<TweetData>;
+  id?: number;
+  message: string;
+  createdAt: string;
+  User: {
+    username: string;
+    displayName: string;
+  };
+};
 
 //
 

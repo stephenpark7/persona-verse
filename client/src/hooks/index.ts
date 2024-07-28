@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react';
 
 export function useOnMountUnsafe(effect: () => Promise<void> | void): Promise<void> | void {
   const initialized = useRef<boolean>(false);

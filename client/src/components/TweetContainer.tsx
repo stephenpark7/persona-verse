@@ -1,28 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Tweet from './Tweet';
-import API from '../api';
-import { useUserState } from '../stores';
+import { Tweet } from './Tweet';
+import { getTweets, postTweet } from '../api';
 import { useOnMountUnsafe } from '../hooks';
 import { toast } from 'react-toastify';
-import { TweetParams } from '../interfaces';
+import { useUserState } from '../stores';
+import { TweetData } from 'src/interfaces/api';
 
-export default function TweetContainer() {
+// interface TweetContainerProps {
+//   jwt: JWT;
+//   isLoggedIn: boolean;
+// }
+
+export const TweetContainer: React.FC = (): React.JSX.Element => {
+// export const TweetContainer: React.FC<TweetContainerProps> = ({ jwt, isLoggedIn }): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
-  const { userState, isLoggedIn } = useUserState();
-  const [ tweetData, setTweetData ] = useState<TweetParams[]>([]);
 
-  useOnMountUnsafe(fetchData);
+  const [ tweetData, setTweetData ] = useState<TweetData[]>([]);
 
-  async function fetchData() {
-    if (!isLoggedIn) return;
-    
-    await API.getTweets({
-      userData: userState.jwt,
-      setTweetData,
-    });
-  }
+  const { jwt, isLoggedIn } = useUserState();
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!isLoggedIn) return;
+
+      await getTweets(setTweetData);
+    }
+    fetchData();
+    return () => {
+      setTweetData([]);
+    };
+  }, []);
+
+  // useOnMountUnsafe(fetchData);
+ 
+  // async function fetchData() {
+  //   if (!isLoggedIn) return;
+
+  //   await getTweets({
+  //     setTweetData,
+  //   });
+  // }
 
   async function handlePostTweet() {
     if (!isLoggedIn) return;
@@ -36,12 +55,22 @@ export default function TweetContainer() {
 
     textRef.current.value = '';
 
-    await API.postTweet({
-      userData: userState.jwt,
+    await postTweet({
+      userData: jwt,
       payload: { message: message },
       tweetData,
       setTweetData,
     });
+  }
+
+  function renderTweets(): React.ReactNode | null {
+    if (!tweetData) return null;
+    return tweetData.map((data: TweetData, idx: React.Key) =>
+      <Tweet 
+        key={idx}
+        {...data}
+      />,
+    );
   }
 
   return (
@@ -53,12 +82,7 @@ export default function TweetContainer() {
       <Button variant="primary" onClick={handlePostTweet}>Tweet</Button>
       <br /><br />
       <h2>Tweets</h2>
-      {tweetData && tweetData.map((data: TweetParams, idx: React.Key) =>
-        <Tweet 
-          key={idx}
-          {...data}
-        />,
-      )}
+      {renderTweets()}
     </Form>
   );
-}
+};

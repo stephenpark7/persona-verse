@@ -1,7 +1,6 @@
-import { JsonResponse } from 'src/interfaces/api';
-import { JWT } from '../interfaces';
-import { apiCall, handleError } from './';
-import { JwtStorage } from 'src/utils/JwtStorage';
+import { JsonResponse } from '../../src/interfaces/api';
+import { JWT } from '../interfaces';import { apiCall, handleError } from './';
+import { clearJwt, setJwt, store } from '../../src/stores';
 
 async function refreshToken(): Promise<JWT | void> {
   try {
@@ -9,30 +8,20 @@ async function refreshToken(): Promise<JWT | void> {
       method: 'POST',
       controller: 'refresh',
       action: '',
-      body: null,
-      options: { credentials: 'include' },
+      options: { withCredentials: true },
     });
 
-    const jwt: JWT = responseData.jwt;
-
+    const { jwt } = responseData;
+    
     if (!jwt) {
       throw new Error('JWT data is missing.');
     }
 
-    // if (setUserData) {
-    //   setUserData(userData);
-    // }
-
-    JwtStorage.setAccessToken(jwt);
-
+    store.dispatch(setJwt(jwt));
     return jwt;
   }
   catch (err: unknown) {
-    // if (setUserData) {
-    //   setUserData(null);
-    // }
-
-    localStorage.removeItem('token');
+    store.dispatch(clearJwt());
 
     handleError(err);
   }
