@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useUserContext } from '../contexts/UserContext';
+import { useUserState } from '../stores';
 import TweetContainer from '../components/TweetContainer';
 import LogoutButton from '../components/LogoutButton';
 
-const Home: React.FC = () => {
-  const { userData, isLoggedIn } = useUserContext();
+const Home: React.FC = (): React.JSX.Element => {
+  const { userState, isLoggedIn } = useUserState();
+
+  // const displayName = userState.value.jwt?.payload?.username;
+  
+  const displayName = 'temp';
 
   function renderBodyContent() {
     if (!isLoggedIn) {
@@ -25,7 +29,7 @@ const Home: React.FC = () => {
 
     return (
       <>
-        <p>Welcome {userData?.payload?.username}!</p>
+        <p>Welcome {displayName}!</p>
         <TweetContainer />
         <LogoutButton />
       </>

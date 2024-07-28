@@ -11,8 +11,6 @@ export const create = async (req: AuthenticatedRequest, res: Response) => {
     const requestBodyMessage: string = requestBody.message;
     const userId = req.userId;
 
-    console.log('requestBodyMessage:', requestBody);
-  
     if (requestBodyMessage.length === 0) {
       return res.status(400).json({ requestBodyMessage: 'Message cannot be empty.' });
     }
@@ -31,8 +29,7 @@ export const create = async (req: AuthenticatedRequest, res: Response) => {
         createdAt: tweet.getDataValue('createdAt'),
       },
     });
-;  } catch (error: unknown) {
-  console.log(error);
+  } catch (error: unknown) {
     res.status(500).json({ message: 'Error posting tweet.' })
   }
 };
@@ -55,7 +52,6 @@ export const get = async (req: AuthenticatedRequest, res: Response) => {
       tweets: tweets,
     });
   } catch (error: unknown) {
-    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
-    res.status(500).json({ message: `Error getting tweets.${errorMessage}` });
+    res.status(500).json({ message: 'Error getting tweets.' });
   }
 };

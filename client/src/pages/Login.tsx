@@ -3,14 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useUserContext } from '../contexts';
 import { RequestBody } from '../interfaces';
 import { submitForm, updateForm } from '../utils';
 import API from '../api';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { setUserData } = useUserContext();
   const [ formData, setFormData ] = useState<RequestBody>({
     username: '',
     password: '',
@@ -21,7 +19,12 @@ const Login: React.FC = () => {
   }
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    submitForm(e, formData, API.login, setUserData, navigate);
+    submitForm({
+      e,
+      formData,
+      apiFunction: API.login,
+      navigate,
+    });
   };
 
   return (

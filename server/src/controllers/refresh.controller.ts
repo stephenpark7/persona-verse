@@ -48,7 +48,7 @@ export const refresh = async (req: Request, res: Response) => {
 
     res.status(200).json({
       message: 'Token refreshed.',
-      accessToken: accessToken,
+      jwt: accessToken,
     });
   } catch (error: unknown) {
     return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 400);

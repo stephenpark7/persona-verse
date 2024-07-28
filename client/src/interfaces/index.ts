@@ -1,6 +1,5 @@
-import { UserContext, UserParams } from './user';
+import { JWT } from './user';
 import {
-  HTTPResponse,
   UsersSignupParams,
   UsersLoginParams,
   TweetPostParams,
@@ -8,16 +7,12 @@ import {
 import { TweetParams } from './tweet';
 
 type RequestBody = UsersSignupParams | UsersLoginParams | TweetPostParams | null;
-type UserData = UserParams | null;
-type SetUserData = React.Dispatch<React.SetStateAction<UserData>>;
+type SetUserData = React.Dispatch<React.SetStateAction<JWT>>;
 
 export {
   RequestBody,
   TweetPostParams,
-  UserContext,
-  UserData,
-  UserParams,
+  JWT,
   SetUserData,
-  HTTPResponse,
   TweetParams,
 };
