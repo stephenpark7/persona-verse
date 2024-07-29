@@ -1,4 +1,5 @@
 In Progress:
+  ☐ Modularize TweetContainer component
   ☐ Use RTK + Redux
   ☐ Fix broken tests
   ☐ Refactor more
