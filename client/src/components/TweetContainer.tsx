@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
@@ -15,12 +15,13 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
 
   const { jwt, isLoggedIn } = useUserState();
 
-  const { isPending, error, data } = useQuery({
+  const { isPending, error } = useQuery({
     queryKey: [ 'tweets' ],
     queryFn: async () => {
       if (!isLoggedIn) return;
 
       const tweets = getTweets(setTweetData);
+      
       return tweets;
     }
   });

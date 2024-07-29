@@ -18,6 +18,7 @@ async function getTweets(
   }
 
   setTweetData(tweets);
+  
   return tweets;
 }
 
