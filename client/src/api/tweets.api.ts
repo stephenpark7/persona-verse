@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify';
-import { SetTweetData, JsonResponse, PostTweet } from '../interfaces/api';
+import { SetTweetData, JsonResponse, PostTweet, TweetData } from '../interfaces/api';
 import { apiCall } from './';
 
 async function getTweets(
   setTweetData: SetTweetData,
-): Promise<void> {
+): Promise<TweetData[]> {
   const responseData: JsonResponse = await apiCall({
     method: 'GET',
     controller: 'tweets',
@@ -14,10 +14,11 @@ async function getTweets(
   const { tweets } = responseData;
 
   if (!tweets) {
-    throw new Error('getTweets failed.');
+    throw new Error('Failed to retrieve tweets.');
   }
 
   setTweetData(tweets);
+  return tweets;
 }
 
 async function postTweet({
@@ -27,7 +28,7 @@ async function postTweet({
   setTweetData,
 }: PostTweet): Promise<void> {
   if (!jwt) {
-    throw new Error('jwt argument is missing.');
+    throw new Error('Failed to post tweet.');
   }
 
   const responseData = await apiCall({
@@ -40,7 +41,7 @@ async function postTweet({
   const { tweet } = responseData;
 
   if (!tweet) {
-    throw new Error('postTweet failed.');
+    throw new Error('Failed to post tweet.');
   }
 
   tweet.User = {

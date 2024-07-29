@@ -4,6 +4,8 @@ import globals from 'globals';
 import reactPlugin from 'eslint-plugin-react';
 import prettierConfig from 'eslint-config-prettier';
 import jest from 'eslint-plugin-jest';
+import query from '@tanstack/eslint-plugin-query';
+
 
 export default tseslint
   .config(
@@ -20,9 +22,11 @@ export default tseslint
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
       prettierConfig,
+      query.configs.recommended,
     ],
     plugins: {
       reactPlugin: reactPlugin,
+      query: query,
     },
     rules: {
       'array-bracket-spacing': [ 'error', 'always' ],

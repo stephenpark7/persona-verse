@@ -6,6 +6,7 @@ import { TweetData } from 'src/interfaces/api';
 import { useUserState } from '../stores';
 import { getTweets, postTweet } from '../api';
 import { Tweet } from './Tweet';
+import { useQuery } from '@tanstack/react-query';
 
 export const TweetContainer: React.FC = (): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
@@ -14,21 +15,15 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
 
   const { jwt, isLoggedIn } = useUserState();
 
-  console.trace();
-
-  useEffect(() => {
-    async function fetchData() {
+  const { isPending, error, data } = useQuery({
+    queryKey: [ 'tweets' ],
+    queryFn: async () => {
       if (!isLoggedIn) return;
 
-      await getTweets(setTweetData);
+      const tweets = getTweets(setTweetData);
+      return tweets;
     }
-
-    fetchData();
-    
-    return () => {
-      setTweetData([]);
-    };
-  }, []);
+  });
 
   async function handlePostTweet() {
     if (!isLoggedIn) return;
@@ -50,8 +45,13 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
     });
   }
 
-  function renderTweets(): React.ReactNode | null {
-    if (!tweetData) return null;
+  function renderTweets(): React.ReactNode {
+    if (error) {
+      return <p>Error: {error.message}</p>;
+    }
+    if (isPending) {
+      return <p>Loading...</p>;
+    }
     return tweetData.map((data: TweetData, idx: React.Key) =>
       <Tweet 
         key={idx}
