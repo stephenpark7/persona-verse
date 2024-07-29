@@ -17,9 +17,9 @@ const pages: RouteObject[] = [
   },
 ];
 
-export const Router: React.FC = () => {
-  const router = createBrowserRouter(pages);
+const router = createBrowserRouter(pages);
 
+export const Router: React.FC = () => {
   return (
     <RouterProvider router={router} />
   );

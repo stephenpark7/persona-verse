@@ -7,13 +7,34 @@ import { useUserState } from '../stores';
 import { getTweets, postTweet } from '../api';
 import { Tweet } from './Tweet';
 import { useQuery } from '@tanstack/react-query';
+import { JWT } from 'src/interfaces';
 
-export const TweetContainer: React.FC = (): React.JSX.Element => {
+export const TweetContainer = () => {
+  const { jwt, isLoggedIn } = useUserState();
+  return (
+    <BaseTweetContainer 
+      jwt={jwt}
+      isLoggedIn={isLoggedIn}
+    />
+  );
+};
+
+interface TweetContainerProps {
+  jwt: JWT | null;
+  isLoggedIn: boolean;
+};
+
+const BaseTweetContainer: React.FC<TweetContainerProps> = ({ 
+  jwt,
+  isLoggedIn,
+}): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
 
   const [ tweetData, setTweetData ] = useState<TweetData[]>([]);
 
-  const { jwt, isLoggedIn } = useUserState();
+  // TODO: modularize this
+  // so that component isn't refreshed
+  // every time jwt changes
 
   const { isPending, error } = useQuery({
     queryKey: [ 'tweets' ],
@@ -21,7 +42,7 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
       if (!isLoggedIn) return;
 
       const tweets = getTweets(setTweetData);
-      
+
       return tweets;
     }
   });

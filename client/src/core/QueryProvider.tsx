@@ -5,9 +5,9 @@ interface QueryProviderProps {
   children: React.JSX.Element[] | React.JSX.Element;
 };
 
-export const QueryProvider = ({ children }: QueryProviderProps): React.JSX.Element => {
-  const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
+export const QueryProvider = ({ children }: QueryProviderProps): React.JSX.Element => {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
