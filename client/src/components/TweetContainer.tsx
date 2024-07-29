@@ -14,6 +14,8 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
 
   const { jwt, isLoggedIn } = useUserState();
 
+  console.trace();
+
   useEffect(() => {
     async function fetchData() {
       if (!isLoggedIn) return;

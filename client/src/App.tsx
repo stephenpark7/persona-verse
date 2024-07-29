@@ -1,13 +1,15 @@
 import React from 'react';
-import { Provider, Router, Toast } from './core';
+import { QueryProvider, ReduxProvider, Router, Toast } from './core';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const App: React.FC = (): React.JSX.Element => {
   return (
-    <Provider>
-      <Router />
-      <Toast />
-    </Provider>
+    <ReduxProvider>
+      <QueryProvider>
+        <Router />
+        <Toast />
+      </QueryProvider>
+    </ReduxProvider>
   );
 };
