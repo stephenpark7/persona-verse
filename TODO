@@ -1,4 +1,5 @@
 In Progress:
+  ☐ Revert refresh token expiration date back to 7 days after testing
   ☐ Modularize TweetContainer component
   ☐ Use RTK + Redux
   ☐ Fix broken tests
