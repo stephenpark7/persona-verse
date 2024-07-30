@@ -32,10 +32,8 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
 
   const [ tweetData, setTweetData ] = useState<TweetData[]>([]);
 
-  // TODO: modularize this
-  // so that component isn't refreshed
-  // every time jwt changes
-
+  // TODO: Use RTK instead of react-query
+  // since we're using redux, we should use RTK
   const { isPending, error } = useQuery({
     queryKey: [ 'tweets' ],
     queryFn: async () => {

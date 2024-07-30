@@ -1,15 +1,15 @@
 import { NavigateFunction } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { JsonResponse, Login, Register } from '../../src/interfaces/api';
-import { apiCall, handleError } from './index';
-import { store, setJwt, clearJwt } from '../stores';
+import { JsonResponse, Login, RegisterFunction, RegisterParams } from '../../interfaces/api';
+import { apiCall, handleError } from '../index';
+import { store, setJwt, clearJwt } from '../../stores';
 
-async function register({
+const register: RegisterFunction = async ({
   formData,
   navigate,
   showToast = true,
   autoLogin = true,
-}: Register): Promise<void> {
+}: RegisterParams): Promise<void> => {
   try {
     const responseData = await apiCall({
       method: 'POST',

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { JsonResponse, ApiCall } from '../interfaces/api';
 import { refreshToken } from './refresh.api';
-import { register, login, logout } from './users.api';
+import { register, login, logout } from './Users/users.api';
 import { getTweets, postTweet } from './tweets.api';
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 
