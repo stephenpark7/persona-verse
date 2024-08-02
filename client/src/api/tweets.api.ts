@@ -3,7 +3,7 @@ import { SetTweetData, JsonResponse, PostTweet, TweetData } from '../interfaces/
 import { apiCall } from './';
 
 async function getTweets(
-  setTweetData: SetTweetData,
+  setTweetData?: SetTweetData,
 ): Promise<TweetData[]> {
   const responseData: JsonResponse = await apiCall({
     method: 'GET',
@@ -17,7 +17,7 @@ async function getTweets(
     throw new Error('Failed to retrieve tweets.');
   }
 
-  setTweetData(tweets);
+  if (setTweetData) setTweetData(tweets);
   
   return tweets;
 }

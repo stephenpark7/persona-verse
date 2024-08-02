@@ -6,8 +6,9 @@ import { TweetData } from 'src/interfaces/api';
 import { useUserState } from '../stores';
 import { getTweets, postTweet } from '../api';
 import { Tweet } from './Tweet';
-import { useQuery } from '@tanstack/react-query';
 import { JWT } from 'src/interfaces';
+
+import { useGetTweetsQuery } from '../services/TweetAPI';
 
 export const TweetContainer = () => {
   const { jwt, isLoggedIn } = useUserState();
@@ -34,16 +35,17 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
 
   // TODO: Use RTK instead of react-query
   // since we're using redux, we should use RTK
-  const { isPending, error } = useQuery({
-    queryKey: [ 'tweets' ],
-    queryFn: async () => {
-      if (!isLoggedIn) return;
+  const { error, data, isLoading } = useGetTweetsQuery(JSON.stringify(setTweetData));
+  // useGetTweetsQuery({
+    // queryKey: [ 'tweets' ],
+    // queryFn: async () => {
+    //   if (!isLoggedIn) return;
 
-      const tweets = getTweets(setTweetData);
+    //   const tweets = getTweets(setTweetData);
 
-      return tweets;
-    }
-  });
+    //   return tweets;
+    // }
+  // });
 
   async function handlePostTweet() {
     if (!isLoggedIn) return;
@@ -66,13 +68,13 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
   }
 
   function renderTweets(): React.ReactNode {
-    if (error) {
-      return <p>Error: {error.message}</p>;
-    }
-    if (isPending) {
+    // if (error) {
+    //   return <p>Error: {error.message}</p>;
+    // }
+    if (isLoading || !data) {
       return <p>Loading...</p>;
     }
-    return tweetData.map((data: TweetData, idx: React.Key) =>
+    return data.map((data: TweetData, idx: React.Key) =>
       <Tweet 
         key={idx}
         {...data}

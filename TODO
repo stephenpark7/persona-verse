@@ -1,5 +1,6 @@
 In Progress:
-  ☐ Modularize TweetContainer component
+  ☐ BUG: user doesn't update after RTK query @started(24-08-01 23:00)
+  ☐ Modularize TweetContainer component @started(24-08-01 23:00)
   ☐ Use RTK + Redux
   ☐ Fix broken tests
   ☐ Refactor more

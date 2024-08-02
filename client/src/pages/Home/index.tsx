@@ -8,6 +8,9 @@ import { LogoutButton } from '../../components/LogoutButton';
 import { HomeProps } from './interface';
 
 export const Home = () => {
+  // TODO: pass tweets to TweetContainer
+  // so that we can display them
+  // using Redux rather than useState
   const { jwt, isLoggedIn } = useUserState();
   return (
     <BaseHome

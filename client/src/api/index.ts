@@ -5,11 +5,10 @@ import { register, login, logout } from './Users/users.api';
 import { getTweets, postTweet } from './tweets.api';
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 
+const BASE_API_URL: string = `${process.env.API_PROTOCOL}://${process.env.API_HOST_NAME}:${process.env.API_PORT}/api/`;
+
 function apiUrl(controller: string, action: string): string {
-  const protocol = process.env.API_PROTOCOL;
-  const port = process.env.API_PORT;
-  const hostName = process.env.API_HOST_NAME;
-  return `${protocol}://${hostName}:${port}/api/${controller}/${action}`;
+  return `${BASE_API_URL}${controller}/${action}`;
 }
 
 async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
@@ -57,6 +56,7 @@ export function handleError(err: unknown, autoClose?: number): void {
 }
 
 export {
+  BASE_API_URL,
   login,
   register,
   logout,
