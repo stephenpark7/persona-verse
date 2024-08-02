@@ -1,5 +1,4 @@
 In Progress:
-  ☐ Revert refresh token expiration date back to 7 days after testing
   ☐ Modularize TweetContainer component
   ☐ Use RTK + Redux
   ☐ Fix broken tests
@@ -29,6 +28,7 @@ To-Do:
   ☐ Use Vite for frontend
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Revert refresh token expiration date back to 7 days after testing @done(24-08-01 22:59)
   ✔ Tweets dont get updated if we change users @started(24-07-28 04:52) @done(24-07-28 19:10) @lasted(14h18m39s)
   ✔ To reproduce, log in as user 1, refresh, and quickly logut out and log in as user 2 @done(24-07-28 19:10)
   ✔ Tweets/get will use the old user's token @done(24-07-28 19:10)
