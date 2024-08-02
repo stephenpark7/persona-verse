@@ -1,9 +1,11 @@
-import { Provider } from './Provider';
+import { ReduxProvider } from './ReduxProvider';
+import { QueryProvider } from './QueryProvider';
 import { Router } from './Router';
 import { Toast } from './Toast';
 
 export {
-  Provider,
+  ReduxProvider,
+  QueryProvider,
   Router,
   Toast,
 };

@@ -1,70 +1,58 @@
 import { toast } from 'react-toastify';
-import {
-  TweetData,
-  JWT,
-} from '../interfaces';
-import { apiCall, handleError } from './';
-import { SetTweetData, JsonResponse, PostTweet } from '../interfaces/api';
+import { SetTweetData, JsonResponse, PostTweet, TweetData } from '../interfaces/api';
+import { apiCall } from './';
 
 async function getTweets(
   setTweetData: SetTweetData,
-): Promise<void> {
+): Promise<TweetData[]> {
   const responseData: JsonResponse = await apiCall({
     method: 'GET',
     controller: 'tweets',
     action: 'get',
   });
 
-  if (!responseData.tweets) {
-    throw new Error('Tweet data is missing.');
+  const { tweets } = responseData;
+
+  if (!tweets) {
+    throw new Error('Failed to retrieve tweets.');
   }
 
-  setTweetData(responseData.tweets);
+  setTweetData(tweets);
+  
+  return tweets;
 }
 
 async function postTweet({
-  userData,
+  jwt,
   payload,
   tweetData,
   setTweetData,
 }: PostTweet): Promise<void> {
-  try {
-    if (!userData) {
-      throw new Error('User data is missing.');
-    }
-
-    const responseData = await apiCall({
-      method: 'POST',
-      controller: 'tweets',
-      action: 'create',
-      body: payload,
-    });
-
-    function addUserDataToTweet(
-      responseData: JsonResponse,
-      userParams: JWT,
-    ): TweetData {
-      const { tweet } = responseData;
-
-      if (!tweet) {
-        throw new Error('Tweet data is missing.');
-      }
-
-      tweet.User = {
-        username: userParams!.payload.username,
-        displayName: userParams!.payload.displayName ? userParams!.payload.displayName : userParams!.payload.username,
-      };
-
-      return tweet;
-    }
-
-    const enrichedData = addUserDataToTweet(responseData, userData);
-    setTweetData([ enrichedData, ...tweetData! ]);
-    toast.success('Tweet posted.');
+  if (!jwt) {
+    throw new Error('Failed to post tweet.');
   }
-  catch (err: unknown) {
-    handleError(err);
+
+  const responseData = await apiCall({
+    method: 'POST',
+    controller: 'tweets',
+    action: 'create',
+    body: payload,
+  });
+
+  const { tweet } = responseData;
+
+  if (!tweet) {
+    throw new Error('Failed to post tweet.');
   }
+
+  tweet.User = {
+    username: jwt.payload.username,
+    displayName: jwt.payload.displayName ? jwt.payload.displayName : jwt.payload.username,
+  };
+
+  setTweetData([ tweet, ...tweetData ]);
+
+  toast.success(responseData.message);
 }
 
 export {

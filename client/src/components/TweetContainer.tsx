@@ -1,47 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Tweet } from './Tweet';
-import { getTweets, postTweet } from '../api';
-import { useOnMountUnsafe } from '../hooks';
 import { toast } from 'react-toastify';
-import { useUserState } from '../stores';
 import { TweetData } from 'src/interfaces/api';
+import { useUserState } from '../stores';
+import { getTweets, postTweet } from '../api';
+import { Tweet } from './Tweet';
+import { useQuery } from '@tanstack/react-query';
+import { JWT } from 'src/interfaces';
 
-// interface TweetContainerProps {
-//   jwt: JWT;
-//   isLoggedIn: boolean;
-// }
+export const TweetContainer = () => {
+  const { jwt, isLoggedIn } = useUserState();
+  return (
+    <BaseTweetContainer 
+      jwt={jwt}
+      isLoggedIn={isLoggedIn}
+    />
+  );
+};
 
-export const TweetContainer: React.FC = (): React.JSX.Element => {
-// export const TweetContainer: React.FC<TweetContainerProps> = ({ jwt, isLoggedIn }): React.JSX.Element => {
+interface TweetContainerProps {
+  jwt: JWT | null;
+  isLoggedIn: boolean;
+};
+
+const BaseTweetContainer: React.FC<TweetContainerProps> = ({ 
+  jwt,
+  isLoggedIn,
+}): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
 
   const [ tweetData, setTweetData ] = useState<TweetData[]>([]);
 
-  const { jwt, isLoggedIn } = useUserState();
-
-  useEffect(() => {
-    async function fetchData() {
+  // TODO: Use RTK instead of react-query
+  // since we're using redux, we should use RTK
+  const { isPending, error } = useQuery({
+    queryKey: [ 'tweets' ],
+    queryFn: async () => {
       if (!isLoggedIn) return;
 
-      await getTweets(setTweetData);
+      const tweets = getTweets(setTweetData);
+
+      return tweets;
     }
-    fetchData();
-    return () => {
-      setTweetData([]);
-    };
-  }, []);
-
-  // useOnMountUnsafe(fetchData);
- 
-  // async function fetchData() {
-  //   if (!isLoggedIn) return;
-
-  //   await getTweets({
-  //     setTweetData,
-  //   });
-  // }
+  });
 
   async function handlePostTweet() {
     if (!isLoggedIn) return;
@@ -56,15 +58,20 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
     textRef.current.value = '';
 
     await postTweet({
-      userData: jwt,
+      jwt: jwt,
       payload: { message: message },
       tweetData,
       setTweetData,
     });
   }
 
-  function renderTweets(): React.ReactNode | null {
-    if (!tweetData) return null;
+  function renderTweets(): React.ReactNode {
+    if (error) {
+      return <p>Error: {error.message}</p>;
+    }
+    if (isPending) {
+      return <p>Loading...</p>;
+    }
     return tweetData.map((data: TweetData, idx: React.Key) =>
       <Tweet 
         key={idx}

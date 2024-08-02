@@ -36,6 +36,8 @@ const useUserState = () => {
 
   const isLoggedIn = jwt !== null;
 
+  // console.trace();
+
   axios.interceptors.request.use((config) => {
     function canUseAuthorizationHeader(jwt: JWT | null, config: AxiosRequestConfig): boolean {
       if (!jwt) return false;

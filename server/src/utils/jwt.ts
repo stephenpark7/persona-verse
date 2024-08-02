@@ -9,8 +9,8 @@ const { RevokedToken } = models;
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 function generateAccessToken(payload: JWTPayload) {
-  const options = { expiresIn: '5s' };
-  const expiresAt = Date.now() + 5 * 60 * 1000;
+  const options = { expiresIn: '30m' };
+  const expiresAt = Date.now() + 30 * 60 * 1000;
   const token = jwt.sign({ ...payload, expiresAt }, JWT_SECRET, options);
   return {
     token,
