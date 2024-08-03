@@ -6,9 +6,9 @@ services:
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=development
-      - API_PROTOCOL=http
-      - API_HOST_NAME=localhost
-      - API_PORT=3001
+      - VITE_API_PROTOCOL=http
+      - VITE_API_HOST_NAME=localhost
+      - VITE_API_PORT=3001
     ports:
       - "3000:3000"
     networks:

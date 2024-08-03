@@ -3,24 +3,31 @@ import { RequestBody } from '.';
 import { NavigateFunction } from 'react-router-dom';
 import { AxiosRequestHeaders, RawAxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
 
-export interface JsonResponse
-         extends RefreshTokenResponse,
-                 GetTweetsResponse,
-                 PostTweetResponse {
+// export interface JsonResponse
+//          extends RefreshTokenResponse,
+//                  GetTweetsResponse,
+//                  PostTweetResponse {
+//   message: string;
+// };
+
+export interface JsonResponse {
   message: string;
-};
+  jwt?: JWT;
+  tweets?: TweetData[];
+  tweet?: TweetData;
+}
 
 export interface RefreshTokenResponse {
   jwt?: JWT;
-};
+}
 
 export interface GetTweetsResponse {
   tweets?: TweetData[];
-};
+}
 
 export interface PostTweetResponse {
   tweet?: TweetData;
-};
+}
 
 export interface ApiCall {
   method: string,
@@ -64,8 +71,8 @@ export type TweetData = {
   User: {
     username: string;
     displayName: string;
-  };
-};
+  }
+}
 
 //
 
@@ -80,16 +87,16 @@ export interface UsersSignupParams {
   username: string;
   email: string;
   password: string;
-};
+}
 
 export interface UsersLoginParams {
   username: string;
   password: string;
-};
+}
 
 export interface TweetPostParams {
   message: string;
-};
+}
 
 export type ApiFunction = ({ ...args }: RegisterParams | Login) => Promise<void>;
 

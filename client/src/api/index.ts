@@ -3,7 +3,7 @@ import { JsonResponse, ApiCall } from '../interfaces/api';
 import { refreshToken } from './refresh.api';
 import { register, login, logout } from './Users/users.api';
 import { getTweets, postTweet } from './tweets.api';
-import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 
 const ENV = {
   API_PROTOCOL: import.meta.env.VITE_API_PROTOCOL as string,
@@ -14,6 +14,9 @@ const ENV = {
 const BASE_API_URL: string = `${ENV.API_PROTOCOL}://${ENV.API_HOST_NAME}:${ENV.API_PORT}/api/`;
 
 function apiUrl(controller: string, action: string): string {
+  if (!BASE_API_URL || !controller || action === undefined) {
+    throw new Error(`Invalid API URL: ${BASE_API_URL}${controller}${action}`);
+  }
   return `${BASE_API_URL}${controller}/${action}`;
 }
 
@@ -30,35 +33,45 @@ async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
     data: body,
     ...options,  
   };
-  
+
   const response: AxiosResponse = await axios.request(config);
 
-  if (response.statusText !== 'OK') {
-    const errorMessage: string = response.data.message ?? 'An unexpected error occurred.';
-    throw new Error(errorMessage);
-  }
+  // if (response.status !== 'OK') {
+  //   console.log(response);
+  //   throw new Error(response.data.message);
+  // }
 
   return response.data;
 }
 
-export async function apiCall(params: ApiCall): Promise<JsonResponse> {
+export async function apiCall(params: ApiCall, showToast: boolean): Promise<JsonResponse | void> {
   try {
-    return await sendHttpRequest(params);
+    const response = await sendHttpRequest(params);
+    if (showToast) {
+      displaySuccessMessage(response.message);
+    }
+    return response;
   }
-  catch (err: unknown) {
-    handleError(err);
-    return {
-      message: 'An unexpected error occurred.',
-    };
+  catch (err: AxiosError | unknown) {
+    console.log(err);
+    displayErrorMessage(err);
+    return undefined;
   }
 }
 
-export function handleError(err: unknown, autoClose?: number): void {
-  if (err instanceof Error) {
-    toast.error(err.message, { autoClose });
-  } else {
-    throw new Error('An unexpected error occurred.');
+function displayErrorMessage(err: AxiosError | unknown, autoClose?: number): string {
+  let message = 'An unexpected error occurred.';
+
+  if (err instanceof AxiosError && err.response?.data.message) {
+    message = err.response.data.message;
   }
+
+  toast.error(message, { autoClose });
+  return message;
+}
+
+function displaySuccessMessage(message: string, autoClose?: number): void {
+  toast.success(message, { autoClose });
 }
 
 export {
