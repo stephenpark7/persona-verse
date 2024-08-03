@@ -24,7 +24,7 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Types */
-    "types": ["@testing-library/jest-dom"],
+    "types": ["@testing-library/jest-dom", "jest"],
 
     "outDir": "./dist",
   },
