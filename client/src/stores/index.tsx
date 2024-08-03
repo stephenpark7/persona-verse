@@ -1,11 +1,11 @@
 import { createSlice, configureStore, Dispatch, UnknownAction } from '@reduxjs/toolkit';
 // import { setupListeners } from '@reduxjs/toolkit/query';
-import { tweetAPI } from '../../src/services/TweetAPI';
+import { tweetAPI } from '../services/TweetAPI';
 import { useSelector, useDispatch } from 'react-redux';
-import { JWT, State } from '../../src/interfaces/user';
+import { JWT, State } from '../interfaces/user';
 import { refreshToken } from '../api';
 import { setJwtReducer, clearJwtReducer, setTweetsReducer } from './reducers';
-import { JwtStorage } from 'src/utils/JwtStorage';
+import { JwtStorage } from '../utils/JwtStorage';
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 
 const initialState: State = {

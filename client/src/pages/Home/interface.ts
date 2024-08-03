@@ -1,4 +1,4 @@
-import { JWT } from '../../../src/interfaces';
+import { JWT } from '../../interfaces';
 
 export interface HomeProps {
   jwt: JWT | null;

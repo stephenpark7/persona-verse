@@ -1,5 +1,5 @@
-import { RequestBody } from '../../src/interfaces';
-import { SubmitForm } from '../../src/interfaces/api';
+import { RequestBody } from '../interfaces';
+import { SubmitForm } from '../interfaces/api';
 
 export async function submitForm({
   e,

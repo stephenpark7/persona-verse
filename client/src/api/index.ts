@@ -5,7 +5,13 @@ import { register, login, logout } from './Users/users.api';
 import { getTweets, postTweet } from './tweets.api';
 import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 
-const BASE_API_URL: string = `${process.env.API_PROTOCOL}://${process.env.API_HOST_NAME}:${process.env.API_PORT}/api/`;
+const ENV = {
+  API_PROTOCOL: import.meta.env.VITE_API_PROTOCOL as string,
+  API_HOST_NAME: import.meta.env.VITE_API_HOST_NAME as string,
+  API_PORT: import.meta.env.VITE_API_PORT as string,
+};
+
+const BASE_API_URL: string = `${ENV.API_PROTOCOL}://${ENV.API_HOST_NAME}:${ENV.API_PORT}/api/`;
 
 function apiUrl(controller: string, action: string): string {
   return `${BASE_API_URL}${controller}/${action}`;

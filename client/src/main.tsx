@@ -8,9 +8,9 @@ const render = () => {
   const rootElement: ReactDOM.Root = ReactDOM.createRoot(root);
 
   const children: React.ReactNode = (
-    // <React.StrictMode>
+    <React.StrictMode>
       <App />
-    // </React.StrictMode>
+    </React.StrictMode>
   );
 
   rootElement.render(children);

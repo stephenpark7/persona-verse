@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { JsonResponse, PostTweet, TweetData } from '../interfaces/api';
-import { apiCall } from './';
-import { setTweets, store } from '../../src/stores';
+import { apiCall } from '.';
+import { setTweets, store } from '../stores';
 
 async function getTweets(
 ): Promise<TweetData[]> {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { JWT } from 'src/interfaces';
+import { JWT } from '../..src/interfaces';
 import { useUserState } from '../../stores';
 import { TweetContainer } from '../../components/TweetContainer';
 import { LogoutButton } from '../../components/LogoutButton';

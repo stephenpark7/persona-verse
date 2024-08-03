@@ -1,7 +1,7 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
-import { JWT, State } from '../../src/interfaces/user';
-import { JwtStorage } from 'src/utils/JwtStorage';
-import { TweetData } from 'src/interfaces';
+import { JWT, State } from '../interfaces/user';
+import { JwtStorage } from '../utils/JwtStorage';
+import { TweetData } from '../interfaces';
 
 const setJwtReducer: CaseReducer<State, { payload: JWT; type: string; }> = (state: State, action: PayloadAction<JWT>) => {
   const { jwt } = state.value;
