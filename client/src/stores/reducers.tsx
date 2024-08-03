@@ -6,14 +6,16 @@ import { TweetData } from 'src/interfaces';
 const setJwtReducer: CaseReducer<State, { payload: JWT; type: string; }> = (state: State, action: PayloadAction<JWT>) => {
   const { jwt } = state.value;
   const { payload } = action;
-  if (jwt === payload) return;
-  // console.log('jwt', jwt, 'setJwtReducer', payload);
+  
+  if (jwt === payload) {
+    return;
+  }
+
   JwtStorage.setAccessToken(payload);
   state.value.jwt = action.payload;
 };
 
 const clearJwtReducer: CaseReducer<State> = (state: State) => {
-  // console.log('clearJwtReducer');
   JwtStorage.clearAccessToken();
   state.value.jwt = null;
 };

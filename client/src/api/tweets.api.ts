@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
-import { SetTweetData, JsonResponse, PostTweet, TweetData } from '../interfaces/api';
+import { JsonResponse, PostTweet, TweetData } from '../interfaces/api';
 import { apiCall } from './';
+import { setTweets, store } from '../../src/stores';
 
 async function getTweets(
-  setTweetData?: SetTweetData,
 ): Promise<TweetData[]> {
   const responseData: JsonResponse = await apiCall({
     method: 'GET',
@@ -17,7 +17,7 @@ async function getTweets(
     throw new Error('Failed to retrieve tweets.');
   }
 
-  if (setTweetData) setTweetData(tweets);
+  store.dispatch(setTweets(tweets));
   
   return tweets;
 }
@@ -25,8 +25,6 @@ async function getTweets(
 async function postTweet({
   jwt,
   payload,
-  tweetData,
-  setTweetData,
 }: PostTweet): Promise<void> {
   if (!jwt) {
     throw new Error('Failed to post tweet.');
@@ -50,7 +48,13 @@ async function postTweet({
     displayName: jwt.payload.displayName ? jwt.payload.displayName : jwt.payload.username,
   };
 
-  setTweetData([ tweet, ...tweetData ]);
+  const tweets = store.getState().user.value.tweets;
+
+  if (!tweets) {
+    throw new Error('Failed to post tweet.');
+  }
+
+  store.dispatch(setTweets([ tweet, ...tweets ]));
 
   toast.success(responseData.message);
 }

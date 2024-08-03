@@ -38,6 +38,9 @@ const store = configureStore({
 
 const useUserState = () => {
   const jwt = useSelector((state: ReturnType<typeof store.getState>) => state.user.value.jwt);
+  // TODO: modularize this
+  // and move it to a separate function
+  const tweets = useSelector((state: ReturnType<typeof store.getState>) => state.user.value.tweets);
   const dispatch: Dispatch<UnknownAction> = useDispatch();
 
   const isLoggedIn = jwt !== null;
@@ -88,6 +91,7 @@ const useUserState = () => {
     jwt,
     dispatch,
     isLoggedIn,
+    tweets,
   };
 };
 

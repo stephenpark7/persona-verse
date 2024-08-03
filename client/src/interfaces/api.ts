@@ -53,8 +53,6 @@ export type SetTweetData = React.Dispatch<React.SetStateAction<TweetData[]>>;
 export interface PostTweet {
   jwt: JWT | null,
   payload: TweetPostParams,
-  tweetData: TweetData[],
-  setTweetData: React.Dispatch<React.SetStateAction<TweetData[]>>,
 }
 
 export type TweetData = {
