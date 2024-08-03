@@ -1,32 +1,32 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
-module.exports = {
+export default {
   preset: 'ts-jest',
   transform: {
-    "^.+\\.test.(js|jsx|ts|tsx)$": "ts-jest",
+    '^.+\\.test.(js|jsx|ts|tsx)$': 'ts-jest',
   },
   globals: {
-    "ts-jest": {
+    'ts-jest': {
       transformerConfig: {
         transformIgnorePatterns: [
-          "<rootDir>/build/",
-          "<rootDir>/dist/",
-          "<rootDir>/node_modules/",
-          "<rootDir>/scripts/",
+          '<rootDir>/build/',
+          '<rootDir>/dist/',
+          '<rootDir>/node_modules/',
+          '<rootDir>/scripts/',
         ],
       },
     },
   },
   testPathIgnorePatterns: [
-    "<rootDir>/build/",
-    "<rootDir>/dist/",
-    "<rootDir>/node_modules/",
-    "<rootDir>/scripts/",
+    '<rootDir>/build/',
+    '<rootDir>/dist/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/scripts/',
   ],
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '\\.(css|scss)$': 'identity-obj-proxy'
+    '\\.(css|scss)$': 'identity-obj-proxy',
   },
-  setupFiles: ["<rootDir>/src/tests/setupTests.ts"],
+  // setupFiles: [ '<rootDir>/src/tests/setupTests.ts' ],
   // setupFilesAfterEnv: ["<rootDir>/jest-setup-after-env.js"],
   // moduleFileExtensions: [ 'js', 'jsx', 'ts', 'tsx', ],
   // moduleDirectories: [ 'node_modules', 'build', 'dist', ],

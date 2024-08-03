@@ -1,7 +1,6 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js';
 import prettierConfig from 'eslint-config-prettier';
 import jestPlugin from 'eslint-plugin-jest';
 import reactPlugin from 'eslint-plugin-react';
@@ -11,7 +10,7 @@ import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 const configs = [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  pluginReactConfig,
+  reactPlugin.configs.flat.recommended,
   prettierConfig,
 ];
 
@@ -25,7 +24,7 @@ const plugins = {
 export default [
   ...configs,
   {
-    files: [ '**/*.{js,mjs,cjs,ts,jsx,tsx}' ],
+    files: [ '**/**/*.{js,mjs,cjs,ts,jsx,tsx}' ],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,
@@ -50,9 +49,15 @@ export default [
     },
   },
   {
-    files: [ '**/*.{js,mjs,cjs,ts}' ],
+    files: [ '**/**/*.{js,mjs,cjs,ts}' ],
     rules: {
       'no-restricted-syntax': [ 'off' ],
+    },
+  },
+  {
+    files: [ '**/**/*.{test,spec}.{jsx,tsx}' ],
+    rules: {
+      'react/react-in-jsx-scope': [ 'off' ],
     },
   },
 ];
