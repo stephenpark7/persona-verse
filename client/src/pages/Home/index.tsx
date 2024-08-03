@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { JWT } from '../..src/interfaces';
+import { JWT } from '../../../src/interfaces';
 import { useUserState } from '../../stores';
 import { TweetContainer } from '../../components/TweetContainer';
 import { LogoutButton } from '../../components/LogoutButton';
@@ -27,7 +27,7 @@ function getDisplayName(jwt: JWT | null): string {
 
 export const BaseHome: React.FC<HomeProps> = ({ 
   jwt, 
-  isLoggedIn 
+  isLoggedIn, 
 }): React.JSX.Element => {
 
   function renderBodyContent() {

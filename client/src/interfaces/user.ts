@@ -4,7 +4,7 @@
 //   payload: JWTPayload;
 // };
 
-import { TweetData } from "./api";
+import { TweetData } from './api';
 
 // export type JWTWrapper = {
 //   jwt: {

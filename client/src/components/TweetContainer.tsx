@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
-import { TweetData } from '../..src/interfaces/api';
+import { TweetData } from '../../src/interfaces/api';
 import { useUserState } from '../stores';
 import { getTweets, postTweet } from '../api';
 import { Tweet } from './Tweet';
-import { JWT } from '../..src/interfaces';
+import { JWT } from '../../src/interfaces';
 
 import { useGetTweetsQuery } from '../services/TweetAPI';
 
