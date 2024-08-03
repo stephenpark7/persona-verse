@@ -1,4 +1,5 @@
 In Progress:
+  ☐ Get Jest to play nicely with Vite 
   ☐ BUG: user doesn't update after RTK query @started(24-08-01 23:00)
   ☐ Modularize TweetContainer component @started(24-08-01 23:00)
   ☐ Use RTK + Redux
@@ -8,12 +9,9 @@ In Progress:
   ☐ Update TODO
   ☐ Update README
   ☐ Check token is expired on client before sending a request
-  ☐ Fix code while refactoring @started(24-07-27 04:55)
-  ☐ Add Redux for data store @started(24-07-26 06:59)
   ☐ Jest tests for local storage
   ☐ Fix issue where it fails to resend the request after getting a new token
 To-Do:
-  ☐ Use React query for fetching data and caching
   ☐ Add profile page
     ☐ Add profile picture
       ☐ Add bio
@@ -26,9 +24,12 @@ To-Do:
   ☐ Amend commit messages to be more descriptive
   ☐ Refactor backend @started(24-07-20 21:05)
   ☐ Refactor frontend @started(24-07-20 21:15)
-  ☐ Use Vite for frontend
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Add Redux for data store @started(24-07-26 06:59) @done(24-08-03 02:35) @lasted(1w19h36m53s)
+  ✔ Fix code while refactoring @started(24-07-27 04:55) @done(24-08-03 02:35) @lasted(6d21h40m44s)
+  ✔ Use React query for fetching data and caching @done(24-08-03 02:35)
+  ✔ Use Vite for frontend @done(24-08-03 02:35)
   ✔ Revert refresh token expiration date back to 7 days after testing @done(24-08-01 22:59)
   ✔ Tweets dont get updated if we change users @started(24-07-28 04:52) @done(24-07-28 19:10) @lasted(14h18m39s)
   ✔ To reproduce, log in as user 1, refresh, and quickly logut out and log in as user 2 @done(24-07-28 19:10)
