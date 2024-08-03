@@ -1,15 +1,18 @@
 import { createSlice, configureStore, Dispatch, UnknownAction } from '@reduxjs/toolkit';
+// import { setupListeners } from '@reduxjs/toolkit/query';
+import { tweetAPI } from '../services/TweetAPI';
 import { useSelector, useDispatch } from 'react-redux';
-import { JWT, State } from '../../src/interfaces/user';
+import { JWT, State } from '../interfaces/user';
 import { refreshToken } from '../api';
-import { setJwtReducer, clearJwtReducer } from './reducers';
-import { JwtStorage } from 'src/utils/JwtStorage';
+import { setJwtReducer, clearJwtReducer, setTweetsReducer } from './reducers';
+import { JwtStorage } from '../utils/JwtStorage';
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 
 const initialState: State = {
   value: {
     jwt: JwtStorage.getAccessToken(),
     history: null,
+    tweets: null,
   },
 };
 
@@ -19,19 +22,25 @@ const userSlice = createSlice({
   reducers: {
     setJwt: setJwtReducer,
     clearJwt: clearJwtReducer,
+    setTweets: setTweetsReducer,
   },
 });
 
-const { setJwt, clearJwt } = userSlice.actions;
+const { setJwt, clearJwt, setTweets } = userSlice.actions;
 
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
+    [tweetAPI.reducerPath]: tweetAPI.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
 });
 
 const useUserState = () => {
   const jwt = useSelector((state: ReturnType<typeof store.getState>) => state.user.value.jwt);
+  // TODO: modularize this
+  // and move it to a separate function
+  const tweets = useSelector((state: ReturnType<typeof store.getState>) => state.user.value.tweets);
   const dispatch: Dispatch<UnknownAction> = useDispatch();
 
   const isLoggedIn = jwt !== null;
@@ -82,6 +91,7 @@ const useUserState = () => {
     jwt,
     dispatch,
     isLoggedIn,
+    tweets,
   };
 };
 
@@ -91,5 +101,6 @@ export {
   store,
   setJwt,
   clearJwt,
+  setTweets,
   useUserState,
 };

@@ -4,6 +4,8 @@
 //   payload: JWTPayload;
 // };
 
+import { TweetData } from './api';
+
 // export type JWTWrapper = {
 //   jwt: {
 //     user: JWT;
@@ -30,6 +32,7 @@ export type State = {
 export type StateProperties = {
   jwt: JWT | null;
   history: History | null;
+  tweets: TweetData[] | null;
 };
 
 export type History = {

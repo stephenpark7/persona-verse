@@ -1,5 +1,5 @@
-import { RequestBody } from '../../src/interfaces';
-import { SubmitForm } from '../../src/interfaces/api';
+import { RequestBody } from '../interfaces';
+import { SubmitForm } from '../interfaces/api';
 
 export async function submitForm({
   e,
@@ -15,14 +15,14 @@ export async function submitForm({
 }
 
 export function updateForm(
-  e: React.ChangeEvent<HTMLInputElement>, 
-  formData: RequestBody, 
+  e: React.ChangeEvent<HTMLInputElement>,
+  formData: RequestBody,
   setFormData: React.Dispatch<React.SetStateAction<RequestBody>>,
 ): void {
   const { value, name } = e.target;
   setFormData({
     ...formData,
-    [ name ]: value,
+    [name]: value,
   } as RequestBody);
 }
 
@@ -34,5 +34,7 @@ export function isTokenRefreshablePath(url: string) {
     '/api/refresh/',
   ];
 
-  return url.includes('/api/') && !ignoredPaths.some(path => url.endsWith(path));
+  return (
+    url.includes('/api/') && !ignoredPaths.some((path) => url.endsWith(path))
+  );
 }

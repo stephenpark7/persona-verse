@@ -1,7 +1,7 @@
 import { JWT } from '../interfaces';
-import { JsonResponse } from '../../src/interfaces/api';
-import { clearJwt, setJwt, store } from '../../src/stores';
-import { apiCall, handleError } from './';
+import { JsonResponse } from '../interfaces/api';
+import { clearJwt, setJwt, store } from '../stores';
+import { apiCall, handleError } from '.';
 
 async function refreshToken(): Promise<JWT | void> {
   try {

@@ -9,7 +9,7 @@ import {
 type RequestBody = UsersSignupParams | UsersLoginParams | TweetPostParams;
 type SetUserData = React.Dispatch<React.SetStateAction<JWT>>;
 
-export {
+export type {
   RequestBody,
   TweetPostParams,
   JWT,

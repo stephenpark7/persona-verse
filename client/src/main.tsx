@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './App';
+import { App } from './core/App';
 
 const render = () => {
   const root: HTMLElement = document.getElementById('root') as HTMLElement;
@@ -8,9 +8,9 @@ const render = () => {
   const rootElement: ReactDOM.Root = ReactDOM.createRoot(root);
 
   const children: React.ReactNode = (
-    // <React.StrictMode>
+    <React.StrictMode>
       <App />
-    // </React.StrictMode>
+    </React.StrictMode>
   );
 
   rootElement.render(children);

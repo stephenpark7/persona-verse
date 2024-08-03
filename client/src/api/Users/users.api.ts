@@ -32,7 +32,7 @@ const register: RegisterFunction = async ({
   } catch (err) {
     handleError(err, 5000);
   }
-}
+};
 
 async function login({
   formData,

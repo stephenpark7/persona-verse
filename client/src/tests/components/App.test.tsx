@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import React from 'react';
-import { App } from '../../App';
+// import React from 'react';
+import { App } from '../../core/App';
 
 test('renders without crashing', () => {
   const { queryByText } = render(<App />);
