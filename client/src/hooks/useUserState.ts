@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-// import { useJwt, useTweets } from '../selectors/userSelectors';
 import { useAxiosInterceptors } from '../stores';
 import { useJwt, useTweets } from '../selectors/userSelectors';
 

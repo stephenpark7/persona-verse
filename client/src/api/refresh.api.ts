@@ -1,5 +1,5 @@
 import { JWT } from '../interfaces';
-import { clearJwt, setJwt, store } from '../stores';
+import { setJwt, store } from '../stores';
 import { apiCall } from '.';
 
 async function refreshToken(): Promise<JWT | void> {

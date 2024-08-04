@@ -24,4 +24,5 @@ const userSlice = createSlice({
 const userReducer = userSlice.reducer;
 
 export const { setJwt, clearJwt, setTweets, addTweet } = userSlice.actions;
+
 export { initialState, userSlice, userReducer };

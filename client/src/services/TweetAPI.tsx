@@ -23,7 +23,7 @@ export const tweetAPI = createApi({
           // console.log(data);
           // `onSuccess` side-effect
           // dispatch(messageCreated('Post received!'))
-          dispatch(setTweets(data));
+          // dispatch(setTweets(data));
           // console.log('Tweets received!');
         } catch (err: unknown) {
           // `onError` side-effect
