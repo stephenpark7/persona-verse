@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { TweetData } from '../../src/interfaces/api';
 import { useUserState } from '../stores';
-import { getTweets, postTweet } from '../api';
+import { postTweet } from '../api';
 import { Tweet } from './Tweet';
 import { JWT } from '../../src/interfaces';
 
 import { useGetTweetsQuery } from '../services/TweetAPI';
 
 export const TweetContainer = () => {
-  const { jwt, isLoggedIn, tweets } = useUserState();
+  const { jwt, isLoggedIn } = useUserState();
   return (
     <BaseTweetContainer 
       jwt={jwt}
       isLoggedIn={isLoggedIn}
-      tweets={tweets}
     />
   );
 };
@@ -24,17 +23,16 @@ export const TweetContainer = () => {
 interface TweetContainerProps {
   jwt: JWT | null;
   isLoggedIn: boolean;
-  tweets: TweetData[] | null;
 };
 
 const BaseTweetContainer: React.FC<TweetContainerProps> = ({ 
   jwt,
   isLoggedIn,
-  tweets,
 }): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
+  const { data, isLoading } = useGetTweetsQuery();
 
-  const { error, data, isLoading } = useGetTweetsQuery();
+  console.log(data);
 
   async function handlePostTweet() {
     if (!isLoggedIn) return;
@@ -55,9 +53,6 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
   }
 
   function renderTweets(): React.ReactNode {
-    // if (error) {
-    //   return <p>Error: {error.message}</p>;
-    // }
     if (isLoading || !data) {
       return <p>Loading...</p>;
     }

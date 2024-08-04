@@ -31,12 +31,7 @@ export type State = {
 
 export type StateProperties = {
   jwt: JWT | null;
-  history: History | null;
   tweets: TweetData[] | null;
-};
-
-export type History = {
-  [key: string]: string;
 };
 
 // export type State = {

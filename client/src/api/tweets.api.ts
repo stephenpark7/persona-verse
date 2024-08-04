@@ -1,6 +1,7 @@
 import { PostTweet, TweetData } from '../interfaces/api';
 import { apiCall } from '.';
 import { setTweets, store } from '../stores';
+import { addTweet } from '../stores/thunks';
 
 async function getTweets(
 ): Promise<TweetData[]> {
@@ -17,7 +18,7 @@ async function getTweets(
   }
 
   store.dispatch(setTweets(data.tweets));
-  
+  // console.log(data.tweets);
   return data.tweets;
 }
 
@@ -36,24 +37,24 @@ async function postTweet({
     body: payload,
   }, true);
 
-  if (!data) return;
+  if (!data || !data.tweet) return;
 
-  // if (!data.tweets) {
-  //   throw new Error('Failed to post tweet.');
-  // }
-
-  data.tweet!.User = {
+  data.tweet.User = {
     username: jwt.payload.username,
     displayName: jwt.payload.displayName ? jwt.payload.displayName : jwt.payload.username,
   };
 
-  const tweets = store.getState().user.value.tweets;
+  await addTweet(data.tweet)(store.dispatch, () => store.getState().user);
+
+  // console.log(store.getState().user.value.tweets);
+
+  // const tweets = store.getState().user.value.tweets;
 
   // if (!tweets) {
   //   throw new Error('Failed to post tweet.');
   // }
 
-  store.dispatch(setTweets([ data.tweet!, ...tweets! ]));
+  // store.dispatch(setTweets([ data.tweet!, ...tweets! ]));
 }
 
 export {
