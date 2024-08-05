@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { JWT } from '../../interfaces';
 import { useUserState } from '../../hooks';
-import { TweetContainer } from '../../components/TweetContainer/TweetContainer';
+import { TweetContainer } from '../../components/TweetContainer/TweetContainer.component';
 import { LogoutButton } from '../../components';
 import { HomeProps } from './Home.interface';
 

@@ -1,1 +1,1 @@
-export * from './TweetContainer';
+export * from './TweetContainer.component';
