@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 import { JsonResponse, ApiCall } from '../interfaces';
-import { refreshToken } from './Refresh/refresh.api';
-import { register, login, logout } from './Users';
-import { getTweets, postTweet } from './Tweets';
+import { refreshToken } from './refresh.api';
+import { register, login, logout } from './users.api';
+import { getTweets, postTweet } from './tweets.api';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 
 const ENV = {
