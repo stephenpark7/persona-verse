@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-const loadEnvVars = () => {
+const loadEnvironmentVariables = () => {
   if (process.env.DB_HOST && 
       process.env.DB_HOST !== 'localhost' &&
       (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test')) {
@@ -12,4 +12,4 @@ const loadEnvVars = () => {
   });
 };
 
-export { loadEnvVars };
+export { loadEnvironmentVariables };
