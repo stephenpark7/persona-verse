@@ -1,18 +1,12 @@
 import express from 'express';
-import users from './users.api';
-import tweets from './tweets.api';
-import refresh from './refresh.api';
+import { usersApi } from './users.api';
+import { tweetsApi } from './tweets.api';
+import { refreshApi } from './refresh.api';
 
 const router = express.Router();
 
-const routes = {
-  '/users': users,
-  '/tweets': tweets,
-  '/refresh': refresh,
-};
-
-for (const [ path, handler ] of Object.entries(routes)) {
-  router.use(path, handler);
-}
+router.use('/users', usersApi);
+router.use('/tweets', tweetsApi);
+router.use('/refresh', refreshApi);
 
 export default router;
