@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
-import { TweetData } from '../../interfaces/api.interface';
+import { TweetData } from '../../interfaces';
 import { JWT } from '../../interfaces';
 import { useUserState } from '../../hooks';
 import { postTweet } from '../../api';

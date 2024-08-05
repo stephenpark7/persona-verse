@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
-import { JWT } from '../interfaces/user.interface';
+import { JWT } from '../interfaces';
 import { refreshToken } from '../api';
 
 const useAxiosInterceptors = (jwt: JWT | null) => {

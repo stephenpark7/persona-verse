@@ -1,4 +1,4 @@
-import { PostTweet, TweetData } from '../../interfaces/api.interface';
+import { PostTweet, TweetData } from '../../interfaces';
 import { apiCall } from '../';
 import { addTweet, setTweets } from '../../redux/slices/actions';
 import { store } from '../../redux/stores';
