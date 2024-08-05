@@ -1,6 +1,6 @@
 import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
 
-class User extends Model {
+class UserProfile extends Model {
   static model: ModelStatic<Model>;
 
   static definition = {
@@ -9,25 +9,23 @@ class User extends Model {
       autoIncrement: true,
       primaryKey: true,
     },
-    username: {
+    displayName: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
-    email: {
+    picture: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+      allowNull: true,
     },
-    password: {
+    bio: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   };
 
   static initModel(sequelize: Sequelize): ModelStatic<Model> {
-    return sequelize.define('User', User.definition);
+    return sequelize.define('UserProfile', UserProfile.definition);
   }
 }
 
-export { User };
+export { UserProfile };

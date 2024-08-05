@@ -27,6 +27,4 @@ class Tweet extends Model {
   }
 }
 
-export {
-  Tweet,
-};
+export { Tweet };

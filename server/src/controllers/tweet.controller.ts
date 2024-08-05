@@ -43,7 +43,7 @@ export const get = async (req: AuthenticatedRequest, res: Response) => {
       },
       include: {
         association: 'User',
-        attributes: [ 'username', 'displayName' ],
+        attributes: [ 'username' ],
       },
       order: [ [ 'createdAt', 'DESC' ] ],
     });

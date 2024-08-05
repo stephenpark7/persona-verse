@@ -16,6 +16,4 @@ class RevokedToken extends Model {
   }
 }
 
-export {
-  RevokedToken,
-};
+export { RevokedToken };

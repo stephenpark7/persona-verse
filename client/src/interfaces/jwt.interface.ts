@@ -7,5 +7,4 @@ export type JWT = {
 export type JWTPayload = {
   userId: number;
   username: string;
-  displayName: string;
 };

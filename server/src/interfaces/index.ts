@@ -28,4 +28,5 @@ export interface ModelDefinitions {
   Tweet: ModelStatic<Model>;
   RevokedToken: ModelStatic<Model>;
   RefreshToken: ModelStatic<Model>;
+  UserProfile: ModelStatic<Model>;
 }

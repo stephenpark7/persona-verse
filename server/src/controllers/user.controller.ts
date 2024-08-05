@@ -6,7 +6,7 @@ import JWT from '../utils/jwt';
 import BCrypt from '../utils/bcrypt';
 
 const { models } = db;
-const { User, RevokedToken } = models;
+const { User, RevokedToken, UserProfile } = models;
 
 export const create = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -38,7 +38,6 @@ export const create = async (req: Request, res: Response): Promise<Response> => 
       username: username,
       email: email,
       password: hashedPassword,
-      displayName: username,
     });
 
     return res.status(201).json({ message: 'Account created successfully.' });
@@ -79,11 +78,21 @@ export const login = async (req: Request, res: Response) => {
       return res.status(500).json({ message: 'Error generating tokens.' });
     }
   
-    req.session!.refreshToken = refreshToken;
-  
+    if (req.session) {
+      req.session.refreshToken = refreshToken;
+    }
+
+    const profile = UserProfile.findOrCreate({
+      where: { UserId: payload.userId },
+      defaults: {
+        displayName: username,
+      },
+    });
+
     res.status(200).json({
       message: 'Logged in successfully.',
       jwt: accessToken,
+      profile: profile,
     });
   } catch (error: unknown) {
     res.status(500).json({ message: 'Error logging in.' });

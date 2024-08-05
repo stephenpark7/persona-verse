@@ -16,6 +16,4 @@ class RefreshToken extends Model {
   }
 }
 
-export {
-  RefreshToken,
-};
+export { RefreshToken };

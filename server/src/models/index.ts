@@ -1,11 +1,5 @@
-import { User } from './user.model';
-import { Tweet } from './tweet.model';
-import { RevokedToken } from './revokedToken.model';
-import { RefreshToken } from './refreshToken.model';
-
-export { 
-  User,
-  Tweet,
-  RevokedToken,
-  RefreshToken,
-};
+export * from './user.model';
+export * from './tweet.model';
+export * from './revokedToken.model';
+export * from './refreshToken.model';
+export * from './userProfile.model';
