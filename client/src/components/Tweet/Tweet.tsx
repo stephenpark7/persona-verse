@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 // import { TrashFill } from 'react-bootstrap-icons';
 import './Tweet.css';
-import { TweetData } from '../interfaces';
+import { TweetData } from '../../interfaces';
 
 export const Tweet: React.FC<TweetData> = ({ 
   message, 
