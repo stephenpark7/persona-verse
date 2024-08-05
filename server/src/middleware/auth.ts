@@ -32,4 +32,4 @@ async function auth(req: AuthenticatedRequest, res: Response, next: NextFunction
   });
 }
 
-export default auth;
+export { auth };

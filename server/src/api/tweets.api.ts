@@ -1,7 +1,7 @@
 import express, { Response } from 'express';
 import { AuthenticatedRequest } from '../interfaces';
+import { auth } from '../middleware/auth';
 import { create, get } from '../controllers/tweet.controller';
-import auth from '../middleware/auth';
 
 const tweetsApi = express.Router();
 

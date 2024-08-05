@@ -5,7 +5,7 @@ import db from '../db';
 const { models } = db;
 const { Tweet } = models;
 
-export const create = async (req: AuthenticatedRequest, res: Response) => {
+const create = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const requestBody: CreateRequestBody = req.body;
     const requestBodyMessage: string = requestBody.message;
@@ -34,7 +34,7 @@ export const create = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
-export const get = async (req: AuthenticatedRequest, res: Response) => {
+const get = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const tweets = await Tweet.findAll({
       attributes: [ 'message', 'likes', 'createdAt' ],
@@ -55,3 +55,5 @@ export const get = async (req: AuthenticatedRequest, res: Response) => {
     res.status(500).json({ message: 'Error getting tweets.' });
   }
 };
+
+export { create, get };

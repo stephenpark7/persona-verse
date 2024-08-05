@@ -7,7 +7,7 @@ import db from '../db';
 const { models } = db;
 const { User, RevokedToken } = models;
 
-export const refresh = async (req: Request, res: Response) => {
+const refresh = async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.session as JWTPayload;
 
@@ -54,3 +54,5 @@ export const refresh = async (req: Request, res: Response) => {
     return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 400);
   }
 };
+
+export { refresh };

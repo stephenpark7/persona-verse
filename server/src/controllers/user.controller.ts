@@ -8,7 +8,7 @@ import BCrypt from '../utils/bcrypt';
 const { models } = db;
 const { User, RevokedToken, UserProfile } = models;
 
-export const create = async (req: Request, res: Response): Promise<Response> => {
+const create = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { username, email, password } = req.body;
 
@@ -46,7 +46,7 @@ export const create = async (req: Request, res: Response): Promise<Response> => 
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
   try {
     const { username, password }: LoginParams  = req.body;
 
@@ -99,7 +99,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-export const logout = async (req: Request, res: Response) => {
+const logout = async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.session as JWTPayload;
 
@@ -137,3 +137,5 @@ export const logout = async (req: Request, res: Response) => {
     res.status(500).json({ message: errorMessage });
   }
 };
+
+export { create, login, logout };
