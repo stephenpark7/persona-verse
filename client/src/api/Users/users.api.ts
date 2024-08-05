@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
-import { Login, RegisterFunction, RegisterParams } from '../../interfaces/api.interface';
+import { RegisterFunction, RegisterParams, LoginParams, LoginFunction } from '../../interfaces';
 import { apiCall } from '../index';
 import { setJwt, clearJwt } from '../../redux/slices/actions';
 import { store } from '../../redux/stores';
@@ -28,11 +28,11 @@ const register: RegisterFunction = async ({
   }
 };
 
-async function login({
+const login: LoginFunction = async ({
   formData,
   navigate,
   showToast = true,
-}: Login): Promise<void> {
+}: LoginParams): Promise<void> => {
   const response = await apiCall({
     method: 'POST',
     controller: 'users',
@@ -50,7 +50,7 @@ async function login({
   store.dispatch(setJwt(response.jwt));
 
   navigate('/'); 
-}
+};
 
 async function logout(
   navigate: NavigateFunction,
