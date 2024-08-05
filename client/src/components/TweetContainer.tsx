@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { TweetData } from '../../src/interfaces/api';
+import { JWT } from '../../src/interfaces';
 import { useUserState } from '../stores';
 import { postTweet } from '../api';
 import { Tweet } from './Tweet';
-import { JWT } from '../../src/interfaces';
 
 import { useGetTweetsQuery } from '../services/TweetAPI';
 
 export const TweetContainer = () => {
-  const { jwt, isLoggedIn } = useUserState();
+  const { jwt, tweets, isLoggedIn } = useUserState();
   return (
     <BaseTweetContainer 
-      jwt={jwt}
-      isLoggedIn={isLoggedIn}
+      {...{ jwt, tweets, isLoggedIn }}
     />
   );
 };
@@ -23,16 +22,21 @@ export const TweetContainer = () => {
 interface TweetContainerProps {
   jwt: JWT | null;
   isLoggedIn: boolean;
+  tweets: TweetData[] | null;
 };
 
 const BaseTweetContainer: React.FC<TweetContainerProps> = ({ 
   jwt,
   isLoggedIn,
+  tweets,
 }): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
-  const { data, isLoading } = useGetTweetsQuery();
+  const { data, isLoading, refetch } = useGetTweetsQuery();
 
-  console.log(data);
+  // TODO: refactor using tags with RTK Query
+  useEffect(() => {
+    refetch();
+  }, [ tweets ]);
 
   async function handlePostTweet() {
     if (!isLoggedIn) return;
@@ -56,7 +60,7 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
     if (isLoading || !data) {
       return <p>Loading...</p>;
     }
-    return data.map((data: TweetData, idx: React.Key) =>
+    return data?.map((data: TweetData, idx: React.Key) =>
       <Tweet 
         key={idx}
         {...data}

@@ -1,21 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { JWT } from '../../../src/interfaces';
+import { JWT } from '../../interfaces';
 import { useUserState } from '../../stores';
 import { TweetContainer } from '../../components/TweetContainer';
 import { LogoutButton } from '../../components/LogoutButton';
-import { HomeProps } from './interface';
+import { HomeProps } from './Home.interface';
 
-export const Home = () => {
-  // TODO: pass tweets to TweetContainer
-  // so that we can display them
-  // using Redux rather than useState
+export const Home: React.FC = () => {
   const { jwt, isLoggedIn } = useUserState();
   return (
     <BaseHome
-      jwt={jwt}
-      isLoggedIn={isLoggedIn}
+      {...{ jwt, isLoggedIn }}
     />
   );  
 };

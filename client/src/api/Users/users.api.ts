@@ -9,14 +9,14 @@ const register: RegisterFunction = async ({
   showToast = true,
   autoLogin = true,
 }: RegisterParams): Promise<void> => {
-  const data = await apiCall({
+  const response = await apiCall({
     method: 'POST',
     controller: 'users',
     action: 'signup',
     body: formData,
   }, showToast);
 
-  if (!data) return;
+  if (!response) return;
 
   if (autoLogin) {
     await login({
@@ -32,7 +32,7 @@ async function login({
   navigate,
   showToast = true,
 }: Login): Promise<void> {
-  const data = await apiCall({
+  const response = await apiCall({
     method: 'POST',
     controller: 'users',
     action: 'login',
@@ -40,13 +40,13 @@ async function login({
     options: { withCredentials: true },
   }, showToast);
 
-  if (!data) return;
+  if (!response) return;
 
-  if (!data.jwt) {
+  if (!response.jwt) {
     throw new Error('JWT data is missing.');
   }
 
-  store.dispatch(setJwt(data.jwt));
+  store.dispatch(setJwt(response.jwt));
 
   navigate('/'); 
 }

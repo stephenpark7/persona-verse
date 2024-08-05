@@ -3,6 +3,7 @@ import { State } from '../interfaces/user';
 import { setJwtReducer, clearJwtReducer, addTweetReducer, setTweetsReducer } from '../reducers';
 import { JwtStorage } from '../utils/JwtStorage';
 
+// TODO: move elsewhere
 const initialState: State = {
   value: {
     jwt: JwtStorage.getAccessToken(),

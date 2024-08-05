@@ -36,11 +36,6 @@ async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
 
   const response: AxiosResponse = await axios.request(config);
 
-  // if (response.status !== 'OK') {
-  //   console.log(response);
-  //   throw new Error(response.data.message);
-  // }
-
   return response.data;
 }
 
@@ -53,9 +48,8 @@ export async function apiCall(params: ApiCall, showToast: boolean): Promise<Json
     return response;
   }
   catch (err: AxiosError | unknown) {
-    console.log(err);
     displayErrorMessage(err);
-    return undefined;
+    return;
   }
 }
 
