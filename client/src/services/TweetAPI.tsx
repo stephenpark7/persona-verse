@@ -11,9 +11,7 @@ export const tweetAPI = createApi({
     getTweets: builder.query<TweetData[], void>({
       queryFn: async () => {
         const tweets = await getTweets();
-        return {
-          data: tweets,
-        };
+        return { data: tweets };
       },
     }),
   }),

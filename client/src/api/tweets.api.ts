@@ -1,25 +1,24 @@
-import { toast } from 'react-toastify';
-import { JsonResponse, PostTweet, TweetData } from '../interfaces/api';
+import { PostTweet, TweetData } from '../interfaces/api';
 import { apiCall } from '.';
-import { setTweets, store } from '../stores';
+import { addTweet, setTweets, store } from '../stores';
 
 async function getTweets(
 ): Promise<TweetData[]> {
-  const responseData: JsonResponse = await apiCall({
+  const response = await apiCall({
     method: 'GET',
     controller: 'tweets',
     action: 'get',
-  });
+  }, false);
 
-  const { tweets } = responseData;
+  if (!response) return [];
 
-  if (!tweets) {
+  if (!response.tweets) {
     throw new Error('Failed to retrieve tweets.');
   }
 
-  store.dispatch(setTweets(tweets));
-  
-  return tweets;
+  store.dispatch(setTweets(response.tweets));
+
+  return response.tweets;
 }
 
 async function postTweet({
@@ -30,33 +29,21 @@ async function postTweet({
     throw new Error('Failed to post tweet.');
   }
 
-  const responseData = await apiCall({
+  const response = await apiCall({
     method: 'POST',
     controller: 'tweets',
     action: 'create',
     body: payload,
-  });
+  }, true);
 
-  const { tweet } = responseData;
+  if (!response || !response.tweet) return;
 
-  if (!tweet) {
-    throw new Error('Failed to post tweet.');
-  }
-
-  tweet.User = {
+  response.tweet.User = {
     username: jwt.payload.username,
     displayName: jwt.payload.displayName ? jwt.payload.displayName : jwt.payload.username,
   };
 
-  const tweets = store.getState().user.value.tweets;
-
-  if (!tweets) {
-    throw new Error('Failed to post tweet.');
-  }
-
-  store.dispatch(setTweets([ tweet, ...tweets ]));
-
-  toast.success(responseData.message);
+  store.dispatch(addTweet(response.tweet));
 }
 
 export {

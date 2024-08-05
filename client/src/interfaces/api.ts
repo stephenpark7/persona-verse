@@ -3,24 +3,13 @@ import { RequestBody } from '.';
 import { NavigateFunction } from 'react-router-dom';
 import { AxiosRequestHeaders, RawAxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
 
-export interface JsonResponse
-         extends RefreshTokenResponse,
-                 GetTweetsResponse,
-                 PostTweetResponse {
+export interface JsonResponse extends RefreshTokenResponse, GetTweetsResponse, PostTweetResponse {
   message: string;
-};
+}
 
-export interface RefreshTokenResponse {
-  jwt?: JWT;
-};
-
-export interface GetTweetsResponse {
-  tweets?: TweetData[];
-};
-
-export interface PostTweetResponse {
-  tweet?: TweetData;
-};
+type RefreshTokenResponse = { jwt?: JWT };
+type GetTweetsResponse = { tweets?: TweetData[] };
+type PostTweetResponse = { tweet?: TweetData };
 
 export interface ApiCall {
   method: string,
@@ -30,8 +19,6 @@ export interface ApiCall {
   options?: RawAxiosRequestConfig,
   headers?: RawAxiosRequestHeaders | AxiosRequestHeaders,
 }
-
-//
 
 export interface RegisterParams {
   formData: RequestBody,
@@ -48,15 +35,12 @@ export interface Login {
   showToast?: boolean | undefined,
 }
 
-export type SetTweetData = React.Dispatch<React.SetStateAction<TweetData[]>>;
-
 export interface PostTweet {
   jwt: JWT | null,
   payload: TweetPostParams,
 }
 
-export type TweetData = {
-  // extends Iterable<TweetData>
+export interface TweetData extends Iterable<TweetData> {
   [Symbol.iterator](): IterableIterator<TweetData>;
   id?: number;
   message: string;
@@ -64,10 +48,8 @@ export type TweetData = {
   User: {
     username: string;
     displayName: string;
-  };
-};
-
-//
+  }
+}
 
 export interface SubmitForm {
   e: React.FormEvent<HTMLFormElement>,
@@ -80,17 +62,15 @@ export interface UsersSignupParams {
   username: string;
   email: string;
   password: string;
-};
+}
 
 export interface UsersLoginParams {
   username: string;
   password: string;
-};
+}
 
 export interface TweetPostParams {
   message: string;
-};
+}
 
-export type ApiFunction = ({ ...args }: RegisterParams | Login) => Promise<void>;
-
-export type ApiCallback = (params: ApiCall) => Promise<void>;
+type ApiFunction = ({ ...args }: RegisterParams | Login) => Promise<void>;

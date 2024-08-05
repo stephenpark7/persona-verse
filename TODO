@@ -1,8 +1,9 @@
 In Progress:
-  ☐ Get Jest to play nicely with Vite 
+  ☐ Posting a tweet doesn't update the list of tweets @started(24-08-01 23:00)
   ☐ BUG: user doesn't update after RTK query @started(24-08-01 23:00)
+  ☐ Use RTK + Redux @started(24-08-01 23:00)
   ☐ Modularize TweetContainer component @started(24-08-01 23:00)
-  ☐ Use RTK + Redux
+  ☐ Get Jest to play nicely with Vite
   ☐ Fix broken tests
   ☐ Refactor more
   ☐ Adding loading spinners

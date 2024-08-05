@@ -1,31 +1,24 @@
 import { JWT } from '../interfaces';
-import { JsonResponse } from '../interfaces/api';
-import { clearJwt, setJwt, store } from '../stores';
-import { apiCall, handleError } from '.';
+import { setJwt, store } from '../stores';
+import { apiCall } from '.';
 
 async function refreshToken(): Promise<JWT | void> {
-  try {
-    const responseData: JsonResponse = await apiCall({
-      method: 'POST',
-      controller: 'refresh',
-      action: '',
-      options: { withCredentials: true },
-    });
+  const response = await apiCall({
+    method: 'POST',
+    controller: 'refresh',
+    action: '',
+    options: { withCredentials: true },
+  }, false);
 
-    const { jwt } = responseData;
-    
-    if (!jwt) {
-      throw new Error('JWT data is missing.');
-    }
+  if (!response) return;
 
-    store.dispatch(setJwt(jwt));
-    return jwt;
+  if (!response.jwt) {
+    throw new Error('JWT data is missing.');
   }
-  catch (err: unknown) {
-    store.dispatch(clearJwt());
 
-    handleError(err);
-  }
+  store.dispatch(setJwt(response.jwt));
+
+  return response.jwt;
 }
 
 export {

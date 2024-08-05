@@ -4,9 +4,10 @@ This monorepo contains a Twitter clone application built using modern web techno
 
 ## Tech Stack
 
-- Front-end: React, TypeScript, Webpack, Babel
+- Front-end: React, TypeScript, React Redux, RTK Query
 - Back-end: Node.js, Express.js, Sequelize
 - Database: PostgreSQL
+- Development: Vite
 - Testing: Jest
 - Linting: ESLint, Prettier
 - Containerization: Docker
