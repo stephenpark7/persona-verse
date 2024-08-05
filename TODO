@@ -1,5 +1,6 @@
 In Progress:
 To-Do:
+  ☐ Change back refresh token expiration date to 7 days
   ☐ Get Jest to play nicely with Vite
   ☐ Fix broken tests
   ☐ Refactor more
