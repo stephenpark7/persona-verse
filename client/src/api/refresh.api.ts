@@ -1,5 +1,5 @@
 import { JWT } from '../interfaces';
-import { setJwt } from '../redux/actions/jwtActions';
+import { setJwt } from '../redux/actions';
 import { store } from '../redux/stores';
 import { apiCall } from '.';
 

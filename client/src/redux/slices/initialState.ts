@@ -1,5 +1,5 @@
 import { State } from '../../interfaces';
-import { JwtStorage } from '../../utils/jwtStorage.util';
+import { JwtStorage } from '../../utils';
 
 const initialState: State = {
   value: {
