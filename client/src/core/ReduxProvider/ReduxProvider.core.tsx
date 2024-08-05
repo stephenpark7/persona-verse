@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { store } from '../../stores';
+import { store } from '../../redux/stores';
 
 interface ReduxProviderProps {
   children: React.JSX.Element[] | React.JSX.Element;

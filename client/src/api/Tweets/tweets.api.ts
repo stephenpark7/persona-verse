@@ -1,7 +1,7 @@
 import { PostTweet, TweetData } from '../../interfaces/api';
 import { apiCall } from '../';
-import { addTweet, setTweets } from '../../slices/actions';
-import { store } from '../../stores';
+import { addTweet, setTweets } from '../../redux/slices/actions';
+import { store } from '../../redux/stores';
 
 async function getTweets(
 ): Promise<TweetData[]> {
