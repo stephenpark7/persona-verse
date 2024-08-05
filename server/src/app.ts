@@ -1,8 +1,8 @@
 import express from 'express';
 import { cors, cookies, router, httpLogger, errorLogger } from './middleware';
-import { loadEnv } from './utils/env';
+import { loadEnvVars } from './utils/env';
 
-loadEnv();
+loadEnvVars();
 
 const app = express();
 
