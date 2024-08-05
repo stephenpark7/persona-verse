@@ -10,8 +10,8 @@ app.use(cors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookies);
-// app.use(httpLogger);
+app.use(httpLogger);
 app.use('/', router);
-// app.use(errorLogger);
+app.use(errorLogger);
 
 export default app;
