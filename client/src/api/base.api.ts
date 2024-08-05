@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { JsonResponse, ApiCall } from '../interfaces/api';
+import { JsonResponse, ApiCall } from '../interfaces/api.interface';
 import { refreshToken } from './Refresh/refresh.api';
 import { register, login, logout } from './Users';
 import { getTweets, postTweet } from './Tweets';

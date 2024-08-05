@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
-import { Login, RegisterFunction, RegisterParams } from '../../interfaces/api';
+import { Login, RegisterFunction, RegisterParams } from '../../interfaces/api.interface';
 import { apiCall } from '../index';
 import { setJwt, clearJwt } from '../../redux/slices/actions';
 import { store } from '../../redux/stores';

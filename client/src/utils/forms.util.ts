@@ -1,5 +1,5 @@
 import { RequestBody } from '../interfaces';
-import { SubmitForm } from '../interfaces/api';
+import { SubmitForm } from '../interfaces/api.interface';
 
 async function submitForm({
   e,

@@ -1,7 +1,8 @@
-import { JWT } from './user';
-import { RequestBody } from '.';
+import { JWT } from './jwt.interface';
 import { NavigateFunction } from 'react-router-dom';
 import { AxiosRequestHeaders, RawAxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
+
+type RequestBody = UsersSignupParams | UsersLoginParams | TweetPostParams;
 
 export interface JsonResponse extends RefreshTokenResponse, GetTweetsResponse, PostTweetResponse {
   message: string;
