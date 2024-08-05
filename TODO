@@ -1,18 +1,13 @@
 In Progress:
-  ☐ Posting a tweet doesn't update the list of tweets @started(24-08-01 23:00)
-  ☐ BUG: user doesn't update after RTK query @started(24-08-01 23:00)
-  ☐ Use RTK + Redux @started(24-08-01 23:00)
-  ☐ Modularize TweetContainer component @started(24-08-01 23:00)
+To-Do:
   ☐ Get Jest to play nicely with Vite
   ☐ Fix broken tests
   ☐ Refactor more
   ☐ Adding loading spinners
-  ☐ Update TODO
   ☐ Update README
   ☐ Check token is expired on client before sending a request
   ☐ Jest tests for local storage
-  ☐ Fix issue where it fails to resend the request after getting a new token
-To-Do:
+  ☐ Investigate, if still an issue (not sure?): Fix issue where it fails to resend the request after getting a new token
   ☐ Add profile page
     ☐ Add profile picture
       ☐ Add bio
@@ -27,6 +22,10 @@ To-Do:
   ☐ Refactor frontend @started(24-07-20 21:15)
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Posting a tweet doesn't update the list of tweets @started(24-08-01 23:00) @done(24-08-05 02:39) @lasted(3d3h39m46s)
+  ✔ BUG: user doesn't update after RTK query @started(24-08-01 23:00) @done(24-08-05 02:39) @lasted(3d3h39m47s)
+  ✔ Use RTK + Redux @started(24-08-01 23:00) @done(24-08-05 02:39) @lasted(3d3h39m48s)
+  ✔ Modularize TweetContainer component @started(24-08-01 23:00) @done(24-08-05 02:39) @lasted(3d3h39m50s)
   ✔ Add Redux for data store @started(24-07-26 06:59) @done(24-08-03 02:35) @lasted(1w19h36m53s)
   ✔ Fix code while refactoring @started(24-07-27 04:55) @done(24-08-03 02:35) @lasted(6d21h40m44s)
   ✔ Use React query for fetching data and caching @done(24-08-03 02:35)
