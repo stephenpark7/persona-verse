@@ -4,8 +4,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { RequestBody } from '../../interfaces';
-import { submitForm, updateForm } from '../../utils';
 import { login } from '../../api';
+import { submitForm, updateForm } from '../../utils';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();

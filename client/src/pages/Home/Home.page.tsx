@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { JWT } from '../../interfaces';
-import { useUserState } from '../../stores';
-import { TweetContainer } from '../../components/TweetContainer';
-import { LogoutButton } from '../../components/LogoutButton';
 import { HomeProps } from './Home.interface';
+import { useUserState } from '../../hooks';
+import { LogoutButton, TweetContainer } from '../../components';
 
 export const Home: React.FC = () => {
   const { jwt, isLoggedIn } = useUserState();
