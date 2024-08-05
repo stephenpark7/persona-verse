@@ -3,16 +3,19 @@ import { sequelize } from './sequelize';
 import { User, Tweet, RevokedToken, RefreshToken, UserProfile } from '../models';
 
 const db = (() => {
+  const models: ModelDefinitions = {
+    User: User.initModel(sequelize),
+    Tweet: Tweet.initModel(sequelize),
+    RevokedToken: RevokedToken.initModel(sequelize),
+    RefreshToken: RefreshToken.initModel(sequelize),
+    UserProfile: UserProfile.initModel(sequelize),
+  };
+
   const setupDB = async (): Promise<void> => {
     await sequelize.authenticate();
 
-    const {
-      User,
-      Tweet,
-      RevokedToken,
-      RefreshToken,
-      UserProfile,
-    }: ModelDefinitions = models;
+    const { User, Tweet, RevokedToken, RefreshToken, UserProfile }
+      : ModelDefinitions = models;
 
     User.hasMany(Tweet);
     User.hasMany(RevokedToken);
@@ -35,14 +38,6 @@ const db = (() => {
 
     await sequelize.sync();
   }
-
-  const models: ModelDefinitions = {
-    User: User.initModel(sequelize),
-    Tweet: Tweet.initModel(sequelize),
-    RevokedToken: RevokedToken.initModel(sequelize),
-    RefreshToken: RefreshToken.initModel(sequelize),
-    UserProfile: UserProfile.initModel(sequelize),
-  };
 
   return {
     sequelize,
