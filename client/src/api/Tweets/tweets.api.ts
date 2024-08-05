@@ -1,6 +1,7 @@
-import { PostTweet, TweetData } from '../interfaces/api';
-import { apiCall } from '.';
-import { addTweet, setTweets, store } from '../stores';
+import { PostTweet, TweetData } from '../../interfaces/api';
+import { apiCall } from '../';
+import { addTweet, setTweets } from '../../slices/actions';
+import { store } from '../../stores';
 
 async function getTweets(
 ): Promise<TweetData[]> {

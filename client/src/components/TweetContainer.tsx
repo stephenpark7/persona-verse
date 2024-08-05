@@ -60,7 +60,7 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
     if (isLoading || !data) {
       return <p>Loading...</p>;
     }
-    return data?.map((data: TweetData, idx: React.Key) =>
+    return data?.slice(0, 5).map((data: TweetData, idx: React.Key) =>
       <Tweet 
         key={idx}
         {...data}

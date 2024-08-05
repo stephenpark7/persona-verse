@@ -1,17 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { State } from '../interfaces/user';
 import { setJwtReducer, clearJwtReducer, addTweetReducer, setTweetsReducer } from '../reducers';
-import { JwtStorage } from '../utils/JwtStorage';
+import { initialState } from './initialState';
 
-// TODO: move elsewhere
-const initialState: State = {
-  value: {
-    jwt: JwtStorage.getAccessToken(),
-    tweets: null,
-  },
-};
-
-const userSlice = createSlice({
+ const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
@@ -24,6 +15,4 @@ const userSlice = createSlice({
 
 const userReducer = userSlice.reducer;
 
-export const { setJwt, clearJwt, setTweets, addTweet } = userSlice.actions;
-
-export { initialState, userSlice, userReducer };
+export { userSlice, userReducer };

@@ -1,6 +1,7 @@
-import { JWT } from '../interfaces';
-import { setJwt, store } from '../stores';
-import { apiCall } from '.';
+import { JWT } from '../../interfaces';
+import { setJwt } from '../../slices/actions';
+import { store } from '../../stores';
+import { apiCall } from '..';
 
 async function refreshToken(): Promise<JWT | void> {
   const response = await apiCall({
