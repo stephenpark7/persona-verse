@@ -1,7 +1,7 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
 import { JWT, State } from '../../interfaces';
+import { initialState } from '../slices';
 import { JwtStorage } from '../../utils';
-import { initialState } from '../slices/initialState';
 
 const setJwtReducer: CaseReducer<State, PayloadAction<JWT>>
 = (state: State = initialState, action: PayloadAction<JWT>) => {

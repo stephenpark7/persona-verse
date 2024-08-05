@@ -1,6 +1,5 @@
 import { JWT } from '../interfaces';
-import { setJwt } from '../redux/actions';
-import { store } from '../redux/stores';
+import { store, setJwt } from '../redux';
 import { apiCall } from '.';
 
 async function refreshToken(): Promise<JWT | void> {

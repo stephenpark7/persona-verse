@@ -1,8 +1,7 @@
 import { NavigateFunction } from 'react-router-dom';
 import { RegisterFunction, RegisterParams, LoginParams, LoginFunction } from '../interfaces';
+import { store, setJwt, clearJwt } from '../redux';
 import { apiCall } from './';
-import { setJwt, clearJwt } from '../redux/actions';
-import { store } from '../redux/stores';
 
 const register: RegisterFunction = async ({
   formData,
