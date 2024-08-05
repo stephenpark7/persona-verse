@@ -2,8 +2,8 @@ import { ModelDefinitions } from '../../src/interfaces';
 import { sequelize } from './sequelize';
 import { User, Tweet, RevokedToken, RefreshToken, UserProfile } from '../models';
 
-const db = () => {
-  async function setupDB(): Promise<void> {
+const db = (() => {
+  const setupDB = async (): Promise<void> => {
     await sequelize.authenticate();
 
     const {
@@ -25,9 +25,9 @@ const db = () => {
     UserProfile.belongsTo(User);
 
     await syncDB();
-  }
+  };
 
-  async function syncDB(): Promise<void> {
+  const syncDB = async (): Promise<void> => {
     if (process.env.NODE_ENV === 'test') {
       await sequelize.sync({ force: true });
       return;
@@ -49,6 +49,6 @@ const db = () => {
     setupDB,
     models,
   };
-};
+})();
 
-export default db();
+export { db };

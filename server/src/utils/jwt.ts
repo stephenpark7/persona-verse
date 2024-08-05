@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { JWTPayload } from '../interfaces';
-import db from '../db';
+import { db } from '../db';
 
 const { models } = db;
 const { RevokedToken } = models;

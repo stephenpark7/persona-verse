@@ -14,4 +14,4 @@ app.use(httpLogger);
 app.use('/', router);
 app.use(errorLogger);
 
-export default app;
+export { app };

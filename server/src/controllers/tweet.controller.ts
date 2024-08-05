@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { AuthenticatedRequest, CreateRequestBody } from '../interfaces';
-import db from '../db';
+import { db } from '../db';
 
 const { models } = db;
 const { Tweet } = models;

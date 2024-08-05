@@ -1,5 +1,5 @@
 import validator from 'validator';
-import db from '../db';
+import { db } from '../db';
 
 const { models } = db;
 const { User } = models;

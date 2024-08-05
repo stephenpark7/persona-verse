@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { JWTPayload } from '../interfaces';
 import { sendUnauthorizedResponse } from '../utils/request';
 import JWT from '../utils/jwt';
-import db from '../db';
+import { db } from '../db';
 
 const { models } = db;
 const { User, RevokedToken } = models;
