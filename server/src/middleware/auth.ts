@@ -1,11 +1,14 @@
 import { NextFunction, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import jwt from 'jsonwebtoken';
-import { AuthenticatedRequest } from '../interfaces';
-import { JWTPayload } from '../interfaces';
+import { AuthenticatedRequest, JWTPayload } from '../interfaces';
 import { sendUnauthorizedResponse } from '../utils/request';
 
-async function auth(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<Response | void> {
+const auth = async (
+  req: AuthenticatedRequest, 
+  res: Response, 
+  next: NextFunction,
+): Promise<Response | void> => {
   const headers = req.headers as IncomingHttpHeaders;
   const token = headers['authorization']?.split(' ')[1];
   const secret: jwt.Secret = process.env.JWT_SECRET as jwt.Secret;
@@ -30,6 +33,6 @@ async function auth(req: AuthenticatedRequest, res: Response, next: NextFunction
     req.userId = decodedToken.userId;
     return next();
   });
-}
+};
 
 export { auth };

@@ -4,8 +4,7 @@ import { sendUnauthorizedResponse } from '../utils/request';
 import JWT from '../utils/jwt';
 import { db } from '../db';
 
-const { models } = db;
-const { User, RevokedToken } = models;
+const { User, RevokedToken } = db.models;
 
 const refresh = async (req: Request, res: Response) => {
   try {

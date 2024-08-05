@@ -2,8 +2,7 @@ import { Response } from 'express';
 import { AuthenticatedRequest, CreateRequestBody } from '../interfaces';
 import { db } from '../db';
 
-const { models } = db;
-const { Tweet } = models;
+const { Tweet } = db.models;
 
 const create = async (req: AuthenticatedRequest, res: Response) => {
   try {

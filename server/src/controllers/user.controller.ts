@@ -5,8 +5,7 @@ import Validator from '../utils/validator';
 import JWT from '../utils/jwt';
 import BCrypt from '../utils/bcrypt';
 
-const { models } = db;
-const { User, RevokedToken, UserProfile } = models;
+const { User, RevokedToken, UserProfile } = db.models;
 
 const create = async (req: Request, res: Response): Promise<Response> => {
   try {

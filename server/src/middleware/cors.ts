@@ -1,11 +1,12 @@
-import cors from 'cors';
+import corsModule from 'cors';
 
-export default cors({
+const cors = corsModule({
   origin: [
     `http://${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT}`,
-    // `http://192.168.2.201:${process.env.CLIENT_PORT}`,
   ],
   methods: [ 'GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD' ],
-  allowedHeaders: [ 'Content-Type', 'Authorization', 'Retry' ],
+  allowedHeaders: [ 'Content-Type', 'Authorization' ],
   credentials: true,
 });
+
+export { cors };
