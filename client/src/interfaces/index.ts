@@ -1,18 +1,6 @@
-import { JWT } from './user';
-import {
-  UsersSignupParams,
-  UsersLoginParams,
-  TweetPostParams,
-  TweetData,
-} from './api';
-
-type RequestBody = UsersSignupParams | UsersLoginParams | TweetPostParams;
-type SetUserData = React.Dispatch<React.SetStateAction<JWT>>;
-
-export type {
-  RequestBody,
-  TweetPostParams,
-  JWT,
-  SetUserData,
-  TweetData,
-};
+export * from './api.interface';
+export * from './form.interface';
+export * from './functions.interface';
+export * from './jwt.interface';
+export * from './tweet.interface';
+export * from './user.interface';

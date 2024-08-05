@@ -1,17 +1,10 @@
 import { toast } from 'react-toastify';
-import { JsonResponse, ApiCall } from '../interfaces/api';
-import { refreshToken } from './Refresh/refresh.api';
-import { register, login, logout } from './Users';
-import { getTweets, postTweet } from './Tweets';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
-
-const ENV = {
-  API_PROTOCOL: import.meta.env.VITE_API_PROTOCOL as string,
-  API_HOST_NAME: import.meta.env.VITE_API_HOST_NAME as string,
-  API_PORT: import.meta.env.VITE_API_PORT as string,
-};
-
-const BASE_API_URL: string = `${ENV.API_PROTOCOL}://${ENV.API_HOST_NAME}:${ENV.API_PORT}/api/`;
+import { JsonResponse, ApiCall } from '../interfaces';
+import { refreshToken } from './refresh.api';
+import { getTweets, postTweet } from './tweets.api';
+import { register, login, logout } from './users.api';
+import { BASE_API_URL } from '../utils';
 
 function apiUrl(controller: string, action: string): string {
   if (!BASE_API_URL || !controller || action === undefined) {
