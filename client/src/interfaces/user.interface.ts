@@ -1,5 +1,4 @@
-import { TweetData } from './api.interface';
-import { JWT } from './jwt.interface';
+import { JWT, TweetData } from './';
 
 export type User = {
   state: State;

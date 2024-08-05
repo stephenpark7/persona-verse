@@ -1,5 +1,5 @@
 import { useAxiosInterceptors } from '../interceptors';
-import { useJwt, useTweets } from '../redux/selectors/userSelectors';
+import { useJwt, useTweets } from '../redux/selectors';
 
 export const useUserState = () => {
   const jwt = useJwt();
