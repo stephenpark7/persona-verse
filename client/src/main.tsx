@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './core/App';
+import { App } from './core';
 
 const render = () => {
   const root: HTMLElement = document.getElementById('root') as HTMLElement;

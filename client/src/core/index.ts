@@ -1,9 +1,4 @@
-import { ReduxProvider } from './ReduxProvider';
-import { Router } from './Router';
-import { Toast } from './Toast';
-
-export {
-  ReduxProvider,
-  Router,
-  Toast,
-};
+export * from './App.core';
+export * from './ReduxProvider.core';
+export * from './Router.core';
+export * from './Toast.core';
