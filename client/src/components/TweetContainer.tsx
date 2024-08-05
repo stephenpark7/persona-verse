@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import { TweetData } from '../../src/interfaces/api';
 import { JWT } from '../../src/interfaces';
-import { useUserState } from '../stores';
+import { useUserState } from '../hooks';
 import { postTweet } from '../api';
 import { Tweet } from './Tweet';
 
