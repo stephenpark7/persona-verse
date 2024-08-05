@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
-import { ApiFunction, RequestBody } from './api.interface';
+import { ApiFunction, RequestBody } from './';
 
 export interface SubmitForm {
   e: React.FormEvent<HTMLFormElement>,

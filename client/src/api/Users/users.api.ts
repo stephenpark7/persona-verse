@@ -1,6 +1,6 @@
 import { NavigateFunction } from 'react-router-dom';
 import { RegisterFunction, RegisterParams, LoginParams, LoginFunction } from '../../interfaces';
-import { apiCall } from '../index';
+import { apiCall } from '../';
 import { setJwt, clearJwt } from '../../redux/slices/actions';
 import { store } from '../../redux/stores';
 

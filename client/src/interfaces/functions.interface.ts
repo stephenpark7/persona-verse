@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
-import { RequestBody } from './api.interface';
+import { RequestBody } from './';
 
 export interface RegisterParams {
   formData: RequestBody,

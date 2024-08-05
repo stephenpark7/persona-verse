@@ -1,7 +1,5 @@
 import { AxiosRequestHeaders, RawAxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
-import { JWT } from './jwt.interface';
-import { TweetData, TweetPostParams } from './tweet.interface';
-import { LoginParams, RegisterParams } from './functions.interface';
+import { JWT, TweetData, TweetPostParams } from './';
 
 export type RequestBody = 
   UsersSignupParams | 
