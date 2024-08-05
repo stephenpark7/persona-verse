@@ -1,3 +1,3 @@
-export * from './LogoutButton';
-export * from './Tweet';
-export * from './TweetContainer';
+export * from './LogoutButton.component';
+export * from './Tweet.component';
+export * from './TweetContainer.component';
