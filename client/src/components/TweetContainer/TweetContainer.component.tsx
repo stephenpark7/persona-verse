@@ -8,7 +8,7 @@ import { useUserState } from '../../hooks';
 import { postTweet } from '../../api';
 import { Tweet } from '../Tweet';
 
-import { useGetTweetsQuery } from '../../services/TweetAPI';
+import { useGetTweetsQuery } from '../../redux/services/TweetAPI';
 
 export const TweetContainer = () => {
   const { jwt, tweets, isLoggedIn } = useUserState();
