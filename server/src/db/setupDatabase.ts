@@ -5,11 +5,17 @@ import {
   RevokedToken, 
   RefreshToken, 
   UserProfile, 
-} from './models';
+} from '../models';
 
 const setupDatabase = async (): Promise<void> => {
   await sequelize.authenticate();
 
+  setupAssociations();
+
+  await syncDatabase();
+};
+
+const setupAssociations = (): void => {
   User.hasMany(Tweet);
   User.hasMany(RevokedToken);
   User.hasMany(RefreshToken);
@@ -19,8 +25,6 @@ const setupDatabase = async (): Promise<void> => {
   RevokedToken.belongsTo(User);
   RefreshToken.belongsTo(User);
   UserProfile.belongsTo(User);
-
-  await syncDatabase();
 };
 
 const syncDatabase = async (): Promise<void> => {

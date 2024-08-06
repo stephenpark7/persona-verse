@@ -5,7 +5,7 @@ import {
   RevokedToken, 
   RefreshToken, 
   UserProfile, 
-} from './models';
+} from '../models';
 import { setupDatabase } from './setupDatabase';
 
 const db = (() => {
