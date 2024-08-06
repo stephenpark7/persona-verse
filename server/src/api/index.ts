@@ -3,10 +3,10 @@ import { usersApi } from './users.api';
 import { tweetsApi } from './tweets.api';
 import { refreshApi } from './refresh.api';
 
-const router = express.Router();
+const api = express.Router();
 
-router.use('/users', usersApi);
-router.use('/tweets', tweetsApi);
-router.use('/refresh', refreshApi);
+api.use('/users', usersApi);
+api.use('/tweets', tweetsApi);
+api.use('/refresh', refreshApi);
 
-export default router;
+export { api };
