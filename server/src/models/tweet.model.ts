@@ -1,30 +1,30 @@
-import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../db/sequelize';
 
-class Tweet extends Model {
-  static definition = {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    message: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    likes: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-  };
+class Tweet extends Model {}
 
-  static initModel(sequelize: Sequelize): ModelStatic<Model> {
-    return sequelize.define('Tweet', Tweet.definition);
-  }
-}
+Tweet.init({
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  message: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  likes: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
+}, {
+  sequelize,
+  modelName: 'Tweet',
+});
 
 export { Tweet };

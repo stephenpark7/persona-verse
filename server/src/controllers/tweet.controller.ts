@@ -46,6 +46,7 @@ const get = async (req: AuthenticatedRequest, res: Response) => {
       },
       order: [ [ 'createdAt', 'DESC' ] ],
     });
+    
     res.status(200).json({ 
       message: 'Tweets retrieved.',
       tweets: tweets,

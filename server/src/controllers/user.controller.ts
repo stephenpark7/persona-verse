@@ -7,7 +7,10 @@ import BCrypt from '../utils/bcrypt';
 
 const { User, RevokedToken, UserProfile } = db.models;
 
-const create = async (req: Request, res: Response): Promise<Response> => {
+const create = async (
+  req: Request, 
+  res: Response,
+): Promise<Response> => {
   try {
     const { username, email, password } = req.body;
 
@@ -98,7 +101,10 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-const logout = async (req: Request, res: Response) => {
+const logout = async (
+  req: Request, 
+  res: Response,
+) => {
   try {
     const { refreshToken } = req.session as JWTPayload;
 

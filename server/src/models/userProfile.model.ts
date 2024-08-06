@@ -1,31 +1,30 @@
-import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../db/sequelize';
 
-class UserProfile extends Model {
-  static model: ModelStatic<Model>;
+class UserProfile extends Model {}
 
-  static definition = {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    displayName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    picture: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    bio: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-  };
+UserProfile.init({
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  displayName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  picture: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  bio: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+}, {
+  sequelize,
+  modelName: 'UserProfile',
+});
 
-  static initModel(sequelize: Sequelize): ModelStatic<Model> {
-    return sequelize.define('UserProfile', UserProfile.definition);
-  }
-}
 
 export { UserProfile };
