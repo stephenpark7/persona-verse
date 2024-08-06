@@ -42,7 +42,7 @@ function verifyToken(token: string): JWTPayload {
   return jwt.verify(token, JWT_SECRET) as JWTPayload;
 }
 
-export default {
+export {
   generateAccessToken,
   generateRefreshToken,
   generateRevokedToken,

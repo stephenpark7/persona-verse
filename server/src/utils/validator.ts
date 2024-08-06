@@ -31,7 +31,7 @@ function missingFields(...fields: string[]): boolean {
   return fields.some(field => field === undefined || field === null || field?.length === 0);
 }
 
-export default {
+export {
   validateUsername,
   validateEmail,
   validatePassword,

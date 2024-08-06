@@ -1,29 +1,28 @@
 import { Response } from 'express';
-import { AuthenticatedRequest, CreateRequestBody } from '../interfaces';
+import { AuthenticatedRequest, RequestBody } from '../interfaces';
 import { db } from '../db';
 
 const { Tweet } = db.models;
 
 const create = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const requestBody: CreateRequestBody = req.body;
-    const requestBodyMessage: string = requestBody.message;
+    const { message } = req.body as RequestBody;
     const userId = req.userId;
 
-    if (requestBodyMessage.length === 0) {
+    if (message.length === 0) {
       return res.status(400).json({ requestBodyMessage: 'Message cannot be empty.' });
     }
 
     const tweet = await Tweet.create({
       UserId: userId,
-      message: requestBodyMessage,
+      message: message,
       likes: 0,
     });
 
     res.status(200).json({ 
       message: 'Tweet posted.',
       tweet: {
-        message: requestBodyMessage,
+        message: message,
         likes: 0,
         createdAt: tweet.getDataValue('createdAt'),
       },

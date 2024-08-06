@@ -7,7 +7,7 @@ export interface AuthenticatedRequest extends Request {
   userId?: number;
 };
 
-export interface CreateRequestBody {
+export interface RequestBody {
   message: string;
 };
 
