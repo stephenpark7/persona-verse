@@ -1,7 +1,6 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "ES6",
-    "module": "NodeNext",
     "lib": [ "ES6" ],
     "strict": true,
     "skipLibCheck": true,

@@ -1,4 +1,4 @@
-import { createTRPCClient, httpBatchLink } from '@trpc/client';
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 // TODO: Import AppRouter from server/src/trpc
 // using npm workspaces
 // npm workspaces are a feature of npm that allows you to manage multiple packages within a single top-level, root package.
@@ -15,7 +15,7 @@ import type { AppRouter } from 'server/src/trpc';
 
 // Pass AppRouter as generic here. 👇 This lets the `trpc` object know
 // what procedures are available on the server and their input/output types.
-const trpc = createTRPCClient<AppRouter>({
+const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
       url: 'http://localhost:3000',

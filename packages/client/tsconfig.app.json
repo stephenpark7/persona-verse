@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
@@ -25,10 +25,10 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Types */
-    "types": ["@testing-library/jest-dom", "jest", "@server/src/trpc"],
+    "types": ["@testing-library/jest-dom", "jest"],
 
     "outDir": "./dist",
-    "rootDir": ".."
+    "rootDir": "./src"
   },
   "include": ["src"]
 }
