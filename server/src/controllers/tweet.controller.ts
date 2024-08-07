@@ -28,7 +28,7 @@ const create = async (req: AuthenticatedRequest, res: Response) => {
       },
     });
   } catch (_err: unknown) {
-    res.status(500).json({ message: 'Error posting tweet.' })
+    res.status(500).json({ message: 'Error posting tweet.' });
   }
 };
 
