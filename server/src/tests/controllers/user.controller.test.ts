@@ -1,15 +1,15 @@
 import request from 'supertest';
-import app from '../../app';
-import db from '../../db';
+import { app } from '../../app';
+import { db } from '../../db';
 
 const {
   sequelize,
-  setupDB,
+  setupDatabase,
 } = db;
 
 describe('POST /api/users/signup', () => {
   beforeAll(async () => {
-    await setupDB();
+    await setupDatabase();
   });
 
   describe('when the request body is valid', () => {

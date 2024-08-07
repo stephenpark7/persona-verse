@@ -15,4 +15,8 @@ import { initialState } from './initialState';
 
 const userReducer = userSlice.reducer;
 
-export { userSlice, userReducer };
+const rootReducer = {
+  user: userReducer,
+};
+
+export { userSlice, userReducer, rootReducer };

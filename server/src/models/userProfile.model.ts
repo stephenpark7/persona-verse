@@ -1,30 +1,30 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db/sequelize';
 
-class Tweet extends Model {}
+class UserProfile extends Model {}
 
-Tweet.init({
+UserProfile.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  message: {
+  displayName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  likes: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+  picture: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
-  createdAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
+  bio: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 }, {
   sequelize,
-  modelName: 'Tweet',
+  modelName: 'UserProfile',
 });
 
-export { Tweet };
+
+export { UserProfile };

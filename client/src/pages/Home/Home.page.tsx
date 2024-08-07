@@ -4,7 +4,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { JWT } from '../../interfaces';
 import { HomeProps } from './Home.interface';
 import { useUserState } from '../../hooks';
-import { LogoutButton, TweetContainer } from '../../components';
+import { LogoutButton, TweetContainer, Profile } from '../../components';
 
 export const Home: React.FC = () => {
   const { jwt, isLoggedIn } = useUserState();
@@ -30,6 +30,7 @@ export const BaseHome: React.FC<HomeProps> = ({
       return (
         <div>
           <p>Welcome {getDisplayName(jwt)}!</p>
+          <Profile />
           <TweetContainer />
           <LogoutButton />
         </div>

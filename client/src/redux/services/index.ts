@@ -1,1 +1,1 @@
-export * from './TweetAPI';
+export * from './tweetAPI';
