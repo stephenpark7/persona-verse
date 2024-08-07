@@ -1,21 +1,17 @@
-import { DataTypes, Model, ModelStatic, Sequelize } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../db/sequelize';
 
-class RefreshToken extends Model {
-  static model: ModelStatic<Model>;
+class RefreshToken extends Model {}
 
-  static definition = {
-    jti: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-    },
-  };
+RefreshToken.init({
+  jti: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+}, {
+  sequelize,
+  modelName: 'RefreshToken',
+});
 
-  static initModel(sequelize: Sequelize): ModelStatic<Model> {
-    return sequelize.define('RefreshToken', RefreshToken.definition);
-  }
-}
-
-export {
-  RefreshToken,
-};
+export { RefreshToken };

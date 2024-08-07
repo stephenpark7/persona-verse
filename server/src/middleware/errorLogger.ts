@@ -1,7 +1,7 @@
 import winston from 'winston';
 import expressWinston from 'express-winston';
 
-const errorLogger = () => {
+const errorLogger = (() => {
   return expressWinston.errorLogger({
     transports: [
       new winston.transports.Console(),
@@ -13,6 +13,6 @@ const errorLogger = () => {
       winston.format.prettyPrint(),
     ),
   });
-};
+})();
 
-export default errorLogger();
+export { errorLogger };

@@ -12,6 +12,7 @@ const sequelizeOptions: Options = {
     min: 0,
     idle: 10000,
   },
+  // sync: { force: true },
 };
 
 const sequelize = new Sequelize(sequelizeOptions);

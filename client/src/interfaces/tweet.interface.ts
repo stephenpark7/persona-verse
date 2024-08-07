@@ -16,6 +16,5 @@ export interface TweetData extends Iterable<TweetData> {
   createdAt: string;
   User: {
     username: string;
-    displayName: string;
   }
 }

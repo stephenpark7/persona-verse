@@ -1,44 +1,52 @@
 import { Request, Response } from 'express';
-import db from '../db';
+import { db } from '../db';
 import { JWTPayload, LoginParams } from '../interfaces';
-import Validator from '../utils/validator';
-import JWT from '../utils/jwt';
-import BCrypt from '../utils/bcrypt';
+import {
+  validateUsername,
+  validateEmail,
+  validatePassword,
+  usernameAlreadyExists,
+  emailAlreadyExists,
+  missingFields,
+} from '../utils/validator';
+import { generateAccessToken, generateRefreshToken, verifyToken, generateRevokedToken } from '../utils/jwt';
+import { compare, hash } from '../utils/bcrypt';
 
-const { models } = db;
-const { User, RevokedToken } = models;
+const { User, RevokedToken, UserProfile } = db.models;
 
-export const create = async (req: Request, res: Response): Promise<Response> => {
+const create = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
   try {
     const { username, email, password } = req.body;
 
-    if (!Validator.validateUsername(username)) {
+    if (!validateUsername(username)) {
       return res.status(400).json({ message: 'Invalid username.' });
     }
-  
-    if (!Validator.validateEmail(email)) {
+
+    if (!validateEmail(email)) {
       return res.status(400).json({ message: 'Invalid email address.' });
     }
-  
-    if (!Validator.validatePassword(password)) {
+
+    if (!validatePassword(password)) {
       return res.status(400).json({ message: 'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.' });
     }
-  
-    if (await Validator.usernameAlreadyExists(username)) {
+
+    if (await usernameAlreadyExists(username)) {
       return res.status(400).json({ message: 'Username already in use.' });
     }
 
-    if (await Validator.emailAlreadyExists(email)) {
+    if (await emailAlreadyExists(email)) {
       return res.status(400).json({ message: 'Email address already in use.' });
     }
-  
-    const hashedPassword = await BCrypt.hash(password);
+
+    const hashedPassword = await hash(password);
 
     await User.create({
       username: username,
       email: email,
       password: hashedPassword,
-      displayName: username,
     });
 
     return res.status(201).json({ message: 'Account created successfully.' });
@@ -47,50 +55,63 @@ export const create = async (req: Request, res: Response): Promise<Response> => 
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
   try {
-    const { username, password }: LoginParams  = req.body;
+    const { username, password }: LoginParams = req.body;
 
-    if (Validator.missingFields(username, password)) {
+    if (missingFields(username, password)) {
       return res.status(400).json({ message: 'Missing field(s).' });
     }
-  
+
     const user = await User.findOne({ where: { username: username } });
-  
+
     if (!user) {
       return res.status(404).json({ message: 'User not found.' });
     }
-  
-    const isAuthenticated = await BCrypt.compare(password, user.get('password') as string);
-  
+
+    const isAuthenticated = await compare(password, user.get('password') as string);
+
     if (!isAuthenticated) {
       return res.status(401).json({ message: 'Invalid username/password.' });
     }
-  
-    const payload: JWTPayload = { 
+
+    const payload: JWTPayload = {
       userId: parseInt(user.get('id') as string),
       username: username,
     };
-  
-    const accessToken = JWT.generateAccessToken(payload);
-    const refreshToken = JWT.generateRefreshToken(payload!);
-  
+
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload!);
+
     if (!accessToken || !refreshToken) {
       return res.status(500).json({ message: 'Error generating tokens.' });
     }
-  
-    req.session!.refreshToken = refreshToken;
-  
+
+    if (req.session) {
+      req.session.refreshToken = refreshToken;
+    }
+
+    const profile = UserProfile.findOrCreate({
+      where: { UserId: payload.userId },
+      defaults: {
+        displayName: username,
+      },
+    });
+
     res.status(200).json({
       message: 'Logged in successfully.',
       jwt: accessToken,
+      profile: profile,
     });
   } catch (error: unknown) {
     res.status(500).json({ message: 'Error logging in.' });
   }
 };
 
-export const logout = async (req: Request, res: Response) => {
+const logout = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     const { refreshToken } = req.session as JWTPayload;
 
@@ -98,7 +119,7 @@ export const logout = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Missing token.' });
     }
 
-    const { jti, userId } = JWT.verifyToken(refreshToken.token);
+    const { jti, userId } = verifyToken(refreshToken.token);
 
     if (!jti) {
       return res.status(400).json({ message: 'Token does not have a jti.' });
@@ -117,8 +138,8 @@ export const logout = async (req: Request, res: Response) => {
     if (await RevokedToken.findByPk(jti)) {
       return res.status(400).json({ message: 'Token already revoked.' });
     }
-  
-    await JWT.generateRevokedToken(userId);
+
+    await generateRevokedToken(userId);
 
     req.session = null;
 
@@ -128,3 +149,5 @@ export const logout = async (req: Request, res: Response) => {
     res.status(500).json({ message: errorMessage });
   }
 };
+
+export { create, login, logout };

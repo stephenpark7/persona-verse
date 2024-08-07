@@ -7,7 +7,7 @@ export interface AuthenticatedRequest extends Request {
   userId?: number;
 };
 
-export interface CreateRequestBody {
+export interface RequestBody {
   message: string;
 };
 
@@ -28,4 +28,5 @@ export interface ModelDefinitions {
   Tweet: ModelStatic<Model>;
   RevokedToken: ModelStatic<Model>;
   RefreshToken: ModelStatic<Model>;
+  UserProfile: ModelStatic<Model>;
 }

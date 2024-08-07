@@ -40,7 +40,6 @@ async function postTweet({
 
   response.tweet.User = {
     username: jwt.payload.username,
-    displayName: jwt.payload.displayName ? jwt.payload.displayName : jwt.payload.username,
   };
 
   store.dispatch(addTweet(response.tweet));
