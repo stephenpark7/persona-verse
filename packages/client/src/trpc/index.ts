@@ -10,7 +10,7 @@ import { createTRPCClient, httpBatchLink } from '@trpc/client';
 // however client and server may have different versions for their dependencies
 // so it needs to be troubleshooted if there are any issues
 
-import type { AppRouter } from '@/server/src/trpc';
+import type { AppRouter } from 'server/src/trpc';
 //     👆 **type-only** import
 
 // Pass AppRouter as generic here. 👇 This lets the `trpc` object know

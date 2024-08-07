@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "NodeNext",
+    "checkJs": true,
+    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["packages/**/*"],
+  "exclude": ["node_modules"]
+}

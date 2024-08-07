@@ -14,6 +14,7 @@ services:
     networks:
       - backend
     volumes:
+      - ./:/app
       - ./client:/app/client
       - /app/client/node_modules
       - /dev/null:/app/client/.env.development
@@ -45,6 +46,7 @@ services:
     networks:
       - backend
     volumes:
+      - ./:/app
       - ./server:/app/server
       - /app/server/node_modules
       - /dev/null:/app/server/.env.development

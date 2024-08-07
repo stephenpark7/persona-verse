@@ -1,12 +1,15 @@
 {
-  "name": "twitter-clone",
+  "name": "twitter-clone-monorepo",
   "version": "1.0.0",
-  "description": "Twitter clone using Node.js, Express.js, React, and PostgreSQL.",
+  "description": "",
   "main": "index.js",
   "author": "Stephen Park",
   "license": "ISC",
   "workspaces": [
-    "client",
-    "server"
-  ]
+    "packages/*"
+  ],
+  "private": true,
+  "resolutions": {
+    "rollup": "npm:@rollup/wasm-node"
+  }
 }
