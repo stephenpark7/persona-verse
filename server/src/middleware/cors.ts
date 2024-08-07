@@ -1,6 +1,6 @@
-import corsModule from 'cors';
+import cors from 'cors';
 
-const cors = corsModule({
+const corsMiddleware = () => cors({
   origin: [
     `http://${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT}`,
   ],
@@ -9,4 +9,4 @@ const cors = corsModule({
   credentials: true,
 });
 
-export { cors };
+export { corsMiddleware };
