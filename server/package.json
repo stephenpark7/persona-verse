@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/app.js",
-    "dev": "NODE_ENV=development tsc-watch --onSuccess \"node dist/server.js\"",
+    "start": "node dist/src/app.js",
+    "dev": "NODE_ENV=development tsc-watch --onSuccess \"node dist/src/server.js\"",
     "build": "npm run lint && tsc",
     "test": "NODE_ENV=test jest",
     "lint": "eslint"
