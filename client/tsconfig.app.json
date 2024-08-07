@@ -27,6 +27,10 @@
     "types": ["@testing-library/jest-dom", "jest"],
 
     "outDir": "./dist",
+
+    "paths": {
+      "@server/*": ["../server/src/*"],
+    },
   },
   "include": ["src"]
 }

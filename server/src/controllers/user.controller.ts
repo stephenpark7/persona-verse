@@ -50,7 +50,7 @@ const create = async (
     });
 
     return res.status(201).json({ message: 'Account created successfully.' });
-  } catch (error: unknown) {
+  } catch (_err: unknown) {
     return res.status(500).json({ message: 'Error creating account.' })
   }
 };
@@ -103,7 +103,7 @@ const login = async (req: Request, res: Response) => {
       jwt: accessToken,
       profile: profile,
     });
-  } catch (error: unknown) {
+  } catch (_err: unknown) {
     res.status(500).json({ message: 'Error logging in.' });
   }
 };
@@ -144,7 +144,7 @@ const logout = async (
     req.session = null;
 
     res.status(200).json({ message: 'Logged out.' });
-  } catch (error: unknown) {
+  } catch (_err: unknown) {
     const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
     res.status(500).json({ message: errorMessage });
   }
