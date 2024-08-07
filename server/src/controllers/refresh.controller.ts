@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { JWTPayload } from '../interfaces';
 import { sendUnauthorizedResponse } from '../utils/request';
-import JWT from '../utils/jwt';
+import { generateAccessToken, verifyToken } from '../utils/jwt';
 import { db } from '../db';
 
 const { User, RevokedToken } = db.models;
@@ -14,7 +14,7 @@ const refresh = async (req: Request, res: Response) => {
       return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
     }
 
-    const { jti, userId } = JWT.verifyToken(refreshToken.token);
+    const { jti, userId } = verifyToken(refreshToken.token);
 
     if (!jti) {
       return sendUnauthorizedResponse(res, 'Token does not have a jti.', 401);
@@ -39,7 +39,7 @@ const refresh = async (req: Request, res: Response) => {
       username: user.get('username') as string,
     };
 
-    const accessToken = JWT.generateAccessToken(payload);
+    const accessToken = generateAccessToken(payload);
 
     if (!accessToken) {
       return sendUnauthorizedResponse(res, 'Failed to generate access token.', 400);
