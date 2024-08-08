@@ -1,5 +1,5 @@
-import { db } from '../db';
 import { t } from './trpc';
+import { db } from '../db';
 
 export const appRouter = t.router({
   userList: t.procedure

@@ -1,27 +1,14 @@
 import { loadEnvironmentVariables } from './utils/env';
-import { createContext } from './trpc';
+import express from 'express';
+import { startServer } from './server';
+import { setupBindings } from './middleware';
 
 loadEnvironmentVariables();
 
-import express from 'express';
-import { setupMiddleware } from './middleware';
-import { startServer } from './server';
+export const app = express();
 
-import * as trpcExpress from '@trpc/server/adapters/express';
-import { appRouter } from './trpc';
+setupBindings(app);
 
-const app = express();
-
-setupMiddleware(app);
-
-app.use(
-  '/trpc',
-  trpcExpress.createExpressMiddleware({
-    router: appRouter,
-    createContext,
-  }),
-);
+app.setupMiddleware();
 
 startServer();
-
-export { app };

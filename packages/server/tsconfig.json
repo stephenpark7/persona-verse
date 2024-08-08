@@ -10,7 +10,8 @@
     "outDir": "dist",
     "allowJs": false,
     "composite": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": [ "express", "jest" ]
   },
-  "include": [ "src/**/*.ts" ]
+  "include": [ "src/**/*" ]
 }
