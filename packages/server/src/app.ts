@@ -1,5 +1,5 @@
 import { loadEnvironmentVariables } from './utils/env';
-import { createContext } from './trpc/context';
+import { createContext } from './trpc';
 
 loadEnvironmentVariables();
 
