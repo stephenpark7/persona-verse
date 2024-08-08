@@ -11,17 +11,13 @@ WORKDIR /app/packages/client
 
 COPY packages/client/package.json packages/client/tsconfig.json packages/client/tsconfig.app.json packages/client/tsconfig.node.json packages/client/eslint.config.js packages/client/jest.config.js ./
 
-WORKDIR /app
-
-COPY package.json package-lock.json tsconfig.json ./
-
-RUN npm install --force
-    
-WORKDIR /app/packages/client
-
 RUN npm install --force
 
 COPY packages/client .
+
+WORKDIR /app
+
+COPY package.json package-lock.json tsconfig.json ./
 
 RUN npm install --force
 

@@ -21,7 +21,7 @@ services:
       - ./packages/client/:/app/packages/client
       - ./packages/server/:/app/packages/server
       - /dev/null:/app/packages/client/.env.development
-    command: bash -c "npm run dev"
+    command: bash -c "npm run client"
 
   node_app:
     container_name: node_app
@@ -58,7 +58,7 @@ services:
       - ./packages/server/:/app/packages/server
       - /dev/null:/app/packages/server/.env.development
       - /dev/null:/app/packages/server/.env.test
-    command: bash -c "npm run dev"
+    command: bash -c "npm run server"
 
   db:
     container_name: postgres_db

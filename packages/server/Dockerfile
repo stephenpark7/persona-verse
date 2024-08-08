@@ -11,18 +11,14 @@ WORKDIR /app/packages/server
 
 COPY packages/server/package.json packages/server/tsconfig.json packages/server/babel.config.json packages/server/eslint.config.mjs packages/server/jest.config.js ./
 
+RUN npm install --force
+
+COPY packages/server .
+
 WORKDIR /app
 
 COPY package.json package-lock.json tsconfig.json ./
 
 RUN npm install --force
     
-WORKDIR /app/packages/server
-
-RUN npm install --force
-
-COPY packages/server .
-
-RUN npm install --force
-
 EXPOSE 3001 3002
