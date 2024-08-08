@@ -1,5 +1,5 @@
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint'
+import tseslint from 'typescript-eslint';
 import globals from 'globals';
 import prettierConfig from 'eslint-config-prettier';
 import jest from 'eslint-plugin-jest';
@@ -33,6 +33,18 @@ export default tseslint.config({
     'jest/no-identical-title': 'error',
     'jest/prefer-to-have-length': 'warn',
     'jest/valid-expect': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error', {
+        'args': 'all',
+        'argsIgnorePattern': '^_',
+        'caughtErrors': 'all',
+        'caughtErrorsIgnorePattern': '^_',
+        'destructuredArrayIgnorePattern': '^_',
+        'varsIgnorePattern': '^_',
+        'ignoreRestSiblings': true,
+      },
+    ],
+    'semi': [ 'error', 'always' ],
   },
 }, {
   files: [ '*.json' ],
@@ -54,6 +66,7 @@ export default tseslint.config({
     'eol-last': [ 'error', 'always' ],
     'quotes': [ 'error', 'double' ],
     'comma-dangle': [ 'error', 'never' ],
+    '@typescript-eslint/no-unused-expressions': 'off',
   },
 },{
   ignores: [ 'coverage', 'dist', 'node_modules' ],

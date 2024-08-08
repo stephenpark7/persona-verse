@@ -28,6 +28,7 @@ export default [
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,
+      sourceType: 'module',
     },
     settings: {
       react: {

@@ -27,8 +27,8 @@ const create = async (req: AuthenticatedRequest, res: Response) => {
         createdAt: tweet.getDataValue('createdAt'),
       },
     });
-  } catch (error: unknown) {
-    res.status(500).json({ message: 'Error posting tweet.' })
+  } catch (_err: unknown) {
+    res.status(500).json({ message: 'Error posting tweet.' });
   }
 };
 
@@ -50,7 +50,7 @@ const get = async (req: AuthenticatedRequest, res: Response) => {
       message: 'Tweets retrieved.',
       tweets: tweets,
     });
-  } catch (error: unknown) {
+  } catch (_err: unknown) {
     res.status(500).json({ message: 'Error getting tweets.' });
   }
 };

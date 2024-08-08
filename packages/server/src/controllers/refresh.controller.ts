@@ -49,7 +49,7 @@ const refresh = async (req: Request, res: Response) => {
       message: 'Token refreshed.',
       jwt: accessToken,
     });
-  } catch (error: unknown) {
+  } catch (_err: unknown) {
     return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 400);
   }
 };
