@@ -19,6 +19,7 @@ const sequelize = new Sequelize(sequelizeOptions);
 
 process.on('SIGINT', () => {
   sequelize.close();
+  process.exit();
 });
 
 export {

@@ -1,7 +1,11 @@
 import { app } from './app';
 import { db } from './db';
 
-app.listen(process.env.SERVER_PORT, async () => {
-  console.log('Server started at port ' + process.env.SERVER_PORT);
-  await db.setupDatabase();
-});
+const startServer = async () => {
+  app.listen(process.env.SERVER_PORT, async () => {
+    console.log('Express server started at port ' + process.env.SERVER_PORT);
+    await db.setupDatabase();
+  });
+};
+
+export { startServer };

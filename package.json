@@ -6,13 +6,18 @@
   "author": "Stephen Park",
   "license": "ISC",
   "workspaces": [
-    "packages/*"
+    "packages/client",
+    "packages/server"
   ],
   "private": true,
-  "resolutions": {
-    "rollup": "npm:@rollup/wasm-node"
+  "overrides": {
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
   },
   "scripts": {
+    "server": "cd packages/server && npm run dev",
+    "client": "cd packages/client && npm run dev",
     "lint": "cd packages/client && npm run lint && cd ../server && npm run lint"
   }
 }

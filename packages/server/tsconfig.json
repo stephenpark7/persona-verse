@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "lib": [ "ES6" ],
+    "lib": [ "es6" ],
+    "target": "es6",
+    "module": "commonjs",
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "outDir": "dist",
     "allowJs": false,
-    "composite": true
+    "composite": true,
+    "esModuleInterop": true
   },
   "include": [ "src/**/*.ts" ]
 }

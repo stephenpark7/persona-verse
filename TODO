@@ -1,5 +1,9 @@
 In Progress:
-  ☐ Use tRPC
+  ☐ Use tRPC @started(24-08-08 07:46)
+  ☐ Use ZOD with tRPC
+  ☐ Refactor to use tRPC instead of REST
+    ☐ Use along with RTK Query
+    ☐ Look into: https://github.com/otahontas/trpc-rtk-query
 To-Do:
   ☐ Change back refresh token expiration date to 7 days
   ☐ Get Jest to play nicely with Vite
