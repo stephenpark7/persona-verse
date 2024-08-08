@@ -1,10 +1,11 @@
-import express from 'express';
-import { setupMiddleware } from './middleware';
 import { loadEnvironmentVariables } from './utils/env';
-import { startRESTServer } from './restServer';
-import { startTRPCServer } from './trpcServer';
 
 loadEnvironmentVariables();
+
+import express from 'express';
+import { setupMiddleware } from './middleware';
+import { startRESTServer } from './restServer';
+import { startTRPCServer } from './trpcServer';
 
 const app = express();
 

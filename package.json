@@ -6,7 +6,8 @@
   "author": "Stephen Park",
   "license": "ISC",
   "workspaces": [
-    "packages/*"
+    "packages/client",
+    "packages/server"
   ],
   "private": true,
   "overrides": {

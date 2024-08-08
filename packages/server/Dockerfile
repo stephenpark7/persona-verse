@@ -20,5 +20,9 @@ WORKDIR /app
 COPY package.json package-lock.json tsconfig.json ./
 
 RUN npm install --force
+
+WORKDIR /app/packages/server
+
+WORKDIR /app
     
 EXPOSE 3001 3002
