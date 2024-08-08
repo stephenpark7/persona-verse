@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { Application } from 'express';
+import { Express } from 'express';
 import { corsMiddleware } from './cors';
 import { cookies } from './cookies';
 import { router } from './router';
@@ -8,6 +8,7 @@ import { errorLogger } from './errorLogger';
 
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter, createContext } from '../trpc';
+import { startServer } from '../../src/server';
 
 export const setupMiddleware = function (this: Express) {
   this.use(corsMiddleware());
@@ -26,10 +27,7 @@ export const setupMiddleware = function (this: Express) {
   );
 };
 
-export interface Express extends Application {
-  setupMiddleware: (this: Express) => void;
-}
-
 export const setupBindings = function (app: Express) {
   app.setupMiddleware = setupMiddleware.bind(app);
+  app.startServer = startServer.bind(app);
 };
