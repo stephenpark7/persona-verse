@@ -36,7 +36,7 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
     refetch();
   }, [ tweets ]);
 
-  async function handlePostTweet() {
+  const handlePostTweet = async () => {
     if (!isLoggedIn) return;
 
     const message = textRef.current?.value;
@@ -52,9 +52,9 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
       jwt: jwt,
       payload: { message: message },
     });
-  }
+  };
 
-  function renderTweets(): React.ReactNode {
+  const renderTweets = (): React.ReactNode => {
     if (isLoading || !data) {
       return <p>Loading...</p>;
     }
@@ -64,7 +64,7 @@ const BaseTweetContainer: React.FC<TweetContainerProps> = ({
         {...data}
       />,
     );
-  }
+  };
 
   return (
     <Form>

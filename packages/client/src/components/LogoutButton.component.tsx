@@ -6,9 +6,9 @@ import { logout } from '../api';
 export const LogoutButton: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();
 
-  async function handleLogout() {
+  const handleLogout = async () => {
     await logout(navigate);
-  }
+  };
 
   return (
     <Button
