@@ -3,7 +3,7 @@ import { AuthenticatedRequest } from '../interfaces';
 import { auth } from '../middleware/auth';
 import { create, get } from '../controllers/tweet.controller';
 
-const tweetsRoute = express.Router();
+export const tweetsRoute = express.Router();
 
 tweetsRoute.post('/create', auth, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   await create(req, res);
@@ -12,5 +12,3 @@ tweetsRoute.post('/create', auth, async (req: AuthenticatedRequest, res: Respons
 tweetsRoute.get('/get', auth, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   await get(req, res);
 });
-
-export { tweetsRoute };

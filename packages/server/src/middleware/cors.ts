@@ -1,6 +1,6 @@
 import cors from 'cors';
 
-const corsMiddleware = () => cors({
+export const corsMiddleware = () => cors({
   origin: [
     `http://${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT}`,
     `https://${process.env.CLIENT_HOST}:3001`,
@@ -10,5 +10,3 @@ const corsMiddleware = () => cors({
   allowedHeaders: [ 'Content-Type', 'Authorization' ],
   credentials: true,
 });
-
-export { corsMiddleware };
