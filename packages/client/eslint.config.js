@@ -61,6 +61,16 @@ export default [
       'react/react-in-jsx-scope': [ 'off' ],
     },
   },
+  {
+    files: [ '*.json ' ],
+    rules: {
+      'array-bracket-spacing': [ 'error', 'always' ],
+      'eol-last': [ 'error', 'always' ],
+      'quotes': [ 'error', 'double' ],
+      'comma-dangle': [ 'error', 'never' ],
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
 ];
 
 

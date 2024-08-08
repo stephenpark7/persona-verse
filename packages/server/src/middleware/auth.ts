@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { AuthenticatedRequest, JWTPayload } from '../interfaces';
 import { sendUnauthorizedResponse } from '../utils/request';
 
-const auth = async (
+export const auth = async (
   req: AuthenticatedRequest, 
   res: Response, 
   next: NextFunction,
@@ -34,5 +34,3 @@ const auth = async (
     return next();
   });
 };
-
-export { auth };

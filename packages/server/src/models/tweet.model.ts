@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db/sequelize';
 
-class Tweet extends Model {}
+export class Tweet extends Model {}
 
 Tweet.init({
   id: {
@@ -26,5 +26,3 @@ Tweet.init({
   sequelize,
   modelName: 'Tweet',
 });
-
-export { Tweet };

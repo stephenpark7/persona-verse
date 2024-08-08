@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db/sequelize';
 
-class RefreshToken extends Model {}
+export class RefreshToken extends Model {}
 
 RefreshToken.init({
   jti: {
@@ -13,5 +13,3 @@ RefreshToken.init({
   sequelize,
   modelName: 'RefreshToken',
 });
-
-export { RefreshToken };

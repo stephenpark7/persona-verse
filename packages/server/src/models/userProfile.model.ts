@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db/sequelize';
 
-class UserProfile extends Model {}
+export class UserProfile extends Model {}
 
 UserProfile.init({
   id: {
@@ -25,6 +25,3 @@ UserProfile.init({
   sequelize,
   modelName: 'UserProfile',
 });
-
-
-export { UserProfile };
