@@ -13,8 +13,7 @@
   "author": "Stephen Park",
   "license": "ISC",
   "dependencies": {
-    "@trpc/client": "^11.0.0-rc.477",
-    "@trpc/server": "^11.0.0-rc.477",
+    "@trpc/server": "^10.0.0-rc.477",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.2.0",
     "cookie-session": "^2.1.0",
