@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node dist/src/app.js",
     "dev": "NODE_ENV=development tsc-watch --onSuccess \"node dist/src/app.js\"",
