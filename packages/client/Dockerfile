@@ -23,5 +23,7 @@ RUN npm install --force
 
 COPY packages/client .
 
+RUN npm install --force
+
 EXPOSE 3000
     

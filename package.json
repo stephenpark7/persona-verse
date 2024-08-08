@@ -9,8 +9,10 @@
     "packages/*"
   ],
   "private": true,
-  "resolutions": {
-    "rollup": "npm:@rollup/wasm-node"
+  "overrides": {
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
   },
   "scripts": {
     "lint": "cd packages/client && npm run lint && cd ../server && npm run lint"

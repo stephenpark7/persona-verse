@@ -16,8 +16,10 @@ services:
       - backend
     volumes:
       - ./:/app
+      - node_modules:/app/node_modules
       - ./packages/:/app/packages
       - ./packages/client/:/app/packages/client
+      - ./packages/server/:/app/packages/server
       - /dev/null:/app/packages/client/.env.development
     command: bash -c "npm run dev"
 
@@ -50,7 +52,9 @@ services:
       - backend
     volumes:
       - ./:/app
+      - node_modules:/app/node_modules
       - ./packages/:/app/packages
+      - ./packages/client/:/app/packages/client
       - ./packages/server/:/app/packages/server
       - /dev/null:/app/packages/server/.env.development
       - /dev/null:/app/packages/server/.env.test
@@ -73,3 +77,6 @@ services:
 networks:
   backend:
     driver: bridge
+
+volumes:
+  node_modules:
