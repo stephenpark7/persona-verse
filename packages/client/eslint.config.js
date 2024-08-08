@@ -42,11 +42,18 @@ export default [
       'eol-last': [ 'error', 'always' ],
       'quotes': [ 'error', 'single' ],
       'comma-dangle': [ 'error', 'always-multiline' ],
-      'no-restricted-syntax': [ 'error', {
-        'selector': 'ExportDefaultDeclaration',
-        'message': 'Use named exports instead',
-      } ],
       'semi': [ 'error', 'always' ],
+      'no-restricted-syntax': [ 'error', {
+        'selector': 'FunctionDeclaration',
+        'message': 'Function declarations are not allowed. Use arrow functions instead.',
+      }, {
+          'selector': 'FunctionExpression:not([async])',
+          'message': 'Function expressions are not allowed. Use arrow functions instead.',
+        }, {
+          'selector': 'ExportDefaultDeclaration',
+          'message': 'Use named exports instead',
+        },
+      ],
     },
   },
   {
@@ -62,7 +69,12 @@ export default [
     },
   },
   {
-    files: [ '*.json ' ],
+    files: [ '*.json' ],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     rules: {
       'array-bracket-spacing': [ 'error', 'always' ],
       'eol-last': [ 'error', 'always' ],
@@ -72,5 +84,3 @@ export default [
     },
   },
 ];
-
-

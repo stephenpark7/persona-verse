@@ -14,9 +14,9 @@ export const Login: React.FC = () => {
     password: '',
   });
 
-  function handleFormChange(e: React.ChangeEvent<HTMLInputElement>): void {
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     updateForm(e, formData, setFormData);
-  }
+  };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     submitForm({
