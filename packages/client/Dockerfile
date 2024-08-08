@@ -9,17 +9,26 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh | ba
 
 WORKDIR /app/packages/client
 
-COPY packages/client/package.json packages/client/tsconfig.json packages/client/tsconfig.app.json packages/client/tsconfig.node.json packages/client/eslint.config.js packages/client/jest.config.js ./
-
-RUN npm install --force
-
 COPY packages/client .
+
+WORKDIR /app/packages/server
+
+COPY packages/server .
 
 WORKDIR /app
 
-COPY package.json package-lock.json tsconfig.json ./
+COPY . .
 
-RUN npm install --force
+RUN npm install
+
+WORKDIR /app/packages/server
+
+RUN npm install
+
+WORKDIR /app/packages/client
+
+RUN npm install
 
 EXPOSE 3000
-    
+
+CMD ["npm", "run", "dev"]
