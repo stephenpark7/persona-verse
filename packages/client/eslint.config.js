@@ -44,9 +44,9 @@ export default [
       'comma-dangle': [ 'error', 'always-multiline' ],
       'semi': [ 'error', 'always' ],
       'no-restricted-syntax': [ 'error', {
-          'selector': 'FunctionDeclaration',
-          'message': 'Function declarations are not allowed. Use arrow functions instead.',
-        }, {
+        'selector': 'FunctionDeclaration',
+        'message': 'Function declarations are not allowed. Use arrow functions instead.',
+      }, {
           'selector': 'FunctionExpression:not([async])',
           'message': 'Function expressions are not allowed. Use arrow functions instead.',
         }, {
@@ -56,28 +56,31 @@ export default [
       ],
     },
   },
-{
-  files: [ '**/**/*.{js,mjs,cjs,ts}' ],
+  {
+    files: [ '**/**/*.{js,mjs,cjs,ts}' ],
     rules: {
-    'no-restricted-syntax': [ 'off' ],
+      'no-restricted-syntax': [ 'off' ],
     },
-},
-{
-  files: [ '**/**/*.{test,spec}.{jsx,tsx}' ],
+  },
+  {
+    files: [ '**/**/*.{test,spec}.{jsx,tsx}' ],
     rules: {
-    'react/react-in-jsx-scope': [ 'off' ],
+      'react/react-in-jsx-scope': [ 'off' ],
     },
-},
-{
-  files: [ '*.json ' ],
+  },
+  {
+    files: [ '*.json' ],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     rules: {
-    'array-bracket-spacing': [ 'error', 'always' ],
+      'array-bracket-spacing': [ 'error', 'always' ],
       'eol-last': [ 'error', 'always' ],
-        'quotes': [ 'error', 'double' ],
-          'comma-dangle': [ 'error', 'never' ],
-            '@typescript-eslint/no-unused-expressions': 'off',
+      'quotes': [ 'error', 'double' ],
+      'comma-dangle': [ 'error', 'never' ],
+      '@typescript-eslint/no-unused-expressions': 'off',
     },
-},
+  },
 ];
-
-
