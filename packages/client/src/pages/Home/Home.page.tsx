@@ -15,17 +15,17 @@ export const Home: React.FC = () => {
   );  
 };
 
-function getDisplayName(jwt: JWT | null): string {
+const getDisplayName = (jwt: JWT | null): string => {
   if (!jwt) return '';
   return jwt.payload.username;
-}
+};
 
 export const BaseHome: React.FC<HomeProps> = ({ 
   jwt, 
   isLoggedIn, 
 }): React.JSX.Element => {
 
-  function renderBodyContent() {
+  const renderBodyContent = () => {
     if (isLoggedIn) {
       return (
         <div>
@@ -50,7 +50,7 @@ export const BaseHome: React.FC<HomeProps> = ({
         </div>
       </div>
     );
-  }
+  };
 
   const bodyContent = renderBodyContent();
 

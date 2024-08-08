@@ -15,9 +15,9 @@ export const Signup: React.FC = () => {
     password: '',
   });
 
-  function handleFormChange(e: React.ChangeEvent<HTMLInputElement>): void {
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     updateForm(e, formData, setFormData);
-  }
+  };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     submitForm({
@@ -37,15 +37,17 @@ export const Signup: React.FC = () => {
             <Form.Group className='mt-3 mb-3'>
               <Form.Control type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
             </Form.Group>
-            <Form.Group className='mt-3 mb-3'>
+            <Form.Group className='mb-3'>
               <Form.Control type='email' name='email' placeholder='Email' onChange={handleFormChange} required />
             </Form.Group>
             <Form.Group className='mb-3'>
               <Form.Control type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
             </Form.Group>
-            <Button variant='primary' type='submit'>Sign up</Button>{' '}
-            <Link to='/'><Button variant='primary'>Go Back</Button></Link>
+            <Button variant="primary" type="submit">Sign up</Button>
           </Form>
+          <p className='mt-3'>
+            Already have an account? <Link to='/login'>Log in</Link>
+          </p>
         </Col>
       </Row>
     </Container>
