@@ -16,8 +16,9 @@ services:
       - backend
     volumes:
       - ./:/app
-      - ./packages/client/:/app/client
-      - /dev/null:/app/client/.env.development
+      - ./packages/:/app/packages
+      - ./packages/client/:/app/packages/client
+      - /dev/null:/app/packages/client/.env.development
     command: bash -c "npm run dev"
 
   node_app:
@@ -49,9 +50,10 @@ services:
       - backend
     volumes:
       - ./:/app
-      - ./packages/server/:/app/server
-      - /dev/null:/app/server/.env.development
-      - /dev/null:/app/server/.env.test
+      - ./packages/:/app/packages
+      - ./packages/server/:/app/packages/server
+      - /dev/null:/app/packages/server/.env.development
+      - /dev/null:/app/packages/server/.env.test
     command: bash -c "npm run dev"
 
   db:
@@ -67,6 +69,7 @@ services:
       - backend
     volumes:
       - ./packages/server/tmp/db:/var/lib/postgresql/data
+      
 networks:
   backend:
     driver: bridge
