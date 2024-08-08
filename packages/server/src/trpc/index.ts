@@ -1,20 +1,29 @@
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
-import { publicProcedure, router } from './trpc';
+import { initTRPC } from '@trpc/server';
 import { db } from '../db';
 
-const AppRouter = router({
-  userList: publicProcedure
+// const createContext = ({
+//   req,
+//   res,
+// }: trpcExpress.CreateExpressContextOptions) => ({});
+// type Context = Awaited<ReturnType<typeof createContext>>;
+
+// const t = initTRPC.context<Context>().create();
+
+const t = initTRPC.create();
+
+const appRouter = t.router({
+  userList: t.procedure
     .query(async () => {
-      // Retrieve users from a datasource, this is an imaginary database
       const users = await db.models.User.findAll();
       return users;
     }),
 });
 
 const server = createHTTPServer({
-  router: AppRouter,
+  router: appRouter,
 });
- 
-server.listen(3000);
 
-export type AppRouter = typeof AppRouter;
+export { server, appRouter };
+
+export type AppRouter = typeof appRouter;
