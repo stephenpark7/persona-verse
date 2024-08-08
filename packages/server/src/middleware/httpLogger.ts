@@ -9,7 +9,7 @@ const logFormat = winston.format.printf((info) => {
   return `${ts} [${level}]: ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ''}`;
 });
 
-const httpLogger = (() => {
+export const httpLogger = (() => {
   return expressWinston.logger({
     transports: [
       new winston.transports.Console(),
@@ -26,5 +26,3 @@ const httpLogger = (() => {
     meta: true,
   });
 })();
-
-export { httpLogger };

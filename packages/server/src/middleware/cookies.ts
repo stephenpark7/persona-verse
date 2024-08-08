@@ -8,7 +8,7 @@ if (process.env.COOKIE_MAX_AGE === undefined) {
   throw new Error('COOKIE_MAX_AGE is not set');
 }
 
-const cookies = cookieSession({
+export const cookies = cookieSession({
   name: 'session',
   secret: process.env.COOKIE_SECRET,
   maxAge: parseInt(process.env.COOKIE_MAX_AGE),
@@ -20,5 +20,3 @@ const cookies = cookieSession({
   signed: true,
   overwrite: true,
 });
-
-export { cookies };

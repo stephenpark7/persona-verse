@@ -7,14 +7,6 @@ import {
   UserProfile, 
 } from '../models';
 
-const setupDatabase = async (): Promise<void> => {
-  await sequelize.authenticate();
-
-  setupAssociations();
-
-  await syncDatabase();
-};
-
 const setupAssociations = (): void => {
   User.hasMany(Tweet);
   User.hasMany(RevokedToken);
@@ -36,4 +28,10 @@ const syncDatabase = async (): Promise<void> => {
   await sequelize.sync();
 };
 
-export { setupDatabase };
+export const setupDatabase = async (): Promise<void> => {
+  await sequelize.authenticate();
+
+  setupAssociations();
+
+  await syncDatabase();
+};

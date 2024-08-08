@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 
-const loadEnvironmentVariables = () => {
-  if (process.env.NODE_ENV === 'production') {
+export const loadEnvironmentVariables = () => {
+  if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test') {
     return;
   }
   dotenv.config({
@@ -9,5 +9,3 @@ const loadEnvironmentVariables = () => {
     debug: true,
   });
 };
-
-export { loadEnvironmentVariables };

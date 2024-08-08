@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db/sequelize';
 
-class RevokedToken extends Model {}
+export class RevokedToken extends Model {}
 
 RevokedToken.init({
   jti: {
@@ -13,5 +13,3 @@ RevokedToken.init({
   sequelize,
   modelName: 'RevokedToken',
 });
-
-export { RevokedToken };

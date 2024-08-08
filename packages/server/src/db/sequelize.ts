@@ -15,13 +15,9 @@ const sequelizeOptions: Options = {
   // sync: { force: true },
 };
 
-const sequelize = new Sequelize(sequelizeOptions);
+export const sequelize = new Sequelize(sequelizeOptions);
 
 process.on('SIGINT', () => {
   sequelize.close();
   process.exit();
 });
-
-export {
-  sequelize,
-};

@@ -10,7 +10,7 @@ import {
   missingFields,
 } from '../utils/validator';
 import { generateAccessToken, generateRefreshToken, verifyToken, generateRevokedToken } from '../utils/jwt';
-import { compare, hash } from '../utils/bcrypt';
+import { compare, hash } from '../utils/encryption';
 
 const { User, RevokedToken, UserProfile } = db.models;
 

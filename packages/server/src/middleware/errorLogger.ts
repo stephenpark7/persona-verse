@@ -1,7 +1,7 @@
 import winston from 'winston';
 import expressWinston from 'express-winston';
 
-const errorLogger = (() => {
+export const errorLogger = (() => {
   return expressWinston.errorLogger({
     transports: [
       new winston.transports.Console(),
@@ -14,5 +14,3 @@ const errorLogger = (() => {
     ),
   });
 })();
-
-export { errorLogger };
