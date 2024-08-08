@@ -4,29 +4,68 @@ This monorepo contains a Twitter clone application built using modern web techno
 
 ## Tech Stack
 
-- Front-end: React, TypeScript, React Redux, RTK Query
-- Back-end: Node.js, Express.js, Sequelize
-- Database: PostgreSQL
-- Development: Vite
-- Testing: Jest
-- Linting: ESLint, Prettier
-- Containerization: Docker
+### Front-end
+
+- **Framework:** React
+- **Language:** TypeScript
+- **State Management:** React Redux, RTK Query
+
+### Back-end
+
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **ORM:** Sequelize
+- **RPC:** tRPC
+- **Database:** PostgreSQL
+
+### Development
+
+- **Building:** Vite
+- **Testing:** Jest
+- **Linting:** ESLint, Prettier
+- **Containerization:** Docker
 
 ## Setup Instructions
 
-1. **Update Environment Variables**: \
-Modify the .env files in the client/server folders to match your configuration.
+1. **Update Environment Variables**:
 
-2. **Install Dependencies**: \
-From the root directory, install dependencies for both client and server: \
-`npm run install`
+   Modify the `.env` files in the `client` and `server` folders to match your configuration.
 
-3. **Run Application**: \
-Start the server: \
-`npm run server` \
-Start the client: \
-`npm run client`
+2. **Install Dependencies**:
 
-4. **Docker Setup**: \
-Build the Docker image and run it in detached mode: \
-`docker-compose up -d`
+   From the root directory, install dependencies for both client and server:
+
+   ```sh
+   npm install
+   ```
+
+3. **Run Application**:
+
+   Start the server:
+
+   ```sh
+   npm run server
+   ```
+
+   Start the client:
+
+   ```sh
+   npm run client
+   ```
+
+4. **Docker Setup**:
+
+    Alternatively, you can use Docker to run the app if you are having issues with local installation.
+
+   ```sh
+   docker-compose up -d
+   ```
+
+5. **TypeScript and Linting**
+
+    To check for TypeScript errors and linting issues:
+
+    ```sh
+    tsc
+    npm run lint
+    ```
