@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "NodeNext",
     "lib": [ "ES6" ],
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "outDir": "dist",
-    "allowJs": false
+    "allowJs": false,
+    "composite": true
   },
   "include": [ "src/**/*.ts" ]
 }

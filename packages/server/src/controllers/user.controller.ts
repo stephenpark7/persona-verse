@@ -50,8 +50,9 @@ const create = async (
     });
 
     return res.status(201).json({ message: 'Account created successfully.' });
-  } catch (error: unknown) {
-    return res.status(500).json({ message: 'Error creating account.' })
+  } catch (_err: unknown) {
+    console.error('Error while trying to create a user: ', _err);
+    return res.status(500).json({ message: 'Error occurred while creating account.' });
   }
 };
 
@@ -103,8 +104,9 @@ const login = async (req: Request, res: Response) => {
       jwt: accessToken,
       profile: profile,
     });
-  } catch (error: unknown) {
-    res.status(500).json({ message: 'Error logging in.' });
+  } catch (_err: unknown) {
+    console.error('Error while trying to log in a user: ', _err);
+    res.status(500).json({ message: 'Error occurred while logging in.' });
   }
 };
 
@@ -144,9 +146,9 @@ const logout = async (
     req.session = null;
 
     res.status(200).json({ message: 'Logged out.' });
-  } catch (error: unknown) {
-    const errorMessage = process.env.NODE_ENV === 'development' ? `\n${error}` : '';
-    res.status(500).json({ message: errorMessage });
+  } catch (_err: unknown) {
+    console.error('Error while trying to log out a user: ', _err);
+    res.status(500).json({ message: 'Error occurred while logging out.' });
   }
 };
 
