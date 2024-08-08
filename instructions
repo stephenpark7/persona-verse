@@ -1,2 +1,0 @@
-docker build -f server/Dockerfile .
-docker build -f client/Dockerfile .
