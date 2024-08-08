@@ -5,6 +5,8 @@ In Progress:
     ☐ Use along with RTK Query
     ☐ Look into: https://github.com/otahontas/trpc-rtk-query
 To-Do:
+  ☐ Fix docker issue where it can't find tsc-watch
+    ☐ Try using yarn workspaces instead of npm
   ☐ Change back refresh token expiration date to 7 days
   ☐ Get Jest to play nicely with Vite
   ☐ Fix broken tests

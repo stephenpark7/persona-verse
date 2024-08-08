@@ -7,22 +7,28 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh | ba
     bash -E nodesource_setup.sh && \
     apt-get install -y nodejs
 
+WORKDIR /app/packages/client
+
+COPY packages/client .
+
 WORKDIR /app/packages/server
-
-COPY packages/server/package.json packages/server/tsconfig.json packages/server/babel.config.json packages/server/eslint.config.mjs packages/server/jest.config.js ./
-
-RUN npm install --force
 
 COPY packages/server .
 
 WORKDIR /app
 
-COPY package.json package-lock.json tsconfig.json ./
+COPY . .
 
-RUN npm install --force
+RUN npm install
+
+WORKDIR /app/packages/client
+
+RUN npm install
 
 WORKDIR /app/packages/server
 
-WORKDIR /app
-    
+RUN npm install
+
 EXPOSE 3001 3002
+
+CMD ["npm", "run", "dev"]
