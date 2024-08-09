@@ -1,18 +1,12 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 import { JWT } from '../interfaces';
 import { refreshToken } from '../api';
+import { canUseAuthorizationHeader } from '../utils/auth.util';
 
 const useAxiosInterceptors = (jwt: JWT | null) => {
   if (!jwt) return;
 
   axios.interceptors.request.use((config) => {
-    function canUseAuthorizationHeader(jwt: JWT | null, config: AxiosRequestConfig): boolean {
-      if (!jwt) return false;
-      if (config.url?.endsWith('/api/refresh/')) return false;
-      if (config.headers?.Authorization) return false;
-      return true;
-    }
-
     if (canUseAuthorizationHeader(jwt, config)) {
       config.headers.Authorization = `Bearer ${jwt?.token}`;
     }
