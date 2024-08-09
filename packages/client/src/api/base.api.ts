@@ -1,6 +1,7 @@
 import { JsonResponse, ApiCall, ApiProtocol } from '../interfaces';
-import { loginUser, LoginUserParams, logoutUser, registerUser, RegisterUserParams } from '../trpc';
+import { loginUser, logoutUser, registerUser } from '../trpc';
 import { displayErrorMessage, displaySuccessMessage } from '../utils';
+import type { LoginUserParams, RegisterUserParams } from '../trpc/types';
 import { sendHttpRequest } from '.';
 
 export const apiCall = async (
