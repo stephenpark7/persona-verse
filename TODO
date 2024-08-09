@@ -1,18 +1,15 @@
 In Progress:
   ☐ Use tRPC @started(24-08-08 07:46)
   ☐ Use ZOD with tRPC
-  ☐ Refactor to use tRPC instead of REST
-    ☐ Use along with RTK Query
+  ☐ Refactor to use tRPC instead of REST @started(24-08-08 22:55)
+    ☐ Use along with RTK Query @started(24-08-08 22:56)
     ☐ Look into: https://github.com/otahontas/trpc-rtk-query
 To-Do:
-  ☐ Fix docker issue where it can't find tsc-watch
-    ☐ Try using yarn workspaces instead of npm
   ☐ Change back refresh token expiration date to 7 days
   ☐ Get Jest to play nicely with Vite
   ☐ Fix broken tests
   ☐ Refactor more
   ☐ Adding loading spinners
-  ☐ Update README
   ☐ Check token is expired on client before sending a request
   ☐ Jest tests for local storage
   ☐ Investigate, if still an issue (not sure?): Fix issue where it fails to resend the request after getting a new token
@@ -30,6 +27,9 @@ To-Do:
   ☐ Refactor frontend @started(24-07-20 21:15)
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Update README @done(24-08-08 22:55)
+  ✔ Fix docker issue where it can't find tsc-watch @done(24-08-08 22:55)
+    ✔ Try using yarn workspaces instead of npm @done(24-08-08 22:55)
   ✔ Posting a tweet doesn't update the list of tweets @started(24-08-01 23:00) @done(24-08-05 02:39) @lasted(3d3h39m46s)
   ✔ BUG: user doesn't update after RTK query @started(24-08-01 23:00) @done(24-08-05 02:39) @lasted(3d3h39m47s)
   ✔ Use RTK + Redux @started(24-08-01 23:00) @done(24-08-05 02:39) @lasted(3d3h39m48s)
