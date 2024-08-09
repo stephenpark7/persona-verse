@@ -1,16 +1,36 @@
-# Twitter Clone
+# Persona-Verse
 
-This monorepo contains a Twitter clone application built using modern web technologies. The project demonstrates a full-stack implementation with a focus on a scalable and maintainable architecture.
+## Project Overview
+
+Persona-Verse is a fresh take on social media where real users and AI characters come together in an interactive and dynamic environment. Imagine a Twitter-like platform where, alongside engaging with other people, you can also chat with AI characters that bring a new layer of depth to your social experience.
+
+## What You Can Do
+
+### Get Personal Help
+
+AI characters act as personal assistants, helping you with tasks, giving recommendations, and curating content just for you.
+
+### Enjoy Interactive Stories
+
+Dive into fun storytelling and role-playing with AI characters. You can co-create stories, embark on adventures, or just enjoy a good narrative.
+
+### Learn and Play
+
+Discover AI characters designed to teach you new things, offer insights, or challenge you with games and puzzles.
+
+### See AI Creativity
+
+Watch as AI generates posts, images, and conversations, adding a constantly evolving twist to your feed.
+
+Persona-Verse offers a unique mix of real and AI interactions, making it an exciting place to explore new ways of communicating and connecting in the digital age.
+
+It’s not just another social platform—it’s a blend of human and AI experiences that stands out in today’s social media landscape.
+
+If you are interested in the project, please star the repository and follow us for updates!
 
 ## Tech Stack
 
-### Front-end
-
-- **Framework:** React
-- **Language:** TypeScript
-- **State Management:** React Redux, RTK Query
-
-### Back-end
+### Frontend
 
 - **Runtime:** Node.js
 - **Framework:** Express.js
@@ -18,7 +38,13 @@ This monorepo contains a Twitter clone application built using modern web techno
 - **RPC:** tRPC
 - **Database:** PostgreSQL
 
-### Development
+### Backend
+
+- **Framework:** React
+- **Language:** TypeScript
+- **State Management:** React Redux, RTK Query
+
+### Tooling
 
 - **Building:** Vite
 - **Testing:** Jest
@@ -27,45 +53,49 @@ This monorepo contains a Twitter clone application built using modern web techno
 
 ## Setup Instructions
 
-1. **Update Environment Variables**:
+1. Start postgres service, create the database:
 
-   Modify the `.env` files in the `client` and `server` folders to match your configuration.
+   ```sh
+   brew services start postgres
+   createdb pv_db
+   ```
 
-2. **Install Dependencies**:
-
-   From the root directory, install dependencies for both client and server:
+2. Install dependencies:
 
    ```sh
    npm install
    ```
 
-3. **Run Application**:
-
-   Start the server:
+3. Run the application:
 
    ```sh
-   npm run server
+   npm run dev
    ```
 
-   Start the client:
+## Docker Setup
+
+1. Build the Docker image:
 
    ```sh
-   npm run client
+   docker-compose build
    ```
 
-4. **Docker Setup**:
-
-    Alternatively, you can use Docker to run the app if you are having issues with local installation.
+2. Start the Docker container:
 
    ```sh
    docker-compose up -d
    ```
 
-5. **TypeScript and Linting**
+## Linting and Testing
 
-    To check for TypeScript errors and linting issues:
+- To check for TypeScript errors and linting issues:
 
-    ```sh
-    tsc
-    npm run lint
-    ```
+   ```sh
+   npm run lint
+   ```
+
+- To run tests:
+
+   ```text
+   npm run test
+   ```

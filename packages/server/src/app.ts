@@ -1,8 +1,9 @@
 import { loadEnvironmentVariables } from './utils/env';
-import express from 'express';
-import { setupBindings } from './middleware';
 
 loadEnvironmentVariables();
+
+import express from 'express';
+import { setupBindings } from './middleware';
 
 export const app = express();
 
