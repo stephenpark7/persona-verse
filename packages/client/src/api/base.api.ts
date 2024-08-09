@@ -57,18 +57,23 @@ export async function apiCall(
 
     return response as JsonResponse;
   }
-  catch (err: AxiosError | unknown) {
+  catch (err: AxiosError | Error | unknown) {
     displayErrorMessage(err);
     return;
   }
 }
 
-function displayErrorMessage(err: AxiosError | unknown, autoClose?: number): string {
-  let message = 'An unexpected error occurred.';
+function displayErrorMessage(err: AxiosError | Error | unknown, autoClose?: number): string {
+  let message;
 
-  if (err instanceof AxiosError && err.response?.data.message) {
-    message = err.response.data.message;
+  if (err instanceof AxiosError) {
+    message = err.response?.data.message;
   }
+  else if (err instanceof Error) {
+    message = err.message;
+  }
+
+  message ||= 'An unexpected error occurred.';
 
   toast.error(message, { autoClose });
   return message;

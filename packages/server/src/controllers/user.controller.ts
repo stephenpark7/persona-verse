@@ -14,7 +14,7 @@ import { compare, hash } from '../utils/encryption';
 
 const { User, RevokedToken, UserProfile } = db.models;
 
-const validateUserRegister = async (username: string, email: string, password: string): Promise<boolean> => {
+const validateCreate = async (username: string, email: string, password: string): Promise<boolean> => {
   if (missingFields(username, email, password)) {
     throw new Error('Missing field(s).');
   }
@@ -53,7 +53,7 @@ const create = async ({
   email, 
   password 
 }: CreateParams): Promise<{ message: string }> => {
-  await validateUserRegister(username, email, password);
+  await validateCreate(username, email, password);
 
   const hashedPassword = await hash(password);
 
