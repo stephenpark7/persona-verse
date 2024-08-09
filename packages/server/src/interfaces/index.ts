@@ -11,11 +11,6 @@ export interface RequestBody {
   message: string;
 };
 
-export interface LoginParams {
-  username: string;
-  password: string;
-};
-
 export interface JWTPayload extends JwtPayload {
   userId: number;
   username: string;
@@ -30,3 +25,5 @@ export interface ModelDefinitions {
   RefreshToken: ModelStatic<Model>;
   UserProfile: ModelStatic<Model>;
 }
+
+export * from './user.controller.interface';

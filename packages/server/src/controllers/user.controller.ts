@@ -2,51 +2,14 @@ import { Request, Response } from 'express';
 import { db } from '../db';
 import { JWTPayload, LoginParams } from '../interfaces';
 import {
-  validateUsername,
-  validateEmail,
-  validatePassword,
-  usernameAlreadyExists,
-  emailAlreadyExists,
-  missingFields,
+  validateCreate,
+  validateLogin,
 } from '../utils/validator';
 import { generateAccessToken, generateRefreshToken, verifyToken, generateRevokedToken } from '../utils/jwt';
 import { compare, hash } from '../utils/encryption';
+import { CreateParams } from '../interfaces';
 
 const { User, RevokedToken, UserProfile } = db.models;
-
-const validateCreate = async (username: string, email: string, password: string): Promise<boolean> => {
-  if (missingFields(username, email, password)) {
-    throw new Error('Missing field(s).');
-  }
-
-  if (!validateUsername(username)) {
-    throw new Error('Invalid username.');
-  }
-
-  if (!validateEmail(email)) {
-    throw new Error('Invalid email address.');
-  }
-
-  if (!validatePassword(password)) {
-    throw new Error('Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.');
-  }
-
-  if (await usernameAlreadyExists(username)) {
-    throw new Error('Username already in use.');
-  }
-
-  if (await emailAlreadyExists(email)) {
-    throw new Error('Email address already in use.');
-  }
-
-  return true;
-};
-
-interface CreateParams {
-  username: string,
-  email: string,
-  password: string,
-}
 
 const create = async ({ 
   username, 
@@ -70,24 +33,23 @@ const login = async (req: Request, res: Response) => {
   try {
     const { username, password }: LoginParams = req.body;
 
-    if (missingFields(username, password)) {
-      return res.status(400).json({ message: 'Missing field(s).' });
+    let user;
+
+    try {
+      user = await validateLogin(username, password);
+    }
+    catch (err: unknown) {
+      return res.status(400).json({ message: err });
     }
 
-    const user = await User.findOne({ where: { username: username } });
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
-    }
-
-    const isAuthenticated = await compare(password, user.get('password') as string);
+    const isAuthenticated = await compare(password, user!.get('password') as string);
 
     if (!isAuthenticated) {
       return res.status(401).json({ message: 'Invalid username/password.' });
     }
 
     const payload: JWTPayload = {
-      userId: parseInt(user.get('id') as string),
+      userId: parseInt(user!.get('id') as string),
       username: username,
     };
 
