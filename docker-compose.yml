@@ -44,7 +44,6 @@ services:
       - SERVER_PORT=3001
     ports:
       - "3001:3001"
-      - "3002:3002"
     depends_on:
       - db
     networks:
