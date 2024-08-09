@@ -60,7 +60,7 @@ async function logout(
     controller: 'users',
     action: 'logout',
     options: { withCredentials: true },
-  }, showToast, 'rest');
+  }, showToast, 'trpc');
 
   if (!response) return;
 

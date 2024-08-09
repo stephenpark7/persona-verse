@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
-import { JsonResponse, ApiCall, ApiProtocol, LoginParams } from '../interfaces';
+import { JsonResponse, ApiCall, ApiProtocol } from '../interfaces';
 import { refreshToken } from './refresh.api';
 import { getTweets, postTweet } from './tweets.api';
 import { register, login, logout } from './users.api';
 import { BASE_API_URL } from '../utils';
-import { loginUser, LoginUserParams, registerUser, RegisterUserParams } from '../trpc';
+import { loginUser, LoginUserParams, logoutUser, registerUser, RegisterUserParams } from '../trpc';
 
 function apiUrl(controller: string, action: string): string {
   if (!BASE_API_URL || !controller || action === undefined) {
@@ -48,6 +48,9 @@ export async function apiCall(
       else if (params.action === 'login') {
         response = await loginUser(params.body as LoginUserParams);
       }
+      else if (params.action === 'logout') {
+        response = await logoutUser();
+      }
       else {
         throw new Error('Invalid API action.');
       }
@@ -62,7 +65,7 @@ export async function apiCall(
     if (showToast) {
       displaySuccessMessage(response.message);
     }
-
+    
     return response as JsonResponse;
   }
   catch (err: AxiosError | Error | unknown) {

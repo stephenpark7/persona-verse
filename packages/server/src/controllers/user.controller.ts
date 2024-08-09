@@ -37,63 +37,55 @@ const login = async ({
   token: string,
   expiresAt: number,
 }, profile: InstanceType<typeof UserProfile> | null } | { message: string }> => {
-  try {
-    let user;
+  let user;
 
-    try {
-      user = await validateLogin(username, password);
-    }
-    catch (err: unknown) {
-      return { message: err as string };
-    }
+  user = await validateLogin(username, password);
 
-    const isAuthenticated = await compare(password, user!.get('password') as string);
+  const isAuthenticated = await compare(password, user!.get('password') as string);
 
-    if (!isAuthenticated) {
-      return { message: 'Invalid credentials.' };
-    }
-
-    const payload: JWTPayload = {
-      userId: parseInt(user!.get('id') as string),
-      username: username,
-    };
-
-    const accessToken = generateAccessToken(payload);
-    const refreshToken = generateRefreshToken(payload!);
-
-    if (!accessToken || !refreshToken) {
-      return { message: 'Error occurred while logging in.' };
-    }
-
-    if (req.session) {
-      req.session.refreshToken = refreshToken;
-    }
-
-    const [ profile ] = await UserProfile.findOrCreate({
-      where: { UserId: payload.userId },
-      defaults: {
-        displayName: username,
-      },
-    });
-
-    if (!profile) {
-      return { message: 'Error occurred while logging in.' };
-    }
-
-    return { message: 'Logged in successfully.', jwt: accessToken, profile: profile };
-
-    // res.status(200).json({
-    //   message: 'Logged in successfully.',
-    //   jwt: accessToken,
-    //   profile: profile,
-    // });
-  } catch (_err: unknown) {
-
-    return { message: 'Error occurred while logging in.' };
-
-    // console.error('Error while trying to log in a user: ', _err);
-    // res.status(500).json({ message: 'Error occurred while logging in.' });
+  if (!isAuthenticated) {
+    throw new Error('Invalid credentials.');
   }
+
+  const payload: JWTPayload = {
+    userId: parseInt(user!.get('id') as string),
+    username: username,
+  };
+
+  const accessToken = generateAccessToken(payload);
+  const refreshToken = generateRefreshToken(payload!);
+
+  if (!accessToken || !refreshToken) {
+    throw new Error('Error occurred while logging in.');
+  }
+
+  if (req.session) {
+    req.session.refreshToken = refreshToken;
+  }
+
+  const [ profile ] = await UserProfile.findOrCreate({
+    where: { UserId: payload.userId },
+    defaults: {
+      displayName: username,
+    },
+    attributes: [ 'displayName', 'picture', 'bio' ],
+  });
+
+  if (!profile) {
+    throw new Error('Error occurred while logging in.');
+  }
+
+  return { 
+    message: 'Logged in successfully.', 
+    jwt: accessToken, 
+    profile: profile 
+  };
+
+  // res.status(200).json({
+  //   message: 'Logged in successfully.',
+  //   jwt: accessToken,
+  //   profile: profile,
+  // });
 };
 
 const logout = async (

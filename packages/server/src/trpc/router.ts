@@ -1,4 +1,4 @@
-import { create, login } from '../controllers/user.controller';
+import { create, login, logout } from '../controllers/user.controller';
 import { router, publicProcedure } from './trpc';
 import { z } from 'zod';
 
@@ -7,29 +7,27 @@ export const appRouter = router({
     .input(z.object({
       username: z.string(),
       email: z.string(),
-      password: z.string()
+      password: z.string(),
     }))
     .mutation(async ({ input }) => {
-      const user = create(input);
+      const user = await create(input);
       return user;
     }),
   loginUser: publicProcedure
     .input(z.object({
       username: z.string(),
-      password: z.string()
+      password: z.string(),
     }))
     .mutation(async ({ input, ctx }) => {
-      const user = login(input, ctx.req);
-      // TODO: need req.session
-      // that's what createcontext is for
+      const user = await login(input, ctx.req);
+      console.log('user: ', user);
       return user;
     }),
-  // .mutation(async (
-  // userList: t.procedure
-  //   .query(async () => {
-  //     const users = await db.models.User.findAll();
-  //     return users;
-  //   }),
+  logoutUser: publicProcedure
+    .mutation(async ({ ctx }) => {
+      await logout(ctx.req, ctx.res);
+      return { message: 'Successfully logged out' };
+    }),
 });
 
 export type AppRouter = typeof appRouter;

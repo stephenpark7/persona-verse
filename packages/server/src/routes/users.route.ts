@@ -15,14 +15,14 @@ usersRoute.post('/signup', async (req: Request, res: Response) => {
 });
 
 usersRoute.post('/login', async (req: Request, res: Response) => {
-  try {
+  // try {
     const response = await login(req.body, req);
     res.status(200).json(response);
-  }
-  catch (err) {
-    console.error('Error while trying to log in a user: ', err);
-    res.status(400).json({ message: err });
-  }
+  // }
+  // catch (err) {
+  //   console.error('Error while trying to log in a user: ', err);
+  //   res.status(400).json({ message: err });
+  // }
 });
 
 usersRoute.post('/logout', async (req: Request, res: Response) => {

@@ -27,7 +27,7 @@ export interface LoginUserParams {
   password: string;
 }
 
-const registerUser = async ({
+export const registerUser = async ({
   username,
   email,
   password,
@@ -48,8 +48,11 @@ export const loginUser = async ({
   username,
   password,
 }: LoginUserParams): Promise<TRPCResponse> => {
-
   return await trpc.loginUser.mutate({ username, password });
+};
+
+export const logoutUser = async (): Promise<JsonResponse> => {
+  return await trpc.logoutUser.mutate();
 };
 
 // Inferred types
@@ -58,5 +61,3 @@ export const loginUser = async ({
 // };
 
 // const createdUser = await trpc.userCreate.mutate({ name: 'foo' });
-
-export { registerUser };

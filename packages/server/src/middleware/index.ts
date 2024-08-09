@@ -15,9 +15,9 @@ export const setupMiddleware = function (this: Express) {
   this.use(express.json());
   this.use(express.urlencoded({ extended: true }));
   this.use(cookies);
-  this.use(httpLogger);
+  // this.use(httpLogger);
   this.use('/', router);
-  this.use(errorLogger);
+  // this.use(errorLogger);
   this.use(
     '/trpc',
     trpcExpress.createExpressMiddleware({
