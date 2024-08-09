@@ -1,23 +1,23 @@
 {
-  "name": "twitter-clone-monorepo",
+  "name": "persona-verse",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "author": "Stephen Park",
   "license": "ISC",
-  "workspaces": [
-    "packages/client",
-    "packages/server"
-  ],
   "private": true,
-  "overrides": {
-    "vite": {
-      "rollup": "npm:@rollup/wasm-node"
-    }
-  },
   "scripts": {
     "server": "cd packages/server && npm run dev",
     "client": "cd packages/client && npm run dev",
     "lint": "cd packages/client && npm run lint && cd ../server && npm run lint"
+  },
+  "workspaces": [
+    "packages/client",
+    "packages/server"
+  ],
+  "overrides": {
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
   }
 }

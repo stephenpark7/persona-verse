@@ -1,7 +1,6 @@
 services:
-
-  twitter_react_app:
-    container_name: twitter_react_app
+  frontend:
+    container_name: pv_frontend
     build:
       context: .
       dockerfile: ./packages/client/Dockerfile
@@ -21,19 +20,17 @@ services:
       - ./packages/server/:/app/packages/server
       - /dev/null:/app/packages/client/.env.development
     command: bash -c "npm install && npm run dev"
-
-  node_app:
-    container_name: node_app
+  backend:
+    container_name: pv_backend
     build:
       context: .
       dockerfile: ./packages/server/Dockerfile
     environment:
       - NODE_ENV=development
-      - DB_HOST=postgres_db
-      - DB_NAME=twitter_clone_db
+      - DB_HOST=pv_db
+      - DB_NAME=pv_db
       - DB_USER=postgres
       - DB_PASSWORD=postgres
-      - DB_HOST=postgres_db
       - DB_PORT=5432
       - JWT_SECRET=secret
       - COOKIE_DOMAIN=localhost
@@ -44,7 +41,6 @@ services:
       - SERVER_PORT=3001
     ports:
       - "3001:3001"
-      - "3002:3002"
     depends_on:
       - db
     networks:
@@ -57,12 +53,11 @@ services:
       - /dev/null:/app/packages/server/.env.development
       - /dev/null:/app/packages/server/.env.test
     command: bash -c "npm install && npm run dev"
-
   db:
-    container_name: postgres_db
+    container_name: pv_db
     image: postgres:latest
     environment:
-      POSTGRES_DB: twitter_clone_db
+      POSTGRES_DB: pv_db_development
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -71,10 +66,6 @@ services:
       - backend
     volumes:
       - ./packages/server/tmp/db:/var/lib/postgresql/data
-      
 networks:
   backend:
     driver: bridge
-
-volumes:
-  node_modules:
