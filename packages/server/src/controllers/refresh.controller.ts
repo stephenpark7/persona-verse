@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { JWTPayload } from '../interfaces';
 import { sendUnauthorizedResponse } from '../utils/request';
 import { generateAccessToken, verifyToken } from '../utils/jwt';
 import { db } from '../db';
@@ -8,7 +7,7 @@ const { User, RevokedToken } = db.models;
 
 const refresh = async (req: Request, res: Response) => {
   try {
-    const { refreshToken } = req.session as JWTPayload;
+    const refreshToken = req.session.refreshToken;
 
     if (!refreshToken) {
       return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
