@@ -75,6 +75,3 @@ services:
 networks:
   backend:
     driver: bridge
-
-volumes:
-  node_modules:
