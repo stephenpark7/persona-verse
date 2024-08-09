@@ -4,6 +4,4 @@ const ENV = {
   API_PORT: import.meta.env.VITE_API_PORT as string,
 };
 
-const BASE_API_URL: string = `${ENV.API_PROTOCOL}://${ENV.API_HOST_NAME}:${ENV.API_PORT}/api/`;
-
-export { BASE_API_URL };
+export const BASE_API_URL: string = `${ENV.API_PROTOCOL}://${ENV.API_HOST_NAME}:${ENV.API_PORT}/api/`;

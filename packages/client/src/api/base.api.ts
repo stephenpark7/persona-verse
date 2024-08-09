@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 import { JsonResponse, ApiCall, ApiProtocol } from '../interfaces';
 import { refreshToken } from './refresh.api';
 import { getTweets, postTweet } from './tweets.api';
@@ -7,37 +5,14 @@ import { register, login, logout } from './users.api';
 import { BASE_API_URL } from '../utils';
 import { loginUser, LoginUserParams, logoutUser, registerUser, RegisterUserParams } from '../trpc';
 
-function apiUrl(controller: string, action: string): string {
-  if (!BASE_API_URL || !controller || action === undefined) {
-    throw new Error(`Invalid API URL: ${BASE_API_URL}${controller}${action}`);
-  }
-  return `${BASE_API_URL}${controller}/${action}`;
-}
+import { displayErrorMessage, displaySuccessMessage } from '../utils/messages';
+import { sendHttpRequest } from './rest.api';
 
-async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
-  const { method, controller, action, body, options, headers } = params;
-
-  const config: AxiosRequestConfig = {
-    url: apiUrl(controller, action),
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    } as RawAxiosRequestHeaders,
-    method,
-    data: body,
-    ...options,
-  };
-
-  const response: AxiosResponse = await axios.request(config);
-
-  return response.data;
-}
-
-export async function apiCall(
+export const apiCall = async (
   params: ApiCall,
   showToast: boolean,
   protocol: ApiProtocol,
-): Promise<JsonResponse | void> {
+): Promise<JsonResponse | void> => {
   try {
     let response;
 
@@ -68,31 +43,11 @@ export async function apiCall(
     
     return response as JsonResponse;
   }
-  catch (err: AxiosError | Error | unknown) {
+  catch (err) {
     displayErrorMessage(err);
     return;
   }
-}
-
-function displayErrorMessage(err: AxiosError | Error | unknown, autoClose?: number): string {
-  let message;
-
-  if (err instanceof AxiosError) {
-    message = err.response?.data.message || err.message;
-  }
-  else if (err instanceof Error) {
-    message = err.message;
-  }
-
-  message ||= 'An unexpected error occurred.';
-
-  toast.error(message, { autoClose });
-  return message;
-}
-
-function displaySuccessMessage(message: string, autoClose?: number): void {
-  toast.success(message, { autoClose });
-}
+};
 
 export {
   BASE_API_URL,
