@@ -29,23 +29,28 @@ const create = async ({
   return { message: 'User created successfully.' };
 };
 
-const login = async (req: Request, res: Response) => {
+const login = async ({ 
+  username, 
+  password 
+}: LoginParams, req: Request,
+): Promise<{ message: string, jwt: {
+  token: string,
+  expiresAt: number,
+}, profile: InstanceType<typeof UserProfile> | null } | { message: string }> => {
   try {
-    const { username, password }: LoginParams = req.body;
-
     let user;
 
     try {
       user = await validateLogin(username, password);
     }
     catch (err: unknown) {
-      return res.status(400).json({ message: err });
+      return { message: err as string };
     }
 
     const isAuthenticated = await compare(password, user!.get('password') as string);
 
     if (!isAuthenticated) {
-      return res.status(401).json({ message: 'Invalid username/password.' });
+      return { message: 'Invalid credentials.' };
     }
 
     const payload: JWTPayload = {
@@ -57,28 +62,37 @@ const login = async (req: Request, res: Response) => {
     const refreshToken = generateRefreshToken(payload!);
 
     if (!accessToken || !refreshToken) {
-      return res.status(500).json({ message: 'Error generating tokens.' });
+      return { message: 'Error occurred while logging in.' };
     }
 
     if (req.session) {
       req.session.refreshToken = refreshToken;
     }
 
-    const profile = UserProfile.findOrCreate({
+    const [ profile ] = await UserProfile.findOrCreate({
       where: { UserId: payload.userId },
       defaults: {
         displayName: username,
       },
     });
 
-    res.status(200).json({
-      message: 'Logged in successfully.',
-      jwt: accessToken,
-      profile: profile,
-    });
+    if (!profile) {
+      return { message: 'Error occurred while logging in.' };
+    }
+
+    return { message: 'Logged in successfully.', jwt: accessToken, profile: profile };
+
+    // res.status(200).json({
+    //   message: 'Logged in successfully.',
+    //   jwt: accessToken,
+    //   profile: profile,
+    // });
   } catch (_err: unknown) {
-    console.error('Error while trying to log in a user: ', _err);
-    res.status(500).json({ message: 'Error occurred while logging in.' });
+
+    return { message: 'Error occurred while logging in.' };
+
+    // console.error('Error while trying to log in a user: ', _err);
+    // res.status(500).json({ message: 'Error occurred while logging in.' });
   }
 };
 

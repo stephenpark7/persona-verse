@@ -38,7 +38,7 @@ const login: LoginFunction = async ({
     action: 'login',
     body: formData,
     options: { withCredentials: true },
-  }, showToast, 'rest');
+  }, showToast, 'trpc');
 
   if (!response) return;
 

@@ -5,6 +5,7 @@ export const createContext = ({
   res,
 }: trpcExpress.CreateExpressContextOptions) => {
   return {
+    session: req.session,
     req,
     res,
   };
