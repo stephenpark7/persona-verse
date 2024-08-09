@@ -11,7 +11,7 @@
     "allowJs": false,
     "composite": true,
     "esModuleInterop": true,
-    "types": [ "express", "jest" ]
+    "types": [ "express", "express-session", "jest" ]
   },
   "include": [ "src/**/*" ]
 }

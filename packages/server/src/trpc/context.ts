@@ -7,6 +7,7 @@ export const createContext = ({
   return {
     req,
     res,
+    session: req.session,
   };
 };
 

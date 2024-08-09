@@ -7,9 +7,10 @@
   "scripts": {
     "start": "node dist/src/app.js",
     "dev": "NODE_ENV=development tsc-watch --onSuccess \"node dist/src/app.js\"",
-    "build": "npm run lint && tsc",
+    "build": "npm run lint && tsc --build",
     "test": "NODE_ENV=test jest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "tsc": "tsc --build || true"
   },
   "author": "Stephen Park",
   "license": "ISC",
@@ -17,10 +18,10 @@
     "@trpc/server": "^10.0.0-rc.477",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.2.0",
-    "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-session": "^1.18.0",
     "express-winston": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
     "path": "^0.12.7",
@@ -42,6 +43,7 @@
     "@types/dotenv": "^6.1.1",
     "@types/eslint__js": "^8.42.3",
     "@types/express": "^4.17.21",
+    "@types/express-session": "^1.18.0",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/supertest": "^6.0.2",

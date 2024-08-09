@@ -6,7 +6,9 @@ export const useUserState = () => {
   const tweets = useTweets();
   const isLoggedIn = jwt !== null;
 
-  useAxiosInterceptors(jwt);
+  if (isLoggedIn) {
+    useAxiosInterceptors(jwt);
+  }
 
   return {
     jwt,
