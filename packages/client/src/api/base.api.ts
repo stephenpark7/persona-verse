@@ -1,12 +1,7 @@
 import { JsonResponse, ApiCall, ApiProtocol } from '../interfaces';
-import { refreshToken } from './refresh.api';
-import { getTweets, postTweet } from './tweets.api';
-import { register, login, logout } from './users.api';
-import { BASE_API_URL } from '../utils';
 import { loginUser, LoginUserParams, logoutUser, registerUser, RegisterUserParams } from '../trpc';
-
-import { displayErrorMessage, displaySuccessMessage } from '../utils/messages';
-import { sendHttpRequest } from './rest.api';
+import { displayErrorMessage, displaySuccessMessage } from '../utils';
+import { sendHttpRequest } from '.';
 
 export const apiCall = async (
   params: ApiCall,
@@ -47,14 +42,4 @@ export const apiCall = async (
     displayErrorMessage(err);
     return;
   }
-};
-
-export {
-  BASE_API_URL,
-  login,
-  register,
-  logout,
-  getTweets,
-  postTweet,
-  refreshToken,
 };
