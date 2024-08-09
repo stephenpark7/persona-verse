@@ -14,7 +14,7 @@ const register: RegisterFunction = async ({
     controller: 'users',
     action: 'signup',
     body: formData,
-  }, showToast, 'rest');
+  }, showToast, 'trpc');
 
   if (!response) return;
 
