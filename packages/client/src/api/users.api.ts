@@ -14,7 +14,7 @@ const register: RegisterFunction = async ({
     controller: 'users',
     action: 'signup',
     body: formData,
-  }, showToast);
+  }, showToast, 'rest');
 
   if (!response) return;
 
@@ -38,7 +38,7 @@ const login: LoginFunction = async ({
     action: 'login',
     body: formData,
     options: { withCredentials: true },
-  }, showToast);
+  }, showToast, 'rest');
 
   if (!response) return;
 
@@ -60,7 +60,7 @@ async function logout(
     controller: 'users',
     action: 'logout',
     options: { withCredentials: true },
-  }, showToast);
+  }, showToast, 'rest');
 
   if (!response) return;
 

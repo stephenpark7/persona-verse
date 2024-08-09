@@ -14,46 +14,56 @@ import { compare, hash } from '../utils/encryption';
 
 const { User, RevokedToken, UserProfile } = db.models;
 
-const create = async (
-  req: Request,
-  res: Response,
-): Promise<Response> => {
-  try {
-    const { username, email, password } = req.body;
-
-    if (!validateUsername(username)) {
-      return res.status(400).json({ message: 'Invalid username.' });
-    }
-
-    if (!validateEmail(email)) {
-      return res.status(400).json({ message: 'Invalid email address.' });
-    }
-
-    if (!validatePassword(password)) {
-      return res.status(400).json({ message: 'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.' });
-    }
-
-    if (await usernameAlreadyExists(username)) {
-      return res.status(400).json({ message: 'Username already in use.' });
-    }
-
-    if (await emailAlreadyExists(email)) {
-      return res.status(400).json({ message: 'Email address already in use.' });
-    }
-
-    const hashedPassword = await hash(password);
-
-    await User.create({
-      username: username,
-      email: email,
-      password: hashedPassword,
-    });
-
-    return res.status(201).json({ message: 'Account created successfully.' });
-  } catch (_err: unknown) {
-    console.error('Error while trying to create a user: ', _err);
-    return res.status(500).json({ message: 'Error occurred while creating account.' });
+const validateUserRegister = async (username: string, email: string, password: string): Promise<boolean> => {
+  if (missingFields(username, email, password)) {
+    throw new Error('Missing field(s).');
   }
+
+  if (!validateUsername(username)) {
+    throw new Error('Invalid username.');
+  }
+
+  if (!validateEmail(email)) {
+    throw new Error('Invalid email address.');
+  }
+
+  if (!validatePassword(password)) {
+    throw new Error('Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.');
+  }
+
+  if (await usernameAlreadyExists(username)) {
+    throw new Error('Username already in use.');
+  }
+
+  if (await emailAlreadyExists(email)) {
+    throw new Error('Email address already in use.');
+  }
+
+  return true;
+};
+
+interface CreateParams {
+  username: string,
+  email: string,
+  password: string,
+}
+
+const create = async ({ 
+  username, 
+  email, 
+  password 
+}: CreateParams): Promise<{ message: string }> => {
+  await validateUserRegister(username, email, password);
+
+  const hashedPassword = await hash(password);
+
+  await User.create({
+    username: username,
+    email: email,
+    password: hashedPassword,
+  });
+
+  return { message: 'User created successfully.' };
 };
 
 const login = async (req: Request, res: Response) => {

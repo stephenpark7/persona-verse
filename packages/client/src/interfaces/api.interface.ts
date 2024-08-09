@@ -33,3 +33,5 @@ export interface UsersLoginParams {
   username: string;
   password: string;
 }
+
+export type ApiProtocol = 'rest' | 'trpc';

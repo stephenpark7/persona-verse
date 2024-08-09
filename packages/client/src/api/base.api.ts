@@ -1,10 +1,11 @@
 import { toast } from 'react-toastify';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
-import { JsonResponse, ApiCall } from '../interfaces';
+import { JsonResponse, ApiCall, ApiProtocol } from '../interfaces';
 import { refreshToken } from './refresh.api';
 import { getTweets, postTweet } from './tweets.api';
 import { register, login, logout } from './users.api';
 import { BASE_API_URL } from '../utils';
+import { registerUser, RegisterUserParams } from '../trpc';
 
 function apiUrl(controller: string, action: string): string {
   if (!BASE_API_URL || !controller || action === undefined) {
@@ -24,7 +25,7 @@ async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
     } as RawAxiosRequestHeaders,
     method,
     data: body,
-    ...options,  
+    ...options,
   };
 
   const response: AxiosResponse = await axios.request(config);
@@ -32,13 +33,29 @@ async function sendHttpRequest(params: ApiCall): Promise<JsonResponse> {
   return response.data;
 }
 
-export async function apiCall(params: ApiCall, showToast: boolean): Promise<JsonResponse | void> {
+export async function apiCall(
+  params: ApiCall,
+  showToast: boolean,
+  protocol: ApiProtocol,
+): Promise<JsonResponse | void> {
   try {
-    const response = await sendHttpRequest(params);
+    let response;
+
+    if (protocol === 'trpc') {
+      response = await registerUser(params.body as RegisterUserParams);
+    }
+    else if (protocol === 'rest') {
+      response = await sendHttpRequest(params);
+    }
+    else {
+      throw new Error('Invalid API protocol.');
+    }
+
     if (showToast) {
       displaySuccessMessage(response.message);
     }
-    return response;
+
+    return response as JsonResponse;
   }
   catch (err: AxiosError | unknown) {
     displayErrorMessage(err);

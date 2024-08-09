@@ -8,7 +8,7 @@ async function refreshToken(): Promise<JWT | void> {
     controller: 'refresh',
     action: '',
     options: { withCredentials: true },
-  }, false);
+  }, false, 'rest');
 
   if (!response) return;
 

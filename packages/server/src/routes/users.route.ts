@@ -4,7 +4,14 @@ import { create, login, logout } from '../controllers/user.controller';
 export const usersRoute = express.Router();
 
 usersRoute.post('/signup', async (req: Request, res: Response) => {
-  await create(req, res);
+  try {
+    const message = await create(req.body);
+    res.status(201).json({ message });
+  }
+  catch (err) {
+    console.error('Error while trying to create a user: ', err);
+    res.status(400).json({ message: err });
+  }
 });
 
 usersRoute.post('/login', async (req: Request, res: Response) => {

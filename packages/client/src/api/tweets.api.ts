@@ -8,7 +8,7 @@ async function getTweets(
     method: 'GET',
     controller: 'tweets',
     action: 'get',
-  }, false);
+  }, false, 'rest');
 
   if (!response) return [];
 
@@ -34,7 +34,7 @@ async function postTweet({
     controller: 'tweets',
     action: 'create',
     body: payload,
-  }, true);
+  }, true, 'rest');
 
   if (!response || !response.tweet) return;
 
