@@ -1,9 +1,9 @@
 In Progress:
   ☐ Use tRPC @started(24-08-08 07:46)
-  ☐ Use ZOD with tRPC
-  ☐ Refactor to use tRPC instead of REST @started(24-08-08 22:55)
-    ☐ Use along with RTK Query @started(24-08-08 22:56)
-    ☐ Look into: https://github.com/otahontas/trpc-rtk-query
+    ☐ Use ZOD for validation
+    ☐ Build out routes, controllers
+  ☐ Refactor backend @started(24-07-20 21:05)
+  ☐ Refactor frontend @started(24-07-20 21:15)
 To-Do:
   ☐ Change back refresh token expiration date to 7 days
   ☐ Get Jest to play nicely with Vite
@@ -23,10 +23,11 @@ To-Do:
   ☐ Add CSS Animations on tweets/create
   ☐ Add test for refresh token
   ☐ Amend commit messages to be more descriptive
-  ☐ Refactor backend @started(24-07-20 21:05)
-  ☐ Refactor frontend @started(24-07-20 21:15)
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Refactor to use tRPC instead of REST @started(24-08-08 22:55) @done(24-08-08 22:57) @lasted(2m24s)
+    ✔ Use along with RTK Query @started(24-08-08 22:56) @done(24-08-08 22:57) @lasted(1m24s)
+    ✔ Look into: https://github.com/otahontas/trpc-rtk-query @done(24-08-08 22:57)
   ✔ Update README @done(24-08-08 22:55)
   ✔ Fix docker issue where it can't find tsc-watch @done(24-08-08 22:55)
     ✔ Try using yarn workspaces instead of npm @done(24-08-08 22:55)
