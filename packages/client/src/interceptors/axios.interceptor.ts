@@ -22,18 +22,25 @@ const useAxiosInterceptors = (jwt: JWT | null) => {
 
   axios.interceptors.response.use((response) => response, async (error) => {
     const originalRequest: AxiosRequestConfig = error.config;
-    const { url } = originalRequest;
-    const { status } = error.response;
+
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
+
     let isRefreshing = false;
 
-    function canRefreshToken(url: string, status: number, isRefreshing: boolean): boolean {
+    const canRefreshToken = (
+      url: string, 
+      status: number, 
+      isRefreshing: boolean,
+    ): boolean => {
       if (status !== 401) return false;
       if (url.endsWith('/api/refresh/')) return false;
       if (isRefreshing) return false;
       return true;
-    }
+    };
 
-    if (canRefreshToken(url as string, status, isRefreshing)) {
+    if (canRefreshToken(originalRequest.url as string, error.response.status, isRefreshing)) {
       const accessToken: JWT = await refreshToken() as JWT;
       const headers = originalRequest.headers as AxiosRequestHeaders;
       headers.Authorization = `Bearer ${accessToken.token}`;

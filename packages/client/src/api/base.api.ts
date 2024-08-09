@@ -78,7 +78,7 @@ function displayErrorMessage(err: AxiosError | Error | unknown, autoClose?: numb
   let message;
 
   if (err instanceof AxiosError) {
-    message = err.response?.data.message;
+    message = err.response?.data.message || err.message;
   }
   else if (err instanceof Error) {
     message = err.message;
