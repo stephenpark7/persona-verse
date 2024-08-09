@@ -57,7 +57,7 @@ If you are interested in the project, please star the repository and follow us f
 
    ```sh
    brew services start postgres
-   createdb pv_db
+   createdb pv_db_development
    ```
 
 2. Install dependencies:
