@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TweetData } from '../../interfaces';
 import { getTweets } from '../../api';
-import { BASE_API_URL } from '../../utils';
+import { apiConfig } from '../../utils';
 
-const baseQuery = fetchBaseQuery({ baseUrl: BASE_API_URL });
+const baseQuery = fetchBaseQuery({ baseUrl: apiConfig.baseUrl });
 
 export const tweetAPI = createApi({
   reducerPath: 'tweetAPI',

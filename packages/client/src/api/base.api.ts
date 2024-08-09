@@ -40,6 +40,7 @@ export const apiCall = async (
     return response as JsonResponse;
   }
   catch (err) {
+    if (params.controller === 'tweets' && params.action === 'get') return;
     displayErrorMessage(err);
     return;
   }

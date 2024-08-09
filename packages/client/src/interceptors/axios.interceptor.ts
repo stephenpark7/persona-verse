@@ -3,6 +3,8 @@ import { JWT } from '../interfaces';
 import { refreshToken } from '../api';
 import { canRefreshToken, canUseAuthorizationHeader } from '../utils/auth.util';
 
+let isRefreshing = false;
+
 const useAxiosInterceptors = (jwt: JWT) => {
   axios.interceptors.request.use((config) => {
     if (canUseAuthorizationHeader(jwt, config)) {
@@ -19,8 +21,6 @@ const useAxiosInterceptors = (jwt: JWT) => {
       return Promise.reject(error);
     }
 
-    let isRefreshing = false;
-
     const url = originalRequest.url;
 
     if (!url) {
@@ -29,9 +29,12 @@ const useAxiosInterceptors = (jwt: JWT) => {
 
     if (canRefreshToken(url, error.response.status, isRefreshing)) {
       const accessToken: JWT = await refreshToken() as JWT;
+      isRefreshing = true;
+      if (!accessToken) {
+        return Promise.reject(error);
+      }
       const headers = originalRequest.headers as AxiosRequestHeaders;
       headers.Authorization = `Bearer ${accessToken.token}`;
-      isRefreshing = true;
       return axios.request(originalRequest);
     }
 

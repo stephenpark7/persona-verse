@@ -71,4 +71,4 @@ export const validateLogin = async (username: string, password: string): Promise
   }
 
   return user;
-}
+};

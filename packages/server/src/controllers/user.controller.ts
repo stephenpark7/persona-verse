@@ -8,13 +8,14 @@ import {
 import { generateAccessToken, generateRefreshToken, verifyToken, generateRevokedToken } from '../utils/jwt';
 import { compare, hash } from '../utils/encryption';
 import { CreateParams } from '../interfaces';
+import { createContext } from 'src/trpc';
 
 const { User, RevokedToken, UserProfile } = db.models;
 
 const create = async ({ 
   username, 
   email, 
-  password 
+  password, 
 }: CreateParams): Promise<{ message: string }> => {
   await validateCreate(username, email, password);
 
@@ -31,15 +32,13 @@ const create = async ({
 
 const login = async ({ 
   username, 
-  password 
+  password, 
 }: LoginParams, req: Request,
 ): Promise<{ message: string, jwt: {
   token: string,
   expiresAt: number,
 }, profile: InstanceType<typeof UserProfile> | null } | { message: string }> => {
-  let user;
-
-  user = await validateLogin(username, password);
+  const user = await validateLogin(username, password);
 
   const isAuthenticated = await compare(password, user!.get('password') as string);
 
@@ -78,7 +77,7 @@ const login = async ({
   return { 
     message: 'Logged in successfully.', 
     jwt: accessToken, 
-    profile: profile 
+    profile: profile, 
   };
 
   // res.status(200).json({
@@ -93,40 +92,43 @@ const logout = async (
   res: Response,
 ) => {
   try {
-    const { refreshToken } = req.session as JWTPayload;
+    if (!req.session) {
+      throw new Error('Session not found.');
+    }
+
+    const refreshToken = req.session.refreshToken;
 
     if (!refreshToken) {
-      return res.status(400).json({ message: 'Missing token.' });
+      throw new Error('Refresh token not found.');
     }
 
     const { jti, userId } = verifyToken(refreshToken.token);
 
     if (!jti) {
-      return res.status(400).json({ message: 'Token does not have a jti.' });
+      throw new Error('Token does not have a jti.');
     }
 
     if (userId === undefined || userId === null) {
-      return res.status(400).json({ message: 'Token does not have a userId.' });
+      throw new Error('Token does not have a userId.');
     }
 
     const user = await User.findByPk(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
+      return new Error('User not found.');
     }
 
     if (await RevokedToken.findByPk(jti)) {
-      return res.status(400).json({ message: 'Token already revoked.' });
+      throw new Error('Token already revoked.');
     }
 
     await generateRevokedToken(userId);
 
-    req.session = null;
-
-    res.status(200).json({ message: 'Logged out.' });
+    return { message: 'Logged out successfully.' };
   } catch (_err: unknown) {
-    console.error('Error while trying to log out a user: ', _err);
-    res.status(500).json({ message: 'Error occurred while logging out.' });
+    // console.error('Error while trying to log out a user: ', _err);
+    // res.status(500).json({ message: 'Error occurred while logging out.' });
+    return { message: 'Error while logging out.' };
   }
 };
 

@@ -20,12 +20,17 @@ export const appRouter = router({
     }))
     .mutation(async ({ input, ctx }) => {
       const user = await login(input, ctx.req);
-      console.log('user: ', user);
       return user;
     }),
   logoutUser: publicProcedure
     .mutation(async ({ ctx }) => {
       await logout(ctx.req, ctx.res);
+      ctx.session.destroy((err) => {
+        if (err) {
+          console.error('Error while destroying session: ', err);
+        }
+      });
+      ctx.res.clearCookie('pv-session', { path: '/' });
       return { message: 'Successfully logged out' };
     }),
 });
