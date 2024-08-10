@@ -2,6 +2,8 @@ import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 import { JWT } from '../interfaces';
 import { refreshToken } from '../api';
 import { canRefreshToken, canUseAuthorizationHeader } from '../utils/auth.util';
+import { JwtStorage } from '../utils';
+import { clearJwt, store } from '../redux';
 
 let isRefreshing = false;
 
@@ -31,6 +33,8 @@ const useAxiosInterceptors = (jwt: JWT) => {
       const accessToken: JWT = await refreshToken() as JWT;
       isRefreshing = true;
       if (!accessToken) {
+        store.dispatch(clearJwt());
+        JwtStorage.clearAccessToken();
         return Promise.reject(error);
       }
       const headers = originalRequest.headers as AxiosRequestHeaders;
