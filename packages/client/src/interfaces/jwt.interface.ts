@@ -1,6 +1,6 @@
 export type JWT = {
   token: string;
-  expiresAt: string;
+  expiresAt: number;
   payload: JWTPayload;
 };
 

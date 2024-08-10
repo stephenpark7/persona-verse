@@ -1,12 +1,12 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
 import { JWT, State } from '../../interfaces';
 import { initialState } from '../slices';
-import { JwtStorage } from '../../utils';
+import { tokenStorage } from '../../utils';
 
 const setJwtReducer: CaseReducer<State, PayloadAction<JWT>>
 = (state: State = initialState, action: PayloadAction<JWT>) => {
   if (!action.payload) return state;
-  JwtStorage.setAccessToken(action.payload);
+  tokenStorage.setAccessToken(action.payload);
   return {
     value: {
       ...state.value,
@@ -16,7 +16,7 @@ const setJwtReducer: CaseReducer<State, PayloadAction<JWT>>
 };
 
 const clearJwtReducer: CaseReducer<State> = (state: State) => {
-  JwtStorage.clearAccessToken();
+  tokenStorage.clearAccessToken();
   return {
     value: {
       ...state.value,

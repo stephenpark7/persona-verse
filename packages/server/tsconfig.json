@@ -13,5 +13,5 @@
     "esModuleInterop": true,
     "types": [ "express", "express-session", "jest" ]
   },
-  "include": [ "src/**/*" ]
+  "include": [ "src/**/*", "../shared/**/*" ]
 }

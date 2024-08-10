@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { db } from '../db';
 import { JWTPayload, LoginParams } from '../interfaces';
 import {
@@ -7,8 +7,7 @@ import {
 } from '../utils/validator';
 import { generateAccessToken, generateRefreshToken, verifyToken, generateRevokedToken } from '../utils/jwt';
 import { compare, hash } from '../utils/encryption';
-import { CreateParams } from '../interfaces';
-import { createContext } from 'src/trpc';
+import { CreateParams, JWT } from '../interfaces';
 
 const { User, RevokedToken, UserProfile } = db.models;
 
@@ -34,10 +33,7 @@ const login = async ({
   username, 
   password, 
 }: LoginParams, req: Request,
-): Promise<{ message: string, jwt: {
-  token: string,
-  expiresAt: number,
-}, profile: InstanceType<typeof UserProfile> | null } | { message: string }> => {
+): Promise<{ message: string, jwt: JWT, profile: InstanceType<typeof UserProfile> | null } | { message: string }> => {
   const user = await validateLogin(username, password);
 
   const isAuthenticated = await compare(password, user!.get('password') as string);
@@ -83,7 +79,6 @@ const login = async ({
 
 const logout = async (
   req: Request,
-  res: Response,
 ) => {
   try {
     if (!req.session) {

@@ -24,10 +24,11 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Types */
-    "types": [ "@testing-library/jest-dom", "jest" ],
+    "types": [ "express", "express-session", "@testing-library/jest-dom", "jest" ],
 
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "baseUrl": "."
   },
-  "include": [ "src" ]
+  "include": [ "src/**/*", "../shared/**/*" ]
 }
