@@ -79,12 +79,6 @@ const login = async ({
     jwt: accessToken, 
     profile: profile, 
   };
-
-  // res.status(200).json({
-  //   message: 'Logged in successfully.',
-  //   jwt: accessToken,
-  //   profile: profile,
-  // });
 };
 
 const logout = async (
@@ -126,8 +120,6 @@ const logout = async (
 
     return { message: 'Logged out successfully.' };
   } catch (_err: unknown) {
-    // console.error('Error while trying to log out a user: ', _err);
-    // res.status(500).json({ message: 'Error occurred while logging out.' });
     return { message: 'Error while logging out.' };
   }
 };
