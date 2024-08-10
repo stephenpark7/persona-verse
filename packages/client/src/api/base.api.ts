@@ -13,7 +13,7 @@ export const apiCall = async (
     let response;
 
     if (protocol === 'trpc') {
-      if (params.action === 'register') {
+      if (params.action === 'signup') {
         response = await registerUser(params.body as RegisterUserParams);
       }
       else if (params.action === 'login') {
