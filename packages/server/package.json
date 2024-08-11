@@ -7,7 +7,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node dist/src/app.js",
-    "dev": "NODE_ENV=development tsc-watch --onSuccess \"node dist/src/app.js\"",
+    "dev": "tsc-watch --onSuccess \"node dist/src/app.js\"",
     "build": "npm run lint && tsc --build",
     "lint": "eslint",
     "tsc": "tsc --build || true"
@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
-    "@faker-js/faker": "^8.4.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^6.1.1",
