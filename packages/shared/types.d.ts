@@ -3,8 +3,9 @@ export type JWT = {
   expiresAt: number;
   payload: JWTPayload;
 };
-
 export type JWTPayload = {
   userId: number;
   username: string;
+  expiresAt?: number;
+  jti?: string;
 };

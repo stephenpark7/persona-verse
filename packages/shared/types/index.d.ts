@@ -9,12 +9,11 @@ declare module 'express-session' {
   }
 }
 
-declare global {
-  namespace Express {
-    interface Application {
-      setupMiddleware: typeof setupMiddleware;
-      startServer: typeof startServer;
-    }
+
+declare module 'express-serve-static-core' {
+  interface Application {
+    setupMiddleware: typeof setupMiddleware;
+    startServer: typeof startServer;
   }
 }
 

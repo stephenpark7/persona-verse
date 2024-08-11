@@ -57,5 +57,5 @@
     "vite": "^5.3.4",
     "vite-tsconfig-paths": "^4.3.2"
   },
-  "types": "src/types.d.ts"
+  "types": "shared/types.d.ts"
 }

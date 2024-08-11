@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { JWT } from '../interfaces/jwt.interface';
+import type { JWT } from 'shared/types';
 
 const JWTSchema = z.object({
   token: z.string(),

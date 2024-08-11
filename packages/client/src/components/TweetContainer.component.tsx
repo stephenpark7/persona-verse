@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { JWT, TweetData } from '../interfaces';
+import { TweetData } from '../interfaces';
 import { postTweet } from '../api';
 import { useUserState } from '../hooks';
 import { useGetTweetsQuery } from '../redux';
 import { Tweet } from './Tweet.component';
+import { JWT } from 'shared/types';
 
 export const TweetContainer = () => {
   const { jwt, tweets, isLoggedIn } = useUserState();
