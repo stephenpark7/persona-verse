@@ -1,4 +1,3 @@
-
 export type JWT = {
   token: string;
   expiresAt: number;
