@@ -5,7 +5,7 @@ import { HomeProps } from './Home.interface';
 import { useUserState } from '../../hooks';
 import { LogoutButton, TweetContainer, Profile } from '../../components';
 
-import { JWT } from 'shared/types';
+import { JWT } from '@shared/types';
 
 export const Home: React.FC = () => {
   const { jwt, isLoggedIn } = useUserState();

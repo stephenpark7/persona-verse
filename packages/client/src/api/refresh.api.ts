@@ -1,4 +1,4 @@
-import { JWT } from 'shared/types';
+import { JWT } from '@shared/types';
 import { store, setJwt } from '../redux';
 import { apiCall } from '.';
 
