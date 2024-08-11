@@ -2,7 +2,7 @@ import { JWT } from 'shared/types';
 import { store, setJwt } from '../redux';
 import { apiCall } from '.';
 
-async function refreshToken(): Promise<JWT | void> {
+export const refreshToken = async (): Promise<JWT | void> => {
   const response = await apiCall({
     method: 'POST',
     controller: 'refresh',
@@ -19,8 +19,4 @@ async function refreshToken(): Promise<JWT | void> {
   store.dispatch(setJwt(response.jwt));
 
   return response.jwt;
-}
-
-export {
-  refreshToken,
 };
