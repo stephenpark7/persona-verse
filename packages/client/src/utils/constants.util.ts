@@ -18,7 +18,7 @@ class ApiConfig {
     const data = {
       protocol: ENV.VITE_API_PROTOCOL,
       hostName: ENV.VITE_API_HOST_NAME,
-      port: ENV.VITE_API_PORT,
+      port:     ENV.VITE_API_PORT,
       baseUrl: `${ENV.VITE_API_PROTOCOL}://${ENV.VITE_API_HOST_NAME}:${ENV.VITE_API_PORT}/api/`,
     };
 

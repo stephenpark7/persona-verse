@@ -24,8 +24,8 @@ export const appRouter = router({
     }),
   logoutUser: publicProcedure
     .mutation(async ({ ctx }) => {
-      await logout(ctx.req, ctx.res);
-      ctx.session.destroy((err) => {
+      await logout(ctx.req);
+      ctx.session.destroy((err: Error) => {
         if (err) {
           console.error('Error while destroying session: ', err);
         }
