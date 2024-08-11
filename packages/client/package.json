@@ -9,7 +9,8 @@
     "lint-loud": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint": "npm run lint-loud --silent || true",
     "tsc-loud": "tsc --build",
-    "tsc": "npm run tsc-loud --silent || true"
+    "tsc": "npm run tsc-loud --silent || true",
+    "tsc:watch": "tsc --watch"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
