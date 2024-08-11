@@ -27,7 +27,7 @@ const emailAlreadyExists = async (email: string): Promise<boolean> => {
   return await User.findOne({ where: { email: email } }) != null;
 };
 
-export const missingFields = (...fields: string[]): boolean => {
+const missingFields = (...fields: string[]): boolean => {
   return fields.some(field => field === undefined || field === null || field?.length === 0);
 };
 

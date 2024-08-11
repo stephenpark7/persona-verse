@@ -1,9 +1,9 @@
 import { State } from '../../interfaces';
-import { JwtStorage } from '../../utils';
+import { tokenStorage } from '../../utils';
 
 const initialState: State = {
   value: {
-    jwt: JwtStorage.getAccessToken(),
+    jwt: tokenStorage.getAccessToken(),
     tweets: null,
   },
 };

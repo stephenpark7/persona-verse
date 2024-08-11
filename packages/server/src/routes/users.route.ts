@@ -25,6 +25,6 @@ usersRoute.post('/login', async (req: Request, res: Response) => {
   // }
 });
 
-usersRoute.post('/logout', async (req: Request, res: Response) => {
-  await logout(req, res);
+usersRoute.post('/logout', async (req: Request) => {
+  await logout(req);
 });

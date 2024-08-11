@@ -1,17 +1,26 @@
 {
   "compilerOptions": {
-    "lib": [ "es6" ],
-    "target": "es6",
-    "module": "commonjs",
-    "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "outDir": "dist",
-    "allowJs": false,
+    "allowImportingTsExtensions": true,
+    "baseUrl": "./",
     "composite": true,
-    "esModuleInterop": true,
-    "types": [ "express", "express-session", "jest" ]
-  },
-  "include": [ "src/**/*" ]
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "lib": [ "ES2015" ],
+    "module": "es2015",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2015",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "types": [ "express", "express-session", "@testing-library/jest-dom", "jest" ],
+    "useDefineForClassFields": true
+  }
 }

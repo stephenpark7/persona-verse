@@ -1,4 +1,4 @@
-import { JWT } from './';
+import type { JWT } from 'shared/types';
 
 export interface PostTweet {
   jwt: JWT | null,
