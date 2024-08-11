@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
+    "test": "jest",
     "build": "tsc -b && vite build",
     "lint-loud": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint": "npm run lint-loud --silent || true",
@@ -13,6 +14,9 @@
     "tsc:watch": "tsc --watch"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "@reduxjs/toolkit": "^2.2.7",
     "@trpc/client": "^10.0.0-rc.477",
     "axios": "^1.7.3",
@@ -38,6 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "babel-plugin-transform-import-meta": "^2.2.1",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
