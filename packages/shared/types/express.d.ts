@@ -6,9 +6,8 @@ declare module 'express-session' {
     refreshToken: JWT;
     clearSession: () => void;
   }
+
 }
-
-
 declare module 'express-serve-static-core' {
   interface Application {
     setupMiddleware: typeof setupMiddleware;

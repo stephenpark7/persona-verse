@@ -1,8 +1,9 @@
 {
   "name": "server",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "author": "Stephen Park",
+  "private": true,
   "type": "commonjs",
   "scripts": {
     "start": "node dist/src/app.js",
@@ -11,8 +12,6 @@
     "lint": "eslint",
     "tsc": "tsc --build || true"
   },
-  "author": "Stephen Park",
-  "license": "ISC",
   "dependencies": {
     "@trpc/server": "^10.0.0-rc.477",
     "bcryptjs": "^2.4.3",
