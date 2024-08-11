@@ -21,7 +21,7 @@
     "strict": true,
     "target": "ES2020",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "types": [ "express", "express-session", "@testing-library/jest-dom", "jest" ],
+    "types": [ "express", "express-session" ],
     "useDefineForClassFields": true
   }
 }
