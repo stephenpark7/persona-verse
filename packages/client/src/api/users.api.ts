@@ -53,7 +53,7 @@ const login: LoginFunction = async ({
 
 async function logout(
   navigate: NavigateFunction,
-  showToast: boolean = true,
+  showToast = true,
 ): Promise<void> {
   const response = await apiCall({
     method: 'POST',

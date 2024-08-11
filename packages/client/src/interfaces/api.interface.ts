@@ -11,9 +11,9 @@ export interface JsonResponse extends RefreshTokenResponse, GetTweetsResponse, P
   message: string;
 }
 
-type RefreshTokenResponse = { jwt?: JWT };
-type GetTweetsResponse = { tweets?: TweetData[] };
-type PostTweetResponse = { tweet?: TweetData };
+interface RefreshTokenResponse { jwt?: JWT }
+interface GetTweetsResponse { tweets?: TweetData[] }
+interface PostTweetResponse { tweet?: TweetData }
 
 export interface ApiCall {
   method: string,

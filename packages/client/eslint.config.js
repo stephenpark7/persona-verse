@@ -1,5 +1,5 @@
-import globals from 'globals';
 import pluginJs from '@eslint/js';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
@@ -8,7 +8,8 @@ import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 
 const configs = [
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.strict,
+  ...tseslint.configs.stylistic,
   reactPlugin.configs.flat.recommended,
   prettierConfig,
 ];
@@ -52,6 +53,7 @@ export default [
           'message': 'Use named exports instead',
         },
       ],
+      '@typescript-eslint/no-invalid-void-type': [ 'off' ],
     },
   },
   {
