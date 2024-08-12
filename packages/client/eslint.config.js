@@ -83,4 +83,7 @@ export default [
       '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
+  {
+    ignores: [ 'coverage', 'dist', 'node_modules' ],
+  },
 ];
