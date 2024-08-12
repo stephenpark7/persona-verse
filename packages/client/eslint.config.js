@@ -3,7 +3,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
+// import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import vitest from 'eslint-plugin-vitest';
 
@@ -17,7 +17,7 @@ const configs = [
 
 const plugins = {
   react: reactPlugin,
-  reactHooks: reactHooksPlugin,
+  // reactHooks: reactHooksPlugin,
   reactRefreshPlugin: reactRefreshPlugin,
 };
 

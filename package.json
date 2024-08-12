@@ -8,7 +8,7 @@
     "server": "cd packages/server && npm run dev",
     "client": "cd packages/client && npm run dev",
     "lint": "cd packages/client && npm run lint && cd ../server && npm run lint",
-    "clean": "rm -rf node_modules && rm -rf packages/**/node_modules && rm -rf packages/**/dist"
+    "clean": "rm -f package-lock.json && rm -rf node_modules && rm -rf packages/server/node_modules && rm -rf packages/server/dist && rm -rf packages/client/node_modules && rm -rf packages/client/dist"
   },
   "workspaces": [
     "packages/client",
