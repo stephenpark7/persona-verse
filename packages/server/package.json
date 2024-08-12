@@ -46,6 +46,7 @@
     "superagent": "^9.0.2",
     "tsc-watch": "^6.2.0",
     "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1"
+    "typescript-eslint": "^8.0.1",
+    "vitest": "^2.0.5"
   }
 }
