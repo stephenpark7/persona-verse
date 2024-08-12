@@ -9,8 +9,8 @@
     "start": "node dist/src/app.js",
     "dev": "tsc-watch --onSuccess \"node dist/src/app.js\"",
     "build": "npm run lint && tsc --build",
-    "lint": "eslint",
-    "tsc": "tsc --build || true"
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "tsc": "tsc --build --watch"
   },
   "dependencies": {
     "@trpc/server": "^10.0.0-rc.477",
