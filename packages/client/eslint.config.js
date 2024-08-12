@@ -5,6 +5,7 @@ import prettierConfig from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
+import vitest from 'eslint-plugin-vitest';
 
 const configs = [
   pluginJs.configs.recommended,
@@ -64,8 +65,23 @@ export default [
   },
   {
     files: [ '**/**/*.{test,spec}.{jsx,tsx}' ],
+    plugins: {
+      vitest,
+    },
     rules: {
       'react/react-in-jsx-scope': [ 'off' ],
+      ...vitest.configs.recommended.rules, // you can also use vitest.configs.all.rules to enable all rules
+      'vitest/max-nested-describe': [ 'error', { 'max': 3 } ], // you can also modify rules' behavior using option like this
+    },
+    settings: {
+      vitest: {
+        typecheck: true,
+      },
+    },
+    languageOptions: {
+      globals: {
+        ...vitest.environments.env.globals,
+      },
     },
   },
   {
