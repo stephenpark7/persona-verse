@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 import { JWT } from '@shared/types';
 import { refreshToken } from '../api';
-import { canRefreshToken, canUseAuthorizationHeader } from '../utils/auth.util';
+import { canRefreshToken, canUseAuthorizationHeader } from '../utils/auth';
 import { tokenStorage } from '../utils';
 import { clearJwt, store } from '../redux';
 
