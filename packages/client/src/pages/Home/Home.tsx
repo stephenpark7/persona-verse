@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { HomeProps } from './Home.interface';
 import { useUserState } from '../../hooks';
 import { LogoutButton, TweetContainer, Profile } from '../../components';
 
 import { JWT } from '@shared/types';
+export interface HomeProps {
+  jwt: JWT | null;
+  isLoggedIn: boolean;
+};
+
 
 export const Home: React.FC = () => {
   const { jwt, isLoggedIn } = useUserState();
