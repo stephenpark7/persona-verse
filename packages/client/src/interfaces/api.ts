@@ -1,5 +1,5 @@
 import { AxiosRequestHeaders, RawAxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
-import { TweetData, TweetPostParams } from './';
+import { TweetData, TweetPostParams } from '.';
 import type { JWT } from '@shared/types';
 
 export type RequestBody = 

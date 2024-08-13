@@ -1,4 +1,4 @@
-import { TweetData } from './';
+import { TweetData } from '.';
 import type { JWT } from '@shared/types';
 
 export interface User {
