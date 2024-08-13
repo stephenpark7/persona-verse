@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReduxProvider, Router, Toast } from './';
+import { ReduxProvider, Router, Toast } from '.';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
