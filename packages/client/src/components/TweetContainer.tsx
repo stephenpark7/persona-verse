@@ -6,7 +6,7 @@ import { TweetData } from '../interfaces';
 import { postTweet } from '../api';
 import { useUserState } from '../hooks';
 import { useGetTweetsQuery } from '../redux';
-import { Tweet } from './Tweet.component';
+import { Tweet } from './Tweet';
 import { JWT } from '@shared/types';
 
 export const TweetContainer = () => {
