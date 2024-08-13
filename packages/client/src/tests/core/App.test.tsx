@@ -1,18 +1,24 @@
 // @vitest-environment jsdom
 import { expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { App } from '../../core/App';
+import { App } from '../../App';
 
 test('App renders without crashing', () => {
   render(<App />);
 
   // screen.logTestingPlaygroundURL();
 
-  const app = screen.queryByText(/Twitter/, {
+  const h1 = screen.queryByText(/Twitter/, {
     selector: 'h1',
   });
 
-  expect(app).toBeTruthy();
+  expect(h1).toBeTruthy();
+
+  const p = screen.queryByText(/Create an account or log in./, {
+    selector: 'p',
+  });
+
+  expect(p).toBeTruthy();
 
   const signUp = screen.queryByText(/Sign up/, {
     selector: 'button',
