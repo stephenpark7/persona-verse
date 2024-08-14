@@ -1,21 +1,27 @@
-import { expect, test } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { App } from '../App';
 
-test('App renders without crashing', () => {
-  render(<App />);
+describe('App renders without crashing', () => {
+  beforeEach(() => {
+    render(<App />);
+  });
 
-  const h1 = screen.getByText(/Twitter/, { selector: 'h1' });
-  expect(h1).toBeInTheDocument();
+  it('renders h1', () => {
+    screen.debug();
+    const h1 = screen.getByText(/Twitter/, { selector: 'h1' });
+    expect(h1).toBeInTheDocument();
+  });
 
-  const p = screen.getByText(/Create an account or log in./, { selector: 'p' });
-  expect(p).toBeInTheDocument();
+  it('renders p', () => {
+    const p = screen.getByText(/Create an account or log in./, { selector: 'p' });
+    expect(p).toBeInTheDocument();
+  });
 
-  const signUpBtn = screen.getByText(/Sign up/, { selector: 'button' });
-  expect(signUpBtn).toBeInTheDocument();
-
-  const logInBtn = screen.getByText(/Log in/, { selector: 'button' });
-  expect(logInBtn).toBeInTheDocument();
-
-  screen.debug();
+  it('renders buttons', () => {
+    const buttons = screen.getAllByRole('button');
+    expect(buttons).toHaveLength(2);
+    expect(buttons[0]).toHaveTextContent('Sign up');
+    expect(buttons[1]).toHaveTextContent('Log in');
+  });
 });
