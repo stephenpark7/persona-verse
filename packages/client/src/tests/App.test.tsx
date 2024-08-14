@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { App } from '../App';
+import { act } from 'react';
 
 describe('App renders without crashing', () => {
   beforeEach(() => {
@@ -8,7 +9,6 @@ describe('App renders without crashing', () => {
   });
 
   it('renders h1', () => {
-    screen.debug();
     const h1 = screen.getByText(/Twitter/, { selector: 'h1' });
     expect(h1).toBeInTheDocument();
   });
@@ -23,5 +23,15 @@ describe('App renders without crashing', () => {
     expect(buttons).toHaveLength(2);
     expect(buttons[0]).toHaveTextContent('Sign up');
     expect(buttons[1]).toHaveTextContent('Log in');
+  });
+
+  describe('clicking sign up button', () => {
+    it('renders sign up form', () => {
+      const signUpButton = screen.getByText('Sign up', { selector: 'button' });
+      act (() => signUpButton.click());
+      const h1 = screen.getByText(/Sign up/, { selector: 'h1' });
+      expect(h1).toBeInTheDocument();
+      screen.debug();
+    });
   });
 });
