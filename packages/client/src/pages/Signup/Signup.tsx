@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { RequestBody } from '../../interfaces';
-import { register } from '../../api';
+import { register } from '../../services';
 import { submitForm, updateForm } from '../../utils';
 
 export const Signup: React.FC = () => {
