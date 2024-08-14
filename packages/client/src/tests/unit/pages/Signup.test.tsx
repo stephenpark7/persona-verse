@@ -1,8 +1,7 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { beforeEach, expect, describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Signup } from '../../pages/Signup/Signup';
+import { Signup } from '../../../pages/Signup/Signup';
 import { BrowserRouter } from 'react-router-dom';
-import { act } from 'react';
 
 describe('Sign up page renders without crashing', () => {
   beforeEach(() => {
@@ -11,8 +10,6 @@ describe('Sign up page renders without crashing', () => {
         <Signup />
       </BrowserRouter>,
     );
-
-    screen.debug();
   });
 
   it('renders h1', () => {

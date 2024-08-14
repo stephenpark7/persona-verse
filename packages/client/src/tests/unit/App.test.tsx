@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { App } from '../App';
+import { App } from '../../App';
 import { act } from 'react';
 
 describe('App renders without crashing', () => {
