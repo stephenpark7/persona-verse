@@ -1,4 +1,3 @@
-// @vitest-environment jsdom
 import { expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { App } from '../App';
@@ -6,15 +5,17 @@ import { App } from '../App';
 test('App renders without crashing', () => {
   render(<App />);
 
-  const h1 = screen.queryByText(/Twitter/, { selector: 'h1' });
-  expect(h1).toBeTruthy();
+  const h1 = screen.getByText(/Twitter/, { selector: 'h1' });
+  expect(h1).toBeInTheDocument();
 
-  const p = screen.queryByText(/Create an account or log in./, { selector: 'p' });
-  expect(p).toBeTruthy();
+  const p = screen.getByText(/Create an account or log in./, { selector: 'p' });
+  expect(p).toBeInTheDocument();
 
-  const signUp = screen.queryByText(/Sign up/, { selector: 'button' });
-  expect(signUp).toBeTruthy();
+  const signUpBtn = screen.getByText(/Sign up/, { selector: 'button' });
+  expect(signUpBtn).toBeInTheDocument();
 
-  const logIn = screen.queryByText(/Log in/, { selector: 'button' });
-  expect(logIn).toBeTruthy();
+  const logInBtn = screen.getByText(/Log in/, { selector: 'button' });
+  expect(logInBtn).toBeInTheDocument();
+
+  screen.debug();
 });
