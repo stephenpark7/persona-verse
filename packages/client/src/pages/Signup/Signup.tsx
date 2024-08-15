@@ -33,7 +33,7 @@ export const Signup: React.FC = () => {
       <Row className='my-5'>
         <Col>
           <h1>Sign up</h1>
-          <Form  onSubmit={handleFormSubmit}>
+          <Form className='signup-form' onSubmit={handleFormSubmit}>
             <Form.Group className='mt-3 mb-3'>
               <Form.Control type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
             </Form.Group>

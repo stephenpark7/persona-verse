@@ -1,14 +1,22 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vitest/config';
+import { mergeConfig, defineConfig } from 'vitest/config';
+import viteConfig from './vite.config';
+// import playwrightConfig from './playwright.config';
 
-export default defineConfig({
-  test: {
-    name: 'unit',
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: [ './src/tests/vitest.setup.ts' ],
-    exclude: [
-      './src/tests/browser',
-    ],
-  },
-});
+const vitestConfig = defineConfig(
+	// playwrightConfig,
+	defineConfig({
+		test: {
+      name: 'jsdom',
+      globals: true,
+			include: [ './src/tests/unit/**/*' ],
+      environment: 'jsdom',
+      setupFiles: './src/tests/vitest.setup.ts',
+		},
+	}),
+);
+
+export default mergeConfig(
+	viteConfig,
+	vitestConfig,
+);
