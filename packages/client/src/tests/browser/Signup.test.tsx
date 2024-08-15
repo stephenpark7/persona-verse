@@ -8,6 +8,8 @@ test('playwright', async () => {
   const context = await browser.newContext();
   const page = await context.newPage();
   await page.goto('http://localhost:3000');
+  // await page.screenshot({ path: 'screenshot.png' });
+  await expect(page).toHaveTitle('PersonaVerse');
 });
 
 // describe('playwright meets vitest', () => {
