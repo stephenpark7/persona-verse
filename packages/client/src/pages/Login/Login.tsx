@@ -4,14 +4,13 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { RequestBody } from '../../interfaces';
-import { register } from '../../api';
+import { login } from '../../services';
 import { submitForm, updateForm } from '../../utils';
 
-export const Signup: React.FC = () => {
+export const Login: React.FC = () => {
   const navigate = useNavigate();
   const [ formData, setFormData ] = useState<RequestBody>({
     username: '',
-    email: '',
     password: '',
   });
 
@@ -23,7 +22,7 @@ export const Signup: React.FC = () => {
     submitForm({
       e,
       formData,
-      apiFunction: register,
+      apiFunction: login,
       navigate,
     });
   };
@@ -32,22 +31,17 @@ export const Signup: React.FC = () => {
     <Container>
       <Row className='my-5'>
         <Col>
-          <h1>Sign up</h1>
+          <h1>Log in</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Group className='mt-3 mb-3'>
               <Form.Control type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
             </Form.Group>
             <Form.Group className='mb-3'>
-              <Form.Control type='email' name='email' placeholder='Email' onChange={handleFormChange} required />
-            </Form.Group>
-            <Form.Group className='mb-3'>
               <Form.Control type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
             </Form.Group>
-            <Button variant="primary" type="submit">Sign up</Button>
+            <Button variant='primary' type='submit'>Log in</Button>{' '}
+            <Link to='/'><Button variant='primary'>Go Back</Button></Link>
           </Form>
-          <p className='mt-3'>
-            Already have an account? <Link to='/login'>Log in</Link>
-          </p>
         </Col>
       </Row>
     </Container>

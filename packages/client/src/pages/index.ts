@@ -1,6 +1,6 @@
-import { Home } from './Home/Home.page';
-import { Login } from './Login/Login.page';
-import { Signup } from './Signup/Signup.page';
+import { Home } from './Home/Home';
+import { Login } from './Login/Login';
+import { Signup } from './Signup/Signup';
 
 export {
   Home,

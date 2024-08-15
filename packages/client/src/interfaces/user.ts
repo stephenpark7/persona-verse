@@ -1,15 +1,15 @@
-import { TweetData } from './';
+import { TweetData } from '.';
 import type { JWT } from '@shared/types';
 
-export type User = {
+export interface User {
   state: State;
-};
+}
 
-export type State = {
+export interface State {
   value: StateProperties;
-};
+}
 
-export type StateProperties = {
+export interface StateProperties {
   jwt: JWT | null;
   tweets: TweetData[] | null;
-};
+}

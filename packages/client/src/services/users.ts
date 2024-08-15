@@ -1,7 +1,7 @@
 import { NavigateFunction } from 'react-router-dom';
 import { RegisterFunction, RegisterParams, LoginParams, LoginFunction } from '../interfaces';
 import { store, setJwt, clearJwt } from '../redux';
-import { apiCall } from './';
+import { apiCall } from '.';
 
 const register: RegisterFunction = async ({
   formData,
@@ -53,7 +53,7 @@ const login: LoginFunction = async ({
 
 async function logout(
   navigate: NavigateFunction,
-  showToast: boolean = true,
+  showToast = true,
 ): Promise<void> {
   const response = await apiCall({
     method: 'POST',

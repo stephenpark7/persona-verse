@@ -1,5 +1,5 @@
 In Progress:
-  ☐ Remove Jest, use Vitest
+  ☐ Remove Jest, use Vitest @started(24-08-11 19:27)
   ☐ Use tRPC @started(24-08-08 07:46)
     ☐ Use ZOD for validation @started(24-08-09 23:01)
     ☐ Build out routes, controllers @started(24-08-09 23:01)
