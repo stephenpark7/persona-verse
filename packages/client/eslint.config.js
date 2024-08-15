@@ -1,21 +1,23 @@
-import globals from 'globals';
 import pluginJs from '@eslint/js';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
+// import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
+import vitest from 'eslint-plugin-vitest';
 
 const configs = [
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.strict,
+  ...tseslint.configs.stylistic,
   reactPlugin.configs.flat.recommended,
   prettierConfig,
 ];
 
 const plugins = {
   react: reactPlugin,
-  reactHooks: reactHooksPlugin,
+  // reactHooks: reactHooksPlugin,
   reactRefreshPlugin: reactRefreshPlugin,
 };
 
@@ -52,6 +54,7 @@ export default [
           'message': 'Use named exports instead',
         },
       ],
+      '@typescript-eslint/no-invalid-void-type': [ 'off' ],
     },
   },
   {
@@ -62,8 +65,23 @@ export default [
   },
   {
     files: [ '**/**/*.{test,spec}.{jsx,tsx}' ],
+    plugins: {
+      vitest,
+    },
     rules: {
       'react/react-in-jsx-scope': [ 'off' ],
+      ...vitest.configs.recommended.rules, // you can also use vitest.configs.all.rules to enable all rules
+      'vitest/max-nested-describe': [ 'error', { 'max': 3 } ], // you can also modify rules' behavior using option like this
+    },
+    settings: {
+      vitest: {
+        typecheck: true,
+      },
+    },
+    languageOptions: {
+      globals: {
+        ...vitest.environments.env.globals,
+      },
     },
   },
   {
@@ -80,5 +98,8 @@ export default [
       'comma-dangle': [ 'error', 'never' ],
       '@typescript-eslint/no-unused-expressions': 'off',
     },
+  },
+  {
+    ignores: [ 'coverage', 'dist', 'node_modules' ],
   },
 ];

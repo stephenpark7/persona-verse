@@ -1,1 +1,1 @@
-export * from './useUserState.hook';
+export * from './useUserState';

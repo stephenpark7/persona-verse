@@ -1,30 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { HomeProps } from './Home.interface';
 import { useUserState } from '../../hooks';
 import { LogoutButton, TweetContainer, Profile } from '../../components';
 
 import { JWT } from '@shared/types';
 
-export const Home: React.FC = () => {
-  const { jwt, isLoggedIn } = useUserState();
-  return (
-    <BaseHome
-      {...{ jwt, isLoggedIn }}
-    />
-  );  
-};
-
-const getDisplayName = (jwt: JWT | null): string => {
+export const getDisplayName = (jwt: JWT | null): string => {
   if (!jwt) return '';
   return jwt.payload.username;
 };
 
-export const BaseHome: React.FC<HomeProps> = ({ 
-  jwt, 
-  isLoggedIn, 
-}): React.JSX.Element => {
+export const Home: React.FC = (): React.JSX.Element => {
+  const { jwt, isLoggedIn } = useUserState();
 
   const renderBodyContent = () => {
     if (isLoggedIn) {

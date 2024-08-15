@@ -3,32 +3,13 @@ import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { TweetData } from '../interfaces';
-import { postTweet } from '../api';
+import { postTweet } from '../services';
 import { useUserState } from '../hooks';
 import { useGetTweetsQuery } from '../redux';
-import { Tweet } from './Tweet.component';
-import { JWT } from '@shared/types';
+import { Tweet } from './Tweet';
 
-export const TweetContainer = () => {
+export const TweetContainer: React.FC = (): React.JSX.Element => {
   const { jwt, tweets, isLoggedIn } = useUserState();
-  return (
-    <BaseTweetContainer 
-      {...{ jwt, tweets, isLoggedIn }}
-    />
-  );
-};
-
-interface TweetContainerProps {
-  jwt: JWT | null;
-  isLoggedIn: boolean;
-  tweets: TweetData[] | null;
-};
-
-const BaseTweetContainer: React.FC<TweetContainerProps> = ({ 
-  jwt,
-  isLoggedIn,
-  tweets,
-}): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
   const { data, isLoading, refetch } = useGetTweetsQuery();
 
