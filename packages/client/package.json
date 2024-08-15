@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "test": "npm run test:vitest && npm run test:playwright",
-    "test:vitest": "vitest run",
+    "test:jsdom": "vitest run",
     "test:playwright": "playwright test",
     "build": "tsc -b && vite build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",

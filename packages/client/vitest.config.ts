@@ -7,10 +7,10 @@ const vitestConfig =
 		test: {
       name: 'jsdom',
       globals: true,
-			include: [ './src/tests/unit/**/*' ],
+			// include: [ './src/tests/jsdom/**/*' ],
       environment: 'jsdom',
-      setupFiles: './src/tests/vitest.setup.ts',
-			dir: './src/tests/unit',
+      setupFiles: './src/tests/jsdom/vitest.setup.ts',
+			dir: './src/tests/jsdom',
 		},
 	});
 
