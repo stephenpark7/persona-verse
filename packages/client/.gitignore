@@ -26,4 +26,4 @@ dist-ssr
 coverage
 
 playwright-report
-playwright-report/*
+test-results
