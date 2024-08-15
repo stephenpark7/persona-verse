@@ -1,6 +1,6 @@
 import { beforeEach, expect, describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Signup } from '../../../pages/Signup/Signup';
+import { Signup } from '../../pages/Signup/Signup';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('Sign up page renders without crashing', () => {
