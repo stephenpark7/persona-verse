@@ -1,14 +1,14 @@
 import { sequelize } from './sequelize';
+import { setupDatabase } from './setupDatabase';
 import { 
   User, 
   Tweet, 
   RevokedToken, 
   RefreshToken, 
   UserProfile, 
-} from '../models';
-import { setupDatabase } from './setupDatabase';
+} from 'src/models';
 
-const db = (() => {
+export const db = (() => {
   const models = {
     User,
     Tweet,
@@ -23,5 +23,3 @@ const db = (() => {
     models,
   };
 })();
-
-export { db };

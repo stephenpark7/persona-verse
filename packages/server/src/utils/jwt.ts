@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
-import { JWTPayload } from '../interfaces';
-import { db } from '../db';
+import { JWTPayload } from 'src/interfaces';
+import { db } from 'src/db';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 

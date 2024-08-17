@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
-import { mergeConfig, defineConfig } from 'vitest/config';
 import viteConfig from './vite.config';
+import { mergeConfig, defineConfig } from 'vitest/config';
 
 const vitestConfig = defineConfig({
 	test: {
@@ -8,6 +8,9 @@ const vitestConfig = defineConfig({
 		environment: 'jsdom',
 		setupFiles: './src/tests/vitest.setup.ts',
 		dir: './src/tests',
+		include: [
+			'./src/tests/**/*.{test,spec}.{ts,tsx}',
+		],
 	},
 });
 

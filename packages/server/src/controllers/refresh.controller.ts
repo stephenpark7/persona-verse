@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { sendUnauthorizedResponse } from '../utils/request';
-import { generateAccessToken, verifyToken } from '../utils/jwt';
-import { db } from '../db';
+import { sendUnauthorizedResponse } from 'src/utils';
+import { generateAccessToken, verifyToken } from 'src/utils';
+import { db } from 'src/db';
 
 const { User, RevokedToken } = db.models;
 
-const refresh = async (req: Request, res: Response) => {
+export const refresh = async (req: Request, res: Response) => {
   try {
     const refreshToken = req.session.refreshToken;
 
@@ -53,4 +53,3 @@ const refresh = async (req: Request, res: Response) => {
   }
 };
 
-export { refresh };

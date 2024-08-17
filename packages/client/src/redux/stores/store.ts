@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from '../slices';
-import { tweetAPI } from '../services';
+import { rootReducer } from '@redux/index';
+import { tweetAPI } from '@redux/index';
 
 export const store = configureStore({
   reducer: {

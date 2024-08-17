@@ -1,5 +1,5 @@
-import { State } from '../../interfaces';
-import { tokenStorage } from '../../utils';
+import { State } from '@interfaces/index';
+import { tokenStorage } from '@utils/index';
 
 const initialState: State = {
   value: {

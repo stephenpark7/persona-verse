@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { logout } from '../services';
+import { logout } from '@services/index';
 
 export const LogoutButton: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { RequestBody } from '../../interfaces';
-import { register } from '../../services';
-import { submitForm, updateForm } from '../../utils';
+import { RequestBody } from '@interfaces/index';
+import { register } from '@services/index';
+import { submitForm, updateForm } from '@utils/index';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -14,6 +14,10 @@ export const Signup: React.FC = () => {
     email: '',
     password: '',
   });
+
+  useEffect(() => {
+    document.title = 'Sign up - PersonaVerse';
+  }, []);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     updateForm(e, formData, setFormData);

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useUserState } from '../../hooks';
-import { LogoutButton, TweetContainer, Profile } from '../../components';
-
 import { JWT } from '@shared/types';
+import { useUserState } from '@hooks/index';
+import { LogoutButton, TweetContainer, Profile } from '@components/index';
 
 export const getDisplayName = (jwt: JWT | null): string => {
   if (!jwt) return '';
@@ -13,6 +12,10 @@ export const getDisplayName = (jwt: JWT | null): string => {
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
+
+  useEffect(() => {
+    document.title = 'PersonaVerse';
+  }, []);
 
   const renderBodyContent = () => {
     if (isLoggedIn) {
@@ -30,7 +33,7 @@ export const Home: React.FC = (): React.JSX.Element => {
       <div>
         <p>Create an account or log in.</p>
         <div style={{ display: 'flex', gap: '0.2rem' }}>
-          <Link to='/signup'>
+          <Link className='signup-link' to='/signup'>
             <Button variant="primary">Sign up</Button>
           </Link>
           <Link to='/login'>
@@ -47,7 +50,7 @@ export const Home: React.FC = (): React.JSX.Element => {
     <Container>
       <Row className='my-5'>
         <Col>
-          <h1>Twitter</h1>
+          <h1>PersonaVerse</h1>
           {bodyContent}
         </Col>
       </Row>

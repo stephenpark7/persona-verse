@@ -1,6 +1,6 @@
-import { JsonResponse, ApiCall, ApiProtocol } from '../interfaces';
+import { JsonResponse, ApiCall, ApiProtocol } from '@interfaces/index';
 import { loginUser, logoutUser, registerUser } from '../trpc';
-import { displayErrorMessage, displaySuccessMessage } from '../utils';
+import { displayErrorMessage, displaySuccessMessage } from '@utils/index';
 import type { LoginUserParams, RegisterUserParams } from '../trpc/types';
 import { sendHttpRequest } from '.';
 

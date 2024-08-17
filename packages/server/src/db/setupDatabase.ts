@@ -5,7 +5,7 @@ import {
   RevokedToken, 
   RefreshToken, 
   UserProfile, 
-} from '../models';
+} from 'src/models';
 
 const setupAssociations = (): void => {
   User.hasMany(Tweet);

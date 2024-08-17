@@ -1,10 +1,10 @@
 import { Response } from 'express';
-import { AuthenticatedRequest, RequestBody } from '../interfaces';
-import { db } from '../db';
+import { db } from 'src/db';
+import { AuthenticatedRequest, RequestBody } from 'src/interfaces';
 
 const { Tweet } = db.models;
 
-const create = async (req: AuthenticatedRequest, res: Response) => {
+export const tweetCreate = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { message } = req.body as RequestBody;
     const userId = req.userId;
@@ -32,7 +32,7 @@ const create = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
-const get = async (req: AuthenticatedRequest, res: Response) => {
+export const tweetGet = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const tweets = await Tweet.findAll({
       attributes: [ 'message', 'likes', 'createdAt' ],
@@ -54,5 +54,3 @@ const get = async (req: AuthenticatedRequest, res: Response) => {
     res.status(500).json({ message: 'Error getting tweets.' });
   }
 };
-
-export { create, get };

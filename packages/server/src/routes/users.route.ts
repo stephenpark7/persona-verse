@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
-import { create, login, logout } from '../controllers/user.controller';
+import { userCreate, userLogin, userLogout } from 'src/controllers';
 
 export const usersRoute = express.Router();
 
 usersRoute.post('/signup', async (req: Request, res: Response) => {
   try {
-    const message = await create(req.body);
+    const message = await userCreate(req.body);
     res.status(201).json({ message });
   }
   catch (err) {
@@ -16,7 +16,7 @@ usersRoute.post('/signup', async (req: Request, res: Response) => {
 
 usersRoute.post('/login', async (req: Request, res: Response) => {
   // try {
-    const response = await login(req.body, req);
+    const response = await userLogin(req.body, req);
     res.status(200).json(response);
   // }
   // catch (err) {
@@ -26,5 +26,5 @@ usersRoute.post('/login', async (req: Request, res: Response) => {
 });
 
 usersRoute.post('/logout', async (req: Request) => {
-  await logout(req);
+  await userLogout(req);
 });

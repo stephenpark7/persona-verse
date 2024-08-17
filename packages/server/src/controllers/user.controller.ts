@@ -1,17 +1,20 @@
 import { Request } from 'express';
-import { db } from '../db';
-import { JWTPayload, LoginParams } from '../interfaces';
-import {
+import { db } from 'src/db';
+import { CreateParams, JWT, JWTPayload, LoginParams } from 'src/interfaces';
+import { 
+  compare,
+  generateAccessToken, 
+  generateRefreshToken, 
+  generateRevokedToken,
+  hash,
   validateCreate,
   validateLogin,
-} from '../utils/validator';
-import { generateAccessToken, generateRefreshToken, verifyToken, generateRevokedToken } from '../utils/jwt';
-import { compare, hash } from '../utils/encryption';
-import { CreateParams, JWT } from '../interfaces';
+  verifyToken, 
+} from 'src/utils';
 
 const { User, RevokedToken, UserProfile } = db.models;
 
-const create = async ({ 
+export const userCreate = async ({ 
   username, 
   email, 
   password, 
@@ -29,7 +32,7 @@ const create = async ({
   return { message: 'User created successfully.' };
 };
 
-const login = async ({ 
+export const userLogin = async ({ 
   username, 
   password, 
 }: LoginParams, req: Request,
@@ -77,7 +80,7 @@ const login = async ({
   };
 };
 
-const logout = async (
+export const userLogout = async (
   req: Request,
 ) => {
   try {
@@ -118,5 +121,3 @@ const logout = async (
     return { message: 'Error while logging out.' };
   }
 };
-
-export { create, login, logout };
