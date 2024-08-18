@@ -1,5 +1,7 @@
 {
-  // "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
+  "include": [ "./src/**/*" ],
+  "exclude": [ "./src/tests/**/*" ],
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "baseUrl": "./",
@@ -34,6 +36,5 @@
       "@services": [ "./src/services/index" ],
       "@shared/*": [ "../shared/*" ]
     }
-  },
-  "include": [ "./src/**/*" ]
+  }
 }

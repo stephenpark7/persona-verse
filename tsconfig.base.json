@@ -1,8 +1,17 @@
-// {
-//   "compilerOptions": {
-//     "baseUrl": "./",
-//     "paths": {
-//       "@shared/*": [ "./packages/shared/*" ]
-//     }
-//   }
-// }
+{
+  "include": [ "./packages/client/src/**/*" ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@components": [ "./packages/client/src/components/index" ],
+      "@core": [ "./packages/client/src/core/index" ],
+      "@hooks": [ "./packages/client/src/hooks/index" ],
+      "@interfaces": [ "./packages/client/src/interfaces/index" ],
+      "@redux": [ "./packages/client/src/redux/index" ],
+      "@utils": [ "./packages/client/src/utils/index" ],
+      "@pages": [ "./packages/client/src/pages/index" ],
+      "@services": [ "./packages/client/src/services/index" ],
+      "@shared/*": [ "./packages/shared/*" ]
+    }
+  }
+}
