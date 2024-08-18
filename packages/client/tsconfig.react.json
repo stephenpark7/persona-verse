@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "baseUrl": "./",
@@ -15,24 +16,23 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist",
-    "paths": {
-      "@shared/*": [ "../shared/*" ],
-      "@components/*": [ "./src/components/*" ],
-      "@core/*": [ "./src/core/*" ],
-      "@hooks/*": [ "./src/hooks/*" ],
-      "@interfaces/*": [ "./src/interfaces/*" ],
-      "@redux/*": [ "./src/redux/*" ],
-      "@utils/*": [ "./src/utils/*" ],
-      "@pages/*": [ "./src/pages/*" ],
-      "@services/*": [ "./src/services/*" ]
-    },
     "resolveJsonModule": true,
     "rootDir": ".",
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2020",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "paths": {
+      "@components": [ "./src/components/index" ],
+      "@core": [ "./src/core/index" ],
+      "@hooks": [ "./src/hooks/index" ],
+      "@interfaces": [ "./src/interfaces/index" ],
+      "@redux": [ "./src/redux/index" ],
+      "@utils": [ "./src/utils/index" ],
+      "@pages": [ "./src/pages/index" ],
+      "@services": [ "./src/services/index" ]
+    }
   },
   "include": [ "./src/**/*" ]
 }

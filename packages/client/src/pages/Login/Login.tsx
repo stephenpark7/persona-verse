@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { RequestBody } from '@interfaces/index';
-import { login } from '@services/index';
-import { submitForm, updateForm } from '@utils/index';
+import { RequestBody } from '@interfaces';
+import { login } from 'src/services';
+import { submitForm, updateForm } from '@utils';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();

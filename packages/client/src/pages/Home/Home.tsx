@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { JWT } from '@shared/types';
-import { useUserState } from '@hooks/index';
-import { LogoutButton, TweetContainer, Profile } from '@components/index';
+import { useUserState } from '@hooks';
+import { LogoutButton, TweetContainer, Profile } from '@components';
 
 export const getDisplayName = (jwt: JWT | null): string => {
   if (!jwt) return '';
