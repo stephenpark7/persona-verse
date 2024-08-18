@@ -24,7 +24,7 @@ describe('Home page', () => {
   });
 
   it('renders p', () => {
-    expect(screen.getByText(/Create an account or log in./, { selector: 'p' }))p;
+    expect(screen.getByText(/Create an account or log in./, { selector: 'p' })).toBeInTheDocument();
   });
 
   it('renders buttons', () => {
