@@ -1,8 +1,9 @@
 import { beforeEach, expect, describe, it } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Home } from '@pages';
 import { ReduxProvider } from '@core';
+import { JWT } from '@shared/types';
 
 describe('Home page', () => {
   beforeEach(() => {

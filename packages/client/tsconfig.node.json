@@ -1,0 +1,20 @@
+{
+  // "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2020",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "types": [ "node", "vite/client", "@testing-library/jest-dom" ],
+    "paths": {
+      // "@shared/*": [ "../shared/*" ]
+    }
+  },
+  "include": [ "vite.config.ts" ]
+}

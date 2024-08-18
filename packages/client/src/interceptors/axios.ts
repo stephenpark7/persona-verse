@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 import { JWT } from '@shared/types';
-import { refreshToken } from 'src/services';
-import { canRefreshToken, canUseAuthorizationHeader } from 'src/utils';
-import { tokenStorage } from 'src/utils';
-import { clearJwt, store } from 'src/redux';
+import { refreshToken } from '@services';
+import { canRefreshToken, canUseAuthorizationHeader } from '@utils';
+import { tokenStorage } from '@utils';
+import { clearJwt, store } from '@redux';
 
 let isRefreshing = false;
 

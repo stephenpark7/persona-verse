@@ -1,11 +1,11 @@
 import viteConfig from './vite.config';
-import { mergeConfig, defineConfig, configDefaults } from 'vitest/config';
+import { mergeConfig, defineConfig } from 'vitest/config';
 import dts from 'vite-plugin-dts';
 
 const vitestConfig = defineConfig({
 	plugins: [
     dts({
-      tsconfigPath: 'tsconfig.vite.json',
+      tsconfigPath: 'tsconfig.node.json',
     }),
 	],
 	test: {
@@ -13,7 +13,6 @@ const vitestConfig = defineConfig({
 		environment: 'jsdom',
 		setupFiles: './src/tests/vitest.setup.ts',
 		include: [ './src/tests/**/*.test.tsx' ],
-		// exclude: [ ...configDefaults.exclude ],
 	},
 });
 

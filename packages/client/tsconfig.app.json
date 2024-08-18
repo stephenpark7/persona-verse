@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  // "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "baseUrl": "./",
@@ -31,7 +31,8 @@
       "@redux": [ "./src/redux/index" ],
       "@utils": [ "./src/utils/index" ],
       "@pages": [ "./src/pages/index" ],
-      "@services": [ "./src/services/index" ]
+      "@services": [ "./src/services/index" ],
+      "@shared/*": [ "../shared/*" ]
     }
   },
   "include": [ "./src/**/*" ]

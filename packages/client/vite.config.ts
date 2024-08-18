@@ -10,7 +10,7 @@ export default defineConfig({
     tsconfigPaths(),
     checker({ typescript: true }),
     dts({
-      tsconfigPath: 'tsconfig.vite.json',
+      tsconfigPath: 'tsconfig.app.json',
     }),
   ],
   server: {
