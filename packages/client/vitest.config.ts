@@ -1,7 +1,13 @@
 import viteConfig from './vite.config';
 import { mergeConfig, defineConfig, configDefaults } from 'vitest/config';
+import dts from 'vite-plugin-dts';
 
 const vitestConfig = defineConfig({
+	plugins: [
+    dts({
+      tsconfigPath: 'tsconfig.vite.json',
+    }),
+	],
 	test: {
 		globals: true,
 		environment: 'jsdom',
