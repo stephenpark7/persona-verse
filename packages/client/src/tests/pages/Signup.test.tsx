@@ -12,6 +12,10 @@ describe('Sign up page', () => {
     );
   });
 
+  it('has a title', () => {
+    expect(document.title).toBe('Sign up - PersonaVerse');
+  });
+
   it('renders h1', () => {
     expect(screen.getByText(/Sign up/, { selector: 'h1' })).toBeInTheDocument();
   });
