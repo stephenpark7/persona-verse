@@ -1,5 +1,5 @@
 import { TweetData } from '.';
-import type { JWT } from '@shared/types';
+import type { JWT } from '@shared';
 
 export interface User {
   state: State;

@@ -7,10 +7,10 @@
   "type": "commonjs",
   "scripts": {
     "start": "node dist/src/app.js",
-    "dev": "tsc-watch --onSuccess \"node dist/src/app.js\"",
+    "dev": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register \"./dist/src/app.js\" --watch --build",
     "build": "npm run lint && tsc --build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "tsc": "tsc --build --watch"
+    "tsc": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register \"./dist/src/app.js\" --build"
   },
   "dependencies": {
     "@trpc/server": "^10.0.0-rc.477",
@@ -44,6 +44,7 @@
     "nodemon": "^3.1.4",
     "superagent": "^9.0.2",
     "tsc-watch": "^6.2.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vitest": "^2.0.5"

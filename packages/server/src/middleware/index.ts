@@ -8,7 +8,7 @@ import { router } from './router';
 
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter, createContext } from '../trpc';
-import { startServer } from '../../src/server';
+import { startServer } from '../server';
 
 export const setupMiddleware = function (this: Express) {
   this.use(corsMiddleware());

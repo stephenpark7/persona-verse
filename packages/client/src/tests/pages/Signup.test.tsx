@@ -1,15 +1,19 @@
 import { beforeEach, expect, describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Signup } from '../../../pages/Signup/Signup';
+import { Signup } from '@pages';
 import { BrowserRouter } from 'react-router-dom';
 
-describe('Sign up page renders without crashing', () => {
+describe('Sign up page', () => {
   beforeEach(() => {
     render(
       <BrowserRouter>
         <Signup />
       </BrowserRouter>,
     );
+  });
+
+  it('has a title', () => {
+    expect(document.title).toBe('Sign up - PersonaVerse');
   });
 
   it('renders h1', () => {

@@ -1,4 +1,4 @@
-import { RequestBody, SubmitForm } from '../interfaces';
+import { RequestBody, SubmitForm } from '@interfaces';
 
 async function submitForm({
   e,

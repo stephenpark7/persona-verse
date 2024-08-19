@@ -1,5 +1,5 @@
-import { PostTweet, TweetData } from '../interfaces';
-import { store, addTweet, setTweets } from '../redux';
+import { PostTweet, TweetData } from '@interfaces';
+import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
 
 async function getTweets(
