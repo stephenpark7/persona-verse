@@ -1,8 +1,8 @@
 import { NextFunction, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import jwt from 'jsonwebtoken';
-import { AuthenticatedRequest, JWTPayload } from '../interfaces';
-import { sendUnauthorizedResponse } from '../utils/request';
+import { AuthenticatedRequest, JWTPayload } from '@interfaces';
+import { sendUnauthorizedResponse } from '@utils';
 
 export const auth = async (
   req: AuthenticatedRequest, 

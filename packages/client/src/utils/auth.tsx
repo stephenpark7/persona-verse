@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { JWT } from '@shared/types';
+import { JWT } from '@shared';
 
 export const canUseAuthorizationHeader = (
   jwt: JWT,

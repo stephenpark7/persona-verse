@@ -1,4 +1,4 @@
-import { create, login, logout } from '../controllers/user.controller';
+import { userCreate, userLogin, userLogout } from '@controllers';
 import { router, publicProcedure } from './trpc';
 import { z } from 'zod';
 
@@ -10,7 +10,7 @@ export const appRouter = router({
       password: z.string(),
     }))
     .mutation(async ({ input }) => {
-      const user = await create(input);
+      const user = await userCreate(input);
       return user;
     }),
   loginUser: publicProcedure
@@ -19,12 +19,12 @@ export const appRouter = router({
       password: z.string(),
     }))
     .mutation(async ({ input, ctx }) => {
-      const user = await login(input, ctx.req);
+      const user = await userLogin(input, ctx.req);
       return user;
     }),
   logoutUser: publicProcedure
     .mutation(async ({ ctx }) => {
-      await logout(ctx.req);
+      await userLogout(ctx.req);
       ctx.session.destroy((err: Error) => {
         if (err) {
           console.error('Error while destroying session: ', err);
