@@ -14,9 +14,10 @@ export const Home: React.FC = (): React.JSX.Element => {
 
   const bodyContent = useMemo(() => {
     if (isLoggedIn) {
+      const displayName = getDisplayName(jwt);
       return (
         <div>
-          <p>Welcome {getDisplayName(jwt)}!</p>
+          <p>Welcome {displayName}!</p>
           <Profile />
           <TweetContainer />
           <LogoutButton />
