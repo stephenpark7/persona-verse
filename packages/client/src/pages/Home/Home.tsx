@@ -1,14 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { JWT } from '@shared';
+import { getDisplayName } from '@utils';
 import { useUserState } from '@hooks';
 import { LogoutButton, TweetContainer, Profile } from '@components';
-
-export const getDisplayName = (jwt: JWT | null): string => {
-  if (!jwt) return '';
-  return jwt.payload.username;
-};
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();

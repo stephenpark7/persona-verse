@@ -3,3 +3,4 @@ export * from './constants';
 export * from './forms';
 export * from './tokenStorage';
 export * from './toast';
+export * from './user';
