@@ -1,15 +1,6 @@
-// import { defineWorkspace } from 'vitest/config'
+import { defineWorkspace } from 'vitest/config';
 
-// export default defineWorkspace([
-//   {
-//     extends: './packages/client/vitest.config.ts',
-//     test: {
-//       include: ['**/*.test.tsx'],
-//     },
-//   }
-// ]);
-
-export default [
+export default defineWorkspace([
   'packages/*',
   {
     extends: './packages/client/vitest.config.ts',
@@ -17,4 +8,4 @@ export default [
       setupFiles: './packages/client/src/tests/vitest.setup.ts',
     },
   }
-]
+]);
