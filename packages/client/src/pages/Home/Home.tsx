@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { JWT } from '@shared';
@@ -17,7 +17,7 @@ export const Home: React.FC = (): React.JSX.Element => {
     document.title = 'PersonaVerse';
   }, []);
 
-  const renderBodyContent = () => {
+  const bodyContent = useMemo(() => {
     if (isLoggedIn) {
       return (
         <div>
@@ -42,9 +42,7 @@ export const Home: React.FC = (): React.JSX.Element => {
         </div>
       </div>
     );
-  };
-
-  const bodyContent = renderBodyContent();
+  }, [ isLoggedIn ]);
 
   return (
     <Container>

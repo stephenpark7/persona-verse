@@ -21,7 +21,7 @@ function updateForm(
   const { value, name } = e.target;
   setFormData({
     ...formData,
-    [name]: value,
+    [ name ]: value,
   } as RequestBody);
 }
 
