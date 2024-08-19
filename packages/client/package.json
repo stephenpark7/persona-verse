@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "test": "vitest",
-    "build": "tsc -b && vite build",
+    "build": "tsc --noEmit && vite build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "tsc": "tsc --noEmit --watch"
   },

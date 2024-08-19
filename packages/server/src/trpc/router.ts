@@ -1,4 +1,4 @@
-import { userCreate, userLogin, userLogout } from 'src/controllers';
+import { userCreate, userLogin, userLogout } from '@controllers';
 import { router, publicProcedure } from './trpc';
 import { z } from 'zod';
 

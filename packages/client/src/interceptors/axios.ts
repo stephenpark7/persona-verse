@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
-import { JWT } from '@shared/types';
+import { JWT } from '@shared';
 import { refreshToken } from '@services';
 import { canRefreshToken, canUseAuthorizationHeader } from '@utils';
 import { tokenStorage } from '@utils';

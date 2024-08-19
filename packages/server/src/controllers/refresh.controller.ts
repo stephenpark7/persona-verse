@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { sendUnauthorizedResponse } from 'src/utils';
-import { generateAccessToken, verifyToken } from 'src/utils';
-import { db } from 'src/db';
+import { sendUnauthorizedResponse } from '@utils';
+import { generateAccessToken, verifyToken } from '@utils';
+import { db } from '@db';
 
 const { User, RevokedToken } = db.models;
 

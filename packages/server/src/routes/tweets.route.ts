@@ -1,7 +1,7 @@
 import express, { Response } from 'express';
 import { AuthenticatedRequest } from '../interfaces';
 import { auth } from '../middleware/auth';
-import { tweetCreate, tweetGet } from 'src/controllers';
+import { tweetCreate, tweetGet } from '@controllers';
 
 export const tweetsRoute = express.Router();
 

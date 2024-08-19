@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { db } from 'src/db';
-import { CreateParams, JWT, JWTPayload, LoginParams } from 'src/interfaces';
+import { db } from '@db';
+import { CreateParams, JWT, JWTPayload, LoginParams } from '@interfaces';
 import { 
   compare,
   generateAccessToken, 
@@ -10,7 +10,7 @@ import {
   validateCreate,
   validateLogin,
   verifyToken, 
-} from 'src/utils';
+} from '@utils';
 
 const { User, RevokedToken, UserProfile } = db.models;
 

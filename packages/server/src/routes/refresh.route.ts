@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { refresh } from 'src/controllers';
+import { refresh } from '@controllers';
 
 export const refreshRoute = express.Router();
 

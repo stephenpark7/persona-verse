@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from 'src/db/sequelize';
+import { sequelize } from '@db/sequelize';
 
 export class RevokedToken extends Model {}
 

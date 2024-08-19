@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { TweetData } from '@interfaces';
-import { postTweet } from 'src/services';
+import { postTweet } from '@services';
 import { useUserState } from '@hooks';
 import { useGetTweetsQuery } from '@redux';
 import { Tweet } from '@components';

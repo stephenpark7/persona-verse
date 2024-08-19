@@ -6,7 +6,7 @@ import {
   RevokedToken, 
   RefreshToken, 
   UserProfile, 
-} from 'src/models';
+} from '@models';
 
 export const db = (() => {
   const models = {
