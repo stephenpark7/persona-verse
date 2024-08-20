@@ -5,7 +5,6 @@ import prettierConfig from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import vitest from 'eslint-plugin-vitest';
-// import reactHooksPlugin from 'eslint-plugin-react-hooks';
 
 const configs = [
   pluginJs.configs.recommended,
@@ -18,7 +17,6 @@ const configs = [
 const plugins = {
   react: reactPlugin,
   reactRefreshPlugin: reactRefreshPlugin,
-  // reactHooks: reactHooksPlugin,
 };
 
 export default [
@@ -59,18 +57,12 @@ export default [
     },
   },
   {
-    files: [ 'vite.config.ts', 'vitest.config.ts' ],
-    rules: {
-      'no-restricted-syntax': [ 'off' ],
-    },
-  },
-  {
     files: [ '**/tests/**/*.{ts,tsx}' ],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: {
-        ...vitest.environments.env.globals,
         ...globals.browser,
+        ...vitest.environments.env.globals,
       },
       sourceType: 'module',
     },
@@ -84,29 +76,29 @@ export default [
       },
     },
     plugins: {
-      // ...plugins,
-      // react: reactPlugin,
+      ...plugins,
       vitest,
     },
     rules: {
       ...vitest.configs.recommended.rules,
       'react/react-in-jsx-scope': [ 'off' ],
-      // 'vitest/max-nested-describe': [ 'error', { 'max': 3 } ],
+      'vitest/max-nested-describe': [ 'error', { 'max': 3 } ],
     },
   },
   {
     files: [ '*.json' ],
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
     rules: {
       'array-bracket-spacing': [ 'error', 'always' ],
       'eol-last': [ 'error', 'always' ],
       'quotes': [ 'error', 'double' ],
       'comma-dangle': [ 'error', 'never' ],
       '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
+  {
+    files: [ 'vite.config.ts', 'vitest.config.ts' ],
+    rules: {
+      'no-restricted-syntax': [ 'off' ],
     },
   },
   {
