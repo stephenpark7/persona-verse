@@ -1,11 +1,10 @@
-import { beforeEach, expect, describe, it } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import { ReduxProvider, Router } from '@core';
-import { Home } from '@pages';
 import { JWTSchema } from '@utils';
 import { setJwt, store } from '@redux';
 import { RenderApp } from '../utils';
+
 
 describe('Home page', () => {
 
