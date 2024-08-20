@@ -22,17 +22,19 @@ const plugins = {
 export default [
   ...configs,
   {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+  {
     files: [ '**/**/*.{ts,tsx}' ],
+    ignores: [ '**/tests/**/*.{ts,tsx}' ],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,
       sourceType: 'module',
-    },
-    settings: {
-      react: {
-        version: 'detect',
-        // defaultVersion: '18.3.1'
-      },
     },
     plugins,
     rules: {
@@ -59,25 +61,18 @@ export default [
   {
     files: [ '**/tests/**/*.{ts,tsx}' ],
     languageOptions: {
-      parserOptions: { ecmaFeatures: { jsx: true } },
       globals: {
-        ...globals.browser,
         ...vitest.environments.env.globals,
       },
       sourceType: 'module',
     },
+    plugins: {
+      vitest,
+    },
     settings: {
-      react: {
-        version: 'detect',
-        // defaultVersion: '18.3.1'
-      },
       vitest: {
         typecheck: true,
       },
-    },
-    plugins: {
-      ...plugins,
-      vitest,
     },
     rules: {
       ...vitest.configs.recommended.rules,
