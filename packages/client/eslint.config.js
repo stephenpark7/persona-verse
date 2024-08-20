@@ -3,9 +3,9 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import reactPlugin from 'eslint-plugin-react';
-// import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import vitest from 'eslint-plugin-vitest';
+// import reactHooksPlugin from 'eslint-plugin-react-hooks';
 
 const configs = [
   pluginJs.configs.recommended,
@@ -17,14 +17,14 @@ const configs = [
 
 const plugins = {
   react: reactPlugin,
-  // reactHooks: reactHooksPlugin,
   reactRefreshPlugin: reactRefreshPlugin,
+  // reactHooks: reactHooksPlugin,
 };
 
 export default [
   ...configs,
   {
-    files: [ '**/**/*.{js,mjs,cjs,ts,jsx,tsx}' ],
+    files: [ '**/**/*.{ts,tsx}' ],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,
@@ -33,6 +33,7 @@ export default [
     settings: {
       react: {
         version: 'detect',
+        // defaultVersion: '18.3.1'
       },
     },
     plugins,
@@ -58,30 +59,39 @@ export default [
     },
   },
   {
-    files: [ '**/**/*.{js,mjs,cjs,ts}' ],
+    files: [ 'vite.config.ts', 'vitest.config.ts' ],
     rules: {
       'no-restricted-syntax': [ 'off' ],
     },
   },
   {
-    files: [ '**/**/*.{test,spec}.{jsx,tsx}' ],
-    plugins: {
-      vitest,
-    },
-    rules: {
-      'react/react-in-jsx-scope': [ 'off' ],
-      ...vitest.configs.recommended.rules, // you can also use vitest.configs.all.rules to enable all rules
-      'vitest/max-nested-describe': [ 'error', { 'max': 3 } ], // you can also modify rules' behavior using option like this
+    files: [ '**/tests/**/*.{ts,tsx}' ],
+    languageOptions: {
+      parserOptions: { ecmaFeatures: { jsx: true } },
+      globals: {
+        ...vitest.environments.env.globals,
+        ...globals.browser,
+      },
+      sourceType: 'module',
     },
     settings: {
+      react: {
+        version: 'detect',
+        // defaultVersion: '18.3.1'
+      },
       vitest: {
         typecheck: true,
       },
     },
-    languageOptions: {
-      globals: {
-        ...vitest.environments.env.globals,
-      },
+    plugins: {
+      // ...plugins,
+      // react: reactPlugin,
+      vitest,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules,
+      'react/react-in-jsx-scope': [ 'off' ],
+      // 'vitest/max-nested-describe': [ 'error', { 'max': 3 } ],
     },
   },
   {

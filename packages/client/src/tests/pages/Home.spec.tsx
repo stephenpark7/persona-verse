@@ -5,12 +5,13 @@ import { JWTSchema } from '@utils';
 import { setJwt, store } from '@redux';
 import { RenderApp } from '../utils';
 
-
 describe('Home page', () => {
 
   describe('initial state', () => {
-    RenderApp();
-  
+    beforeEach(() => {
+      RenderApp();
+    });
+
     it('has a title', () => {
       expect(document.title).toBe('PersonaVerse');
     });
@@ -21,7 +22,9 @@ describe('Home page', () => {
   });
 
   describe('when user is not logged in', () => {
-    RenderApp();
+    beforeEach(() => {
+      RenderApp();
+    });
 
     it('renders p', () => {
       expect(screen.getByText(/Create an account or log in./, { selector: 'p' })).toBeInTheDocument();
