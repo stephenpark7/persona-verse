@@ -1,4 +1,4 @@
-import { userSlice } from '../slices/userSlice';
+import { userSlice } from '../stores/store';
 
 const { setJwt, clearJwt } = userSlice.actions;
 
