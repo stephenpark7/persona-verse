@@ -1,9 +1,11 @@
 import { expect, describe, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { ReduxProvider, Router } from '@core';
-import { JWTSchema } from '@utils';
-import { setJwt, store } from '@redux';
+import { tokenStorage } from '@utils';
+import { store } from '@redux';
 import { RenderApp } from '../utils';
+import { mockJwt } from '../mocks';
+
 
 describe('Home page', () => {
 
@@ -22,6 +24,17 @@ describe('Home page', () => {
   });
 
   describe('when user is not logged in', () => {
+
+    // TODO: mocking token storage will only work
+    // once, since localstorage doesn't reset between tests
+    // and/or: the store doesn't get rebuilt between tests
+    // it will be cached and reused
+
+    // you have to set up Redux store for each test/test file
+    // and clear the Redux store after each test/test file
+
+    // https://github.com/reduxjs/redux/issues/4239
+
     beforeEach(() => {
       RenderApp();
     });
@@ -40,27 +53,6 @@ describe('Home page', () => {
 
   describe('when user is logged in', () => {
     it('renders p', () => {
-
-      const mockJwt = JWTSchema.parse({
-        token: 'token',
-        expiresAt: Date.now() + 1000,
-        payload: {
-          userId: 1,
-          username: 'user',
-        },
-      });
-
-      expect(store.getState()).toMatchObject({
-        user: {
-          value: {
-            jwt: null,
-            tweets: null,
-          },
-        },
-      });
-
-      store.dispatch(setJwt(mockJwt));
-
       expect(store.getState()).toMatchObject({
         user: {
           value: {
@@ -70,16 +62,8 @@ describe('Home page', () => {
         },
       });
 
-      cleanup();
+      RenderApp();
 
-      render(
-        <ReduxProvider>
-          <Router />
-        </ReduxProvider>,
-      );
-
-      screen.debug();
-      
       expect(screen.getByText(/Welcome/, { selector: 'p' })).toBeInTheDocument();
     });
   });
