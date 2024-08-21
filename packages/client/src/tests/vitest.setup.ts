@@ -9,7 +9,7 @@ const response = new Response(JSON.stringify({}), {
   headers: new Headers(),
 });
 
-export const axiosRequestSpy = vi.spyOn(axios, 'request').mockReturnValue(Promise.resolve(response));
+vi.spyOn(axios, 'request').mockReturnValue(Promise.resolve(response));
 
 expect.extend({
   toHaveSomeText(received, expected) {
