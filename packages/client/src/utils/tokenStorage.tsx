@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { JWT } from '@shared';
 
-const JWTSchema = z.object({
+export const JWTSchema = z.object({
   token: z.string(),
   expiresAt: z.number(),
   payload: z.object({
