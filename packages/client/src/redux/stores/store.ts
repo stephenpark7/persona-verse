@@ -28,10 +28,10 @@ const rootReducer = combineReducers({
   tweetAPI: tweetAPI.reducer,
 });
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
-});
+// export const store = configureStore({
+//   reducer: rootReducer,
+//   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
+// });
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -44,3 +44,5 @@ export const setupStore = (preloadedState: Partial<RootState>) => {
 };
 
 export type AppStore = ReturnType<typeof setupStore>;
+
+export type AppDispatch = AppStore['dispatch'];

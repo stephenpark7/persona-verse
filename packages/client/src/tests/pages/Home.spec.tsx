@@ -44,16 +44,14 @@ describe('Home page', () => {
 
   describe('when user is logged in', () => {
     it('renders p', () => {
-      // expect(store.getState()).toMatchObject({
-      //   user: {
-      //     value: {
-      //       jwt: mockJwt,
-      //       tweets: null,
-      //     },
-      //   },
-      // });
-
-      RenderApp(mockJwt);
+      RenderApp({
+        user: {
+          value: {
+            jwt: mockJwt,
+            tweets: null,
+          },
+        },
+      });
 
       expect(screen.getByText(/Welcome/, { selector: 'p' })).toBeInTheDocument();
     });

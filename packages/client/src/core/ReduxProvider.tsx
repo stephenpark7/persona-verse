@@ -1,12 +1,13 @@
 import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 import { AppStore, setupStore, RootState } from '@redux';
-import { render, RenderOptions } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import type { RenderOptions } from '@testing-library/react';
 // import { store } from '@redux';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: Partial<RootState>,
-  store?: AppStore,
+  preloadedState?: Partial<RootState>
+  store?: AppStore
 }
 
 export const renderWithProviders = (
@@ -16,8 +17,8 @@ export const renderWithProviders = (
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) => {
-  
-  const Wrapper: React.FC<PropsWithChildren> = ({
+
+  const Wrapper: React.FC<PropsWithChildren<object>> = ({
     children,
   }): JSX.Element => (
     <Provider store={store}>
@@ -31,16 +32,16 @@ export const renderWithProviders = (
   };
 };
 
-// interface ReduxProviderProps {
-//   children: React.JSX.Element[] | React.JSX.Element;
-// };
+interface ReduxProviderProps {
+  children: React.JSX.Element[] | React.JSX.Element;
+};
 
-// export const ReduxProvider = ({
-//   children,
-// }: ReduxProviderProps): React.JSX.Element => {
-//   return (
-//     <Provider store={store}>
-//       {children}
-//     </Provider>
-//   );
-// };
+export const ReduxProvider = ({
+  children,
+}: ReduxProviderProps): React.JSX.Element => {
+  return (
+    <Provider store={setupStore({})}>
+      {children}
+    </Provider>
+  );
+};
