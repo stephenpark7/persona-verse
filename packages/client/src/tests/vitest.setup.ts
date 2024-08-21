@@ -13,14 +13,16 @@ export const axiosRequestSpy = vi.spyOn(axios, 'request').mockReturnValue(Promis
 
 expect.extend({
   toHaveSomeText(received, expected) {
-
+    const hasText = (element: HTMLElement, text: string) => element.textContent?.includes(text) || false;
     const isSingular = received.textContent !== undefined;
     const isPlural = Array.isArray(received);
 
     let pass = false;
 
-    if (isSingular || isPlural) {
-      pass = isSingular ? received.textContent.length > 0 : received.some((element: HTMLElement) => element.textContent?.includes(expected)); 
+    if (isSingular) {
+      pass = hasText(received, expected);
+    } else if (isPlural) {
+      pass = received.some((element: HTMLElement) => hasText(element, expected));
     }
 
     if (pass) {
