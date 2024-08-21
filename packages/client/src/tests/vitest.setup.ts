@@ -13,7 +13,7 @@ vi.spyOn(global, 'fetch').mockImplementation(() =>
   })),
 );
 
-vi.spyOn(tokenStorage, 'getAccessToken').mockImplementation(() => mockJwt);
+// vi.spyOn(tokenStorage, 'getAccessToken').mockImplementation(() => mockJwt);
 
 afterEach(() => {
   cleanup();

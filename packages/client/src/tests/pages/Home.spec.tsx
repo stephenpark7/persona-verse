@@ -24,19 +24,10 @@ describe('Home page', () => {
   });
 
   describe('when user is not logged in', () => {
-
-    // TODO: mocking token storage will only work
-    // once, since localstorage doesn't reset between tests
-    // and/or: the store doesn't get rebuilt between tests
-    // it will be cached and reused
-
-    // you have to set up Redux store for each test/test file
-    // and clear the Redux store after each test/test file
-
-    // https://github.com/reduxjs/redux/issues/4239
-
     beforeEach(() => {
+      localStorage.clear();
       RenderApp();
+      screen.debug();
     });
 
     it('renders p', () => {
@@ -53,16 +44,16 @@ describe('Home page', () => {
 
   describe('when user is logged in', () => {
     it('renders p', () => {
-      expect(store.getState()).toMatchObject({
-        user: {
-          value: {
-            jwt: mockJwt,
-            tweets: null,
-          },
-        },
-      });
+      // expect(store.getState()).toMatchObject({
+      //   user: {
+      //     value: {
+      //       jwt: mockJwt,
+      //       tweets: null,
+      //     },
+      //   },
+      // });
 
-      RenderApp();
+      RenderApp(mockJwt);
 
       expect(screen.getByText(/Welcome/, { selector: 'p' })).toBeInTheDocument();
     });

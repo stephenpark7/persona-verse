@@ -1,3 +1,4 @@
+import { combineReducers } from 'redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { State } from '@interfaces';
 import { tokenStorage } from '@utils';
@@ -22,14 +23,24 @@ export const userSlice = createSlice({
   },
 });
 
-const rootReducer = {
+const rootReducer = combineReducers({
   user: userSlice.reducer,
-};
+  tweetAPI: tweetAPI.reducer,
+});
 
 export const store = configureStore({
-  reducer: {
-    ...rootReducer,
-    tweetAPI: tweetAPI.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export const setupStore = (preloadedState: Partial<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
+    preloadedState,
+  });
+};
+
+export type AppStore = ReturnType<typeof setupStore>;

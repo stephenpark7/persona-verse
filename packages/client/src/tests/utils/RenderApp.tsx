@@ -1,10 +1,5 @@
-import { render } from '@testing-library/react';
-import { ReduxProvider, Router } from '@core';
+import { renderWithProviders, Router } from '@core';
 
-export const RenderApp = () => {
-  render(
-    <ReduxProvider>
-      <Router />
-    </ReduxProvider>,
-  );
+export const RenderApp = (preloadedState?: Record<string, unknown>) => {
+  renderWithProviders(<Router />, { preloadedState });
 };
