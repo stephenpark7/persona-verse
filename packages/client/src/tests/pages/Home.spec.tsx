@@ -15,7 +15,7 @@ describe('Home page', () => {
     });
   
     it('renders h1', () => {
-      expect(screen.getByText(/PersonaVerse/, { selector: 'h1' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('PersonaVerse');
     });
   });
 
@@ -25,14 +25,14 @@ describe('Home page', () => {
     });
 
     it('renders p', () => {
-      expect(screen.getByText(/Create an account or log in./, { selector: 'p' })).toBeInTheDocument();
+      expect(screen.getByRole('paragraph')).toHaveTextContent('Create an account or log in.');
     });
 
     it('renders buttons', () => {
       const buttons = screen.getAllByRole('button');
       expect(buttons).toHaveLength(2);
-      expect(buttons[0]).toHaveTextContent('Sign up');
-      expect(buttons[1]).toHaveTextContent('Log in');
+      expect(buttons).toHaveSomeText('Sign up');
+      expect(buttons).toHaveSomeText('Log in');
     });
   });
 
@@ -54,6 +54,8 @@ describe('Home page', () => {
 
     it('renders tweet container', () => {
       expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe('What\'s happening?');
+      expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Tweets');
+      expect(screen.getAllByRole('paragraph')).toHaveSomeText('Loading...');
       const buttons = screen.getAllByRole('button');
       expect(buttons).toHaveSomeText('Tweet');
       expect(buttons).toHaveSomeText('Log out');
