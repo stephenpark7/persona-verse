@@ -14,8 +14,8 @@ export const axiosRequestSpy = vi.spyOn(axios, 'request').mockReturnValue(Promis
 expect.extend({
   toHaveSomeText(received, expected) {
 
-    const isSingular = received.textContent?.length > 0;
-    const isPlural = received.length > 0;
+    const isSingular = received.textContent !== undefined;
+    const isPlural = Array.isArray(received);
 
     let pass = false;
 
