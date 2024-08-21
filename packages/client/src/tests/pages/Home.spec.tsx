@@ -2,7 +2,7 @@ import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
 import { RenderApp } from '../utils';
 import { mockJwt } from '../mocks';
-
+import { axiosRequestSpy } from '../vitest.setup';
 
 describe('Home page', () => {
 
@@ -22,9 +22,7 @@ describe('Home page', () => {
 
   describe('when user is not logged in', () => {
     beforeEach(() => {
-      localStorage.clear();
       RenderApp();
-      screen.debug();
     });
 
     it('renders p', () => {
@@ -51,6 +49,20 @@ describe('Home page', () => {
       });
 
       expect(screen.getByText(/Welcome/, { selector: 'p' })).toBeInTheDocument();
+    });
+
+    it('renders tweet container', () => {
+      RenderApp({
+        user: {
+          value: {
+            jwt: mockJwt,
+            tweets: null,
+          },
+        },
+      });
+      screen.debug();
+      expect(axiosRequestSpy).toHaveBeenCalled();
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
     });
   });
 });
