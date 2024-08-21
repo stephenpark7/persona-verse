@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { JWT } from '@shared';
+import { getDisplayName } from '@utils';
 import { useUserState } from '@hooks';
 import { LogoutButton, TweetContainer, Profile } from '@components';
-
-export const getDisplayName = (jwt: JWT | null): string => {
-  if (!jwt) return '';
-  return jwt.payload.username;
-};
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
@@ -17,11 +12,12 @@ export const Home: React.FC = (): React.JSX.Element => {
     document.title = 'PersonaVerse';
   }, []);
 
-  const renderBodyContent = () => {
+  const bodyContent = useMemo(() => {
     if (isLoggedIn) {
+      const displayName = getDisplayName(jwt);
       return (
         <div>
-          <p>Welcome {getDisplayName(jwt)}!</p>
+          <p>Welcome {displayName}!</p>
           <Profile />
           <TweetContainer />
           <LogoutButton />
@@ -42,9 +38,7 @@ export const Home: React.FC = (): React.JSX.Element => {
         </div>
       </div>
     );
-  };
-
-  const bodyContent = renderBodyContent();
+  }, [ isLoggedIn ]);
 
   return (
     <Container>

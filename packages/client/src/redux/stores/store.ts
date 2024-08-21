@@ -1,11 +1,45 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from '@redux';
-import { tweetAPI } from '@redux';
+import { combineReducers } from 'redux';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { State } from '@interfaces';
+import { tokenStorage } from '@utils';
+import { setJwtReducer, clearJwtReducer, addTweetReducer, setTweetsReducer } from '../reducers';
+import { tweetAPI } from '../services';
 
-export const store = configureStore({
-  reducer: {
-    ...rootReducer,
-    tweetAPI: tweetAPI.reducer,
+export const initialState: State = {
+  value: {
+    jwt: tokenStorage.getAccessToken(),
+    tweets: null,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
+};
+
+export const userSlice = createSlice({
+  name: 'user',
+  initialState: initialState,
+  reducers: {
+    setJwt: setJwtReducer,
+    clearJwt: clearJwtReducer,
+    setTweets: setTweetsReducer,
+    addTweet: addTweetReducer,
+  },
 });
+
+const rootReducer = combineReducers({
+  user: userSlice.reducer,
+  tweetAPI: tweetAPI.reducer,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export const setupStore = (preloadedState?: Partial<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
+    preloadedState,
+  });
+};
+
+export const store = setupStore();
+
+export type AppStore = ReturnType<typeof setupStore>;
+
+export type AppDispatch = AppStore['dispatch'];

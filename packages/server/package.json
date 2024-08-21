@@ -7,10 +7,10 @@
   "type": "commonjs",
   "scripts": {
     "start": "node dist/src/app.js",
-    "dev": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register \"./dist/src/app.js\" --watch --build",
+    "dev": "npm run tsc && TS_NODE_BASEURL=./dist node -r tsconfig-paths/register \"./dist/src/app.js\" --watch",
     "build": "npm run lint && tsc --build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "tsc": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register \"./dist/src/app.js\" --build"
+    "tsc": "tsc --build"
   },
   "dependencies": {
     "@trpc/server": "^10.0.0-rc.477",

@@ -3,7 +3,7 @@ import { RegisterFunction, RegisterParams, LoginParams, LoginFunction } from '@i
 import { store, setJwt, clearJwt } from '@redux';
 import { apiCall } from '.';
 
-const register: RegisterFunction = async ({
+export const register: RegisterFunction = async ({
   formData,
   navigate,
   showToast = true,
@@ -27,7 +27,7 @@ const register: RegisterFunction = async ({
   }
 };
 
-const login: LoginFunction = async ({
+export const login: LoginFunction = async ({
   formData,
   navigate,
   showToast = true,
@@ -51,10 +51,10 @@ const login: LoginFunction = async ({
   navigate('/'); 
 };
 
-async function logout(
+export const logout = async (
   navigate: NavigateFunction,
   showToast = true,
-): Promise<void> {
+): Promise<void> => {
   const response = await apiCall({
     method: 'POST',
     controller: 'users',
@@ -67,10 +67,4 @@ async function logout(
   store.dispatch(clearJwt());
 
   navigate('/');
-}
-
-export {
-  login,
-  logout,
-  register,
 };

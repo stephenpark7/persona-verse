@@ -1,28 +1,26 @@
 import { RequestBody, SubmitForm } from '@interfaces';
 
-async function submitForm({
+export const submitForm = async ({
   e,
   formData,
   apiFunction,
   navigate,
-}: SubmitForm): Promise<void> {
+}: SubmitForm): Promise<void> => {
   e.preventDefault();
   await apiFunction({
     formData,
     navigate,
   });
-}
+};
 
-function updateForm(
+export const updateForm = (
   e: React.ChangeEvent<HTMLInputElement>,
   formData: RequestBody,
   setFormData: React.Dispatch<React.SetStateAction<RequestBody>>,
-): void {
+): void => {
   const { value, name } = e.target;
   setFormData({
     ...formData,
     [name]: value,
   } as RequestBody);
-}
-
-export { submitForm, updateForm };
+};

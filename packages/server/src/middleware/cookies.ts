@@ -22,12 +22,4 @@ export const cookies = session({
     httpOnly: true,
     signed: true,
   },
-  // maxAge: parseInt(process.env.COOKIE_MAX_AGE),
-  // path: '/',
-  // domain: process.env.COOKIE_DOMAIN,
-  // sameSite: 'strict',
-  // secure: process.env.NODE_ENV === 'production',
-  // httpOnly: true,
-  // signed: true,
-  // overwrite: true,
 });

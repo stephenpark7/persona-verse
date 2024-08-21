@@ -2,8 +2,7 @@ import { PostTweet, TweetData } from '@interfaces';
 import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
 
-async function getTweets(
-): Promise<TweetData[]> {
+export const getTweets = async (): Promise<TweetData[]> => {
   const response = await apiCall({
     method: 'GET',
     controller: 'tweets',
@@ -19,12 +18,12 @@ async function getTweets(
   store.dispatch(setTweets(response.tweets));
 
   return response.tweets;
-}
+};
 
-async function postTweet({
+export const postTweet = async ({
   jwt,
   payload,
-}: PostTweet): Promise<void> {
+}: PostTweet): Promise<void> => {
   if (!jwt) {
     throw new Error('Failed to post tweet.');
   }
@@ -43,9 +42,4 @@ async function postTweet({
   };
 
   store.dispatch(addTweet(response.tweet));
-}
-
-export {
-  getTweets,
-  postTweet,
 };
