@@ -11,6 +11,6 @@ const response = new Response(JSON.stringify({}), {
 
 export const axiosRequestSpy = vi.spyOn(axios, 'request').mockReturnValue(Promise.resolve(response));
 
-afterEach(() => {
-  cleanup();
-});
+// afterEach(() => {
+//   cleanup();
+// });
