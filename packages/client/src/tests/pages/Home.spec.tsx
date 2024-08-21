@@ -1,14 +1,13 @@
 import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
-import { RenderApp } from '../utils';
+import { renderApp } from '../utils';
 import { mockJwt } from '../mocks';
-import { axiosRequestSpy } from '../vitest.setup';
 
 describe('Home page', () => {
 
   describe('initial state', () => {
     beforeEach(() => {
-      RenderApp();
+      renderApp();
     });
 
     it('has a title', () => {
@@ -22,7 +21,7 @@ describe('Home page', () => {
 
   describe('when user is not logged in', () => {
     beforeEach(() => {
-      RenderApp();
+      renderApp();
     });
 
     it('renders p', () => {
@@ -38,8 +37,8 @@ describe('Home page', () => {
   });
 
   describe('when user is logged in', () => {
-    it('renders p', () => {
-      RenderApp({
+    beforeEach(() => {
+      renderApp({
         user: {
           value: {
             jwt: mockJwt,
@@ -47,22 +46,17 @@ describe('Home page', () => {
           },
         },
       });
+    });
 
-      expect(screen.getByText(/Welcome/, { selector: 'p' })).toBeInTheDocument();
+    it('renders p', () => {
+      expect(screen.getAllByRole('paragraph')).toHaveSomeText('Welcome test_user!');
     });
 
     it('renders tweet container', () => {
-      RenderApp({
-        user: {
-          value: {
-            jwt: mockJwt,
-            tweets: null,
-          },
-        },
-      });
-      screen.debug();
-      expect(axiosRequestSpy).toHaveBeenCalled();
-      expect(screen.getByRole('textbox')).toBeInTheDocument();
+      expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe('What\'s happening?');
+      const buttons = screen.getAllByRole('button');
+      expect(buttons).toHaveSomeText('Tweet');
+      expect(buttons).toHaveSomeText('Log out');
     });
   });
 });
