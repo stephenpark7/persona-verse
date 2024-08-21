@@ -1,8 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { ReduxProvider, Router } from '@core';
-import { tokenStorage } from '@utils';
-import { store } from '@redux';
+import { screen } from '@testing-library/react';
 import { RenderApp } from '../utils';
 import { mockJwt } from '../mocks';
 
