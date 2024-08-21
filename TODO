@@ -1,8 +1,6 @@
 In Progress:
-  ☐ Remove Jest, use Vitest @started(24-08-11 19:27)
-  ☐ Use tRPC @started(24-08-08 07:46)
-    ☐ Use ZOD for validation @started(24-08-09 23:01)
-    ☐ Build out routes, controllers @started(24-08-09 23:01)
+  ☐ Add more tests @started(24-08-21 02:24)
+  ☐ Add more tRPC integration @started(24-08-21 02:25)
   ☐ Refactor backend @started(24-07-20 21:05)
   ☐ Refactor frontend @started(24-07-20 21:15)
 To-Do:
@@ -27,6 +25,10 @@ To-Do:
   ☐ Amend commit messages to be more descriptive
   ☐ Migrate DB from Sequelize to TypeORM
 Done:
+  ✔ Use tRPC @started(24-08-08 07:46) @done(24-08-21 02:24) @lasted(1w5d18h38m56s)
+  ✔ Use ZOD for validation @started(24-08-09 23:01) @done(24-08-21 02:24) @lasted(1w4d3h23m57s)
+  ✔ Build out routes, controllers @started(24-08-09 23:01) @done(24-08-21 02:25) @lasted(1w4d3h24m4s)
+  ✔ Remove Jest, use Vitest @started(24-08-11 19:27) @done(2408-21 02:24) @lasted(1w2d6h57m12s)
   ✔ Refactor to use tRPC instead of REST @started(24-08-08 22:55) @done(24-08-08 22:57) @lasted(2m24s)
     ✔ Use along with RTK Query @started(24-08-08 22:56) @done(24-08-08 22:57) @lasted(1m24s)
     ✔ Look into: https://github.com/otahontas/trpc-rtk-query @done(24-08-08 22:57)
