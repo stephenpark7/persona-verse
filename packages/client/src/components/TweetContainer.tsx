@@ -51,7 +51,7 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
   return (
     <Form>
       <Form.Group className='mt-3 mb-3'>
-        <Form.Control ref={textRef} type='text' name='username' placeholder={'What\'s happening?'}
+        <Form.Control ref={textRef} type='text' placeholder={'What\'s happening?'}
           defaultValue={''} required />
       </Form.Group>
       <Button variant="primary" onClick={handlePostTweet}>Tweet</Button>

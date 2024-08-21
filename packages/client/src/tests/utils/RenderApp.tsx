@@ -15,7 +15,7 @@ type PreloadedState = Partial<{
   }, never, "tweetAPI">;
 }> | undefined;
 
-export const RenderApp = (
+export const renderApp = (
   preloadedState?: PreloadedState,
 ) => {
   renderWithProviders(<Router />, { preloadedState });

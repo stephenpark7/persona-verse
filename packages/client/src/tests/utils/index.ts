@@ -1,1 +1,1 @@
-export * from './RenderApp';
+export * from './renderApp';
