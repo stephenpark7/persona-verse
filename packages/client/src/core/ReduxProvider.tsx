@@ -1,9 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
-import { AppStore, setupStore, RootState } from '@redux';
+import { AppStore, setupStore, RootState, store } from '@redux';
 import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
-// import { store } from '@redux';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>
@@ -40,7 +39,7 @@ export const ReduxProvider = ({
   children,
 }: ReduxProviderProps): React.JSX.Element => {
   return (
-    <Provider store={setupStore({})}>
+    <Provider store={store}>
       {children}
     </Provider>
   );
