@@ -17,7 +17,7 @@ describe('Sign up page', () => {
   });
 
   it('renders h1', () => {
-    expect(screen.getByText(/Sign up/, { selector: 'h1' })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Sign up');
   });
 
   it('renders form', () => {
