@@ -52,14 +52,23 @@ describe('Home page', () => {
       expect(screen.getAllByRole('paragraph')).toHaveSomeTextContent('Welcome test_user!');
     });
 
-    it('renders tweet container', () => {
+    it('renders textbox', () => {
       expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe('What\'s happening?');
+    });
+
+    it('renders heading', () => {
       expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Tweets');
+    });
+
+    it('renders paragraph', () => {
       expect(screen.getAllByRole('paragraph')).toHaveSomeTextContent('Loading...');
+    });
+    
+    it('renders buttons', () => {
       const buttons = screen.getAllByRole('button');
+      expect(buttons).toHaveLength(2);
       expect(buttons).toHaveSomeTextContent('Tweet');
       expect(buttons).toHaveSomeTextContent('Log out');
-      screen.debug();
     });
   });
 });
