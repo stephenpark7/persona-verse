@@ -31,8 +31,8 @@ describe('Home page', () => {
     it('renders buttons', () => {
       const buttons = screen.getAllByRole('button');
       expect(buttons).toHaveLength(2);
-      expect(buttons).toHaveSomeText('Sign up');
-      expect(buttons).toHaveSomeText('Log in');
+      expect(buttons).toHaveSomeTextContent('Sign up');
+      expect(buttons).toHaveSomeTextContent('Log in');
     });
   });
 
@@ -49,16 +49,17 @@ describe('Home page', () => {
     });
 
     it('renders p', () => {
-      expect(screen.getAllByRole('paragraph')).toHaveSomeText('Welcome test_user!');
+      expect(screen.getAllByRole('paragraph')).toHaveSomeTextContent('Welcome test_user!');
     });
 
     it('renders tweet container', () => {
       expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe('What\'s happening?');
       expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Tweets');
-      expect(screen.getAllByRole('paragraph')).toHaveSomeText('Loading...');
+      expect(screen.getAllByRole('paragraph')).toHaveSomeTextContent('Loading...');
       const buttons = screen.getAllByRole('button');
-      expect(buttons).toHaveSomeText('Tweet');
-      expect(buttons).toHaveSomeText('Log out');
+      expect(buttons).toHaveSomeTextContent('Tweet');
+      expect(buttons).toHaveSomeTextContent('Log out');
+      screen.debug();
     });
   });
 });

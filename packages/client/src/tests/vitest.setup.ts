@@ -12,7 +12,7 @@ const response = new Response(JSON.stringify({}), {
 vi.spyOn(axios, 'request').mockReturnValue(Promise.resolve(response));
 
 expect.extend({
-  toHaveSomeText(received, expected) {
+  toHaveSomeTextContent(received, expected) {
     const hasText = (element: HTMLElement, text: string) => element.textContent?.includes(text) || false;
     const isSingular = received.textContent !== undefined;
     const isPlural = Array.isArray(received);
