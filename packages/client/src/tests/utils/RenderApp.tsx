@@ -22,7 +22,7 @@ export const renderApp = (
   renderWithProviders(<Router />, { preloadedState });
 };
 
-export const StoreStates = {
+export const StoreStateStubs = {
   loggedIn: {
     user: {
       value: {

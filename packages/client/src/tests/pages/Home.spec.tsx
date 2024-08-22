@@ -1,6 +1,6 @@
 import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
-import { StoreStates, renderApp } from '../utils';
+import { StoreStateStubs, renderApp } from '../utils';
 
 describe('Home page', () => {
 
@@ -37,7 +37,7 @@ describe('Home page', () => {
 
   describe('when user is logged in', () => {
     beforeEach(() => {
-      renderApp(StoreStates.loggedIn);
+      renderApp(StoreStateStubs.loggedIn);
     });
 
     it('renders p', () => {
