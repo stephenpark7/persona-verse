@@ -1,6 +1,7 @@
 import { renderWithProviders, Router } from '@core';
 import { State, TweetData } from '@interfaces';
 import { BaseQueryFn, CombinedState, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta, QueryDefinition } from '@reduxjs/toolkit/query';
+import { mockJwt } from '../mocks';
 
 type PreloadedState = Partial<{
   user: State;
@@ -20,3 +21,14 @@ export const renderApp = (
 ) => {
   renderWithProviders(<Router />, { preloadedState });
 };
+
+export const StoreStates = {
+  loggedIn: {
+    user: {
+      value: {
+        jwt: mockJwt,
+        tweets: null,
+      },
+    },
+  },
+}

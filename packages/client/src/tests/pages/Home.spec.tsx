@@ -1,7 +1,6 @@
 import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
-import { renderApp } from '../utils';
-import { mockJwt } from '../mocks';
+import { StoreStates, renderApp } from '../utils';
 
 describe('Home page', () => {
 
@@ -38,14 +37,7 @@ describe('Home page', () => {
 
   describe('when user is logged in', () => {
     beforeEach(() => {
-      renderApp({
-        user: {
-          value: {
-            jwt: mockJwt,
-            tweets: null,
-          },
-        },
-      });
+      renderApp(StoreStates.loggedIn);
     });
 
     it('renders p', () => {
