@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom/client';
 import { App } from './App';
 
 const render = () => {
-  const root: HTMLElement = document.getElementById('root') as HTMLElement;
+  const root = document.getElementById('root');
 
-  const rootElement: ReactDOM.Root = ReactDOM.createRoot(root);
+  if (!root) {
+    throw new Error('Root element not found');
+  }
 
-  const children: React.ReactNode = (
+  const rootElement = ReactDOM.createRoot(root);
+
+  const children = (
     <React.StrictMode>
       <App />
     </React.StrictMode>

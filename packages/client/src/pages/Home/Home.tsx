@@ -41,7 +41,7 @@ export const Home: React.FC = (): React.JSX.Element => {
 
   return (
     <div>
-      <div className='my-5'>
+      <div className='text-3xl font-bold underline'>
         <div>
           <h1>PersonaVerse</h1>
           {bodyContent}

@@ -45,7 +45,7 @@ export const Signup: React.FC = () => {
             <div className='mb-3'>
               <input type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
             </div>
-            <Button variant="primary" type="submit">Sign up</Button>
+            <button className="primary" type="submit">Sign up</button>
           </form>
           <p className='mt-3'>
             Already have an account? <Link to='/login'>Log in</Link>
