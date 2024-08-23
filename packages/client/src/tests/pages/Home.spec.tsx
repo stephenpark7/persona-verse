@@ -11,10 +11,15 @@ describe('Home page', () => {
 
     it('has a title', () => {
       expect(document.title).toBe('PersonaVerse');
+      // screen.debug();
     });
   
     it('renders h1', () => {
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('PersonaVerse');
+    });
+
+    it('does not render h2', () => {
+      expect(screen.queryByRole('heading', { level: 2 })).toBeNull();
     });
   });
 
