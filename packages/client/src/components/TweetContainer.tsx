@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Form } from '@components';
 import { TweetData } from '@interfaces';
 import { postTweet } from '@services';
 import { useUserState } from '@hooks';

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button } from '@components';
 import { RequestBody } from '@interfaces';
 import { register } from '@services';
 import { submitForm, updateForm } from '@utils';
@@ -33,27 +31,27 @@ export const Signup: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Row className='my-5'>
-        <Col>
+    <div>
+      <div className='my-5'>
+        <div>
           <h1>Sign up</h1>
-          <Form className='signup-form' onSubmit={handleFormSubmit}>
-            <Form.Group className='mt-3 mb-3'>
-              <Form.Control type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
-            </Form.Group>
-            <Form.Group className='mb-3'>
-              <Form.Control type='email' name='email' placeholder='Email' onChange={handleFormChange} required />
-            </Form.Group>
-            <Form.Group className='mb-3'>
-              <Form.Control type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
-            </Form.Group>
+          <form className='signup-form' onSubmit={handleFormSubmit}>
+            <div className='mt-3 mb-3'>
+              <input type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
+            </div>
+            <div className='mb-3'>
+              <input type='email' name='email' placeholder='Email' onChange={handleFormChange} required />
+            </div>
+            <div className='mb-3'>
+              <input type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
+            </div>
             <Button variant="primary" type="submit">Sign up</Button>
-          </Form>
+          </form>
           <p className='mt-3'>
             Already have an account? <Link to='/login'>Log in</Link>
           </p>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };
