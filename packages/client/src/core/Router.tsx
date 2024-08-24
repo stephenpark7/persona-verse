@@ -1,28 +1,40 @@
 import React from 'react';
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, useMatches } from 'react-router-dom';
 import { Home, Login, Signup } from '@pages';
 import { MainLayout } from 'src/layouts/main';
 
-const pages: RouteObject[] = [
+interface Page {
+  path?: string;
+  element?: React.ReactNode;
+  title: string;
+}
+
+const pages: Page[] = [
   {
     path: '/signup',
     element: <Signup />,
+    title: 'PersonaVerse - Sign up',
   },
   {
     path: '/login',
     element: <Login />,
+    title: 'PersonaVerse - Log in',
   },
   {
     path: '/',
     element: <Home />,
+    title: 'PersonaVerse',
   },
 ];
 
-const router = createBrowserRouter(pages);
+export const router = createBrowserRouter(pages);
 
 export const Router: React.FC = () => {
+  const routeId = parseInt(router.state.matches[0].route.id);
+  const pageTitle = pages[routeId].title;
+
   return (
-    <MainLayout>
+    <MainLayout title={pageTitle}>
       <RouterProvider router={router} />
     </MainLayout>
   );

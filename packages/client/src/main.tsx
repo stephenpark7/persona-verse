@@ -3,11 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { App } from './App';
 
 const render = () => {
-  const root = document.getElementById('root');
-
-  if (!root) {
-    throw new Error('Root element not found');
-  }
+  const root: HTMLElement = document.getElementById('root') as HTMLElement;
 
   const rootElement = ReactDOM.createRoot(root);
 

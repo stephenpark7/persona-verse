@@ -1,15 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { getDisplayName } from '@utils';
 import { useUserState } from '@hooks';
 import { Button, LogoutButton, TweetContainer, Profile } from '@components';
 
+// document.title = 'PersonaVerse';
+
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
-
-  useEffect(() => {
-    document.title = 'PersonaVerse';
-  }, []);
 
   const bodyContent = useMemo(() => {
     if (isLoggedIn) {
@@ -40,9 +38,11 @@ export const Home: React.FC = (): React.JSX.Element => {
   }, [ isLoggedIn ]);
 
   return (
-    <div className=''>
+    <div>
       <h1 className='text-2xl'>PersonaVerse</h1>
-      {bodyContent}
+      <div>
+        {bodyContent}
+      </div>
     </div>
   );
 };
