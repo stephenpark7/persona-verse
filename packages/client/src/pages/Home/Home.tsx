@@ -27,7 +27,7 @@ export const Home: React.FC = (): React.JSX.Element => {
     return (
       <div>
         <p>Create an account or log in.</p>
-        <div style={{ display: 'flex', gap: '0.2rem' }}>
+        <div className='flex'>
           <Link className='signup-link' to='/signup'>
             <Button variant="primary">Sign up</Button>
           </Link>
@@ -40,13 +40,9 @@ export const Home: React.FC = (): React.JSX.Element => {
   }, [ isLoggedIn ]);
 
   return (
-    <div>
-      <div className='text-3xl font-bold underline'>
-        <div>
-          <h1>PersonaVerse</h1>
-          {bodyContent}
-        </div>
-      </div>
+    <div className=''>
+      <h1 className='text-2xl'>PersonaVerse</h1>
+      {bodyContent}
     </div>
   );
 };

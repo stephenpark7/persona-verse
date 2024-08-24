@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 import { Home, Login, Signup } from '@pages';
+import { MainLayout } from 'src/layouts/main';
 
 const pages: RouteObject[] = [
   {
@@ -21,6 +22,8 @@ const router = createBrowserRouter(pages);
 
 export const Router: React.FC = () => {
   return (
-    <RouterProvider router={router} />
+    <MainLayout>
+      <RouterProvider router={router} />
+    </MainLayout>
   );
 };
