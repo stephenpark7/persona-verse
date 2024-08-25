@@ -27,7 +27,7 @@ export const Home: React.FC = (): React.JSX.Element => {
     }
 
     return (
-      <div>
+      <div className='flex gap-2'>
         <Link to='/signup'>
           <Button>Sign up</Button>
         </Link>
