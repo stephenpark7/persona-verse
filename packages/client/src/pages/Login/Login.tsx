@@ -30,7 +30,7 @@ export const Login: React.FC = () => {
       <div className='my-5'>
         <div>
           <h1>Log in</h1>
-          <div onSubmit={handleFormSubmit}>
+          <form onSubmit={handleFormSubmit}>
             <div className='mt-3 mb-3'>
               <input type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
             </div>
@@ -39,7 +39,7 @@ export const Login: React.FC = () => {
             </div>
             <Button variant='primary' type='submit'>Log in</Button>{' '}
             <Link to='/'><Button variant='primary'>Go Back</Button></Link>
-          </div>
+          </form>
         </div>
       </div>
     </div>
