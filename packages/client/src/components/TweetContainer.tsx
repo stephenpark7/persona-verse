@@ -62,6 +62,8 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
       <Button 
         extraStyles='mb-2'
         onClickEvent={handlePostTweet}
+        width='w-20'
+        height='h-9'
       >
         Tweet
       </Button>
