@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button } from '@components';
 import { logout } from '@services';
 
 export const LogoutButton: React.FC = (): React.JSX.Element => {
@@ -12,8 +12,7 @@ export const LogoutButton: React.FC = (): React.JSX.Element => {
 
   return (
     <Button
-      variant='primary'
-      onClick={handleLogout}>Log out
+      onClickEvent={handleLogout}>Log out
     </Button>
   );
 };

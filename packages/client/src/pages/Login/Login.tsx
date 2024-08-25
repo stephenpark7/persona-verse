@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button } from '@components';
 import { RequestBody } from '@interfaces';
 import { login } from '@services';
 import { submitForm, updateForm } from '@utils';
@@ -28,22 +26,22 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Row className='my-5'>
-        <Col>
+    <div>
+      <div className='my-5'>
+        <div>
           <h1>Log in</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Group className='mt-3 mb-3'>
-              <Form.Control type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
-            </Form.Group>
-            <Form.Group className='mb-3'>
-              <Form.Control type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
-            </Form.Group>
+          <form onSubmit={handleFormSubmit}>
+            <div className='mt-3 mb-3'>
+              <input type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
+            </div>
+            <div className='mb-3'>
+              <input type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
+            </div>
             <Button variant='primary' type='submit'>Log in</Button>{' '}
             <Link to='/'><Button variant='primary'>Go Back</Button></Link>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };

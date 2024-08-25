@@ -5,9 +5,9 @@ import { App } from './App';
 const render = () => {
   const root: HTMLElement = document.getElementById('root') as HTMLElement;
 
-  const rootElement: ReactDOM.Root = ReactDOM.createRoot(root);
+  const rootElement = ReactDOM.createRoot(root);
 
-  const children: React.ReactNode = (
+  const children = (
     <React.StrictMode>
       <App />
     </React.StrictMode>

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { AppStore, setupStore, RootState, store } from '@redux';
 import { render } from '@testing-library/react';
@@ -17,13 +17,13 @@ export const renderWithProviders = (
   }: ExtendedRenderOptions = {},
 ) => {
 
-  const Wrapper: React.FC<PropsWithChildren<object>> = ({
-    children,
-  }): JSX.Element => (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
+  const Wrapper = ({ children }: { children: React.ReactNode }) => {
+    return (
+      <Provider store={store}>
+        {children}
+      </Provider>
+    );
+  };
 
   return {
     store,
@@ -32,7 +32,7 @@ export const renderWithProviders = (
 };
 
 interface ReduxProviderProps {
-  children: React.JSX.Element[] | React.JSX.Element;
+  children: React.ReactNode;
 };
 
 export const ReduxProvider = ({
