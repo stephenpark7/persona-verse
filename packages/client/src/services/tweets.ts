@@ -23,7 +23,7 @@ export const getTweets = async (): Promise<TweetData[]> => {
 export const postTweet = async ({
   jwt,
   payload,
-}: PostTweet): Promise<void> => {
+}: PostTweet): Promise<TweetData> => {
   if (!jwt) {
     throw new Error('Failed to post tweet.');
   }
@@ -35,11 +35,15 @@ export const postTweet = async ({
     body: payload,
   }, true, 'rest');
 
-  if (!response || !response.tweet) return;
+  if (!response || !response.tweet) {
+    throw new Error('Failed to post tweet.');
+  }
 
   response.tweet.User = {
     username: jwt.payload.username,
   };
 
   store.dispatch(addTweet(response.tweet));
+
+  return response.tweet;
 };

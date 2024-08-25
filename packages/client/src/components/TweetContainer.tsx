@@ -1,21 +1,16 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { toast } from 'react-toastify';
 import { Button } from '@components';
 import { TweetData } from '@interfaces';
-import { postTweet } from '@services';
 import { useUserState } from '@hooks';
-import { useGetTweetsQuery } from '@redux';
+import { useGetTweetsQuery, usePostTweetMutation } from '@redux';
 import { Tweet } from '@components';
 
 export const TweetContainer: React.FC = (): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
-  const { jwt, tweets, isLoggedIn } = useUserState();
-  const { data, isLoading, refetch } = useGetTweetsQuery();
-
-  // TODO: refactor using tags with RTK Query
-  useEffect(() => {
-    refetch();
-  }, [ tweets ]);
+  const { jwt, isLoggedIn } = useUserState();
+  const { data, isLoading } = useGetTweetsQuery();
+  const [ postTweet ] = usePostTweetMutation();
 
   const handlePostTweet = async () => {
     if (!isLoggedIn) {
@@ -31,10 +26,11 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
 
     textRef.current.value = '';
 
-    await postTweet({
-      jwt: jwt,
-      payload: { message: message },
-    });
+    if (!jwt) {
+      return;
+    }
+
+    postTweet({ jwt: jwt, payload: { message: message } });
   };
   
   const tweetsContent = useMemo(() => {
