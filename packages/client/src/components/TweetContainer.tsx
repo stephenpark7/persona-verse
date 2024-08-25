@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button } from '@components';
 import { TweetData } from '@interfaces';
 import { postTweet } from '@services';
 import { useUserState } from '@hooks';
@@ -9,8 +8,8 @@ import { useGetTweetsQuery } from '@redux';
 import { Tweet } from '@components';
 
 export const TweetContainer: React.FC = (): React.JSX.Element => {
-  const { jwt, tweets, isLoggedIn } = useUserState();
   const textRef = React.useRef<HTMLInputElement>(null);
+  const { jwt, tweets, isLoggedIn } = useUserState();
   const { data, isLoading, refetch } = useGetTweetsQuery();
 
   // TODO: refactor using tags with RTK Query
@@ -19,7 +18,9 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
   }, [ tweets ]);
 
   const handlePostTweet = async () => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+      return;
+    }
 
     const message = textRef.current?.value;
 
@@ -35,29 +36,39 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
       payload: { message: message },
     });
   };
-
-  const renderTweets = (): React.ReactNode => {
+  
+  const tweetsContent = useMemo(() => {
     if (isLoading || !data) {
       return <p>Loading...</p>;
     }
+
     return data?.slice(0, 5).map((data: TweetData, idx: React.Key) =>
       <Tweet 
         key={idx}
         {...data}
       />,
     );
-  };
+  }, [ isLoading, data ]);
 
   return (
-    <Form>
-      <Form.Group className='mt-3 mb-3'>
-        <Form.Control ref={textRef} type='text' placeholder={'What\'s happening?'}
-          defaultValue={''} required />
-      </Form.Group>
-      <Button variant="primary" onClick={handlePostTweet}>Tweet</Button>
-      <br /><br />
-      <h2>Tweets</h2>
-      {renderTweets()}
-    </Form>
+    <div>
+      <div className='mt-3 mb-3'>
+        <input
+          className='border border-black rounded w-96 h-9 p-2'
+          ref={textRef} type='text' placeholder={'What\'s happening?'}
+          defaultValue={''} required
+        />
+      </div>
+      <Button 
+        extraStyles='mb-2'
+        onClickEvent={handlePostTweet}
+      >
+        Tweet
+      </Button>
+      <div className='flex flex-col '>
+        <span className='font-bold'>Tweets</span>
+        {tweetsContent}
+      </div>
+    </div>
   );
 };

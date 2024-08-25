@@ -1,7 +1,6 @@
 import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
-import { renderApp } from '../utils';
-import { mockJwt } from '../mocks';
+import { StoreStateStubs, renderApp } from '../utils';
 
 describe('Home page', () => {
 
@@ -12,10 +11,15 @@ describe('Home page', () => {
 
     it('has a title', () => {
       expect(document.title).toBe('PersonaVerse');
+      // screen.debug();
     });
   
     it('renders h1', () => {
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('PersonaVerse');
+    });
+
+    it('does not render h2', () => {
+      expect(screen.queryByRole('heading', { level: 2 })).toBeNull();
     });
   });
 
@@ -31,34 +35,37 @@ describe('Home page', () => {
     it('renders buttons', () => {
       const buttons = screen.getAllByRole('button');
       expect(buttons).toHaveLength(2);
-      expect(buttons).toHaveSomeText('Sign up');
-      expect(buttons).toHaveSomeText('Log in');
+      expect(buttons).someToContainText('Sign up');
+      expect(buttons).someToContainText('Log in');
     });
   });
 
   describe('when user is logged in', () => {
     beforeEach(() => {
-      renderApp({
-        user: {
-          value: {
-            jwt: mockJwt,
-            tweets: null,
-          },
-        },
-      });
+      renderApp(StoreStateStubs.loggedIn);
     });
 
     it('renders p', () => {
-      expect(screen.getAllByRole('paragraph')).toHaveSomeText('Welcome test_user!');
+      expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
     });
 
-    it('renders tweet container', () => {
+    it('renders textbox', () => {
       expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe('What\'s happening?');
+    });
+
+    it('renders heading', () => {
       expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Tweets');
-      expect(screen.getAllByRole('paragraph')).toHaveSomeText('Loading...');
+    });
+
+    it('renders paragraph', () => {
+      expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
+    });
+    
+    it('renders buttons', () => {
       const buttons = screen.getAllByRole('button');
-      expect(buttons).toHaveSomeText('Tweet');
-      expect(buttons).toHaveSomeText('Log out');
+      expect(buttons).toHaveLength(2);
+      expect(buttons).someToContainText('Tweet');
+      expect(buttons).someToContainText('Log out');
     });
   });
 });
