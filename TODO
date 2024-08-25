@@ -1,4 +1,5 @@
 In Progress:
+  ☐ TODO: complete signup page tailwindcss integration
   ☐ Use tailwindcss instead of bootstrap @started(24-08-21 02:25)
   ☐ Create mock/factory/stubs folder for tests
   ☐ Add more tests @started(24-08-21 02:24)
