@@ -11,9 +11,9 @@ export const LogoutButton: React.FC = (): React.JSX.Element => {
   };
 
   return (
-    <Button
-      variant='primary'
+    <button
+      className='primary'
       onClick={handleLogout}>Log out
-    </Button>
+    </button>
   );
 };
