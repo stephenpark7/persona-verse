@@ -53,13 +53,22 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
   return (
     <div>
       <div className='mt-3 mb-3'>
-        <input ref={textRef} type='text' placeholder={'What\'s happening?'}
-          defaultValue={''} required />
+        <input
+          className='border border-black rounded w-96 h-9 p-2'
+          ref={textRef} type='text' placeholder={'What\'s happening?'}
+          defaultValue={''} required
+        />
       </div>
-      <Button onClickEvent={handlePostTweet}>Tweet</Button>
-      <br /><br />
-      <h2>Tweets</h2>
-      {tweetsContent}
+      <Button 
+        extraStyles='mb-2'
+        onClickEvent={handlePostTweet}
+      >
+        Tweet
+      </Button>
+      <div className='flex flex-col '>
+        <span className='font-bold'>Tweets</span>
+        {tweetsContent}
+      </div>
     </div>
   );
 };

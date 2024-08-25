@@ -41,7 +41,7 @@ export const Home: React.FC = (): React.JSX.Element => {
   return (
     <div>
       <h1 className='text-5xl mb-3'>PersonaVerse</h1>
-      <p className='text-xl mb-2'>{welcomeMessageContent}</p>
+      <p className='text-lg mb-2'>{welcomeMessageContent}</p>
       <div className='flex gap-2'>{bodyContent}</div>
     </div>
   );
