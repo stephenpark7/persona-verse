@@ -1,24 +1,23 @@
 import React from 'react';
 
 interface ButtonProps {
-  variant: string;
+  variant?: string;
   type?: string;
   onClickEvent?: (e: React.FormEvent) => void;
   children: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({ variant, onClickEvent, children }): React.JSX.Element => {
-  const handleOnClick = (e: React.FormEvent) => {
-    if (!onClickEvent) {
-      return;
-    }
-    onClickEvent(e);
-  };
+export const Button: React.FC<ButtonProps> = ({ 
+  // variant,
+  // type,
+  onClickEvent, 
+  children,
+}): React.JSX.Element => {
 
   return (
-    <button
-      className={`btn btn-${variant}`}
-      onClick={handleOnClick}>
+    <button onClick={(e: React.FormEvent) => onClickEvent && onClickEvent(e)}
+            className='border border-black rounded bg-white h-9 w-24 text-md 
+                     hover:bg-black hover:text-white transition-colors ease-in-out duration-200'>
       {children}
     </button>
   );

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
-import { Button, Form } from '@components';
+import { Button } from '@components';
 import { TweetData } from '@interfaces';
 import { postTweet } from '@services';
 import { useUserState } from '@hooks';
@@ -8,8 +8,8 @@ import { useGetTweetsQuery } from '@redux';
 import { Tweet } from '@components';
 
 export const TweetContainer: React.FC = (): React.JSX.Element => {
-  const { jwt, tweets, isLoggedIn } = useUserState();
   const textRef = React.useRef<HTMLInputElement>(null);
+  const { jwt, tweets, isLoggedIn } = useUserState();
   const { data, isLoading, refetch } = useGetTweetsQuery();
 
   // TODO: refactor using tags with RTK Query
@@ -18,7 +18,9 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
   }, [ tweets ]);
 
   const handlePostTweet = async () => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+      return;
+    }
 
     const message = textRef.current?.value;
 
@@ -34,18 +36,19 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
       payload: { message: message },
     });
   };
-
-  const renderTweets = (): React.ReactNode => {
+  
+  const tweetsContent = useMemo(() => {
     if (isLoading || !data) {
       return <p>Loading...</p>;
     }
+
     return data?.slice(0, 5).map((data: TweetData, idx: React.Key) =>
       <Tweet 
         key={idx}
         {...data}
       />,
     );
-  };
+  }, [ isLoading, data ]);
 
   return (
     <div>
@@ -53,10 +56,10 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
         <input ref={textRef} type='text' placeholder={'What\'s happening?'}
           defaultValue={''} required />
       </div>
-      <button className="primary" onClick={handlePostTweet}>Tweet</button>
+      <Button onClickEvent={handlePostTweet}>Tweet</Button>
       <br /><br />
       <h2>Tweets</h2>
-      {renderTweets()}
+      {tweetsContent}
     </div>
   );
 };
