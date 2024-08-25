@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider, useMatches } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Home, Login, Signup } from '@pages';
 import { MainLayout } from 'src/layouts/main';
 
