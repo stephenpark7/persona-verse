@@ -8,7 +8,7 @@ export const register: RegisterFunction = async ({
   navigate,
   showToast = true,
   autoLogin = true,
-}: RegisterParams): Promise<void> => {
+}: RegisterParams): Promise<boolean> => {
   const response = await apiCall({
     method: 'POST',
     controller: 'users',
@@ -16,7 +16,9 @@ export const register: RegisterFunction = async ({
     body: formData,
   }, showToast, 'trpc');
 
-  if (!response) return;
+  if (!response) {
+    return Promise.resolve(false);
+  }
 
   if (autoLogin) {
     await login({
@@ -25,13 +27,15 @@ export const register: RegisterFunction = async ({
       showToast: false,
     });
   }
+
+  return Promise.resolve(true);
 };
 
 export const login: LoginFunction = async ({
   formData,
   navigate,
   showToast = true,
-}: LoginParams): Promise<void> => {
+}: LoginParams): Promise<boolean> => {
   const response = await apiCall({
     method: 'POST',
     controller: 'users',
@@ -40,15 +44,17 @@ export const login: LoginFunction = async ({
     options: { withCredentials: true },
   }, showToast, 'trpc');
 
-  if (!response) return;
+  if (!response) {
+    return Promise.resolve(false);
+  }
 
   if (!response.jwt) {
     throw new Error('JWT data is missing.');
   }
 
   store.dispatch(setJwt(response.jwt));
-
   navigate('/'); 
+  return Promise.resolve(true);
 };
 
 export const logout = async (
@@ -63,10 +69,10 @@ export const logout = async (
   }, showToast, 'trpc');
 
   if (!response) {
-    return false;
+    return Promise.resolve(false);
   }
 
   store.dispatch(clearJwt());
   navigate('/');
-  return true;
+  return Promise.resolve(true);
 };

@@ -14,8 +14,8 @@ export interface LoginParams {
   showToast?: boolean | undefined,
 }
 
-export type RegisterFunction = (params: RegisterParams) => Promise<void>;
+export type RegisterFunction = (params: RegisterParams) => Promise<boolean>;
 
-export type LoginFunction = (params: LoginParams) => Promise<void>;
+export type LoginFunction = (params: LoginParams) => Promise<boolean>;
 
 export type ApiFunction = ({ ...args }: RegisterParams | LoginParams) => Promise<void>;
