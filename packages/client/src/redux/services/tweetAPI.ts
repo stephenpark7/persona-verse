@@ -20,7 +20,10 @@ export const tweetAPI = createApi({
       },
       providesTags: [ 'Tweets' ],
     }),
-    postTweet: builder.mutation<TweetData, { jwt: JWT, payload: { message: string } }>({
+    postTweet: builder.mutation<TweetData, { 
+      jwt: JWT, 
+      payload: { message: string },
+    }>({
       queryFn: async (arg) => {
         const { jwt, payload } = arg;
         const tweet = await postTweet({ jwt, payload });
