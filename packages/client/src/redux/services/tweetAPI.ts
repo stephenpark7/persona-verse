@@ -4,7 +4,9 @@ import { getTweets, postTweet } from '@services';
 import { apiConfig } from '@utils';
 import { JWT } from '@shared';
 
-const baseQuery = fetchBaseQuery({ baseUrl: apiConfig.baseUrl });
+const baseQuery = fetchBaseQuery({ 
+  baseUrl: apiConfig.baseUrl, 
+});
 
 export const tweetAPI = createApi({
   reducerPath: 'tweetAPI',
