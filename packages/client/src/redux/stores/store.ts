@@ -2,7 +2,12 @@ import { combineReducers } from 'redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { State } from '@interfaces';
 import { tokenStorage } from '@utils';
-import { setJwtReducer, clearJwtReducer, addTweetReducer, setTweetsReducer } from '../reducers';
+import { 
+  setJwtReducer, 
+  clearJwtReducer, 
+  addTweetReducer, 
+  setTweetsReducer, 
+} from '../reducers';
 import { tweetAPI } from '../services';
 import { useDispatch } from 'react-redux';
 
