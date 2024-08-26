@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { getDisplayName } from '@utils';
 import { useUserState } from '@hooks';
@@ -7,36 +7,26 @@ import { Button, LogoutButton, TweetContainer, Profile } from '@components';
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
 
-  const welcomeMessageContent = useMemo(() => {
-    if (isLoggedIn) {
-      return `Welcome ${getDisplayName(jwt)}!`;
-    }
+  const welcomeMessageContent = isLoggedIn
+    ? `Welcome ${getDisplayName(jwt)}!`
+    : 'Create an account or log in.';
 
-    return 'Create an account or log in.';
-  }, [ isLoggedIn ]);
-
-  const bodyContent = useMemo(() => {
-    if (isLoggedIn) {
-      return (
-        <div>
-          <Profile />
-          <TweetContainer />
-          <LogoutButton />
-        </div>
-      );
-    }
-
-    return (
-      <div className='flex gap-2'>
-        <Link to='/signup'>
-          <Button>Sign up</Button>
-        </Link>
-        <Link to='/login'>
-          <Button>Log in</Button>
-        </Link>
-      </div>
-    );
-  }, [ isLoggedIn ]);
+  const bodyContent = isLoggedIn ? (
+    <div>
+      <Profile />
+      <TweetContainer />
+      <LogoutButton />
+    </div>
+  ) : (
+    <div className='flex gap-2'>
+      <Link to='/signup'>
+        <Button>Sign up</Button>
+      </Link>
+      <Link to='/login'>
+        <Button>Log in</Button>
+      </Link>
+    </div>
+  );
 
   return (
     <div>

@@ -43,6 +43,7 @@ describe('Home Component', () => {
     expect(screen.getByText('Profile')).toBeInTheDocument();
     expect(screen.getByText('TweetContainer')).toBeInTheDocument();
     expect(screen.getByText('Logout')).toBeInTheDocument();
+    screen.debug();
   });
 
   test('renders welcome message and buttons when logged out', () => {
