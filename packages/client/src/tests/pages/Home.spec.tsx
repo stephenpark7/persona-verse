@@ -40,10 +40,10 @@ describe('Home page', () => {
     });
   });
 
-  describe('when user is logged in', () => {
-    beforeEach(() => {
-      renderApp(StoreStateStubs.loggedIn);
-    });
+  // describe('when user is logged in', () => {
+    // beforeEach(() => {
+    //   renderApp(StoreStateStubs.loggedIn);
+    // });
 
     // it('renders p', () => {
     //   expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
@@ -63,5 +63,5 @@ describe('Home page', () => {
     //   expect(buttons).someToContainText('Tweet');
     //   expect(buttons).someToContainText('Log out');
     // });
-  });
+  // });
 });
