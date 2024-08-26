@@ -26,7 +26,10 @@ export const tweetAPI = createApi({
     }>({
       queryFn: async (arg) => {
         const { jwt, payload } = arg;
-        const tweet = await postTweet({ jwt, payload });
+        const tweet = await postTweet({ 
+          jwt, 
+          payload, 
+        });
         return { data: tweet };
       },
       invalidatesTags: [ 'Tweets' ],
