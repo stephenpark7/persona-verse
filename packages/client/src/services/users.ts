@@ -54,7 +54,7 @@ export const login: LoginFunction = async ({
 export const logout = async (
   navigate: NavigateFunction,
   showToast = true,
-): Promise<void> => {
+): Promise<boolean> => {
   const response = await apiCall({
     method: 'POST',
     controller: 'users',
@@ -62,9 +62,11 @@ export const logout = async (
     options: { withCredentials: true },
   }, showToast, 'trpc');
 
-  if (!response) return;
+  if (!response) {
+    return false;
+  }
 
   store.dispatch(clearJwt());
-
   navigate('/');
+  return true;
 };

@@ -4,6 +4,7 @@ import { State } from '@interfaces';
 import { tokenStorage } from '@utils';
 import { setJwtReducer, clearJwtReducer, addTweetReducer, setTweetsReducer } from '../reducers';
 import { tweetAPI } from '../services';
+import { useDispatch } from 'react-redux';
 
 export const initialState: State = {
   value: {
@@ -38,8 +39,10 @@ export const setupStore = (preloadedState?: Partial<RootState>) => {
   });
 };
 
-export const store = setupStore();
-
 export type AppStore = ReturnType<typeof setupStore>;
 
 export type AppDispatch = AppStore['dispatch'];
+
+export const useAppStoreDispatch = useDispatch<AppDispatch>;
+
+export const store = setupStore();
