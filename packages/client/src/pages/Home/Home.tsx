@@ -2,7 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { getDisplayName } from '@utils';
 import { useUserState } from '@hooks';
-import { Button, LogoutButton, TweetContainer, Profile } from '@components';
+import {
+  Button,
+  LogoutButton,
+  TweetContainer,
+  Profile,
+} from '@components';
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();

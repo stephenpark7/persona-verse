@@ -1,27 +1,36 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Home } from './Home';
+import { render, screen } from '@testing-library/react';
+import { Home } from '@pages';
 import { useUserState } from '@hooks';
 import { getDisplayName } from '@utils';
 import { vi, describe, beforeEach, test, expect, Mock } from 'vitest';
+import { mockJwt } from 'src/tests/mocks';
 
-// Mock the dependencies
 vi.mock('@hooks', () => ({
   useUserState: vi.fn(),
 }));
 
 vi.mock('@utils', () => ({
   getDisplayName: vi.fn(),
+  JWTSchema: {
+    parse: vi.fn(),
+  },
+  apiConfig: vi.fn(),
+  tokenStorage: {
+    getAccessToken: vi.fn(),
+  },
 }));
 
 vi.mock('@components', () => ({
-  Button: ({ children }: { children: React.ReactNode }) => <button>
+  Button: ({ children }: { 
+    children: React.ReactNode 
+  }) => <button>
     {children}
   </button>,
-  LogoutButton: () => <button>Logout</button>,
-  TweetContainer: () => <div>TweetContainer</div>,
   Profile: () => <div>Profile</div>,
+  TweetContainer: () => <div>TweetContainer</div>,
+  LogoutButton: () => <button>Logout</button>,
 }));
 
 describe('Home Component', () => {
@@ -30,8 +39,12 @@ describe('Home Component', () => {
   });
 
   test('renders welcome message and components when logged in', () => {
-    (useUserState as Mock).mockReturnValue({ jwt: 'fake-jwt', isLoggedIn: true });
-    (getDisplayName as Mock).mockReturnValue('John Doe');
+    vi.mocked(useUserState).mockReturnValue({ 
+      jwt: mockJwt,
+      isLoggedIn: true,
+      tweets: null,
+    });
+    vi.mocked(getDisplayName).mockReturnValue('John Doe');
 
     render(
       <Router>

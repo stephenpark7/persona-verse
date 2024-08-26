@@ -7,7 +7,7 @@ import { clearJwt, store } from '@redux';
 
 let isRefreshing = false;
 
-const useAxiosInterceptors = (jwt: JWT) => {
+export const useAxiosInterceptors = (jwt: JWT) => {
   axios.interceptors.request.use((config) => {
     if (canUseAuthorizationHeader(jwt, config)) {
       config.headers.Authorization = `Bearer ${jwt?.token}`;
@@ -45,5 +45,3 @@ const useAxiosInterceptors = (jwt: JWT) => {
     return Promise.reject(error);
   });
 };
-
-export { useAxiosInterceptors };

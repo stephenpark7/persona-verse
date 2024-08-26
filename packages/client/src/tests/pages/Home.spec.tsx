@@ -41,27 +41,27 @@ describe('Home page', () => {
   });
 
   // describe('when user is logged in', () => {
-    // beforeEach(() => {
-    //   renderApp(StoreStateStubs.loggedIn);
-    // });
+  //   beforeEach(() => {
+  //     renderApp(StoreStateStubs.loggedIn);
+  //   });
 
-    // it('renders p', () => {
-    //   expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
-    // });
+  //   it('renders p', () => {
+  //     expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
+  //   });
 
-    // it('renders textbox', () => {
-    //   expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe('What\'s happening?');
-    // });
+  //   it('renders textbox', () => {
+  //     expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe('What\'s happening?');
+  //   });
 
-    // it('renders paragraph', () => {
-    //   expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
-    // });
+  //   it('renders paragraph', () => {
+  //     expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
+  //   });
     
-    // it('renders buttons', () => {
-    //   const buttons = screen.getAllByRole('button');
-    //   expect(buttons).toHaveLength(2);
-    //   expect(buttons).someToContainText('Tweet');
-    //   expect(buttons).someToContainText('Log out');
-    // });
+  //   it('renders buttons', () => {
+  //     const buttons = screen.getAllByRole('button');
+  //     expect(buttons).toHaveLength(2);
+  //     expect(buttons).someToContainText('Tweet');
+  //     expect(buttons).someToContainText('Log out');
+  //   });
   // });
 });

@@ -25,6 +25,7 @@
       "@utils": [ "./src/utils/index" ],
       "@pages": [ "./src/pages/index" ],
       "@services": [ "./src/services/index" ],
+      "@interceptors": [ "./src/interceptors/index" ],
       "@shared": [ "../shared/types/index" ]
     }
   }

@@ -3,12 +3,13 @@ import type { RootState } from '@redux';
 import { mockJwt } from '../mocks';
 
 export const renderApp = (
+  rootComponent: React.ReactElement = <Router />,
   preloadedState?: RootState,
 ) => {
-  renderWithProviders(<Router />, { preloadedState });
+  renderWithProviders(rootComponent, { preloadedState });
 };
 
-export const StoreStateStubs = {
+export const fgStoreStateStubs = {
   loggedIn: {
     user: {
       value: {

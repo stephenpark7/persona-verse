@@ -11,6 +11,7 @@
       "@utils": [ "./packages/client/src/utils/index" ],
       "@pages": [ "./packages/client/src/pages/index" ],
       "@services": [ "./packages/client/src/services/index" ],
+      "@interceptors": [ "./packages/client/src/interceptors/index" ],
       "@shared": [ "./packages/shared/types/index" ]
     }
   }
