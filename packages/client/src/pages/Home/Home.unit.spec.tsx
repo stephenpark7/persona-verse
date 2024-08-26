@@ -44,6 +44,7 @@ describe('Home Component', () => {
       isLoggedIn: true,
       tweets: null,
     });
+    
     vi.mocked(getDisplayName).mockReturnValue('John Doe');
 
     render(
