@@ -32,5 +32,4 @@ export const tweetAPI = createApi({
 export const { 
   useGetTweetsQuery, 
   usePostTweetMutation, 
-  usePrefetch, 
 } = tweetAPI;
