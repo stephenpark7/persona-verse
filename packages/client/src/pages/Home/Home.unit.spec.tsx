@@ -5,33 +5,7 @@ import { Home } from '@pages';
 import { useUserState } from '@hooks';
 import { getDisplayName } from '@utils';
 import { vi, describe, beforeEach, test, expect, Mock } from 'vitest';
-import { mockJwt } from 'src/tests/mocks';
-
-vi.mock('@hooks', () => ({
-  useUserState: vi.fn(),
-}));
-
-vi.mock('@utils', () => ({
-  getDisplayName: vi.fn(),
-  JWTSchema: {
-    parse: vi.fn(),
-  },
-  apiConfig: vi.fn(),
-  tokenStorage: {
-    getAccessToken: vi.fn(),
-  },
-}));
-
-vi.mock('@components', () => ({
-  Button: ({ children }: { 
-    children: React.ReactNode 
-  }) => <button>
-    {children}
-  </button>,
-  Profile: () => <div>Profile</div>,
-  TweetContainer: () => <div>TweetContainer</div>,
-  LogoutButton: () => <button>Logout</button>,
-}));
+import { jwtFactory } from '@factories';
 
 describe('Home Component', () => {
   beforeEach(() => {
@@ -39,13 +13,17 @@ describe('Home Component', () => {
   });
 
   test('renders welcome message and components when logged in', () => {
-    vi.mocked(useUserState).mockReturnValue({ 
-      jwt: mockJwt,
+    const useUserStateStub = vi.mocked(useUserState);
+
+    useUserStateStub.mockReturnValue({ 
+      jwt: jwtFactory(),
       isLoggedIn: true,
       tweets: null,
     });
     
-    vi.mocked(getDisplayName).mockReturnValue('John Doe');
+    const getDisplayNameStub = vi.mocked(getDisplayName);
+    
+    getDisplayNameStub.mockReturnValue('John Doe');
 
     render(
       <Router>
