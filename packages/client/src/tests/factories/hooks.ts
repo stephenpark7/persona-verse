@@ -1,10 +1,10 @@
-import { useUserState } from '@hooks';
-import { mockJwt } from '../mocks';
+import { jwtFactory } from './jwt';
 
-const useUserStateStub = vi.mocked(useUserState);
-
-useUserStateStub.mockReturnValue({ 
-  jwt: mockJwt,
-  isLoggedIn: true,
-  tweets: null,
-});
+export const useUserStateFactory = (overrides = {}) => {
+  return {
+    jwt: jwtFactory(),
+    isLoggedIn: true,
+    tweets: null,
+    ...overrides,
+  };
+};

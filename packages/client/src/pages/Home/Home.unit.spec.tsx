@@ -3,9 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { Home } from '@pages';
 import { useUserState } from '@hooks';
-import { getDisplayName } from '@utils';
 import { vi, describe, beforeEach, test, expect, Mock } from 'vitest';
-import { jwtFactory } from '@factories';
 
 describe('Home Component', () => {
   beforeEach(() => {
@@ -13,18 +11,6 @@ describe('Home Component', () => {
   });
 
   test('renders welcome message and components when logged in', () => {
-    const useUserStateStub = vi.mocked(useUserState);
-
-    useUserStateStub.mockReturnValue({ 
-      jwt: jwtFactory(),
-      isLoggedIn: true,
-      tweets: null,
-    });
-    
-    const getDisplayNameStub = vi.mocked(getDisplayName);
-    
-    getDisplayNameStub.mockReturnValue('John Doe');
-
     render(
       <Router>
         <Home />

@@ -1,4 +1,5 @@
 import { vi } from 'vitest';
+import { getDisplayName } from '@utils';
 
 vi.mock('@utils', () => ({
   getDisplayName: vi.fn(),
@@ -10,3 +11,5 @@ vi.mock('@utils', () => ({
     getAccessToken: vi.fn(),
   },
 }));
+
+export const getDisplayNameStub = vi.mocked(getDisplayName).mockReturnValue('John Doe');
