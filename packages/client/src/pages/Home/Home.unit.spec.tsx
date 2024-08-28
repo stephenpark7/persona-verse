@@ -4,6 +4,8 @@ import { render, screen } from '@testing-library/react';
 import { Home } from '@pages';
 import { useUserState } from '@hooks';
 import { vi, describe, beforeEach, test, expect, Mock } from 'vitest';
+import { getDisplayName } from '@utils';
+import { jwtFactory } from '@factories';
 
 describe('Home Component', () => {
   beforeEach(() => {
@@ -17,9 +19,9 @@ describe('Home Component', () => {
       </Router>,
     );
 
-    // expect(useUserStateStub).toHaveBeenCalledOnce();
-
-    expect(screen.getByText('Welcome John Doe!')).toBeInTheDocument();
+    const jwt = jwtFactory();
+    const displayName = getDisplayName(jwt);
+    expect(screen.getByText(`Welcome ${displayName}!`)).toBeInTheDocument();
     expect(screen.getByText('Profile')).toBeInTheDocument();
     expect(screen.getByText('TweetContainer')).toBeInTheDocument();
     expect(screen.getByText('Logout')).toBeInTheDocument();
