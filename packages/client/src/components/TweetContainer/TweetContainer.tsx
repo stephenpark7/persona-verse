@@ -5,6 +5,7 @@ import { TweetData } from '@interfaces';
 import { useUserState } from '@hooks';
 import { useGetTweetsQuery, usePostTweetMutation } from '@redux';
 import { Tweet } from '@components';
+import { TweetInput } from './components/TweetInput';
 
 export const TweetContainer: React.FC = (): React.JSX.Element => {
   const textRef = React.useRef<HTMLInputElement>(null);
@@ -48,13 +49,7 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
 
   return (
     <div>
-      <div className='mt-3 mb-3'>
-        <input
-          className='border border-black rounded w-96 h-9 p-2'
-          ref={textRef} type='text' placeholder={'What\'s happening?'}
-          defaultValue={''} required
-        />
-      </div>
+      <TweetInput textRef={textRef} />
       <Button 
         extraStyles='mb-2'
         onClickEvent={handlePostTweet}
