@@ -8,14 +8,21 @@ import {
   TweetContainer,
   Profile,
 } from '@components';
+import { 
+  Header, 
+  WelcomeMessage, 
+  BodyContent, 
+} from './components';
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
 
+  // TODO: move to a helper function
   const welcomeMessageContent = isLoggedIn
     ? `Welcome ${getDisplayName(jwt)}!`
     : 'Create an account or log in.';
 
+  // TODO: move to a helper function
   const bodyContent = isLoggedIn ? (
     <div>
       <Profile />
@@ -35,9 +42,9 @@ export const Home: React.FC = (): React.JSX.Element => {
 
   return (
     <div>
-      <h1 className='text-5xl mb-3'>PersonaVerse</h1>
-      <p className='text-lg mb-2'>{welcomeMessageContent}</p>
-      <div className='flex gap-2'>{bodyContent}</div>
+      <Header title='PersonaVerse' />
+      <WelcomeMessage message={welcomeMessageContent} />
+      <BodyContent content={bodyContent} />
     </div>
   );
 };
