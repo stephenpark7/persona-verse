@@ -3,9 +3,10 @@ import { Header } from '@pages';
 
 describe('Header Component', () => {
   test('renders the title', () => {
-    render(<Header title={'PersonaVerse'} />);
+    const title = 'PersonaVerse';
+    render(<Header title={title} />);
     expect(screen.getByRole('heading', { 
-      name: /PersonaVerse/, 
+      name: title, 
       level: 1,
     })).toBeInTheDocument();
   });
