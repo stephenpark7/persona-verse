@@ -58,6 +58,7 @@ export const TweetContainer: React.FC = (): React.JSX.Element => {
       >
         Tweet
       </Button>
+      {/* // TODO: modularize below and move to a new file */}
       <div className='flex flex-col '>
         <span className='font-bold'>Tweets</span>
         {tweetsContent}
