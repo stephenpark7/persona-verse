@@ -29,6 +29,7 @@
       "@factories": [ "./src/tests/factories/index" ],
       "@mocks": [ "./src/mocks/index" ],
       "@matchers": [ "./src/tests/matchers/index" ],
+      "@helpers": [ "./src/tests/helpers/index" ],
       "@shared": [ "../shared/types/index" ]
     }
   }

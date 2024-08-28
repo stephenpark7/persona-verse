@@ -1,9 +1,11 @@
 import { vi } from 'vitest';
 import { useUserState } from '@hooks';
-import { useUserStateFactory } from '@factories';
+import { UserTypes, useUserStateFactory } from '@factories';
 
 vi.mock('@hooks', () => ({
   useUserState: vi.fn(),
 }));
 
-export const useUserStateStub = vi.mocked(useUserState).mockReturnValue(useUserStateFactory());
+export const useUserStateStubGuest = () => vi.mocked(useUserState).mockImplementationOnce(() => useUserStateFactory(UserTypes.Guest));
+
+export const useUserStateStubUser = () => vi.mocked(useUserState).mockImplementationOnce(() => useUserStateFactory(UserTypes.User));

@@ -15,6 +15,7 @@
       "@factories": [ "./packages/client/src/tests/factories/index" ],
       "@mocks": [ "./packages/client/src/tests/mocks/index" ],
       "@matchers": [ "./packages/client/src/tests/matchers/index" ],
+      "@helpers": [ "./packages/client/src/tests/helpers/index" ],
       "@shared": [ "./packages/shared/types/index" ]
     }
   }

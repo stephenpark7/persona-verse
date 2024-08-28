@@ -1,6 +1,8 @@
 import React from 'react';
 import { vi } from 'vitest';
 
+// TODO: only mock for unit tests
+
 vi.mock('@components', () => ({
   Button: ({ children }: { 
     children: React.ReactNode 

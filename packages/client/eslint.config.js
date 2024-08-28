@@ -30,7 +30,7 @@ export default [
   },
   {
     files: [ '**/**/*.{ts,tsx}' ],
-    ignores: [ '**/tests/**/*.{ts,tsx}' ],
+    ignores: [ '**/**/*.{test,spec}.{ts,tsx}' ],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,
@@ -59,7 +59,7 @@ export default [
     },
   },
   {
-    files: [ '**/tests/**/*.{ts,tsx}' ],
+    files: [ '**/**/*.{test,spec}.{ts,tsx}' ],
     languageOptions: {
       globals: {
         ...vitest.environments.env.globals,

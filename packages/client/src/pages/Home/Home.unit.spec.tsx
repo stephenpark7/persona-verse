@@ -1,44 +1,81 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { Home } from '@pages';
-import { useUserState } from '@hooks';
-import { vi, describe, beforeEach, test, expect, Mock } from 'vitest';
-import { getDisplayName } from '@utils';
-import { jwtFactory } from '@factories';
+import { describe, beforeEach, it, expect } from 'vitest';
+import { renderPage } from '@helpers';
+import { useUserStateStubGuest, useUserStateStubUser } from 'src/tests/mocks';
 
-describe('Home Component', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
+describe('When visiting the home page', () => {
+  describe('while logged out', () => {
+    beforeEach(() => {
+      useUserStateStubGuest();
+      renderPage(<Home />);
+    });
+
+    // positive tests
+    it('renders welcome message', () => {
+      expect(screen.getByText('Create an account or log in.')).toBeInTheDocument();
+    });
+
+    it('renders sign up button', () => {
+      expect(screen.getByText('Sign up')).toBeInTheDocument();
+    });
+
+    it('renders log in button', () => {
+      expect(screen.getByText('Log in')).toBeInTheDocument();
+    });
+
+    // negative tests
+    it('does not render welcome message', () => {
+      expect(screen.queryByText('Welcome John Doe!')).not.toBeInTheDocument();
+    });
+
+    it('does not render profile', () => {
+      expect(screen.queryByText('Profile')).not.toBeInTheDocument();
+    });
+
+    it('does not render tweet container', () => {
+      expect(screen.queryByText('TweetContainer')).not.toBeInTheDocument();
+    });
+
+    it('does not render logout button', () => {
+      expect(screen.queryByText('Logout')).not.toBeInTheDocument();
+    });
   });
 
-  test('renders welcome message and components when logged in', () => {
-    render(
-      <Router>
-        <Home />
-      </Router>,
-    );
+  describe('while logged in', () => {
+    beforeEach(() => {
+      useUserStateStubUser();
+      renderPage(<Home />);
+    });
 
-    const jwt = jwtFactory();
-    const displayName = getDisplayName(jwt);
-    expect(screen.getByText(`Welcome ${displayName}!`)).toBeInTheDocument();
-    expect(screen.getByText('Profile')).toBeInTheDocument();
-    expect(screen.getByText('TweetContainer')).toBeInTheDocument();
-    expect(screen.getByText('Logout')).toBeInTheDocument();
-    screen.debug();
-  });
+    // positive tests
+    it('renders welcome message', () => {
+      expect(screen.getByText('Welcome John Doe!')).toBeInTheDocument();
+    });
 
-  test('renders welcome message and buttons when logged out', () => {
-    (useUserState as Mock).mockReturnValue({ jwt: null, isLoggedIn: false });
+    it('renders profile', () => {
+      expect(screen.getByText('Profile')).toBeInTheDocument();
+    });
 
-    render(
-      <Router>
-        <Home />
-      </Router>,
-    );
+    it('renders tweet container', () => {
+      expect(screen.getByText('TweetContainer')).toBeInTheDocument();
+    });
 
-    expect(screen.getByText('Create an account or log in.')).toBeInTheDocument();
-    expect(screen.getByText('Sign up')).toBeInTheDocument();
-    expect(screen.getByText('Log in')).toBeInTheDocument();
+    it('renders logout button', () => {
+      expect(screen.getByText('Logout')).toBeInTheDocument();
+    });
+
+    // negative tests
+    it('does not render sign up button', () => {
+      expect(screen.queryByText('Sign up')).not.toBeInTheDocument();
+    });
+
+    it('does not render log in button', () => {
+      expect(screen.queryByText('Log in')).not.toBeInTheDocument();
+    });
+
+    it('does not render create account message', () => {
+      expect(screen.queryByText('Create an account or log in.')).not.toBeInTheDocument();
+    });
   });
 });

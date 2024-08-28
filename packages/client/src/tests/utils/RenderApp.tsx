@@ -1,21 +1,24 @@
+import React from 'react';
 import { renderWithProviders, Router } from '@core';
 import type { RootState } from '@redux';
-import { mockJwt } from '../mocks';
+// import { jwtFactory } from '@factories';
 
 export const renderApp = (
   rootComponent: React.ReactElement = <Router />,
   preloadedState?: RootState,
 ) => {
-  renderWithProviders(rootComponent, { preloadedState });
+  renderWithProviders(rootComponent, { 
+    preloadedState,
+  });
 };
 
-export const fgStoreStateStubs = {
-  loggedIn: {
-    user: {
-      value: {
-        jwt: mockJwt,
-        tweets: null,
-      },
-    },
-  },
-}
+// export const fgStoreStateStubs = {
+//   loggedIn: {
+//     user: {
+//       value: {
+//         jwt: jwtFactory(),
+//         tweets: null,
+//       },
+//     },
+//   },
+// };
