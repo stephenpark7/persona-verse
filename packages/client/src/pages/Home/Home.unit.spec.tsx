@@ -1,13 +1,14 @@
 import { screen } from '@testing-library/react';
-import { Home } from '@pages';
 import { describe, beforeEach, it, expect } from 'vitest';
+import { Home } from '@pages';
+import { UserType } from '@factories';
+import { useUserStateStub } from '@mocks';
 import { renderPage } from '@helpers';
-import { useUserStateStubGuest, useUserStateStubUser } from 'src/tests/mocks';
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
-      useUserStateStubGuest();
+      useUserStateStub(UserType.Guest);
       renderPage(<Home />);
     });
 
@@ -42,7 +43,7 @@ describe('When visiting the home page', () => {
 
   describe('while logged in', () => {
     beforeEach(() => {
-      useUserStateStubUser();
+      useUserStateStub(UserType.User);
       renderPage(<Home />);
     });
 
