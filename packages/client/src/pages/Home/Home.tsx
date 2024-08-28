@@ -17,6 +17,8 @@ import {
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
 
+  // TODO: add tests for modularized components
+
   // TODO: move to a helper function
   const welcomeMessageContent = isLoggedIn
     ? `Welcome ${getDisplayName(jwt)}!`
