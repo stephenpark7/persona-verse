@@ -11,7 +11,6 @@ describe('When visiting the home page', () => {
       renderPage(<Home />);
     });
 
-    // positive tests
     it('renders welcome message', () => {
       expect(screen.getByText('Create an account or log in.')).toBeInTheDocument();
     });
@@ -24,7 +23,6 @@ describe('When visiting the home page', () => {
       expect(screen.getByText('Log in')).toBeInTheDocument();
     });
 
-    // negative tests
     it('does not render welcome message', () => {
       expect(screen.queryByText('Welcome John Doe!')).not.toBeInTheDocument();
     });
@@ -48,7 +46,6 @@ describe('When visiting the home page', () => {
       renderPage(<Home />);
     });
 
-    // positive tests
     it('renders welcome message', () => {
       expect(screen.getByText('Welcome John Doe!')).toBeInTheDocument();
     });
@@ -65,7 +62,6 @@ describe('When visiting the home page', () => {
       expect(screen.getByText('Logout')).toBeInTheDocument();
     });
 
-    // negative tests
     it('does not render sign up button', () => {
       expect(screen.queryByText('Sign up')).not.toBeInTheDocument();
     });
