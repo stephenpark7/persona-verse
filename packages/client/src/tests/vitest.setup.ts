@@ -1,4 +1,3 @@
 import '@testing-library/jest-dom/vitest';
-
-import './mocks';
-import './matchers';
+import '@mocks';
+import '@matchers';

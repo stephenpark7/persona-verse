@@ -14,6 +14,7 @@
       "@interceptors": [ "./packages/client/src/interceptors/index" ],
       "@factories": [ "./packages/client/src/tests/factories/index" ],
       "@mocks": [ "./packages/client/src/tests/mocks/index" ],
+      "@matchers": [ "./packages/client/src/tests/matchers/index" ],
       "@shared": [ "./packages/shared/types/index" ]
     }
   }

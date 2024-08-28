@@ -17,6 +17,8 @@ describe('Home Component', () => {
       </Router>,
     );
 
+    // expect(useUserStateStub).toHaveBeenCalledOnce();
+
     expect(screen.getByText('Welcome John Doe!')).toBeInTheDocument();
     expect(screen.getByText('Profile')).toBeInTheDocument();
     expect(screen.getByText('TweetContainer')).toBeInTheDocument();

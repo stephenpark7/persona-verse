@@ -36,6 +36,7 @@
       "@interceptors": [ "./src/interceptors/index" ],
       "@factories": [ "./src/tests/factories/index" ],
       "@mocks": [ "./src/tests/mocks/index" ],
+      "@matchers": [ "./src/tests/matchers/index" ],
       "@shared": [ "../shared/types/index" ]
     }
   }
