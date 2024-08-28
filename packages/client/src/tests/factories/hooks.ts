@@ -1,5 +1,6 @@
 import { jwtFactory } from './jwt';
 
+// TODO: rename to stub type, or traits, or something similar
 export enum UserType {
   Guest = 'guest',
   User = 'user',
