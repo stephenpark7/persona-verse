@@ -1,5 +1,7 @@
 import React from 'react';
 
+// TODO: rename extraStyles to overrideCSS
+
 interface ButtonProps {
   variant?: string;
   type?: string;
