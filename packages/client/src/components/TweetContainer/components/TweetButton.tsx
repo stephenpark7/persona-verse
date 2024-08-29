@@ -4,8 +4,12 @@ import { useUserState } from '@hooks';
 import { usePostTweetMutation } from '@redux';
 import { Button } from '@components';
 
+interface TweetButtonProps {
+  tweetInput: string;
+  setTweetInput: React.Dispatch<React.SetStateAction<string>>;
+}
 
-export const TweetButton: React.FC = () => {
+export const TweetButton: React.FC<TweetButtonProps> = ( { tweetInput, setTweetInput } ) => {
   const { jwt, isLoggedIn } = useUserState();
 
   const [ postTweet ] = usePostTweetMutation();
@@ -15,14 +19,14 @@ export const TweetButton: React.FC = () => {
       return;
     }
 
-    const message = textRef.current?.value;
+    const message = tweetInput;
 
     if (!message || message.length === 0) {
       toast.error('Please enter a message');
       return;
     }
 
-    textRef.current.value = '';
+    setTweetInput('');
 
     if (!jwt) {
       return;
@@ -39,6 +43,6 @@ export const TweetButton: React.FC = () => {
       height='h-9'
     >
       Tweet
-    </Button>``
+    </Button>
   );
 };
