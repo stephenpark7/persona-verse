@@ -29,6 +29,7 @@ export const TweetButton: React.FC<TweetButtonProps> = ( { tweetInput, setTweetI
     setTweetInput('');
 
     if (!jwt) {
+      toast.error('Please login to post a tweet');
       return;
     }
 
