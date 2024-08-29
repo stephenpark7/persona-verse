@@ -33,7 +33,12 @@ export const TweetButton: React.FC<TweetButtonProps> = ( { tweetInput, setTweetI
       return;
     }
 
-    postTweet({ jwt: jwt, payload: { message: message } });
+    postTweet({ 
+      jwt, 
+      payload: { 
+        message, 
+      }, 
+    });
   };
 
   return (
