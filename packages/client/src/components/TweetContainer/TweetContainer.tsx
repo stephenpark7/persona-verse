@@ -11,13 +11,11 @@ export const TweetContainer: FC = (): JSX.Element => {
 
   return (
     <div>
-      <TweetInput 
-        tweetInput={tweetInput} 
-        setTweetInput={setTweetInput}
+      <TweetInput
+        inputRef={{ tweetInput, setTweetInput }}
       />
       <TweetButton
-        tweetInput={tweetInput}
-        setTweetInput={setTweetInput}
+        inputRef={{ tweetInput, setTweetInput }}
       />
       <Tweets  />
     </div>
