@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import { describe, beforeEach, it, expect } from 'vitest';
 import { Home } from '@pages';
 import { UserType } from '@factories';
-import { useUserStateStub } from '@mocks';
+import { getDisplayNameStub, useUserStateStub } from '@mocks';
 import { renderPage } from '@helpers';
 
 describe('When visiting the home page', () => {
@@ -46,6 +46,7 @@ describe('When visiting the home page', () => {
   describe('while logged in', () => {
     beforeEach(() => {
       useUserStateStub(UserType.User);
+      getDisplayNameStub();
       renderPage(<Home />);
     });
 
