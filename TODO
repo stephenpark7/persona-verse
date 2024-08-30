@@ -8,6 +8,7 @@ In Progress:
   ☐ Add more tRPC integration @started(24-08-21 02:25)
   ☐ Refactor backend @started(24-07-20 21:05)
   ☐ Refactor frontend @started(24-07-20 21:15)
+  ☐ Should automated test on commit
 To-Do:
   ☐ Use eslint in root instead of in each package
   ☐ Change back refresh token expiration date to 7 days
