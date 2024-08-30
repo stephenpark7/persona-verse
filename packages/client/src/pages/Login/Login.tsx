@@ -50,7 +50,10 @@ export const Login: React.FC = () => {
                 required
               />
             </div>
-            <Button variant="primary" type="submit">
+            <Button
+              variant="primary"
+              type="submit"
+            >
               Log in
             </Button>{' '}
             <Link to="/">

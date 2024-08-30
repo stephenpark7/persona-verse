@@ -34,7 +34,10 @@ export const Signup: React.FC = () => {
       <div className="my-5">
         <div>
           <h1>Sign up</h1>
-          <form className="signup-form" onSubmit={handleFormSubmit}>
+          <form
+            className="signup-form"
+            onSubmit={handleFormSubmit}
+          >
             <div className="mt-3 mb-3">
               <input
                 type="text"
@@ -63,7 +66,10 @@ export const Signup: React.FC = () => {
                 required
               />
             </div>
-            <button className="primary" type="submit">
+            <button
+              className="primary"
+              type="submit"
+            >
               Sign up
             </button>
           </form>

@@ -27,7 +27,10 @@ export const TweetContainer: FC = (): JSX.Element => {
 
   return (
     <div>
-      <TweetInput state={inputTextState} onPostTweet={handlePostTweet} />
+      <TweetInput
+        state={inputTextState}
+        onPostTweet={handlePostTweet}
+      />
       <TweetButton onPostTweet={handlePostTweet} />
       <Tweets />
     </div>
