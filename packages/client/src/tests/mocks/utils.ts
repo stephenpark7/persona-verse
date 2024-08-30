@@ -1,5 +1,7 @@
 import { vi } from 'vitest';
 import { getDisplayName } from '@utils';
+import { UserType } from '@factories';
+import { userFactory } from '../factories/user';
 
 vi.mock('@utils', () => ({
   getDisplayName: vi.fn(),
@@ -12,7 +14,7 @@ vi.mock('@utils', () => ({
   },
 }));
 
-// TODO: add parameter for user type
-
-export const getDisplayNameStub = () =>
-  vi.mocked(getDisplayName).mockReturnValueOnce('John Doe');
+export const getDisplayNameStub = (userType: UserType = UserType.User) =>
+  vi
+    .mocked(getDisplayName)
+    .mockReturnValueOnce(userFactory(userType).displayName);
