@@ -7,6 +7,4 @@ vi.mock('@hooks', () => ({
 }));
 
 export const useUserStateStub = (type: UserType) =>
-  vi
-    .mocked(useUserState)
-    .mockImplementationOnce(() => useUserStateFactory(type));
+  vi.mocked(useUserState).mockImplementation(() => useUserStateFactory(type));
