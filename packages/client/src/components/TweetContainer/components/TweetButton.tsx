@@ -5,15 +5,17 @@ import { usePostTweetMutation } from '@redux';
 import { Button } from '@components';
 
 interface TweetButtonProps {
-  inputRef: {
-    tweetInput: string;
-    setTweetInput: React.Dispatch<React.SetStateAction<string>>;
-  }
+  tweetInputState: [ string, React.Dispatch<React.SetStateAction<string>> ];
 }
 
 // TODO: pressing enter should submit the tweet
 
-export const TweetButton: React.FC<TweetButtonProps> = ( { inputRef: { tweetInput, setTweetInput } } ) => {
+export const TweetButton: React.FC<
+  TweetButtonProps
+> = ({
+  tweetInputState,
+}) => {
+  const [ tweetInput, setTweetInput ] = tweetInputState;
   const { jwt, isLoggedIn } = useUserState();
 
   const [ postTweet ] = usePostTweetMutation();

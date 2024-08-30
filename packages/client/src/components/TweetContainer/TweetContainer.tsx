@@ -4,20 +4,13 @@ import { Tweets } from './components/Tweets';
 import { TweetButton } from './components/TweetButton';
 
 export const TweetContainer: FC = (): JSX.Element => {
-  const [ 
-    tweetInput, 
-    setTweetInput, 
-  ] = useState<string>('');
+  const tweetInputState = useState<string>('');
 
   return (
     <div>
-      <TweetInput
-        inputRef={{ tweetInput, setTweetInput }}
-      />
-      <TweetButton
-        inputRef={{ tweetInput, setTweetInput }}
-      />
-      <Tweets  />
+      <TweetInput tweetInputState={tweetInputState} />
+      <TweetButton tweetInputState={tweetInputState} />
+      <Tweets />
     </div>
   );
 };

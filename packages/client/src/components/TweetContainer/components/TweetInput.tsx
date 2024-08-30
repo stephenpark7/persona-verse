@@ -1,13 +1,11 @@
 import React from 'react';
 
 interface TweetInputProps {
-  inputRef: {
-    tweetInput: string;
-    setTweetInput: React.Dispatch<React.SetStateAction<string>>;
-  }
+  tweetInputState: [ string, React.Dispatch<React.SetStateAction<string>> ];
 }
 
-export const TweetInput: React.FC<TweetInputProps> = ({ inputRef: { tweetInput, setTweetInput } }): React.JSX.Element => {
+export const TweetInput: React.FC<TweetInputProps> = ({ tweetInputState }): React.JSX.Element => {
+  const [ tweetInput, setTweetInput ] = tweetInputState;
   return (
     <div className='mt-3 mb-3'>
       <input
