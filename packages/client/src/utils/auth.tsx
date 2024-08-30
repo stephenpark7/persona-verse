@@ -12,8 +12,8 @@ export const canUseAuthorizationHeader = (
 };
 
 export const canRefreshToken = (
-  url: string, 
-  status: number, 
+  url: string,
+  status: number,
   isRefreshing: boolean,
 ): boolean => {
   if (status !== 401) return false;

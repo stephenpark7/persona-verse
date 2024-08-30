@@ -4,13 +4,12 @@ import { jwtFactory } from './jwt';
 export enum UserType {
   Guest = 'guest',
   User = 'user',
-};
+}
 
 export const useUserStateFactory = (
   type: UserType = UserType.Guest,
   overrides = {},
 ) => {
-
   const types = [
     {
       type: UserType.Guest,

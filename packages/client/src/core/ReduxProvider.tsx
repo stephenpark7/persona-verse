@@ -5,24 +5,20 @@ import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: Partial<RootState>
-  store?: AppStore
+  preloadedState?: Partial<RootState>;
+  store?: AppStore;
 }
 
 export const renderWithProviders = (
-  ui: React.ReactElement, {
-    preloadedState = {}, 
-    store = setupStore(preloadedState), 
+  ui: React.ReactElement,
+  {
+    preloadedState = {},
+    store = setupStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) => {
-
   const Wrapper = ({ children }: { children: React.ReactNode }) => {
-    return (
-      <Provider store={store}>
-        {children}
-      </Provider>
-    );
+    return <Provider store={store}>{children}</Provider>;
   };
 
   return {
@@ -33,14 +29,10 @@ export const renderWithProviders = (
 
 interface ReduxProviderProps {
   children: React.ReactNode;
-};
+}
 
 export const ReduxProvider = ({
   children,
 }: ReduxProviderProps): React.JSX.Element => {
-  return (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
+  return <Provider store={store}>{children}</Provider>;
 };

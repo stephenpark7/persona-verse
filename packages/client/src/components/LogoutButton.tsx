@@ -10,17 +10,12 @@ export const LogoutButton: React.FC = (): React.JSX.Element => {
 
   const handleLogout = async () => {
     await logout(navigate);
-    dispatch(
-      tweetAPI.util.invalidateTags([ 'Tweets' ]),
-    );
+    dispatch(tweetAPI.util.invalidateTags(['Tweets']));
   };
 
   return (
-    <Button
-      onClickEvent={handleLogout}
-      width='w-20'
-    >
-    Log out
+    <Button onClickEvent={handleLogout} width="w-20">
+      Log out
     </Button>
   );
 };

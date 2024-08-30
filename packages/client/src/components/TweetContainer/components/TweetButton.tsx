@@ -5,23 +5,19 @@ interface TweetButtonProps {
   onPostTweet: () => void;
 }
 
-export const TweetButton: React.FC<
-  TweetButtonProps
-> = ({
-  onPostTweet,
-}) => {
-    const handleClickEvent = () => {
-      onPostTweet();
-    };
-
-    return (
-      <Button
-        extraStyles='mb-2'
-        width='w-20'
-        height='h-9'
-        onClickEvent={handleClickEvent}
-      >
-        Tweet
-      </Button>
-    );
+export const TweetButton: React.FC<TweetButtonProps> = ({ onPostTweet }) => {
+  const handleClickEvent = () => {
+    onPostTweet();
   };
+
+  return (
+    <Button
+      extraStyles="mb-2"
+      width="w-20"
+      height="h-9"
+      onClickEvent={handleClickEvent}
+    >
+      Tweet
+    </Button>
+  );
+};

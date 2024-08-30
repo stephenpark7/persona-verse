@@ -11,8 +11,11 @@ export const JWTSchema = z.object({
 });
 
 const TokenStorageSchema = z.object({
-  getAccessToken: z.function().returns(z.union([ JWTSchema, z.null() ])),
-  setAccessToken: z.function().args(z.union([ JWTSchema, z.null() ])).returns(z.void()),
+  getAccessToken: z.function().returns(z.union([JWTSchema, z.null()])),
+  setAccessToken: z
+    .function()
+    .args(z.union([JWTSchema, z.null()]))
+    .returns(z.void()),
   clearAccessToken: z.function().returns(z.void()),
 });
 

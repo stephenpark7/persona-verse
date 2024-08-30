@@ -1,27 +1,40 @@
-import { AxiosRequestHeaders, RawAxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
+import {
+  AxiosRequestHeaders,
+  RawAxiosRequestConfig,
+  RawAxiosRequestHeaders,
+} from 'axios';
 import { TweetData, TweetPostParams } from '.';
 import type { JWT } from '@shared';
 
-export type RequestBody = 
-  UsersSignupParams | 
-  UsersLoginParams | 
-  TweetPostParams;
+export type RequestBody =
+  | UsersSignupParams
+  | UsersLoginParams
+  | TweetPostParams;
 
-export interface JsonResponse extends RefreshTokenResponse, GetTweetsResponse, PostTweetResponse {
+export interface JsonResponse
+  extends RefreshTokenResponse,
+    GetTweetsResponse,
+    PostTweetResponse {
   message: string;
 }
 
-interface RefreshTokenResponse { jwt?: JWT }
-interface GetTweetsResponse { tweets?: TweetData[] }
-interface PostTweetResponse { tweet?: TweetData }
+interface RefreshTokenResponse {
+  jwt?: JWT;
+}
+interface GetTweetsResponse {
+  tweets?: TweetData[];
+}
+interface PostTweetResponse {
+  tweet?: TweetData;
+}
 
 export interface ApiCall {
-  method: string,
-  controller: string,
-  action: string,
-  body?: RequestBody,
-  options?: RawAxiosRequestConfig,
-  headers?: RawAxiosRequestHeaders | AxiosRequestHeaders,
+  method: string;
+  controller: string;
+  action: string;
+  body?: RequestBody;
+  options?: RawAxiosRequestConfig;
+  headers?: RawAxiosRequestHeaders | AxiosRequestHeaders;
 }
 
 export interface UsersSignupParams {

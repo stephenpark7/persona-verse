@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { State } from '@interfaces';
 import { tokenStorage } from '@utils';
-import { 
-  setJwtReducer, 
-  clearJwtReducer, 
-  addTweetReducer, 
-  setTweetsReducer, 
+import {
+  setJwtReducer,
+  clearJwtReducer,
+  addTweetReducer,
+  setTweetsReducer,
 } from '../reducers';
 import { tweetAPI } from '../services';
 import { useDispatch } from 'react-redux';
@@ -39,7 +39,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 export const setupStore = (preloadedState?: Partial<RootState>) => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(tweetAPI.middleware),
     preloadedState,
   });
 };

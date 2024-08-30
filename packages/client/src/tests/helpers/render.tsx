@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-export const renderPage =  (
+export const renderPage = (
   component: React.ReactElement,
   clearAllMocks = true,
 ) => {
@@ -10,9 +10,5 @@ export const renderPage =  (
     vi.clearAllMocks();
   }
 
-  return render(
-    <Router>
-      {component}
-    </Router>,
-  );
+  return render(<Router>{component}</Router>);
 };

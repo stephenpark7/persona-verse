@@ -7,7 +7,7 @@ export const renderApp = (
   rootComponent: React.ReactElement = <Router />,
   preloadedState?: RootState,
 ) => {
-  renderWithProviders(rootComponent, { 
+  renderWithProviders(rootComponent, {
     preloadedState,
   });
 };
