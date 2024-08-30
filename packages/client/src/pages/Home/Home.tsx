@@ -23,6 +23,7 @@ export const Home: React.FC = (): React.JSX.Element => {
       <LogoutButton />
     </div>
   ) : (
+    // modularize buttons into a component
     <div className="flex gap-2">
       <Link to="/signup">
         <Button>Sign up</Button>

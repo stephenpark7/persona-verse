@@ -46,7 +46,7 @@ describe('When visiting the home page', () => {
   describe('while logged in', () => {
     beforeEach(() => {
       useUserStateStub(UserType.User);
-      getDisplayNameStub();
+      getDisplayNameStub(UserType.User);
       renderPage(<Home />);
     });
 
