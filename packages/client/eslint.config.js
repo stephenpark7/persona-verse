@@ -68,10 +68,10 @@ export default [
         {
           bracketSpacing: true,
           bracketSameLine: false,
-          singleQuote: true,
           trailingComma: 'all',
           printWidth: 80,
           singleAttributePerLine: true,
+          singleQuote: true,
         },
       ],
       'object-curly-newline': [
@@ -122,6 +122,17 @@ export default [
     },
   },
   eslintPluginPrettierRecommended,
+  {
+    files: ['**/**/*.{test,spec}.{ts,tsx}'],
+    rules: {
+      'prettier/prettier': [
+        'error',
+        {
+          singleQuote: true,
+        },
+      ],
+    },
+  },
   {
     ignores: ['coverage', 'dist', 'node_modules'],
   },

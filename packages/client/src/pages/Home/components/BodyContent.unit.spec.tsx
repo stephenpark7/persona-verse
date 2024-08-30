@@ -1,8 +1,8 @@
-import { render, screen } from "@testing-library/react";
-import { BodyContent } from "@pages";
-import { beforeEach, describe, test, expect } from "vitest";
+import { render, screen } from '@testing-library/react';
+import { BodyContent } from '@pages';
+import { beforeEach, describe, test, expect } from 'vitest';
 
-describe("BodyContent Component", () => {
+describe('BodyContent Component', () => {
   const contentText = (
     <>
       <div>Profile</div>
@@ -15,15 +15,15 @@ describe("BodyContent Component", () => {
     render(<BodyContent content={contentText} />);
   });
 
-  test("renders the Profile content", () => {
-    expect(screen.getByText("Profile")).toBeInTheDocument();
+  test('renders the Profile content', () => {
+    expect(screen.getByText('Profile')).toBeInTheDocument();
   });
 
-  test("renders the TweetContainer content", () => {
-    expect(screen.getByText("TweetContainer")).toBeInTheDocument();
+  test('renders the TweetContainer content', () => {
+    expect(screen.getByText('TweetContainer')).toBeInTheDocument();
   });
 
-  test("renders the LogoutButton content", () => {
-    expect(screen.getByText("LogoutButton")).toBeInTheDocument();
+  test('renders the LogoutButton content', () => {
+    expect(screen.getByText('LogoutButton')).toBeInTheDocument();
   });
 });
