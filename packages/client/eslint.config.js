@@ -29,8 +29,8 @@ export default [
     },
   },
   {
-    files: [ '**/**/*.{ts,tsx}' ],
-    ignores: [ '**/**/*.{test,spec}.{ts,tsx}' ],
+    files: ['**/**/*.{ts,tsx}'],
+    ignores: ['**/**/*.{test,spec}.{ts,tsx}'],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,
@@ -38,13 +38,13 @@ export default [
     },
     plugins,
     rules: {
-      'array-bracket-spacing': [ 'error', 'always' ],
-      'object-curly-spacing': [ 'error', 'always' ],
-      'eol-last': [ 'error', 'always' ],
-      'quotes': [ 'error', 'single' ],
-      'comma-dangle': [ 'error', 'always-multiline' ],
-      'semi': [ 'error', 'always' ],
-      'no-restricted-syntax': [ 'error', {
+      'array-bracket-spacing': ['error', 'always'],
+      'object-curly-spacing': ['error', 'always'],
+      'eol-last': ['error', 'always'],
+      'quotes': ['error', 'single'],
+      'comma-dangle': ['error', 'always-multiline'],
+      'semi': ['error', 'always'],
+      'no-restricted-syntax': ['error', {
         'selector': 'FunctionDeclaration',
         'message': 'Function declarations are not allowed. Use arrow functions instead.',
       }, {
@@ -55,11 +55,22 @@ export default [
           'message': 'Use named exports instead',
         },
       ],
-      '@typescript-eslint/no-invalid-void-type': [ 'off' ],
+      '@typescript-eslint/no-invalid-void-type': ['off'],
+      "prettier/prettier": [
+        "error",
+        {
+          "bracketSpacing": true,
+          "bracketSameLine": false,
+          "singleQuote": true,
+          "trailingComma": "all",
+          "printWidth": 80
+        }
+      ],
+      "object-curly-newline": ["error", { "multiline": true, "consistent": true }],
     },
   },
   {
-    files: [ '**/**/*.{test,spec}.{ts,tsx}' ],
+    files: ['**/**/*.{test,spec}.{ts,tsx}'],
     languageOptions: {
       globals: {
         ...vitest.environments.env.globals,
@@ -76,27 +87,27 @@ export default [
     },
     rules: {
       ...vitest.configs.recommended.rules,
-      'react/react-in-jsx-scope': [ 'off' ],
-      'vitest/max-nested-describe': [ 'error', { 'max': 3 } ],
+      'react/react-in-jsx-scope': ['off'],
+      'vitest/max-nested-describe': ['error', { 'max': 3 }],
     },
   },
   {
-    files: [ '*.json' ],
+    files: ['*.json'],
     rules: {
-      'array-bracket-spacing': [ 'error', 'always' ],
-      'eol-last': [ 'error', 'always' ],
-      'quotes': [ 'error', 'double' ],
-      'comma-dangle': [ 'error', 'never' ],
+      'array-bracket-spacing': ['error', 'always'],
+      'eol-last': ['error', 'always'],
+      'quotes': ['error', 'double'],
+      'comma-dangle': ['error', 'never'],
       '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
   {
-    files: [ 'vite.config.ts', 'vitest.config.ts' ],
+    files: ['vite.config.ts', 'vitest.config.ts'],
     rules: {
-      'no-restricted-syntax': [ 'off' ],
+      'no-restricted-syntax': ['off'],
     },
   },
   {
-    ignores: [ 'coverage', 'dist', 'node_modules' ],
+    ignores: ['coverage', 'dist', 'node_modules'],
   },
 ];
