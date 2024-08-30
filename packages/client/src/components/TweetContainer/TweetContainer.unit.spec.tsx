@@ -1,13 +1,13 @@
-import { render, screen } from "@testing-library/react";
-import { TweetContainer } from "@components";
-import { beforeEach, describe, test, expect } from "vitest";
+import { render, screen } from '@testing-library/react';
+import { TweetContainer } from '@components';
+import { beforeEach, describe, test, expect } from 'vitest';
 
-describe("TweetContainer component", () => {
+describe('TweetContainer component', () => {
   beforeEach(() => {
     render(<TweetContainer />);
   });
 
-  test("renders content", () => {
-    expect(screen.getByText("TweetContainer")).toBeInTheDocument();
+  test('renders content', () => {
+    expect(screen.getByText('TweetContainer')).toBeInTheDocument();
   });
 });

@@ -1,15 +1,15 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { TweetInput } from "./";
-import { beforeEach, describe, test, expect, vi } from "vitest";
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { TweetInput } from './';
+import { beforeEach, describe, test, expect, vi } from 'vitest';
 
-describe("TweetInput component", () => {
+describe('TweetInput component', () => {
   const mockSetTweetInput = vi.fn();
   // const mockUseState = vi.fn().mockImplementation(init => [init, mockSetTweetInput]);
 
   // vi.spyOn(React, 'useState').mockImplementation(mockUseState);
 
-  const tweetInput = "";
+  const tweetInput = '';
   const setTweetInput = mockSetTweetInput;
 
   beforeEach(() => {
@@ -18,26 +18,26 @@ describe("TweetInput component", () => {
     );
   });
 
-  test("renders input field", () => {
+  test('renders input field', () => {
     expect(
       screen.getByPlaceholderText("What's happening?"),
     ).toBeInTheDocument();
   });
 
-  test("calls handleOnChange", () => {
+  test('calls handleOnChange', () => {
     const input = screen.getByPlaceholderText("What's happening?");
     fireEvent.change(input, {
-      target: { value: "test" },
+      target: { value: 'test' },
     });
-    expect(mockSetTweetInput).toHaveBeenCalledWith("test");
+    expect(mockSetTweetInput).toHaveBeenCalledWith('test');
   });
 
-  test("calls handleKeyUp", () => {
+  test('calls handleKeyUp', () => {
     const input = screen.getByPlaceholderText("What's happening?");
     fireEvent.change(input, {
-      target: { value: "test" },
+      target: { value: 'test' },
     });
-    fireEvent.keyUp(input, { key: "Enter" });
-    expect(mockSetTweetInput).toHaveBeenCalledWith("test");
+    fireEvent.keyUp(input, { key: 'Enter' });
+    expect(mockSetTweetInput).toHaveBeenCalledWith('test');
   });
 });
