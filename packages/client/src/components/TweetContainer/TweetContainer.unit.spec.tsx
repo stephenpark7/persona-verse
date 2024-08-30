@@ -1,13 +1,17 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { TweetContainer } from '@components';
-import { beforeEach, describe, test, expect } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+// import { UserType } from '@factories';
+// import { useUserStateStub } from '@mocks';
+import { renderWithProviders } from '@core';
 
 describe('TweetContainer component', () => {
   beforeEach(() => {
-    render(<TweetContainer />);
+    // useUserStateStub(UserType.User);
+    renderWithProviders(<TweetContainer />);
   });
 
-  test('renders content', () => {
+  it('renders content', () => {
     expect(screen.getByText('TweetContainer')).toBeInTheDocument();
   });
 });

@@ -12,6 +12,7 @@ vi.mock('@utils', () => ({
   },
 }));
 
-export const getDisplayNameStub = vi
-  .mocked(getDisplayName)
-  .mockReturnValue('John Doe');
+// TODO: add parameter for user type
+
+export const getDisplayNameStub = () =>
+  vi.mocked(getDisplayName).mockReturnValueOnce('John Doe');
