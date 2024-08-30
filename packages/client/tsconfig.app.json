@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": [ "./src/**/*" ],
+  "include": ["./src/**/*"],
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "baseUrl": "./",
@@ -8,7 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": [ "ES2020", "DOM", "DOM.Iterable" ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleDetection": "force",
     "moduleResolution": "bundler",
@@ -25,15 +25,20 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "useDefineForClassFields": true,
     "paths": {
-      "@components": [ "./src/components/index" ],
-      "@core": [ "./src/core/index" ],
-      "@hooks": [ "./src/hooks/index" ],
-      "@interfaces": [ "./src/interfaces/index" ],
-      "@redux": [ "./src/redux/index" ],
-      "@utils": [ "./src/utils/index" ],
-      "@pages": [ "./src/pages/index" ],
-      "@services": [ "./src/services/index" ],
-      "@shared": [ "../shared/types/index" ]
+      "@components": ["./src/components/index"],
+      "@core": ["./src/core/index"],
+      "@hooks": ["./src/hooks/index"],
+      "@interfaces": ["./src/interfaces/index"],
+      "@redux": ["./src/redux/index"],
+      "@utils": ["./src/utils/index"],
+      "@pages": ["./src/pages/index"],
+      "@services": ["./src/services/index"],
+      "@interceptors": ["./src/interceptors/index"],
+      "@factories": ["./src/tests/factories/index"],
+      "@mocks": ["./src/tests/mocks/index"],
+      "@matchers": ["./src/tests/matchers/index"],
+      "@helpers": ["./src/tests/helpers/index"],
+      "@shared": ["../shared/types/index"]
     }
   }
 }

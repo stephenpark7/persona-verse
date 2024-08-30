@@ -1,48 +1,43 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { getDisplayName } from '@utils';
 import { useUserState } from '@hooks';
 import { Button, LogoutButton, TweetContainer, Profile } from '@components';
+import { Header, WelcomeMessage, BodyContent } from './components';
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
 
-  const welcomeMessageContent = useMemo(() => {
-    if (isLoggedIn) {
-      return `Welcome ${getDisplayName(jwt)}!`;
-    }
+  // TODO: add tests for modularized components
 
-    return 'Create an account or log in.';
-  }, [ isLoggedIn ]);
+  // TODO: move to a helper function
+  const welcomeMessageContent = isLoggedIn
+    ? `Welcome ${getDisplayName(jwt)}!`
+    : 'Create an account or log in.';
 
-  const bodyContent = useMemo(() => {
-    if (isLoggedIn) {
-      return (
-        <div>
-          <Profile />
-          <TweetContainer />
-          <LogoutButton />
-        </div>
-      );
-    }
-
-    return (
-      <div>
-        <Link to='/signup'>
-          <Button>Sign up</Button>
-        </Link>
-        <Link to='/login'>
-          <Button>Log in</Button>
-        </Link>
-      </div>
-    );
-  }, [ isLoggedIn ]);
+  // TODO: move to a helper function
+  const bodyContent = isLoggedIn ? (
+    <div>
+      <Profile />
+      <TweetContainer />
+      <LogoutButton />
+    </div>
+  ) : (
+    <div className="flex gap-2">
+      <Link to="/signup">
+        <Button>Sign up</Button>
+      </Link>
+      <Link to="/login">
+        <Button>Log in</Button>
+      </Link>
+    </div>
+  );
 
   return (
     <div>
-      <h1 className='text-5xl mb-3'>PersonaVerse</h1>
-      <p className='text-lg mb-2'>{welcomeMessageContent}</p>
-      <div className='flex gap-2'>{bodyContent}</div>
+      <Header title="PersonaVerse" />
+      <WelcomeMessage message={welcomeMessageContent} />
+      <BodyContent content={bodyContent} />
     </div>
   );
 };

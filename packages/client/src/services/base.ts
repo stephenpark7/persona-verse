@@ -15,31 +15,25 @@ export const apiCall = async (
     if (protocol === 'trpc') {
       if (params.action === 'signup') {
         response = await registerUser(params.body as RegisterUserParams);
-      }
-      else if (params.action === 'login') {
+      } else if (params.action === 'login') {
         response = await loginUser(params.body as LoginUserParams);
-      }
-      else if (params.action === 'logout') {
+      } else if (params.action === 'logout') {
         response = await logoutUser();
-      }
-      else {
+      } else {
         throw new Error('Invalid API action.');
       }
-    }
-    else if (protocol === 'rest') {
+    } else if (protocol === 'rest') {
       response = await sendHttpRequest(params);
-    }
-    else {
+    } else {
       throw new Error('Invalid API protocol.');
     }
 
     if (showToast) {
       displaySuccessMessage(response.message);
     }
-    
+
     return response as JsonResponse;
-  }
-  catch (err) {
+  } catch (err) {
     if (params.controller === 'tweets' && params.action === 'get') return;
     displayErrorMessage(err);
     return;

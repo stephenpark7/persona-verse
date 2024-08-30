@@ -4,11 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import checker from 'vite-plugin-checker';
 
 export default defineConfig({
-  plugins: [ 
-    react(), 
-    tsconfigPaths(),
-    checker({ typescript: true }),
-  ],
+  plugins: [react(), tsconfigPaths(), checker({ typescript: true })],
   server: {
     port: 3000,
   },

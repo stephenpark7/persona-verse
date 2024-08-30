@@ -7,7 +7,7 @@ import { submitForm, updateForm } from '@utils';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [ formData, setFormData ] = useState<RequestBody>({
+  const [formData, setFormData] = useState<RequestBody>({
     username: '',
     password: '',
   });
@@ -27,18 +27,35 @@ export const Login: React.FC = () => {
 
   return (
     <div>
-      <div className='my-5'>
+      <div className="my-5">
         <div>
           <h1>Log in</h1>
           <form onSubmit={handleFormSubmit}>
-            <div className='mt-3 mb-3'>
-              <input type='text' name='username' placeholder='Username' onChange={handleFormChange} required />
+            <div className="mt-3 mb-3">
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={handleFormChange}
+                required
+              />
             </div>
-            <div className='mb-3'>
-              <input type='password' name='password' placeholder='Password' onChange={handleFormChange} autoComplete='password' required />
+            <div className="mb-3">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleFormChange}
+                autoComplete="password"
+                required
+              />
             </div>
-            <Button variant='primary' type='submit'>Log in</Button>{' '}
-            <Link to='/'><Button variant='primary'>Go Back</Button></Link>
+            <Button variant="primary" type="submit">
+              Log in
+            </Button>{' '}
+            <Link to="/">
+              <Button variant="primary">Go Back</Button>
+            </Link>
           </form>
         </div>
       </div>

@@ -2,8 +2,14 @@ import { combineReducers } from 'redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { State } from '@interfaces';
 import { tokenStorage } from '@utils';
-import { setJwtReducer, clearJwtReducer, addTweetReducer, setTweetsReducer } from '../reducers';
+import {
+  setJwtReducer,
+  clearJwtReducer,
+  addTweetReducer,
+  setTweetsReducer,
+} from '../reducers';
 import { tweetAPI } from '../services';
+import { useDispatch } from 'react-redux';
 
 export const initialState: State = {
   value: {
@@ -33,13 +39,16 @@ export type RootState = ReturnType<typeof rootReducer>;
 export const setupStore = (preloadedState?: Partial<RootState>) => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tweetAPI.middleware),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(tweetAPI.middleware),
     preloadedState,
   });
 };
 
-export const store = setupStore();
-
 export type AppStore = ReturnType<typeof setupStore>;
 
 export type AppDispatch = AppStore['dispatch'];
+
+export const useAppStoreDispatch = useDispatch<AppDispatch>;
+
+export const store = setupStore();

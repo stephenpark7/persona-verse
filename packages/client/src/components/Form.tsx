@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from './Button';
 
 export const Form: React.FC = (): React.JSX.Element => {
-  const [ formData, setFormData ] = useState({ name: '', email: '' });
+  const [formData, setFormData] = useState({ name: '', email: '' });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -11,7 +11,6 @@ export const Form: React.FC = (): React.JSX.Element => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
   };
 
   return (
@@ -36,9 +35,7 @@ export const Form: React.FC = (): React.JSX.Element => {
           onChange={handleChange}
         />
       </div>
-      <Button variant="primary">
-        Submit
-      </Button>
+      <Button variant="primary">Submit</Button>
     </form>
   );
 };

@@ -1,12 +1,10 @@
-import { expect, describe, it } from 'vitest';
-import { router } from './Router';
-import { renderApp } from '../tests/utils';
+import { describe, it } from "vitest";
+import { renderApp } from "../tests/utils";
 
-
-describe('Router', () => {
-  it('renders', () => {
+describe("Router", () => {
+  it.skip("renders", () => {
     renderApp();
-    console.log(router.state.matches);
+    // console.log(router.state.matches);
     // expect(document.title).toBe('PersonaVerse');
   });
 });

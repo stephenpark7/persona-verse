@@ -3,11 +3,15 @@ import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
 
 export const getTweets = async (): Promise<TweetData[]> => {
-  const response = await apiCall({
-    method: 'GET',
-    controller: 'tweets',
-    action: 'get',
-  }, false, 'rest');
+  const response = await apiCall(
+    {
+      method: 'GET',
+      controller: 'tweets',
+      action: 'get',
+    },
+    false,
+    'rest',
+  );
 
   if (!response) return [];
 
@@ -23,23 +27,31 @@ export const getTweets = async (): Promise<TweetData[]> => {
 export const postTweet = async ({
   jwt,
   payload,
-}: PostTweet): Promise<void> => {
+}: PostTweet): Promise<TweetData> => {
   if (!jwt) {
     throw new Error('Failed to post tweet.');
   }
 
-  const response = await apiCall({
-    method: 'POST',
-    controller: 'tweets',
-    action: 'create',
-    body: payload,
-  }, true, 'rest');
+  const response = await apiCall(
+    {
+      method: 'POST',
+      controller: 'tweets',
+      action: 'create',
+      body: payload,
+    },
+    true,
+    'rest',
+  );
 
-  if (!response || !response.tweet) return;
+  if (!response || !response.tweet) {
+    throw new Error('Failed to post tweet.');
+  }
 
   response.tweet.User = {
     username: jwt.payload.username,
   };
 
   store.dispatch(addTweet(response.tweet));
+
+  return response.tweet;
 };

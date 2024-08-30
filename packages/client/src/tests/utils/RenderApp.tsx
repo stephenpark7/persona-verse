@@ -1,34 +1,24 @@
+import React from 'react';
 import { renderWithProviders, Router } from '@core';
-import { State, TweetData } from '@interfaces';
-import { BaseQueryFn, CombinedState, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta, QueryDefinition } from '@reduxjs/toolkit/query';
-import { mockJwt } from '../mocks';
-
-type PreloadedState = Partial<{
-  user: State;
-  tweetAPI: CombinedState<{
-    getTweets: QueryDefinition<
-      void,
-      BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, object, FetchBaseQueryMeta>,
-      never,
-      TweetData[],
-      "tweetAPI"
-    >;
-  }, never, "tweetAPI">;
-}> | undefined;
+import type { RootState } from '@redux';
+// import { jwtFactory } from '@factories';
 
 export const renderApp = (
-  preloadedState?: PreloadedState,
+  rootComponent: React.ReactElement = <Router />,
+  preloadedState?: RootState,
 ) => {
-  renderWithProviders(<Router />, { preloadedState });
+  renderWithProviders(rootComponent, {
+    preloadedState,
+  });
 };
 
-export const StoreStateStubs = {
-  loggedIn: {
-    user: {
-      value: {
-        jwt: mockJwt,
-        tweets: null,
-      },
-    },
-  },
-}
+// export const fgStoreStateStubs = {
+//   loggedIn: {
+//     user: {
+//       value: {
+//         jwt: jwtFactory(),
+//         tweets: null,
+//       },
+//     },
+//   },
+// };
