@@ -71,9 +71,16 @@ export default [
           singleQuote: true,
           trailingComma: 'all',
           printWidth: 80,
+          singleAttributePerLine: true,
         },
       ],
-      'object-curly-newline': ['error', { multiline: true, consistent: true }],
+      'object-curly-newline': [
+        'error',
+        {
+          multiline: true,
+          consistent: true,
+        },
+      ],
     },
   },
   {

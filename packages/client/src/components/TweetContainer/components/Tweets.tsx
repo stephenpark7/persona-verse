@@ -11,9 +11,12 @@ export const Tweets: React.FC = (): React.JSX.Element => {
       return <p>Loading...</p>;
     }
 
-    return data
-      ?.slice(0, 5)
-      .map((data: TweetData, idx: React.Key) => <Tweet key={idx} {...data} />);
+    return data?.slice(0, 5).map((data: TweetData, idx: React.Key) => (
+      <Tweet
+        key={idx}
+        {...data}
+      />
+    ));
   };
 
   return (
