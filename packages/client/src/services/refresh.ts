@@ -3,12 +3,16 @@ import { store, setJwt } from '@redux';
 import { apiCall } from '.';
 
 export const refreshToken = async (): Promise<JWT | void> => {
-  const response = await apiCall({
-    method: 'POST',
-    controller: 'refresh',
-    action: '',
-    options: { withCredentials: true },
-  }, false, 'rest');
+  const response = await apiCall(
+    {
+      method: 'POST',
+      controller: 'refresh',
+      action: '',
+      options: { withCredentials: true },
+    },
+    false,
+    'rest',
+  );
 
   if (!response) return;
 

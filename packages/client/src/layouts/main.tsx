@@ -5,17 +5,10 @@ interface MainLayoutProps {
   title: string;
 }
 
-export const MainLayout = ({ 
-  children,
-  title,
-}: MainLayoutProps) => {
+export const MainLayout = ({ children, title }: MainLayoutProps) => {
   useEffect(() => {
     document.title = title;
-  }, [ title ]);
+  }, [title]);
 
-  return (
-    <div className='m-5'>
-      {children}
-    </div>
-  );
+  return <div className="m-5">{children}</div>;
 };

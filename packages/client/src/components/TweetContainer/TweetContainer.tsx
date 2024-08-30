@@ -11,9 +11,9 @@ export const TweetContainer: FC = (): JSX.Element => {
 
   const { isLoggedIn, jwt } = useUserState();
 
-  const [ postTweet ] = usePostTweetMutation();
+  const [postTweet] = usePostTweetMutation();
 
-  const [ tweetInput, setTweetInput ] = inputTextState;
+  const [tweetInput, setTweetInput] = inputTextState;
 
   const handlePostTweet = () => {
     submitTweet({
@@ -27,13 +27,8 @@ export const TweetContainer: FC = (): JSX.Element => {
 
   return (
     <div>
-      <TweetInput 
-        state={inputTextState}
-        onPostTweet={handlePostTweet}
-      />
-      <TweetButton 
-        onPostTweet={handlePostTweet}
-      />
+      <TweetInput state={inputTextState} onPostTweet={handlePostTweet} />
+      <TweetButton onPostTweet={handlePostTweet} />
       <Tweets />
     </div>
   );

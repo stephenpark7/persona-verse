@@ -4,8 +4,10 @@ import { initialState } from '@redux';
 import { tokenStorage } from '@utils';
 import type { JWT } from '@shared';
 
-const setJwtReducer: CaseReducer<State, PayloadAction<JWT>>
-= (state: State = initialState, action: PayloadAction<JWT>) => {
+const setJwtReducer: CaseReducer<State, PayloadAction<JWT>> = (
+  state: State = initialState,
+  action: PayloadAction<JWT>,
+) => {
   if (!action.payload) return state;
   tokenStorage.setAccessToken(action.payload);
   return {

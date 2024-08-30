@@ -1,8 +1,14 @@
-import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  RawAxiosRequestHeaders,
+} from 'axios';
 import { JsonResponse, ApiCall } from '@interfaces';
 import { apiConfig } from '@utils';
 
-export const sendHttpRequest = async (params: ApiCall): Promise<JsonResponse> =>{
+export const sendHttpRequest = async (
+  params: ApiCall,
+): Promise<JsonResponse> => {
   const { method, controller, action, body, options, headers } = params;
 
   const config: AxiosRequestConfig = {

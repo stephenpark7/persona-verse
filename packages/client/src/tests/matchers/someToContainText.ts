@@ -5,7 +5,8 @@ expect.extend({
     received: HTMLElement | HTMLElement[],
     expected: string,
   ) => {
-    const hasText = (element: HTMLElement, text: string) => element.textContent?.includes(text) || false;
+    const hasText = (element: HTMLElement, text: string) =>
+      element.textContent?.includes(text) || false;
     const isSingular = !Array.isArray(received);
     const isPlural = Array.isArray(received);
 
@@ -14,7 +15,9 @@ expect.extend({
     if (isSingular) {
       pass = hasText(received, expected);
     } else if (isPlural) {
-      pass = (received).some((element: HTMLElement) => hasText(element, expected));
+      pass = received.some((element: HTMLElement) =>
+        hasText(element, expected),
+      );
     }
 
     if (pass) {

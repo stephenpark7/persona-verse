@@ -23,9 +23,9 @@ export const registerUser = async ({
   email,
   password,
 }: RegisterUserParams): Promise<JsonResponse> => {
-  return await trpc.registerUser.mutate({ 
-    username, 
-    email, 
+  return await trpc.registerUser.mutate({
+    username,
+    email,
     password,
   });
 };
@@ -34,9 +34,9 @@ export const loginUser = async ({
   username,
   password,
 }: LoginUserParams): Promise<Response> => {
-  return await trpc.loginUser.mutate({ 
-    username, 
-    password, 
+  return await trpc.loginUser.mutate({
+    username,
+    password,
   });
 };
 

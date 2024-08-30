@@ -12,4 +12,6 @@ vi.mock('@utils', () => ({
   },
 }));
 
-export const getDisplayNameStub = vi.mocked(getDisplayName).mockReturnValue('John Doe');
+export const getDisplayNameStub = vi
+  .mocked(getDisplayName)
+  .mockReturnValue('John Doe');

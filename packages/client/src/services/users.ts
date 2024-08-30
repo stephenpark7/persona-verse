@@ -1,5 +1,10 @@
 import { NavigateFunction } from 'react-router-dom';
-import { RegisterFunction, RegisterParams, LoginParams, LoginFunction } from '@interfaces';
+import {
+  RegisterFunction,
+  RegisterParams,
+  LoginParams,
+  LoginFunction,
+} from '@interfaces';
 import { store, setJwt, clearJwt } from '@redux';
 import { apiCall } from '.';
 
@@ -9,12 +14,16 @@ export const register: RegisterFunction = async ({
   showToast = true,
   autoLogin = true,
 }: RegisterParams): Promise<boolean> => {
-  const response = await apiCall({
-    method: 'POST',
-    controller: 'users',
-    action: 'signup',
-    body: formData,
-  }, showToast, 'trpc');
+  const response = await apiCall(
+    {
+      method: 'POST',
+      controller: 'users',
+      action: 'signup',
+      body: formData,
+    },
+    showToast,
+    'trpc',
+  );
 
   if (!response) {
     return Promise.resolve(false);
@@ -36,13 +45,17 @@ export const login: LoginFunction = async ({
   navigate,
   showToast = true,
 }: LoginParams): Promise<boolean> => {
-  const response = await apiCall({
-    method: 'POST',
-    controller: 'users',
-    action: 'login',
-    body: formData,
-    options: { withCredentials: true },
-  }, showToast, 'trpc');
+  const response = await apiCall(
+    {
+      method: 'POST',
+      controller: 'users',
+      action: 'login',
+      body: formData,
+      options: { withCredentials: true },
+    },
+    showToast,
+    'trpc',
+  );
 
   if (!response) {
     return Promise.resolve(false);
@@ -53,7 +66,7 @@ export const login: LoginFunction = async ({
   }
 
   store.dispatch(setJwt(response.jwt));
-  navigate('/'); 
+  navigate('/');
   return Promise.resolve(true);
 };
 
@@ -61,12 +74,16 @@ export const logout = async (
   navigate: NavigateFunction,
   showToast = true,
 ): Promise<boolean> => {
-  const response = await apiCall({
-    method: 'POST',
-    controller: 'users',
-    action: 'logout',
-    options: { withCredentials: true },
-  }, showToast, 'trpc');
+  const response = await apiCall(
+    {
+      method: 'POST',
+      controller: 'users',
+      action: 'logout',
+      options: { withCredentials: true },
+    },
+    showToast,
+    'trpc',
+  );
 
   if (!response) {
     return Promise.resolve(false);

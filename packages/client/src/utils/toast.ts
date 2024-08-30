@@ -3,13 +3,15 @@ import { toast } from 'react-toastify';
 
 export type ApiError = AxiosError | Error | unknown;
 
-export const displayErrorMessage = (err: ApiError, autoClose?: number): string => {
+export const displayErrorMessage = (
+  err: ApiError,
+  autoClose?: number,
+): string => {
   let message = 'An unexpected error occurred.';
 
   if (err instanceof AxiosError) {
     message = err.response?.data.message || err.message;
-  }
-  else if (err instanceof Error) {
+  } else if (err instanceof Error) {
     message = err.message;
   }
 
@@ -17,6 +19,9 @@ export const displayErrorMessage = (err: ApiError, autoClose?: number): string =
   return message;
 };
 
-export const displaySuccessMessage = (message: string, autoClose?: number): void => {
+export const displaySuccessMessage = (
+  message: string,
+  autoClose?: number,
+): void => {
   toast.success(message, { autoClose });
 };

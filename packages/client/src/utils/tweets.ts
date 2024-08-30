@@ -35,10 +35,10 @@ export const submitTweet = async ({
     return;
   }
 
-  postTweet({ 
-    jwt, 
-    payload: { 
-      message, 
-    }, 
+  postTweet({
+    jwt,
+    payload: {
+      message,
+    },
   });
 };

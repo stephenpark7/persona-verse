@@ -1,8 +1,8 @@
 import type { JWT } from '@shared';
 
 export interface PostTweet {
-  jwt: JWT | null,
-  payload: TweetPostParams,
+  jwt: JWT | null;
+  payload: TweetPostParams;
 }
 
 export interface TweetPostParams {
@@ -16,5 +16,5 @@ export interface TweetData extends Iterable<TweetData> {
   createdAt: string;
   User: {
     username: string;
-  }
+  };
 }

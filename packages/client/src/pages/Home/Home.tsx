@@ -2,17 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { getDisplayName } from '@utils';
 import { useUserState } from '@hooks';
-import {
-  Button,
-  LogoutButton,
-  TweetContainer,
-  Profile,
-} from '@components';
-import { 
-  Header, 
-  WelcomeMessage, 
-  BodyContent, 
-} from './components';
+import { Button, LogoutButton, TweetContainer, Profile } from '@components';
+import { Header, WelcomeMessage, BodyContent } from './components';
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
@@ -32,11 +23,11 @@ export const Home: React.FC = (): React.JSX.Element => {
       <LogoutButton />
     </div>
   ) : (
-    <div className='flex gap-2'>
-      <Link to='/signup'>
+    <div className="flex gap-2">
+      <Link to="/signup">
         <Button>Sign up</Button>
       </Link>
-      <Link to='/login'>
+      <Link to="/login">
         <Button>Log in</Button>
       </Link>
     </div>
@@ -44,7 +35,7 @@ export const Home: React.FC = (): React.JSX.Element => {
 
   return (
     <div>
-      <Header title='PersonaVerse' />
+      <Header title="PersonaVerse" />
       <WelcomeMessage message={welcomeMessageContent} />
       <BodyContent content={bodyContent} />
     </div>
