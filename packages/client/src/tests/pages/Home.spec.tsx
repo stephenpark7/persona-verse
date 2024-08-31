@@ -1,13 +1,11 @@
 import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
 import { renderApp } from '../utils';
-import { componentsStub, getDisplayNameStub, useUserStateStub } from '@mocks';
-import { jwtFactory, UserType } from '@factories';
-import { initialState, RootState, tweetAPI } from '@redux';
-import { BrowserRouter, BrowserRouter as Router } from 'react-router-dom';
+import { useUserStateStub } from '@mocks';
+import { UserType } from '@factories';
 import { renderPage } from '@helpers';
 import { Home } from '@pages';
-import { ReduxProvider, renderWithProviders } from '@core';
+import { ReduxProvider } from '@core';
 
 describe('Home page', () => {
   describe('initial state', () => {
@@ -34,7 +32,11 @@ describe('Home page', () => {
   describe('when user is not logged in', () => {
     beforeEach(() => {
       useUserStateStub(UserType.Guest);
-      renderApp();
+      renderPage(
+        <ReduxProvider>
+          <Home />
+        </ReduxProvider>,
+      );
     });
 
     it('renders p', () => {

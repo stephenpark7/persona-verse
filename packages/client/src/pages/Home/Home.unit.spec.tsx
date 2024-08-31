@@ -48,13 +48,10 @@ describe('When visiting the home page', () => {
   describe('while logged in', () => {
     beforeEach(() => {
       useUserStateStub(UserType.User);
-      // getDisplayNameStub(UserType.User);
       renderPage(<Home />);
-      // renderApp();
     });
 
     it('renders welcome message', () => {
-      screen.debug();
       expect(screen.getByText('Welcome john-doe!')).toBeInTheDocument();
     });
 
