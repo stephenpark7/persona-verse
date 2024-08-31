@@ -3,12 +3,9 @@ import { screen } from '@testing-library/react';
 import { renderApp } from '../utils';
 import { useUserStateStub } from '@mocks';
 import { UserType } from '@factories';
-import { renderPage } from '@helpers';
-import { Home } from '@pages';
-import { ReduxProvider } from '@core';
 
-describe('Home page', () => {
-  describe('initial state', () => {
+describe('When visiting the home page', () => {
+  describe('while logged out', () => {
     beforeEach(() => {
       useUserStateStub(UserType.Guest);
       renderApp();
@@ -27,17 +24,6 @@ describe('Home page', () => {
     it('does not render h2', () => {
       expect(screen.queryByRole('heading', { level: 2 })).toBeNull();
     });
-  });
-
-  describe('when user is not logged in', () => {
-    beforeEach(() => {
-      useUserStateStub(UserType.Guest);
-      renderPage(
-        <ReduxProvider>
-          <Home />
-        </ReduxProvider>,
-      );
-    });
 
     it('renders p', () => {
       expect(screen.getByRole('paragraph')).toHaveTextContent(
@@ -53,14 +39,10 @@ describe('Home page', () => {
     });
   });
 
-  describe('when user is logged in', () => {
+  describe('while logged in', () => {
     beforeEach(() => {
       useUserStateStub(UserType.User);
-      renderPage(
-        <ReduxProvider>
-          <Home />
-        </ReduxProvider>,
-      );
+      renderApp();
     });
 
     it('renders paragraph', () => {
@@ -78,6 +60,19 @@ describe('Home page', () => {
       expect(buttons).toHaveLength(2);
       expect(buttons).someToContainText('Tweet');
       expect(buttons).someToContainText('Log out');
+      screen.debug();
+    });
+
+    it('does not render sign up button', () => {
+      expect(screen.queryByText('Sign up')).toBeNull();
+    });
+
+    it('does not render log in button', () => {
+      expect(screen.queryByText('Log in')).toBeNull();
+    });
+
+    it('does not render create account message', () => {
+      expect(screen.queryByText('Create an account or log in.')).toBeNull();
     });
   });
 });
