@@ -54,33 +54,11 @@ describe('Home page', () => {
   describe('when user is logged in', () => {
     beforeEach(() => {
       useUserStateStub(UserType.User);
-      // getDisplayNameStub(UserType.User);
-      // vi.restoreAllMocks();
-      // vi.clearAllMocks();
-      // vi.resetAllMocks();
-      // renderApp(<Router />, { user: initialState });
       renderPage(
         <ReduxProvider>
           <Home />
         </ReduxProvider>,
       );
-      // renderApp();
-
-      // const fgStoreStateStubs = {
-      //   user: {
-      //     value: {
-      //       jwt: jwtFactory(),
-      //       tweets: null,
-      //     },
-      //   },
-      // };
-
-      // renderApp(
-      //   <BrowserRouter>
-      //     <Home />
-      //   </BrowserRouter>,
-      //   fgStoreStateStubs,
-      // );
     });
 
     it('renders paragraph', () => {
