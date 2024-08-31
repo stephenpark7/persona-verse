@@ -8,15 +8,10 @@ import { Buttons } from './components/Buttons';
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
 
-  // TODO: add tests for modularized components
-
-  // TODO: move to a helper function
-  // to isolate logic for easier testing
   const welcomeMessageContent = isLoggedIn
     ? `Welcome ${getDisplayName(jwt)}!`
     : 'Create an account or log in.';
 
-  // TODO: move to a helper function
   const bodyContent = isLoggedIn ? (
     <div>
       <Profile />
