@@ -11,6 +11,7 @@ describe('When visiting the home page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
       useUserStateStub(UserType.Guest);
+      // TODO: mock router instead for unit tests
       renderPage(<Home />);
     });
 
