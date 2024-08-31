@@ -1,19 +1,11 @@
+import '../../tests/mocks/components.unit';
+
 import { screen } from '@testing-library/react';
 import { describe, beforeEach, it, expect } from 'vitest';
 import { Home } from '@pages';
 import { UserType } from '@factories';
-import { getDisplayNameStub, useUserStateStub } from '@mocks';
+import { useUserStateStub } from '@mocks';
 import { renderPage } from '@helpers';
-import { renderApp } from 'src/tests/utils';
-
-vi.mock('@components', () => ({
-  Button: ({ children }: { children: React.ReactNode }) => (
-    <button>{children}</button>
-  ),
-  Profile: () => <div>Profile</div>,
-  TweetContainer: () => <div>TweetContainer</div>,
-  LogoutButton: () => <button>Logout</button>,
-}));
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
