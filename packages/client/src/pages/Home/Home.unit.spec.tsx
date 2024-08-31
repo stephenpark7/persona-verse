@@ -30,7 +30,7 @@ describe('When visiting the home page', () => {
     });
 
     it('does not render welcome message', () => {
-      expect(screen.queryByText('Welcome John Doe!')).not.toBeInTheDocument();
+      expect(screen.queryByText('Welcome john-doe!')).not.toBeInTheDocument();
     });
 
     it('does not render profile', () => {
