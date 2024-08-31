@@ -6,10 +6,7 @@ export enum UserType {
   User = 'user',
 }
 
-export const useUserStateFactory = (
-  type: UserType = UserType.Guest,
-  overrides = {},
-) => {
+export const useUserStateFactory = (type: UserType, overrides = {}) => {
   const types = [
     {
       type: UserType.Guest,

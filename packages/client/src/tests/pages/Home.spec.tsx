@@ -1,8 +1,13 @@
 import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
 import { renderApp } from '../utils';
-import { getDisplayNameStub, useUserStateStub } from '@mocks';
-import { UserType } from '@factories';
+import { componentsStub, getDisplayNameStub, useUserStateStub } from '@mocks';
+import { jwtFactory, UserType } from '@factories';
+import { initialState, RootState, tweetAPI } from '@redux';
+import { BrowserRouter, BrowserRouter as Router } from 'react-router-dom';
+import { renderPage } from '@helpers';
+import { Home } from '@pages';
+import { ReduxProvider, renderWithProviders } from '@core';
 
 describe('Home page', () => {
   describe('initial state', () => {
@@ -49,15 +54,36 @@ describe('Home page', () => {
   describe('when user is logged in', () => {
     beforeEach(() => {
       useUserStateStub(UserType.User);
-      getDisplayNameStub(UserType.User);
+      // getDisplayNameStub(UserType.User);
       // vi.restoreAllMocks();
       // vi.clearAllMocks();
       // vi.resetAllMocks();
-      renderApp();
+      // renderApp(<Router />, { user: initialState });
+      renderPage(
+        <ReduxProvider>
+          <Home />
+        </ReduxProvider>,
+      );
+      // renderApp();
+
+      // const fgStoreStateStubs = {
+      //   user: {
+      //     value: {
+      //       jwt: jwtFactory(),
+      //       tweets: null,
+      //     },
+      //   },
+      // };
+
+      // renderApp(
+      //   <BrowserRouter>
+      //     <Home />
+      //   </BrowserRouter>,
+      //   fgStoreStateStubs,
+      // );
     });
 
-    it('renders p', () => {
-      screen.debug();
+    it('renders paragraph', () => {
       expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
     });
 
@@ -65,10 +91,6 @@ describe('Home page', () => {
       expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe(
         "What's happening?",
       );
-    });
-
-    it('renders paragraph', () => {
-      expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
     });
 
     it('renders buttons', () => {
