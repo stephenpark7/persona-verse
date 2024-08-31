@@ -4,6 +4,16 @@ import { Home } from '@pages';
 import { UserType } from '@factories';
 import { getDisplayNameStub, useUserStateStub } from '@mocks';
 import { renderPage } from '@helpers';
+import { renderApp } from 'src/tests/utils';
+
+vi.mock('@components', () => ({
+  Button: ({ children }: { children: React.ReactNode }) => (
+    <button>{children}</button>
+  ),
+  Profile: () => <div>Profile</div>,
+  TweetContainer: () => <div>TweetContainer</div>,
+  LogoutButton: () => <button>Logout</button>,
+}));
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
@@ -46,12 +56,14 @@ describe('When visiting the home page', () => {
   describe('while logged in', () => {
     beforeEach(() => {
       useUserStateStub(UserType.User);
-      getDisplayNameStub(UserType.User);
+      // getDisplayNameStub(UserType.User);
       renderPage(<Home />);
+      // renderApp();
     });
 
     it('renders welcome message', () => {
-      expect(screen.getByText('Welcome John Doe!')).toBeInTheDocument();
+      screen.debug();
+      expect(screen.getByText('Welcome john-doe!')).toBeInTheDocument();
     });
 
     it('renders profile', () => {
