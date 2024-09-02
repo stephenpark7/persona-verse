@@ -4,6 +4,10 @@ import { renderApp } from '../utils';
 import { User } from '@interfaces';
 import { jwtFactory } from '@factories';
 
+// TODO: refactor to use factories
+// for integration tests
+// specifically for the preloaded state
+
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
