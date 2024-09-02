@@ -32,17 +32,17 @@ If you are interested in the project, please star the repository and follow us f
 
 ### Frontend
 
+- **Framework:** React
+- **Language:** TypeScript
+- **State Management:** React Redux, RTK Query
+
+### Backend
+
 - **Runtime:** Node.js
 - **Framework:** Express.js
 - **ORM:** Sequelize
 - **RPC:** tRPC
 - **Database:** PostgreSQL
-
-### Backend
-
-- **Framework:** React
-- **Language:** TypeScript
-- **State Management:** React Redux, RTK Query
 
 ### Tooling
 
