@@ -29,7 +29,7 @@ export const userSlice = createSlice({
   },
 });
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   user: userSlice.reducer,
   tweetAPI: tweetAPI.reducer,
 });
