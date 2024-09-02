@@ -1,1 +1,2 @@
-export * from './renderApp';
+export * from './RenderApp';
+export * from './matchers';
