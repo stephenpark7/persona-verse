@@ -1,11 +1,11 @@
 import '../../tests/mocks/components.unit';
+import { useUserStateStub } from '../../tests/mocks/hooks.unit';
 
 import { screen } from '@testing-library/react';
 import { TweetContainer } from '@components';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { UserType } from '@factories';
-import { useUserStateStub } from '@mocks';
 import { renderWithProviders } from '@core';
+import { UserType } from '@factories';
 
 describe('TweetContainer component', () => {
   beforeEach(() => {
@@ -14,7 +14,6 @@ describe('TweetContainer component', () => {
   });
 
   it('renders content', () => {
-    screen.debug();
     expect(screen.getByText('TweetContainer')).toBeInTheDocument();
   });
 });
