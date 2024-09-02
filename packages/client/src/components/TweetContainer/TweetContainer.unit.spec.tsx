@@ -14,7 +14,6 @@ describe('TweetContainer component', () => {
   });
 
   it('renders content', () => {
-    screen.debug();
     expect(screen.getByText('TweetContainer')).toBeInTheDocument();
   });
 });

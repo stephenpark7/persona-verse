@@ -158,7 +158,6 @@ describe('When visiting the home page', () => {
       expect(buttons).toHaveLength(2);
       expect(buttons).someToContainText('Tweet');
       expect(buttons).someToContainText('Log out');
-      screen.debug();
     });
 
     it('does not render sign up button', () => {
