@@ -10,14 +10,11 @@ In Progress:
   ☐ Refactor frontend @started(24-07-20 21:15)
   ☐ Should automated test on commit
 To-Do:
-  ☐ Use eslint in root instead of in each package
-  ☐ Change back refresh token expiration date to 7 days
-  ☐ Get Jest to play nicely with Vite
   ☐ Fix broken tests
   ☐ Refactor more
   ☐ Adding loading spinners
   ☐ Check token is expired on client before sending a request
-  ☐ Jest tests for local storage
+  ☐ Tests for local storage
   ☐ Investigate, if still an issue (not sure?): Fix issue where it fails to resend the request after getting a new token
   ☐ Add profile page
     ☐ Add profile picture
@@ -30,7 +27,10 @@ To-Do:
   ☐ Add test for refresh token
   ☐ Amend commit messages to be more descriptive
   ☐ Migrate DB from Sequelize to TypeORM
+  ☐ Use eslint in root instead of in each package
 Done:
+  ✔ Get Jest to play nicely with Vite @done(24-09-02 01:12)
+  ✔ Change back refresh token expiration date to 7 days @done(24-09-02 01:12)
   ✔ Use tRPC @started(24-08-08 07:46) @done(24-08-21 02:24) @lasted(1w5d18h38m56s)
   ✔ Use ZOD for validation @started(24-08-09 23:01) @done(24-08-21 02:24) @lasted(1w4d3h23m57s)
   ✔ Build out routes, controllers @started(24-08-09 23:01) @done(24-08-21 02:25) @lasted(1w4d3h24m4s)
