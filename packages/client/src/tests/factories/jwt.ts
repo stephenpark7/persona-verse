@@ -1,4 +1,4 @@
-import { JWTSchema } from '@utils';
+import { JWTSchema } from '@interfaces';
 
 export const jwtFactory = (overrides = {}) => {
   return JWTSchema.parse({

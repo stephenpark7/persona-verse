@@ -1,11 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { AppStore, setupStore, RootState, store } from '@redux';
+import { z } from 'zod';
+import { AppStore, RootState, setupStore, store } from '@redux';
 import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
+import { PreloadedStateSchema } from '@interfaces';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: Partial<RootState>;
+  preloadedState?: z.infer<typeof PreloadedStateSchema>;
   store?: AppStore;
 }
 
@@ -13,7 +15,7 @@ export const renderWithProviders = (
   ui: React.ReactElement,
   {
     preloadedState = {},
-    store = setupStore(preloadedState),
+    store = setupStore(preloadedState as Partial<RootState>),
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) => {

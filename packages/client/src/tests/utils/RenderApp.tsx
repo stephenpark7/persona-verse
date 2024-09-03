@@ -1,10 +1,11 @@
 import React from 'react';
+import { z } from 'zod';
 import { renderWithProviders, Router } from '@core';
-import type { RootState } from '@redux';
+import { PreloadedStateSchema } from '@interfaces';
 
 export const renderApp = (
   rootComponent: React.ReactElement | null = <Router />,
-  preloadedState?: RootState,
+  preloadedState?: z.infer<typeof PreloadedStateSchema>,
 ) => {
   renderWithProviders(rootComponent ?? <Router />, {
     preloadedState,

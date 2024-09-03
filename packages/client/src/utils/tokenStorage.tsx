@@ -1,14 +1,6 @@
 import { z } from 'zod';
 import type { JWT } from '@shared';
-
-export const JWTSchema = z.object({
-  token: z.string(),
-  expiresAt: z.number(),
-  payload: z.object({
-    userId: z.number(),
-    username: z.string(),
-  }),
-});
+import { JWTSchema } from '@interfaces';
 
 const TokenStorageSchema = z.object({
   getAccessToken: z.function().returns(z.union([JWTSchema, z.null()])),
