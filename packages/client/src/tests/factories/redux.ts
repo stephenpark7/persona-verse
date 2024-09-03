@@ -1,17 +1,11 @@
 import { PreloadedStateSchema } from '@interfaces';
+import { jwtFactory } from './jwt';
 
 export const PreloadedStateFactory = (overrides = {}) => {
   const user = {
     state: {
       value: {
-        jwt: {
-          token: '1',
-          expiresAt: Date.now() + 1000,
-          payload: {
-            userId: 1,
-            username: 'john-doe',
-          },
-        },
+        jwt: jwtFactory(),
         tweets: [],
       },
     },

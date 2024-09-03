@@ -1,68 +1,13 @@
 import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
+import { jwtFactory } from '@factories';
 import { renderApp } from '../utils';
-// import { User } from '@interfaces';
-// import { jwtFactory } from '@factories';
 import { PreloadedStateFactory } from '../factories/redux';
-
-// TODO: refactor to use factories
-// for integration tests
-// specifically for the preloaded state
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
-      // const guestUser: User = {
-      //   state: {
-      //     value: {
-      //       jwt: null,
-      //       tweets: null,
-      //     },
-      //   },
-      // };
-
-      // const tweetAPI = {
-      //   getTweets: {
-      //     data: null,
-      //     error: null,
-      //     isLoading: false,
-      //   },
-      //   postTweet: {
-      //     data: null,
-      //     error: null,
-      //     isLoading: false,
-      //   },
-      // };
-
-      renderApp(null, PreloadedStateFactory());
-
-      // renderApp(null, {
-      //   user: {
-      //     value: {
-      //       ...guestUser.state.value,
-      //     },
-      //   },
-      //   tweetAPI: {
-      //     ...tweetAPI,
-      //     queries: {},
-      //     mutations: {},
-      //     provided: {
-      //       Tweets: {},
-      //     },
-      //     subscriptions: {},
-      //     config: {
-      //       reducerPath: 'tweetAPI',
-      //       online: true,
-      //       focused: true,
-      //       middlewareRegistered: true,
-      //       refetchOnMountOrArgChange: true,
-      //       refetchOnReconnect: true,
-      //       refetchOnFocus: true,
-      //       keepUnusedDataFor: 0,
-      //       invalidationBehavior: 'immediately',
-      //     },
-      //   },
-      // });
+      renderApp(null);
     });
 
     it('has a title', () => {
@@ -70,7 +15,6 @@ describe('When visiting the home page', () => {
     });
 
     it('renders h1', () => {
-      screen.debug();
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
         'PersonaVerse',
       );
@@ -94,55 +38,11 @@ describe('When visiting the home page', () => {
     });
   });
 
-  describe.skip('while logged in', () => {
+  // TODO: make ZOD play nicely with redux toolkit
+
+  describe('while logged in', () => {
     beforeEach(() => {
-      // const regularUser: User = {
-      //   state: {
-      //     value: {
-      //       jwt: jwtFactory(),
-      //       tweets: null,
-      //     },
-      //   },
-      // };
-      // const tweetAPI = {
-      //   getTweets: {
-      //     data: null,
-      //     error: null,
-      //     isLoading: false,
-      //   },
-      //   postTweet: {
-      //     data: null,
-      //     error: null,
-      //     isLoading: false,
-      //   },
-      // };
-      // renderApp(null, {
-      //   user: {
-      //     value: {
-      //       ...regularUser.state.value,
-      //     },
-      //   },
-      //   tweetAPI: {
-      //     ...tweetAPI,
-      //     queries: {},
-      //     mutations: {},
-      //     provided: {
-      //       Tweets: {},
-      //     },
-      //     subscriptions: {},
-      //     config: {
-      //       reducerPath: 'tweetAPI',
-      //       online: true,
-      //       focused: true,
-      //       middlewareRegistered: true,
-      //       refetchOnMountOrArgChange: true,
-      //       refetchOnReconnect: true,
-      //       refetchOnFocus: true,
-      //       keepUnusedDataFor: 0,
-      //       invalidationBehavior: 'immediately',
-      //     },
-      //   },
-      // });
+      renderApp(null, PreloadedStateFactory());
     });
 
     it('renders paragraph', () => {
