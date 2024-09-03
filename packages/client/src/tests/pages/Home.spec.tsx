@@ -70,6 +70,7 @@ describe('When visiting the home page', () => {
     });
 
     it('renders h1', () => {
+      screen.debug();
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
         'PersonaVerse',
       );
