@@ -1,4 +1,4 @@
-import { RequestBody, SubmitForm } from '@interfaces';
+import { RequestBody, SubmitForm } from 'src/schemas';
 
 export const submitForm = async ({
   e,

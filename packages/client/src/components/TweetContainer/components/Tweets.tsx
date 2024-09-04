@@ -1,5 +1,5 @@
 import React, { FC, Key, JSX } from 'react';
-import { TweetData } from '@interfaces';
+import { TweetData } from 'src/schemas';
 import { useGetTweetsQuery } from '@redux';
 import { Tweet } from '@components';
 

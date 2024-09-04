@@ -1,6 +1,6 @@
 import { NavigateFunction } from 'react-router-dom';
 import { store, setJwt, clearJwt } from '@redux';
-import { LoginParams, RegisterParams } from '@interfaces';
+import { LoginParams, RegisterParams } from 'src/schemas';
 import { apiCall } from './base';
 
 export const register = async ({

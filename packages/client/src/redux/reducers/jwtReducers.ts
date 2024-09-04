@@ -1,5 +1,5 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
-import { State } from '@interfaces';
+import { State } from 'src/schemas';
 import { initialState } from '@redux';
 import { tokenStorage } from '@utils';
 import type { JWT } from '@shared';

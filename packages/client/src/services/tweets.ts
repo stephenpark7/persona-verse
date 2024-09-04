@@ -1,4 +1,4 @@
-import { PostTweetData, TweetData } from '@interfaces';
+import { PostTweetData, TweetData } from 'src/schemas';
 import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
 

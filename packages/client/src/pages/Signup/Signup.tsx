@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { RequestBody } from '@interfaces';
+import { RequestBody } from 'src/schemas';
 import { register } from '@services';
 import { submitForm, updateForm } from '@utils';
 

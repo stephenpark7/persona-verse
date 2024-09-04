@@ -1,4 +1,4 @@
-import { UserSchema } from '@interfaces';
+import { UserSchema } from 'src/schemas';
 import { jwtFactory } from './jwt';
 import { RootState } from '@redux';
 
