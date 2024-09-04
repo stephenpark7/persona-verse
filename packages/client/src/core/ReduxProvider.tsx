@@ -1,10 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { z } from 'zod';
 import { AppStore, RootState, setupStore, store } from '@redux';
 import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
-import { PreloadedStateSchema } from '@interfaces';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>;
