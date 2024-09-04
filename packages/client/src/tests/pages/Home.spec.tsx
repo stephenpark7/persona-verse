@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import { jwtFactory } from '@factories';
 import { renderApp } from '../utils';
 import { PreloadedStateFactory } from '../factories/redux';
+import { RootState } from '@redux';
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
@@ -37,8 +38,6 @@ describe('When visiting the home page', () => {
       expect(buttons).someToContainText('Log in');
     });
   });
-
-  // TODO: make ZOD play nicely with redux toolkit
 
   describe('while logged in', () => {
     beforeEach(() => {

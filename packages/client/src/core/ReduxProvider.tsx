@@ -7,7 +7,7 @@ import type { RenderOptions } from '@testing-library/react';
 import { PreloadedStateSchema } from '@interfaces';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: z.infer<typeof PreloadedStateSchema>;
+  preloadedState?: Partial<RootState>;
   store?: AppStore;
 }
 
@@ -15,7 +15,7 @@ export const renderWithProviders = (
   ui: React.ReactElement,
   {
     preloadedState = {},
-    store = setupStore(preloadedState as Partial<RootState>),
+    store = setupStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) => {
