@@ -5,12 +5,10 @@ import {
 } from 'axios';
 import { TweetData } from '.';
 import type { JWT } from '@shared';
-import { TweetPostParamsProps } from './schemas';
+import { TweetPostData } from './schemas/tweet';
+import type { UserSignupData, UserLoginData } from './schemas/api';
 
-export type RequestBody =
-  | UsersSignupParams
-  | UsersLoginParams
-  | TweetPostParamsProps;
+export type RequestBody = UserSignupData | UserLoginData | TweetPostData;
 
 export interface JsonResponse
   extends RefreshTokenResponse,
@@ -36,17 +34,6 @@ export interface ApiCall {
   body?: RequestBody;
   options?: RawAxiosRequestConfig;
   headers?: RawAxiosRequestHeaders | AxiosRequestHeaders;
-}
-
-export interface UsersSignupParams {
-  username: string;
-  email: string;
-  password: string;
-}
-
-export interface UsersLoginParams {
-  username: string;
-  password: string;
 }
 
 export type ApiProtocol = 'rest' | 'trpc';
