@@ -22,7 +22,7 @@ class ApiConfig {
       hostName: ENV.VITE_API_HOST_NAME,
       port: ENV.VITE_API_PORT,
       baseUrl: `${ENV.VITE_API_PROTOCOL}://${ENV.VITE_API_HOST_NAME}:${ENV.VITE_API_PORT}/api/`,
-      trpcUrl: `${ENV.VITE_API_PROTOCOL}://${ENV.VITE_API_HOST_NAME}:${ENV.VITE_API_PORT}/trpc`,
+      trpcUrl: `${ENV.VITE_API_PROTOCOL}://${ENV.VITE_API_HOST_NAME}:${ENV.VITE_API_PORT}/trpc/`,
     };
 
     const parsedData = ApiConfigSchema.parse(data);
