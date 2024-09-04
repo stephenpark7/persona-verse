@@ -9,3 +9,5 @@ export const SubmitFormSchema = z.object({
   apiFunction: ApiFunctionSchema,
   navigate: z.function(),
 });
+
+export type SubmitForm = z.infer<typeof SubmitFormSchema>;

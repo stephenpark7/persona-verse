@@ -57,15 +57,6 @@ export const ApiCallSchema = z.object({
 
 export const ApiFunctionSchema = z.function();
 
-export const SubmitFormSchema = z.object({
-  e: z.object({
-    preventDefault: z.function(),
-  }),
-  formData: RequestBodySchema,
-  apiFunction: ApiFunctionSchema,
-  navigate: z.function(),
-});
-
 export const RegisterParamsSchema = z.object({
   formData: UserSignupSchema,
   navigate: z.function(),
@@ -91,7 +82,6 @@ export type ApiProtocol = z.infer<typeof ApiProtocolSchema>;
 export type RequestBody = z.infer<typeof RequestBodySchema>;
 export type ApiCall = z.infer<typeof ApiCallSchema>;
 export type ApiFunction = z.infer<typeof ApiFunctionSchema>;
-export type SubmitForm = z.infer<typeof SubmitFormSchema>;
 export type RegisterParams = z.infer<typeof RegisterParamsSchema>;
 export type LoginParams = z.infer<typeof LoginParamsSchema>;
 export type RegisterFunction = z.infer<typeof RegisterFunctionSchema>;
