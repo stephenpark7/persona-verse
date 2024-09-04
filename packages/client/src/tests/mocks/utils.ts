@@ -5,7 +5,7 @@ import { userFactory } from '../factories/user';
 
 // vi.mock('@utils', () => ({
 //   getDisplayName: vi.fn(),
-//   JWTSchema: {
+//   JwtSchema: {
 //     parse: vi.fn(),
 //   },
 //   apiConfig: vi.fn(),

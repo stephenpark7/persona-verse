@@ -3,10 +3,12 @@ import {
   RawAxiosRequestConfig,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { TweetData } from '.';
-import type { JWT } from '@shared';
-import { TweetPostData } from './schemas/tweet';
-import type { UserSignupData, UserLoginData } from './schemas/api';
+import { TweetData, TweetPostData } from './schemas/tweet';
+import type {
+  RefreshTokenResponse,
+  UserSignupData,
+  UserLoginData,
+} from './schemas/api';
 
 export type RequestBody = UserSignupData | UserLoginData | TweetPostData;
 
@@ -17,9 +19,6 @@ export interface JsonResponse
   message: string;
 }
 
-interface RefreshTokenResponse {
-  jwt?: JWT;
-}
 interface GetTweetsResponse {
   tweets?: TweetData[];
 }
