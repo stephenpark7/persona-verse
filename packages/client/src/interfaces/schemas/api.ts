@@ -1,11 +1,10 @@
 import { z } from 'zod';
 import { JwtSchema } from './jwt';
 import { TweetPostSchema, TweetSchema } from './tweet';
-import type {
-  RawAxiosRequestConfig,
-  RawAxiosRequestHeaders,
-  AxiosRequestHeaders,
-} from 'axios';
+import {
+  RawAxiosRequestConfigSchema,
+  RawAxiosRequestHeadersSchema,
+} from './axios';
 
 export const UserSignupSchema = z.object({
   username: z.string(),
@@ -27,8 +26,6 @@ export const RefreshTokenResponseSchema = z.object({
 });
 
 export type RefreshTokenResponse = z.infer<typeof RefreshTokenResponseSchema>;
-
-//
 
 export const GetTweetsResponseSchema = z.object({
   tweets: z.array(TweetSchema),
@@ -65,6 +62,6 @@ export const ApiCallSchema = z.object({
   controller: z.string(),
   action: z.string(),
   body: RequestBodySchema,
-  // options: RawAxiosRequestConfig,
-  // headers: RawAxiosRequestHeaders | AxiosRequestHeaders,
+  options: RawAxiosRequestConfigSchema,
+  headers: RawAxiosRequestHeadersSchema,
 });
