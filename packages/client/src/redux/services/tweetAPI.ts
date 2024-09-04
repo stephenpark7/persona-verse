@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { TweetProps } from '@interfaces';
+import { TweetData } from '@interfaces';
 import { getTweets, postTweet } from '@services';
 import { apiConfig } from '@utils';
 import { JWT } from '@shared';
@@ -13,7 +13,7 @@ export const tweetAPI = createApi({
   baseQuery: baseQuery,
   tagTypes: ['Tweets'],
   endpoints: (builder) => ({
-    getTweets: builder.query<TweetProps[], void>({
+    getTweets: builder.query<TweetData[], void>({
       queryFn: async () => {
         const tweets = await getTweets();
         return { data: tweets };
@@ -21,7 +21,7 @@ export const tweetAPI = createApi({
       providesTags: ['Tweets'],
     }),
     postTweet: builder.mutation<
-      TweetProps,
+      TweetData,
       {
         jwt: JWT;
         payload: { message: string };
