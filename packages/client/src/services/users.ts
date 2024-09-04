@@ -1,14 +1,9 @@
 import { NavigateFunction } from 'react-router-dom';
-import {
-  RegisterFunction,
-  RegisterParams,
-  LoginParams,
-  LoginFunction,
-} from '@interfaces';
 import { store, setJwt, clearJwt } from '@redux';
-import { apiCall } from '.';
+import { LoginParams, RegisterParams } from '@interfaces';
+import { apiCall } from './base';
 
-export const register: RegisterFunction = async ({
+export const register = async ({
   formData,
   navigate,
   showToast = true,
@@ -40,7 +35,7 @@ export const register: RegisterFunction = async ({
   return Promise.resolve(true);
 };
 
-export const login: LoginFunction = async ({
+export const login = async ({
   formData,
   navigate,
   showToast = true,
