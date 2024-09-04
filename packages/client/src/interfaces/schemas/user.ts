@@ -1,11 +1,10 @@
 import { z } from 'zod';
 import { JWTSchema } from './jwt';
-
-// TODO: define schema for tweets
+import { TweetSchema } from './tweet';
 
 export const UserSchema = z.object({
   value: z.object({
     jwt: JWTSchema,
-    tweets: z.array(z.object({})),
+    tweets: z.array(z.array(TweetSchema)),
   }),
 });
