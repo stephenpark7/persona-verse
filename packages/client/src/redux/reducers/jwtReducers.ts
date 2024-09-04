@@ -18,11 +18,10 @@ const setJwtReducer: CaseReducer<State, PayloadAction<JWT>> = (
   };
 };
 
-const clearJwtReducer: CaseReducer<State> = (state: State) => {
+const clearJwtReducer: CaseReducer = () => {
   tokenStorage.clearAccessToken();
   return {
     value: {
-      ...state.value,
       jwt: null,
       tweets: null,
     },
