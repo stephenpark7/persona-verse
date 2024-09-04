@@ -3,7 +3,7 @@ import {
   RawAxiosRequestConfig,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { TweetData, TweetPostParams } from '.';
+import { TweetProps, TweetPostParams } from '.';
 import type { JWT } from '@shared';
 
 export type RequestBody =
@@ -22,10 +22,10 @@ interface RefreshTokenResponse {
   jwt?: JWT;
 }
 interface GetTweetsResponse {
-  tweets?: TweetData[];
+  tweets?: TweetProps[];
 }
 interface PostTweetResponse {
-  tweet?: TweetData;
+  tweet?: TweetProps;
 }
 
 export interface ApiCall {

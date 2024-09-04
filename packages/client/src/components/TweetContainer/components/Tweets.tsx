@@ -1,5 +1,5 @@
 import React from 'react';
-import { TweetData } from '@interfaces';
+import { TweetProps } from '@interfaces';
 import { useGetTweetsQuery } from '@redux';
 import { Tweet } from '@components';
 
@@ -11,7 +11,7 @@ export const Tweets: React.FC = (): React.JSX.Element => {
       return <p>Loading...</p>;
     }
 
-    return data?.slice(0, 5).map((data: TweetData, idx: React.Key) => (
+    return data?.slice(0, 5).map((data: TweetProps, idx: React.Key) => (
       <Tweet
         key={idx}
         {...data}

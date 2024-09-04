@@ -1,4 +1,4 @@
-import { TweetData } from '.';
+import { TweetProps } from '.';
 import type { JWT } from '@shared';
 
 export interface User {
@@ -11,5 +11,5 @@ export interface State {
 
 export interface StateProperties {
   jwt: JWT | null;
-  tweets: TweetData[] | null;
+  tweets: TweetProps[] | null;
 }

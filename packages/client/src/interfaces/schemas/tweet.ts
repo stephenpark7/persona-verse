@@ -8,3 +8,5 @@ export const TweetSchema = z.object({
     username: z.string(),
   }),
 });
+
+export type TweetProps = z.infer<typeof TweetSchema>;

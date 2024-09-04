@@ -1,8 +1,8 @@
-import { PostTweet, TweetData } from '@interfaces';
+import { PostTweet, TweetProps } from '@interfaces';
 import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
 
-export const getTweets = async (): Promise<TweetData[]> => {
+export const getTweets = async (): Promise<TweetProps[]> => {
   const response = await apiCall(
     {
       method: 'GET',
@@ -27,7 +27,7 @@ export const getTweets = async (): Promise<TweetData[]> => {
 export const postTweet = async ({
   jwt,
   payload,
-}: PostTweet): Promise<TweetData> => {
+}: PostTweet): Promise<TweetProps> => {
   if (!jwt) {
     throw new Error('Failed to post tweet.');
   }

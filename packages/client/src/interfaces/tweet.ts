@@ -8,13 +8,3 @@ export interface PostTweet {
 export interface TweetPostParams {
   message: string;
 }
-
-export interface TweetData extends Iterable<TweetData> {
-  [Symbol.iterator](): IterableIterator<TweetData>;
-  id?: number;
-  message: string;
-  createdAt: string;
-  User: {
-    username: string;
-  };
-}
