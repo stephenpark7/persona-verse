@@ -6,6 +6,7 @@ const ApiConfigSchema = z.object({
   hostName: z.string(),
   port: z.number(),
   baseUrl: z.string(),
+  trpcUrl: z.string(),
 });
 
 class ApiConfig {
@@ -13,6 +14,7 @@ class ApiConfig {
   hostName: string;
   port: number;
   baseUrl: string;
+  trpcUrl: string;
 
   constructor() {
     const data = {
@@ -20,6 +22,7 @@ class ApiConfig {
       hostName: ENV.VITE_API_HOST_NAME,
       port: ENV.VITE_API_PORT,
       baseUrl: `${ENV.VITE_API_PROTOCOL}://${ENV.VITE_API_HOST_NAME}:${ENV.VITE_API_PORT}/api/`,
+      trpcUrl: `${ENV.VITE_API_PROTOCOL}://${ENV.VITE_API_HOST_NAME}:${ENV.VITE_API_PORT}/trpc`,
     };
 
     const parsedData = ApiConfigSchema.parse(data);
@@ -28,6 +31,7 @@ class ApiConfig {
     this.hostName = parsedData.hostName;
     this.port = parsedData.port;
     this.baseUrl = parsedData.baseUrl;
+    this.trpcUrl = parsedData.trpcUrl;
   }
 
   urlWithParams(controller: string, action: string): string {

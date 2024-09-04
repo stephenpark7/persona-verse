@@ -1,13 +1,12 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from 'server/src/trpc';
-import type { JsonResponse, UserSignupData } from '@interfaces';
-import type { LoginUserParams } from './types';
+import type { JsonResponse, UserLoginData, UserSignupData } from '@interfaces';
+import { apiConfig } from '@utils';
 
 const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      // TODO: use ENV variables for the URL
-      url: 'http://localhost:3001/trpc',
+      url: apiConfig.trpcUrl,
       fetch(url, options) {
         return fetch(url, {
           ...options,
@@ -33,7 +32,7 @@ export const registerUser = async ({
 export const loginUser = async ({
   username,
   password,
-}: LoginUserParams): Promise<JsonResponse> => {
+}: UserLoginData): Promise<JsonResponse> => {
   return await trpc.loginUser.mutate({
     username,
     password,
