@@ -3,10 +3,7 @@ import {
   RawAxiosRequestConfig,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { TweetPostData } from './schemas/tweet';
-import type { UserSignupData, UserLoginData } from './schemas/api';
-
-export type RequestBody = UserSignupData | UserLoginData | TweetPostData;
+import type { RequestBody } from './schemas/api';
 
 export interface ApiCall {
   method: string;

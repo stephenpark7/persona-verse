@@ -10,15 +10,15 @@ export const TweetSchema = z.object({
   }),
 });
 
-export const TweetPostDataSchema = z.object({
+export const TweetPostSchema = z.object({
   message: z.string(),
 });
 
 export const PostTweetSchema = z.object({
   jwt: JwtSchema,
-  payload: TweetPostDataSchema,
+  payload: TweetPostSchema,
 });
 
 export type TweetData = z.infer<typeof TweetSchema>;
-export type TweetPostData = z.infer<typeof TweetPostDataSchema>;
+export type TweetPostData = z.infer<typeof TweetPostSchema>;
 export type PostTweetData = z.infer<typeof PostTweetSchema>;

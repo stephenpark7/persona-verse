@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import { JwtSchema } from './jwt';
-import { TweetSchema } from './tweet';
+import { TweetPostSchema, TweetSchema } from './tweet';
+import type {
+  RawAxiosRequestConfig,
+  RawAxiosRequestHeaders,
+  AxiosRequestHeaders,
+} from 'axios';
 
 export const UserSignupSchema = z.object({
   username: z.string(),
@@ -37,12 +42,29 @@ export const JsonResponseSchema = z
   .object({
     message: z.string(),
   })
-  .extend(RefreshTokenResponseSchema.shape)
-  .extend(GetTweetsResponseSchema.shape)
-  .extend(PostTweetResponseSchema.shape);
+  .extend(RefreshTokenResponseSchema.partial().shape)
+  .extend(GetTweetsResponseSchema.partial().shape)
+  .extend(PostTweetResponseSchema.partial().shape);
 
 export type JsonResponse = z.infer<typeof JsonResponseSchema>;
 
 export const ApiProtocolSchema = z.enum(['rest', 'trpc']);
 
 export type ApiProtocol = z.infer<typeof ApiProtocolSchema>;
+
+export const RequestBodySchema = z.union([
+  UserSignupSchema,
+  UserLoginSchema,
+  TweetPostSchema,
+]);
+
+export type RequestBody = z.infer<typeof RequestBodySchema>;
+
+export const ApiCallSchema = z.object({
+  method: z.string(),
+  controller: z.string(),
+  action: z.string(),
+  body: RequestBodySchema,
+  // options: RawAxiosRequestConfig,
+  // headers: RawAxiosRequestHeaders | AxiosRequestHeaders,
+});
