@@ -11,7 +11,7 @@ export const sendHttpRequest = async (
 ): Promise<JsonResponse> => {
   const { method, controller, action, body, options, headers } = params;
 
-  const config: AxiosRequestConfig = {
+  const config = {
     url: apiConfig.urlWithParams(controller, action),
     headers: {
       'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export const sendHttpRequest = async (
     method,
     data: body,
     ...options,
-  };
+  } as AxiosRequestConfig<JsonResponse>;
 
   const response: AxiosResponse = await axios.request(config);
 

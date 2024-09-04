@@ -35,7 +35,8 @@ export const JsonResponseSchema = z
   })
   .extend(RefreshTokenResponseSchema.partial().shape)
   .extend(GetTweetsResponseSchema.partial().shape)
-  .extend(PostTweetResponseSchema.partial().shape);
+  .extend(PostTweetResponseSchema.partial().shape)
+  .extend(z.object({}).partial().shape);
 
 export const ApiProtocolSchema = z.enum(['rest', 'trpc']);
 

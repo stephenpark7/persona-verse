@@ -1,8 +1,7 @@
-import { JsonResponse, ApiProtocol } from '@interfaces';
+import { JsonResponse, ApiProtocol, ApiCall } from '@interfaces';
 import { loginUser, logoutUser, registerUser } from '../trpc';
 import { displayErrorMessage, displaySuccessMessage } from '@utils';
-import type { LoginUserParams } from '../trpc/types';
-import { UserSignupData } from '@interfaces';
+import type { UserSignupData, UserLoginData } from '@interfaces';
 import { sendHttpRequest } from '.';
 
 export const apiCall = async (
@@ -17,7 +16,7 @@ export const apiCall = async (
       if (params.action === 'signup') {
         response = await registerUser(params.body as UserSignupData);
       } else if (params.action === 'login') {
-        response = await loginUser(params.body as LoginUserParams);
+        response = await loginUser(params.body as UserLoginData);
       } else if (params.action === 'logout') {
         response = await logoutUser();
       } else {
