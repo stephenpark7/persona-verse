@@ -12,20 +12,14 @@ export const UserSignupSchema = z.object({
   password: z.string(),
 });
 
-export type UserSignupData = z.infer<typeof UserSignupSchema>;
-
 export const UserLoginSchema = z.object({
   username: z.string(),
   password: z.string(),
 });
 
-export type UserLoginData = z.infer<typeof UserLoginSchema>;
-
 export const RefreshTokenResponseSchema = z.object({
   jwt: JwtSchema,
 });
-
-export type RefreshTokenResponse = z.infer<typeof RefreshTokenResponseSchema>;
 
 export const GetTweetsResponseSchema = z.object({
   tweets: z.array(TweetSchema),
@@ -43,19 +37,13 @@ export const JsonResponseSchema = z
   .extend(GetTweetsResponseSchema.partial().shape)
   .extend(PostTweetResponseSchema.partial().shape);
 
-export type JsonResponse = z.infer<typeof JsonResponseSchema>;
-
 export const ApiProtocolSchema = z.enum(['rest', 'trpc']);
-
-export type ApiProtocol = z.infer<typeof ApiProtocolSchema>;
 
 export const RequestBodySchema = z.union([
   UserSignupSchema,
   UserLoginSchema,
   TweetPostSchema,
 ]);
-
-export type RequestBody = z.infer<typeof RequestBodySchema>;
 
 export const ApiCallSchema = z.object({
   method: z.string(),
@@ -65,3 +53,11 @@ export const ApiCallSchema = z.object({
   options: RawAxiosRequestConfigSchema,
   headers: RawAxiosRequestHeadersSchema,
 });
+
+export type UserSignupData = z.infer<typeof UserSignupSchema>;
+export type UserLoginData = z.infer<typeof UserLoginSchema>;
+export type RefreshTokenResponse = z.infer<typeof RefreshTokenResponseSchema>;
+export type JsonResponse = z.infer<typeof JsonResponseSchema>;
+export type ApiProtocol = z.infer<typeof ApiProtocolSchema>;
+export type RequestBody = z.infer<typeof RequestBodySchema>;
+export type ApiCall = z.infer<typeof ApiCallSchema>;

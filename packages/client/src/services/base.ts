@@ -1,4 +1,4 @@
-import { JsonResponse, ApiCall, ApiProtocol } from '@interfaces';
+import { JsonResponse, ApiProtocol } from '@interfaces';
 import { loginUser, logoutUser, registerUser } from '../trpc';
 import { displayErrorMessage, displaySuccessMessage } from '@utils';
 import type { LoginUserParams } from '../trpc/types';
