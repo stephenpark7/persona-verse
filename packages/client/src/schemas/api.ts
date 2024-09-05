@@ -5,6 +5,7 @@ import {
   RawAxiosRequestConfigSchema,
   RawAxiosRequestHeadersSchema,
 } from './axios';
+import { NavigateFunctionSchema } from './form';
 
 export const UserSignupSchema = z.object({
   username: z.string(),
@@ -55,22 +56,41 @@ export const ApiCallSchema = z.object({
   headers: RawAxiosRequestHeadersSchema.optional(),
 });
 
-export const ApiFunctionSchema = z.function();
-
 export const RegisterParamsSchema = z.object({
   formData: UserSignupSchema,
-  navigate: z.function(),
+  navigate: NavigateFunctionSchema,
   showToast: z.boolean().optional(),
   autoLogin: z.boolean().optional(),
 });
 
 export const LoginParamsSchema = z.object({
   formData: UserLoginSchema,
-  navigate: z.function(),
+  navigate: NavigateFunctionSchema,
   showToast: z.boolean().optional(),
 });
 
-export const RegisterFunctionSchema = z.function();
+// const RegisterFunctionSchema = z
+//   .function()
+//   .args(
+//     z.object({
+//       formData: UserSignupSchema,
+//       navigate: NavigateFunctionSchema,
+//     }),
+//   )
+//   .returns(z.promise(z.boolean()));
+
+export const ApiFunctionSchema = z
+  .function()
+  .args(
+    z.object({
+      formData: RequestBodySchema,
+      navigate: NavigateFunctionSchema,
+      showToast: z.boolean().optional(),
+      autoLogin: z.boolean().optional(),
+    }),
+  )
+  .returns(z.promise(z.boolean()));
+//const register: ({ formData, navigate, showToast, autoLogin, }: RegisterParams) => Promise<boolean>
 
 export const LoginFunctionSchema = z.function();
 
@@ -84,5 +104,5 @@ export type ApiCall = z.infer<typeof ApiCallSchema>;
 export type ApiFunction = z.infer<typeof ApiFunctionSchema>;
 export type RegisterParams = z.infer<typeof RegisterParamsSchema>;
 export type LoginParams = z.infer<typeof LoginParamsSchema>;
-export type RegisterFunction = z.infer<typeof RegisterFunctionSchema>;
+// export type RegisterFunction = z.infer<typeof RegisterFunctionSchema>;
 export type LoginFunction = z.infer<typeof LoginFunctionSchema>;

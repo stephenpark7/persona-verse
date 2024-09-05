@@ -1,14 +1,13 @@
-import { NavigateFunction } from 'react-router-dom';
 import { store, setJwt, clearJwt } from '@redux';
-import { LoginParams, RegisterParams } from 'src/schemas';
+import { ApiFunction } from '@schemas';
 import { apiCall } from './base';
 
-export const register = async ({
+export const register: ApiFunction = async ({
   formData,
   navigate,
   showToast = true,
   autoLogin = true,
-}: RegisterParams): Promise<boolean> => {
+}): Promise<boolean> => {
   const response = await apiCall(
     {
       method: 'POST',
@@ -35,11 +34,11 @@ export const register = async ({
   return Promise.resolve(true);
 };
 
-export const login = async ({
+export const login: ApiFunction = async ({
   formData,
   navigate,
   showToast = true,
-}: LoginParams): Promise<boolean> => {
+}): Promise<boolean> => {
   const response = await apiCall(
     {
       method: 'POST',
@@ -65,10 +64,10 @@ export const login = async ({
   return Promise.resolve(true);
 };
 
-export const logout = async (
-  navigate: NavigateFunction,
+export const logout: ApiFunction = async ({
+  navigate,
   showToast = true,
-): Promise<boolean> => {
+}): Promise<boolean> => {
   const response = await apiCall(
     {
       method: 'POST',

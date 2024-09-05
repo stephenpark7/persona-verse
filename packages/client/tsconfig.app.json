@@ -28,7 +28,7 @@
       "@components": ["./src/components/index"],
       "@core": ["./src/core/index"],
       "@hooks": ["./src/hooks/index"],
-      "@interfaces": ["src/schemas/index"],
+      "@schemas": ["src/schemas/index"],
       "@redux": ["./src/redux/index"],
       "@utils": ["./src/utils/index"],
       "@pages": ["./src/pages/index"],

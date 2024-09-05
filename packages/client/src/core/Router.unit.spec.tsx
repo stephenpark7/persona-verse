@@ -5,7 +5,7 @@ import { Home, Login, Signup } from '@pages';
 import { vi } from 'vitest';
 import { screen } from '@testing-library/react';
 import { renderApp } from 'src/tests/utils';
-import { MainLayout } from 'src/layouts';
+// import { MainLayout } from 'src/layouts';
 
 vi.mock('src/layouts/main', () => ({
   MainLayout: ({

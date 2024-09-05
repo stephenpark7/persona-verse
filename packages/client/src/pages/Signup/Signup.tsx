@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from 'src/schemas';
 import { register } from '@services';
@@ -16,15 +16,15 @@ export const Signup: React.FC = () => {
     document.title = 'Sign up - PersonaVerse';
   }, []);
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleFormChange = (e: ChangeEvent<HTMLInputElement>): void => {
     updateForm(e, formData, setFormData);
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     submitForm({
       e,
       formData,
-      register,
+      apiFunction: register,
       navigate,
     });
   };
