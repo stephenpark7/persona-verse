@@ -31,8 +31,7 @@ describe('Router', () => {
 
   it.only('renders title', () => {
     const router = createMemoryRouter(routes, { initialEntries: ['/'] });
-    const children = <RouterProvider router={router} />;
-    renderApp(<MainLayout title="PersonaVerse">{children}</MainLayout>);
+    renderApp(<RouterProvider router={router} />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'PersonaVerse',
     );

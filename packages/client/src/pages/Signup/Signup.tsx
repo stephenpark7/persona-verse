@@ -24,7 +24,7 @@ export const Signup: React.FC = () => {
     submitForm({
       e,
       formData,
-      apiFunction: register,
+      register,
       navigate,
     });
   };
