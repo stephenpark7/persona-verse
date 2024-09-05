@@ -1,8 +1,8 @@
 import { store, setJwt, clearJwt } from '@redux';
-import { ApiFunction } from '@schemas';
+import { LoginFunction, LogoutFunction, RegisterFunction } from '@schemas';
 import { apiCall } from './base';
 
-export const register: ApiFunction = async ({
+export const register: RegisterFunction = async ({
   formData,
   navigate,
   showToast = true,
@@ -34,7 +34,7 @@ export const register: ApiFunction = async ({
   return Promise.resolve(true);
 };
 
-export const login: ApiFunction = async ({
+export const login: LoginFunction = async ({
   formData,
   navigate,
   showToast = true,
@@ -64,7 +64,7 @@ export const login: ApiFunction = async ({
   return Promise.resolve(true);
 };
 
-export const logout: ApiFunction = async ({
+export const logout: LogoutFunction = async ({
   navigate,
   showToast = true,
 }): Promise<boolean> => {

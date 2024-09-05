@@ -1,14 +1,14 @@
-import { RequestBody, SubmitForm } from 'src/schemas';
+import { RequestBody, SubmitFormFunction } from 'src/schemas';
 
-export const submitForm = async ({
+export const submitForm: SubmitFormFunction = async ({
   e,
   formData,
   apiFunction,
   navigate,
-}: SubmitForm): Promise<void> => {
+}): Promise<void> => {
   e.preventDefault();
   await apiFunction({
-    formData,
+    ...formData,
     navigate,
   });
 };
