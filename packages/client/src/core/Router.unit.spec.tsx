@@ -38,4 +38,5 @@ describe('Router', () => {
   });
 
   // TODO: check to make sure MainLayout and RouterProvider are returned
+  // TODO: mock use state instead, and use render instead of renderApp
 });
