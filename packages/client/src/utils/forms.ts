@@ -1,16 +1,15 @@
 import { RequestBody, SubmitFormFunction } from 'src/schemas';
 
-export const submitForm: SubmitFormFunction = async ({
+export const submitForm: SubmitFormFunction = async (
   e,
   formData,
   apiFunction,
   navigate,
-}): Promise<void> => {
+  options,
+): Promise<void> => {
   e.preventDefault();
-  await apiFunction({
-    ...formData,
-    navigate,
-  });
+
+  await apiFunction(formData, navigate, options);
 };
 
 export const updateForm = (

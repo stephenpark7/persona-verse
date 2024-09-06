@@ -7,6 +7,8 @@ import {
 } from './axios';
 import { NavigateFunctionSchema } from './form';
 
+// TODO: rename since they are form fields
+
 export const UserSignupSchema = z.object({
   username: z.string(),
   email: z.string(),
@@ -41,11 +43,12 @@ export const JsonResponseSchema = z
 
 export const ApiProtocolSchema = z.enum(['rest', 'trpc']);
 
-export const RequestBodySchema = z.union([
-  UserSignupSchema,
-  UserLoginSchema,
-  TweetPostSchema,
-]);
+export const RequestBodySchema = z.object({
+  username: z.string().optional(),
+  email: z.string().optional(),
+  password: z.string().optional(),
+  message: z.string().optional(),
+});
 
 export const ApiCallSchema = z.object({
   method: z.string(),
@@ -73,10 +76,14 @@ export const RegisterFunctionSchema = z
   .function()
   .args(
     z.object({
-      formData: UserSignupSchema,
-      navigate: NavigateFunctionSchema,
-      showToast: z.boolean().default(true),
-      autoLogin: z.boolean(),
+      username: z.string().optional(),
+      email: z.string().optional(),
+      password: z.string().optional(),
+    }),
+    NavigateFunctionSchema,
+    z.object({
+      showToast: z.boolean().optional(),
+      autoLogin: z.boolean().optional(),
     }),
   )
   .returns(z.promise(z.boolean()));
@@ -85,26 +92,55 @@ export const LoginFunctionSchema = z
   .function()
   .args(
     z.object({
-      formData: UserLoginSchema,
-      navigate: NavigateFunctionSchema,
-      showToast: z.boolean().default(true),
+      username: z.string().optional(),
+      password: z.string().optional(),
+    }),
+    NavigateFunctionSchema,
+    z.object({
+      showToast: z.boolean().optional(),
     }),
   )
   .returns(z.promise(z.boolean()));
 
 export const LogoutFunctionSchema = z.function().args(
+  NavigateFunctionSchema,
   z.object({
-    navigate: NavigateFunctionSchema,
-    showToast: z.boolean().default(true),
+    showToast: z.boolean(),
   }),
 );
 
-export const ApiFunctionSchema = z.function().args(
-  z.object({
-    ...UserSignupSchema.shape,
-    ...UserLoginSchema.shape,
-  }),
-);
+export const ApiFunctionSchema = z
+  .function()
+  .args(
+    z.object({
+      username: z.string().optional(),
+      email: z.string().optional(),
+      password: z.string().optional(),
+      message: z.string().optional(),
+    }),
+    NavigateFunctionSchema,
+    z.object({
+      showToast: z.boolean().optional(),
+      autoLogin: z.boolean().optional(),
+    }),
+  )
+  .returns(z.promise(z.boolean()));
+
+// .args(
+//   z.object({
+//     formData: UserSignupSchema,
+//     navigate: NavigateFunctionSchema,
+//     showToast: z.boolean().default(true),
+//     autoLogin: z.boolean().default(true),
+//   }),
+// )
+// .returns(z.promise(z.boolean()));
+
+// export const ApiFunctionSchema = z.union([
+//   RegisterFunctionSchema,
+//   // LoginFunctionSchema,
+//   // LogoutFunctionSchema,
+// ]);
 
 export type UserSignupData = z.infer<typeof UserSignupSchema>;
 export type UserLoginData = z.infer<typeof UserLoginSchema>;
