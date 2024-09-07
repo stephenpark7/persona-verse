@@ -100,14 +100,7 @@ export type LogoutFunction = z.infer<typeof logoutFunction>;
 export const ApiFunctionSchema = z
   .function()
   .args(
-    z
-      .object({
-        username: z.string(),
-        email: z.string(),
-        password: z.string(),
-        message: z.string(),
-      })
-      .partial(),
+    requestBody,
     NavigateFunctionSchema,
     z.object({
       showToast: z.boolean().optional(),
@@ -115,3 +108,5 @@ export const ApiFunctionSchema = z
     }),
   )
   .returns(z.promise(z.boolean()));
+
+export type ApiFunction = z.infer<typeof ApiFunctionSchema>;

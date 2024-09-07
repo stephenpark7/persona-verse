@@ -1,6 +1,6 @@
 import type { NavigateFunction } from 'react-router-dom';
 import { z } from 'zod';
-import { ApiFunction, RequestBody } from './types';
+import { ApiFunction, RequestBody } from './api';
 import { FormEvent } from 'react';
 
 export const NavigateFunctionSchema = z.custom<NavigateFunction>();
