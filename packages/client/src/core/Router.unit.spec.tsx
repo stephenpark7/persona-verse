@@ -28,7 +28,7 @@ describe('Router', () => {
   // ];
 
   beforeEach(() => {
-    useUserStateStub(UserType.Guest);
+    useUserStateStub(UserType.GUEST);
     render(<Router />);
   });
 

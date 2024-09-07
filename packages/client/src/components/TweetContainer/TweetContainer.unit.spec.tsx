@@ -9,7 +9,7 @@ import { UserType } from '@factories';
 
 describe('TweetContainer component', () => {
   beforeEach(() => {
-    useUserStateStub(UserType.User);
+    useUserStateStub(UserType.USER);
     renderWithProviders(<TweetContainer />);
   });
 

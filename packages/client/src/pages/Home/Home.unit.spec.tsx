@@ -10,7 +10,7 @@ import { renderPage } from '@helpers';
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
-      useUserStateStub(UserType.Guest);
+      useUserStateStub(UserType.GUEST);
       renderPage(<Home />);
     });
 
@@ -47,7 +47,7 @@ describe('When visiting the home page', () => {
 
   describe('while logged in', () => {
     beforeEach(() => {
-      useUserStateStub(UserType.User);
+      useUserStateStub(UserType.USER);
       renderPage(<Home />);
     });
 
