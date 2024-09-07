@@ -1,9 +1,11 @@
-import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
+import React, { useEffect, useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { register } from '@services';
-import { submitForm, updateForm } from '@utils';
+import { submitForm } from '@utils';
 // import { useDocumentTitle } from '@hooks';
+import { Header } from '../Home/components';
+import { Input, Label } from '../../components/Form';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -20,11 +22,11 @@ export const Signup: React.FC = () => {
 
   // TODO: simply pass the function to form component instead of using wrapper methods
 
-  const handleFormChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    updateForm(e, formData, setFormData);
-  };
-
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    if (!formData.username || !formData.email || !formData.password) {
+      return;
+    }
+
     submitForm(e, formData, register, navigate, {
       showToast: true,
       autoLogin: true,
@@ -36,40 +38,43 @@ export const Signup: React.FC = () => {
     <div>
       <div className="my-5">
         <div>
-          <h1>Sign up</h1>
+          <Header title="Register" />
+          <h2 className="text-xl mb-3 font-medium">Create an account</h2>
           <form
             className="signup-form"
             onSubmit={handleFormSubmit}
           >
-            <div className="mt-3 mb-3">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                onChange={handleFormChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                onChange={handleFormChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleFormChange}
-                autoComplete="password"
-                required
-              />
+            <div className="flex flex-col gap-3">
+              <div className="flex">
+                <Label label="Username" />
+                <Input
+                  label="Username"
+                  type="text"
+                  value={formData.username}
+                  formDataState={{ formData, setFormData }}
+                />
+              </div>
+              <div className="flex">
+                <Label label="Email" />
+                <Input
+                  label="Email"
+                  type="text"
+                  value={formData.email}
+                  formDataState={{ formData, setFormData }}
+                />
+              </div>
+              <div className="flex">
+                <Label label="Password" />
+                <Input
+                  label="Password"
+                  type="password"
+                  value={formData.password}
+                  formDataState={{ formData, setFormData }}
+                />
+              </div>
             </div>
             <button
+              aria-label="Sign up"
               className="primary"
               type="submit"
             >

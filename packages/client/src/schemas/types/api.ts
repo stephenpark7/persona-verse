@@ -13,6 +13,7 @@ import {
   LoginFunctionSchema,
   LogoutFunctionSchema,
   ApiFunctionSchema,
+  LogoutParamsSchema,
 } from '../api';
 
 export type UserSignupData = z.infer<typeof UserSignupSchema>;
@@ -28,3 +29,4 @@ export type RegisterFunction = z.infer<typeof RegisterFunctionSchema>;
 export type LoginFunction = z.infer<typeof LoginFunctionSchema>;
 export type LogoutFunction = z.infer<typeof LogoutFunctionSchema>;
 export type ApiFunction = z.infer<typeof ApiFunctionSchema>;
+export type LogoutParams = z.infer<typeof LogoutParamsSchema>;

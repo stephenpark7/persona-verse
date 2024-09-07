@@ -72,6 +72,11 @@ export const LoginParamsSchema = z.object({
   showToast: z.boolean().optional(),
 });
 
+export const LogoutParamsSchema = z.object({
+  navigate: NavigateFunctionSchema,
+  showToast: z.boolean().optional(),
+});
+
 export const RegisterFunctionSchema = z
   .function()
   .args(

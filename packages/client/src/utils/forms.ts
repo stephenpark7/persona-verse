@@ -1,9 +1,11 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { register } from '@services';
+import { register, login, logout } from '@services';
 import {
-  RegisterFunctionSchema,
+  UserSignupSchema,
   RequestBody,
   SubmitFormFunction,
+  UserLoginSchema,
+  LogoutParamsSchema,
 } from '@schemas';
 
 export const submitForm: SubmitFormFunction = async (
@@ -18,7 +20,13 @@ export const submitForm: SubmitFormFunction = async (
   // validate form data
 
   if (apiFunction === register) {
-    RegisterFunctionSchema.parse(formData);
+    UserSignupSchema.parse(formData);
+  } else if (apiFunction === login) {
+    UserLoginSchema.parse(formData);
+  } else if (apiFunction === logout) {
+    LogoutParamsSchema.parse(formData);
+  } else {
+    throw new Error('Invalid API function');
   }
 
   await apiFunction(formData, navigate, options);
