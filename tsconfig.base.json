@@ -16,6 +16,7 @@
       "@mocks": [ "./packages/client/src/tests/mocks/index" ],
       "@matchers": [ "./packages/client/src/tests/matchers/index" ],
       "@helpers": [ "./packages/client/src/tests/helpers/index" ],
+      "@layouts": [ "./packages/client/src/layouts/index" ],
       "@shared": [ "./packages/shared/types/index" ]
     }
   }

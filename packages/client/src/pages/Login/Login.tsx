@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@components';
-import { RequestBody } from 'src/schemas';
+import { RequestBody } from '@schemas';
 import { login } from '@services';
 import { submitForm, updateForm } from '@utils';
 

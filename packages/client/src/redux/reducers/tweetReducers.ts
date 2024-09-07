@@ -1,8 +1,8 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
-import { State, TweetData } from 'src/schemas';
+import { State, TweetData } from '@schemas';
 import { initialState } from '@redux';
 
-const setTweetsReducer: CaseReducer<
+export const setTweetsReducer: CaseReducer<
   State,
   { payload: TweetData[]; type: string }
 > = (state: State = initialState, action: PayloadAction<TweetData[]>) => {
@@ -15,7 +15,7 @@ const setTweetsReducer: CaseReducer<
   };
 };
 
-const addTweetReducer: CaseReducer<
+export const addTweetReducer: CaseReducer<
   State,
   { payload: TweetData; type: string }
 > = (state: State = initialState, action: PayloadAction<TweetData>) => {
@@ -29,5 +29,3 @@ const addTweetReducer: CaseReducer<
     },
   };
 };
-
-export { addTweetReducer, setTweetsReducer };

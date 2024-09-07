@@ -1,4 +1,4 @@
-import { JwtSchema } from 'src/schemas';
+import { JwtSchema } from '@schemas';
 
 export const jwtFactory = (overrides = {}) => {
   return JwtSchema.parse({

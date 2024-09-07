@@ -1,8 +1,9 @@
 import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { RequestBody } from 'src/schemas';
+import { RequestBody } from '@schemas';
 import { register } from '@services';
 import { submitForm, updateForm } from '@utils';
+// import { useDocumentTitle } from '@hooks';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -13,9 +14,8 @@ export const Signup: React.FC = () => {
     password: '',
   });
 
-  // TODO: set document title in router component instead
   useEffect(() => {
-    document.title = 'Sign up - PersonaVerse';
+    document.title = 'PersonaVerse - Sign up';
   }, []);
 
   // TODO: simply pass the function to form component instead of using wrapper methods

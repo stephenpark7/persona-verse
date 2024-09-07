@@ -1,10 +1,10 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
-import { State } from 'src/schemas';
+import { State } from '@schemas';
 import { initialState } from '@redux';
 import { tokenStorage } from '@utils';
 import type { JWT } from '@shared';
 
-const setJwtReducer: CaseReducer<State, PayloadAction<JWT>> = (
+export const setJwtReducer: CaseReducer<State, PayloadAction<JWT>> = (
   state: State = initialState,
   action: PayloadAction<JWT>,
 ) => {
@@ -18,7 +18,7 @@ const setJwtReducer: CaseReducer<State, PayloadAction<JWT>> = (
   };
 };
 
-const clearJwtReducer: CaseReducer = () => {
+export const clearJwtReducer: CaseReducer = () => {
   tokenStorage.clearAccessToken();
   return {
     value: {
@@ -27,5 +27,3 @@ const clearJwtReducer: CaseReducer = () => {
     },
   };
 };
-
-export { setJwtReducer, clearJwtReducer };

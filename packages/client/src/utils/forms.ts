@@ -1,9 +1,10 @@
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { register } from '@services';
 import {
   RegisterFunctionSchema,
   RequestBody,
   SubmitFormFunction,
-} from 'src/schemas';
+} from '@schemas';
 
 export const submitForm: SubmitFormFunction = async (
   e,
@@ -24,9 +25,9 @@ export const submitForm: SubmitFormFunction = async (
 };
 
 export const updateForm = (
-  e: React.ChangeEvent<HTMLInputElement>,
+  e: ChangeEvent<HTMLInputElement>,
   formData: RequestBody,
-  setFormData: React.Dispatch<React.SetStateAction<RequestBody>>,
+  setFormData: Dispatch<SetStateAction<RequestBody>>,
 ): void => {
   const { value, name } = e.target;
   setFormData({

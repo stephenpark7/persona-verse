@@ -3,7 +3,7 @@ import axios, {
   AxiosResponse,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { JsonResponse, ApiCall } from 'src/schemas';
+import { JsonResponse, ApiCall } from '@schemas';
 import { apiConfig } from '@utils';
 
 export const sendHttpRequest = async (
