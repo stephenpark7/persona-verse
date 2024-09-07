@@ -1,6 +1,6 @@
 import { JWT } from '@shared';
-import { JwtSchema } from '@schemas';
+import { jwtSchema } from '@schemas';
 
 export const getDisplayName = (jwt: JWT | null): string => {
-  return JwtSchema.parse(jwt).payload.username;
+  return jwtSchema.parse(jwt).payload.username;
 };

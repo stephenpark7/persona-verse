@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import type { JWT } from '@shared';
-import { JwtSchema } from '@schemas';
+import { jwtSchema } from '@schemas';
 
 const TokenStorageSchema = z.object({
-  getAccessToken: z.function().returns(z.union([JwtSchema, z.null()])),
+  getAccessToken: z.function().returns(z.union([jwtSchema, z.null()])),
   setAccessToken: z
     .function()
-    .args(z.union([JwtSchema, z.null()]))
+    .args(z.union([jwtSchema, z.null()]))
     .returns(z.void()),
   clearAccessToken: z.function().returns(z.void()),
 });
@@ -22,14 +22,14 @@ class TokenStorage {
     const data = {
       getAccessToken: (): JWT | null => {
         const value: string | null = localStorage.getItem('jwt');
-        return value ? JwtSchema.parse(JSON.parse(value)) : null;
+        return value ? jwtSchema.parse(JSON.parse(value)) : null;
       },
       setAccessToken: (jwt: JWT | null) => {
         if (!jwt) {
           localStorage.removeItem('jwt');
           return;
         }
-        localStorage.setItem('jwt', JSON.stringify(JwtSchema.parse(jwt)));
+        localStorage.setItem('jwt', JSON.stringify(jwtSchema.parse(jwt)));
       },
       clearAccessToken: () => {
         localStorage.removeItem('jwt');

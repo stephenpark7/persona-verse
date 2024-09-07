@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { JwtSchema } from './jwt';
+import { jwtSchema } from './jwt';
 
 export const TweetSchema = z.object({
   id: z.number(),
@@ -15,7 +15,7 @@ export const TweetPostSchema = z.object({
 });
 
 export const PostTweetSchema = z.object({
-  jwt: JwtSchema,
+  jwt: jwtSchema,
   payload: TweetPostSchema,
 });
 

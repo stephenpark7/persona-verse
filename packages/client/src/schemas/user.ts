@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { JwtSchema } from './jwt';
+import { jwtSchema } from './jwt';
 import { TweetSchema } from './tweet';
 
 export const StatePropertiesSchema = z.object({
-  jwt: JwtSchema.nullable(),
+  jwt: jwtSchema.nullable(),
   tweets: z.array(z.array(TweetSchema)).nullable(),
 });
 

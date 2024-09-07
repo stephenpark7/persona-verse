@@ -1,13 +1,11 @@
 import { z } from 'zod';
-import { JwtSchema } from './jwt';
+import { Jwt } from './jwt';
 import { TweetSchema } from './tweet';
 import {
   RawAxiosRequestConfigSchema,
   RawAxiosRequestHeadersSchema,
 } from './axios';
 import { NavigateFunctionSchema } from './form';
-
-// TODO: rename since they are form fields
 
 export const registerFormFields = z.object({
   username: z.string(),
@@ -23,7 +21,7 @@ export const loginFormFields = z.object({
 export type LoginFormFields = z.infer<typeof loginFormFields>;
 
 export const refreshTokenResponse = z.object({
-  jwt: JwtSchema,
+  jwt: z.custom<Jwt>(),
 });
 
 export const getTweetsResponse = z.object({
@@ -33,15 +31,6 @@ export const getTweetsResponse = z.object({
 export const postTweetResponse = z.object({
   tweet: TweetSchema,
 });
-
-// export const JsonResponseSchema = z
-//   .object({
-//     message: z.string(),
-//   })
-//   .extend(refreshTokenResponse.partial());
-// .extend(getTweetsResponse.partial().shape)x
-// .extend(postTweetResponse.partial().shape);
-// .extend(z.object({}).partial().shape);
 
 export const apiProtocol = z.enum(['rest', 'trpc']);
 
