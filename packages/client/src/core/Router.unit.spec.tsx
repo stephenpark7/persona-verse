@@ -1,9 +1,8 @@
 import '../tests/mocks/components.unit';
 import { useUserStateStub } from '../tests/mocks/hooks.unit';
 
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { UserType } from '@factories';
-import { renderWithProviders } from './ReduxProvider';
 import { Router } from '@core';
 
 // vi.mock('src/layouts/main', () => ({
@@ -30,15 +29,16 @@ describe('Router', () => {
 
   beforeEach(() => {
     useUserStateStub(UserType.Guest);
-    renderWithProviders(<Router />);
+    render(<Router />);
   });
 
   it.only('renders home page by default', () => {
+    screen.debug();
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'PersonaVerse',
     );
   });
 
   // TODO: check to make sure MainLayout and RouterProvider are returned
-  // TODO: mock use state instead, and use render instead of renderApp
+  // meaning we should mock MainLayout and RouterProvider
 });
