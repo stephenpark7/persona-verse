@@ -92,8 +92,8 @@ export const LoginFunctionSchema = z
   .function()
   .args(
     z.object({
-      username: z.string().optional(),
-      password: z.string().optional(),
+      username: z.string(),
+      password: z.string(),
     }),
     NavigateFunctionSchema,
     z.object({
@@ -124,33 +124,3 @@ export const ApiFunctionSchema = z
     }),
   )
   .returns(z.promise(z.boolean()));
-
-// .args(
-//   z.object({
-//     formData: UserSignupSchema,
-//     navigate: NavigateFunctionSchema,
-//     showToast: z.boolean().default(true),
-//     autoLogin: z.boolean().default(true),
-//   }),
-// )
-// .returns(z.promise(z.boolean()));
-
-// export const ApiFunctionSchema = z.union([
-//   RegisterFunctionSchema,
-//   // LoginFunctionSchema,
-//   // LogoutFunctionSchema,
-// ]);
-
-export type UserSignupData = z.infer<typeof UserSignupSchema>;
-export type UserLoginData = z.infer<typeof UserLoginSchema>;
-export type RefreshTokenResponse = z.infer<typeof RefreshTokenResponseSchema>;
-export type JsonResponse = z.infer<typeof JsonResponseSchema>;
-export type ApiProtocol = z.infer<typeof ApiProtocolSchema>;
-export type RequestBody = z.infer<typeof RequestBodySchema>;
-export type ApiCall = z.infer<typeof ApiCallSchema>;
-export type RegisterParams = z.infer<typeof RegisterParamsSchema>;
-export type LoginParams = z.infer<typeof LoginParamsSchema>;
-export type RegisterFunction = z.infer<typeof RegisterFunctionSchema>;
-export type LoginFunction = z.infer<typeof LoginFunctionSchema>;
-export type LogoutFunction = z.infer<typeof LogoutFunctionSchema>;
-export type ApiFunction = z.infer<typeof ApiFunctionSchema>;
