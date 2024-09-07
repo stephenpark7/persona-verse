@@ -4,8 +4,8 @@ import { Home, Login, Signup } from '@pages';
 import { MainLayout } from 'src/layouts/main';
 
 interface Page {
-  path?: string;
-  element?: React.ReactNode;
+  path: string;
+  element: React.ReactNode;
   title: string;
 }
 
