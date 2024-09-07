@@ -6,7 +6,7 @@
       "@components": [ "./packages/client/src/components/index" ],
       "@core": [ "./packages/client/src/core/index" ],
       "@hooks": [ "./packages/client/src/hooks/index" ],
-      "@interfaces": [ "./packages/client/src/interfaces/index" ],
+      "@schemas": [ "./packages/client/src/schemas/index" ],
       "@redux": [ "./packages/client/src/redux/index" ],
       "@utils": [ "./packages/client/src/utils/index" ],
       "@pages": [ "./packages/client/src/pages/index" ],

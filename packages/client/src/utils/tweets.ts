@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import type { JWT } from '@shared';
 import { tweetAPI } from '@redux';
 
-interface handlePostTweetProps {
+interface handlePostTweetData {
   isLoggedIn: boolean;
   jwt: JWT | null;
   tweetInput: string;
@@ -16,7 +16,7 @@ export const submitTweet = async ({
   tweetInput,
   setTweetInput,
   postTweet,
-}: handlePostTweetProps): Promise<void> => {
+}: handlePostTweetData): Promise<void> => {
   if (!isLoggedIn) {
     return;
   }

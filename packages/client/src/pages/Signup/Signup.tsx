@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { RequestBody } from '@interfaces';
+import { RequestBody } from 'src/schemas';
 import { register } from '@services';
 import { submitForm, updateForm } from '@utils';
 
@@ -16,16 +16,14 @@ export const Signup: React.FC = () => {
     document.title = 'Sign up - PersonaVerse';
   }, []);
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleFormChange = (e: ChangeEvent<HTMLInputElement>): void => {
     updateForm(e, formData, setFormData);
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    submitForm({
-      e,
-      formData,
-      apiFunction: register,
-      navigate,
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    submitForm(e, formData, register, navigate, {
+      showToast: true,
+      autoLogin: true,
     });
   };
 

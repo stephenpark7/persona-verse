@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { TweetData } from '@interfaces';
+import { TweetData } from 'src/schemas';
 import './Tweet.css';
 
 export const Tweet: React.FC<TweetData> = ({ message, createdAt, User }) => {

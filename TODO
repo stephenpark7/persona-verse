@@ -1,15 +1,13 @@
 In Progress:
-  ☐ TODO: complete signup page tailwindcss integration
-  ☐ Use tailwindcss instead of bootstrap @started(24-08-21 02:25)
-  ☐ Create mock/factory/stubs folder for tests
-  ☐ Add more tests @started(24-08-21 02:24)
+  ☐ Complete signup page tailwindcss integration
   ☐ Refactor tests to use best practices
     ☐ GetByRole
+  ☐ Add more tests @started(24-08-21 02:24)
   ☐ Add more tRPC integration @started(24-08-21 02:25)
   ☐ Refactor backend @started(24-07-20 21:05)
   ☐ Refactor frontend @started(24-07-20 21:15)
-  ☐ Should automated test on commit
 To-Do:
+  ☐ Should automated test on commit
   ☐ Fix broken tests
   ☐ Refactor more
   ☐ Adding loading spinners
@@ -29,6 +27,8 @@ To-Do:
   ☐ Migrate DB from Sequelize to TypeORM
   ☐ Use eslint in root instead of in each package
 Done:
+  ✔ Create mock/factory/stubs folder for tests @done(24-09-02 21:45)
+  ✔ Use tailwindcss instead of bootstrap @started(24-08-21 02:25) @done(24-09-02 21:45) @lasted(1w5d19h20m37s)
   ✔ Get Jest to play nicely with Vite @done(24-09-02 01:12)
   ✔ Change back refresh token expiration date to 7 days @done(24-09-02 01:12)
   ✔ Use tRPC @started(24-08-08 07:46) @done(24-08-21 02:24) @lasted(1w5d18h38m56s)
