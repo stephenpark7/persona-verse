@@ -11,7 +11,7 @@ const TokenStorageSchema = z.object({
   clearAccessToken: z.function().returns(z.void()),
 });
 
-// TODO: consider shortening the name of methods, for example: getAccessToken -> getToken
+// TODO: shorten the name of methods, for example: getAccessToken -> getToken
 
 class TokenStorage {
   getAccessToken: () => JWT | null;

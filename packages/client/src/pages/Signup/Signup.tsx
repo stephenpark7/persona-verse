@@ -6,15 +6,19 @@ import { submitForm, updateForm } from '@utils';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
+  // TODO: have an initial state constant for the form data
   const [formData, setFormData] = useState<RequestBody>({
     username: '',
     email: '',
     password: '',
   });
 
+  // TODO: set document title in router component instead
   useEffect(() => {
     document.title = 'Sign up - PersonaVerse';
   }, []);
+
+  // TODO: simply pass the function to form component instead of using wrapper methods
 
   const handleFormChange = (e: ChangeEvent<HTMLInputElement>): void => {
     updateForm(e, formData, setFormData);
@@ -27,6 +31,7 @@ export const Signup: React.FC = () => {
     });
   };
 
+  // TODO: modularize form components
   return (
     <div>
       <div className="my-5">
