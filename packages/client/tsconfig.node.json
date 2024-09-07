@@ -34,11 +34,11 @@
       "@interceptors": ["./src/interceptors/index"],
       "@factories": ["./src/tests/factories/index"],
       "@mocks": ["./src/tests/mocks/index"],
+      "@mocks/*": ["./src/tests/mocks/*"],
       "@matchers": ["./src/tests/matchers/index"],
       "@helpers": ["./src/tests/helpers/index"],
       "@layouts": ["./src/layouts/index"],
       "@tests/utils": ["./src/tests/utils/index"],
-      "@tests/mocks": ["./src/tests/mocks/index"],
       "@shared": ["../shared/types/index"]
     }
   }

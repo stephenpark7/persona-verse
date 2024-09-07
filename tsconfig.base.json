@@ -14,11 +14,11 @@
       "@interceptors": [ "./packages/client/src/interceptors/index" ],
       "@factories": [ "./packages/client/src/tests/factories/index" ],
       "@mocks": [ "./packages/client/src/tests/mocks/index" ],
+      "@mocks/*": [ "./packages/client/src/tests/mocks/*" ],
       "@matchers": [ "./packages/client/src/tests/matchers/index" ],
       "@helpers": [ "./packages/client/src/tests/helpers/index" ],
       "@layouts": [ "./packages/client/src/layouts/index" ],
       "@tests/utils": [ "./packages/client/src/tests/utils/index" ],
-      "@tests/mocks": [ "./packages/client/src/tests/mocks/index" ],
       "@shared": [ "./packages/shared/types/index" ]
     }
   }

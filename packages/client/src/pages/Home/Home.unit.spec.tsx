@@ -1,11 +1,9 @@
-import '../../tests/mocks/components.unit';
-import { useUserStateStub } from '../../tests/mocks/hooks.unit';
-
-import { screen } from '@testing-library/react';
+import { useUserStateStub } from '@mocks';
 import { describe, beforeEach, it, expect } from 'vitest';
-import { Home } from '@pages';
+import { screen } from '@testing-library/react';
 import { UserType } from '@factories';
 import { renderPage } from '@helpers';
+import { Home } from '@pages';
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {

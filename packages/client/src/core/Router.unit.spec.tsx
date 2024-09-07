@@ -1,5 +1,5 @@
-import '../tests/mocks/components.unit';
-import { useUserStateStub } from '../tests/mocks/hooks.unit';
+import '../tests/mocks/components';
+import { useUserStateStub } from '../tests/mocks/hooks';
 
 import { render, screen } from '@testing-library/react';
 import { UserType } from '@factories';
@@ -33,7 +33,6 @@ describe('Router', () => {
   });
 
   it.only('renders home page by default', () => {
-    screen.debug();
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'PersonaVerse',
     );
