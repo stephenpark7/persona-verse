@@ -37,6 +37,8 @@
       "@matchers": ["./src/tests/matchers/index"],
       "@helpers": ["./src/tests/helpers/index"],
       "@layouts": ["./src/layouts/index"],
+      "@tests/utils": ["./src/tests/utils/index"],
+      "@tests/mocks": ["./src/tests/mocks/index"],
       "@shared": ["../shared/types/index"]
     }
   }

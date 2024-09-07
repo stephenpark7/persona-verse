@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
-import { renderApp } from '../utils';
-import { PreloadedStateFactory } from '../factories/redux';
+import { renderApp } from '@tests/utils';
+import { PreloadedStateFactory } from '@factories';
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
