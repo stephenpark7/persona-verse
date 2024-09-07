@@ -23,7 +23,11 @@ export const Signup: React.FC = () => {
   // TODO: simply pass the function to form component instead of using wrapper methods
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    if (!formData.username || !formData.email || !formData.password) {
+    if (
+      formData.username === undefined ||
+      formData.email === undefined ||
+      formData.password === undefined
+    ) {
       return;
     }
 

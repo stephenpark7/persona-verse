@@ -123,9 +123,10 @@ export const ApiFunctionSchema = z
   .function()
   .args(
     z.object({
-      username: z.string(),
-      email: z.string(),
-      password: z.string(),
+      username: z.string().optional(),
+      email: z.string().optional(),
+      password: z.string().optional(),
+      message: z.string().optional(),
     }),
     NavigateFunctionSchema,
     z.object({

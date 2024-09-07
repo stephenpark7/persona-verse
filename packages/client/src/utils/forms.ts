@@ -1,11 +1,10 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { register, login, logout } from '@services';
+import { register, login } from '@services';
 import {
   UserSignupSchema,
   RequestBody,
   SubmitFormFunction,
   UserLoginSchema,
-  LogoutParamsSchema,
 } from '@schemas';
 
 export const submitForm: SubmitFormFunction = async (
@@ -17,17 +16,17 @@ export const submitForm: SubmitFormFunction = async (
 ): Promise<void> => {
   e.preventDefault();
 
-  // validate form data
+  // if (!formData) {
+  //   throw new Error('Form data is undefined');
+  // }
 
-  if (apiFunction === register) {
-    UserSignupSchema.parse(formData);
-  } else if (apiFunction === login) {
-    UserLoginSchema.parse(formData);
-  } else if (apiFunction === logout) {
-    LogoutParamsSchema.parse(formData);
-  } else {
-    throw new Error('Invalid API function');
-  }
+  // if (apiFunction === register) {
+  //   UserSignupSchema.parse(formData);
+  // } else if (apiFunction === login) {
+  //   UserLoginSchema.parse(formData);
+  // } else {
+  //   throw new Error('Invalid API function');
+  // }
 
   await apiFunction(formData, navigate, options);
 };
