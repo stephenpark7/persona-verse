@@ -9,6 +9,8 @@ interface Page {
   title: string;
 }
 
+// TODO: move to separate file
+
 const pages: Page[] = [
   {
     path: '/signup',
