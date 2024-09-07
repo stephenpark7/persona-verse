@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { JwtSchema } from './jwt';
-import { TweetPostSchema, TweetSchema } from './tweet';
+import { TweetSchema } from './tweet';
 import {
   RawAxiosRequestConfigSchema,
   RawAxiosRequestHeadersSchema,
@@ -76,9 +76,9 @@ export const RegisterFunctionSchema = z
   .function()
   .args(
     z.object({
-      username: z.string().optional(),
-      email: z.string().optional(),
-      password: z.string().optional(),
+      username: z.string(),
+      email: z.string(),
+      password: z.string(),
     }),
     NavigateFunctionSchema,
     z.object({
@@ -113,10 +113,9 @@ export const ApiFunctionSchema = z
   .function()
   .args(
     z.object({
-      username: z.string().optional(),
-      email: z.string().optional(),
-      password: z.string().optional(),
-      message: z.string().optional(),
+      username: z.string(),
+      email: z.string(),
+      password: z.string(),
     }),
     NavigateFunctionSchema,
     z.object({

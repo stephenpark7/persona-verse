@@ -20,8 +20,6 @@ export const Signup: React.FC = () => {
     updateForm(e, formData, setFormData);
   };
 
-  // TODO: don't use object for arguments
-
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     submitForm(e, formData, register, navigate, {
       showToast: true,

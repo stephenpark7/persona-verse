@@ -1,4 +1,9 @@
-import { RequestBody, SubmitFormFunction } from 'src/schemas';
+import { register } from '@services';
+import {
+  RegisterFunctionSchema,
+  RequestBody,
+  SubmitFormFunction,
+} from 'src/schemas';
 
 export const submitForm: SubmitFormFunction = async (
   e,
@@ -8,6 +13,12 @@ export const submitForm: SubmitFormFunction = async (
   options,
 ): Promise<void> => {
   e.preventDefault();
+
+  // validate form data
+
+  if (apiFunction === register) {
+    RegisterFunctionSchema.parse(formData);
+  }
 
   await apiFunction(formData, navigate, options);
 };
