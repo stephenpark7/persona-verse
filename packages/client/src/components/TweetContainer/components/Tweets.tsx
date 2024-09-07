@@ -1,9 +1,9 @@
-import React from 'react';
-import { TweetData } from '@interfaces';
+import React, { FC, Key, JSX } from 'react';
+import { TweetData } from 'src/schemas';
 import { useGetTweetsQuery } from '@redux';
 import { Tweet } from '@components';
 
-export const Tweets: React.FC = (): React.JSX.Element => {
+export const Tweets: FC = (): JSX.Element => {
   const { data, isLoading } = useGetTweetsQuery();
 
   const renderTweets = () => {
@@ -11,7 +11,7 @@ export const Tweets: React.FC = (): React.JSX.Element => {
       return <p>Loading...</p>;
     }
 
-    return data?.slice(0, 5).map((data: TweetData, idx: React.Key) => (
+    return data?.slice(0, 5).map((data: TweetData, idx: Key) => (
       <Tweet
         key={idx}
         {...data}

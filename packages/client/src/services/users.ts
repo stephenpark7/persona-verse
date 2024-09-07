@@ -1,19 +1,12 @@
-import { NavigateFunction } from 'react-router-dom';
-import {
-  RegisterFunction,
-  RegisterParams,
-  LoginParams,
-  LoginFunction,
-} from '@interfaces';
 import { store, setJwt, clearJwt } from '@redux';
-import { apiCall } from '.';
+import { LoginFunction, LogoutFunction, RegisterFunction } from '@schemas';
+import { apiCall } from './base';
 
-export const register: RegisterFunction = async ({
+export const register: RegisterFunction = async (
   formData,
   navigate,
-  showToast = true,
-  autoLogin = true,
-}: RegisterParams): Promise<boolean> => {
+  { showToast, autoLogin },
+): Promise<boolean> => {
   const response = await apiCall(
     {
       method: 'POST',
@@ -21,7 +14,7 @@ export const register: RegisterFunction = async ({
       action: 'signup',
       body: formData,
     },
-    showToast,
+    showToast ?? true,
     'trpc',
   );
 
@@ -30,21 +23,17 @@ export const register: RegisterFunction = async ({
   }
 
   if (autoLogin) {
-    await login({
-      formData,
-      navigate,
-      showToast: false,
-    });
+    await login(formData, navigate, { showToast });
   }
 
   return Promise.resolve(true);
 };
 
-export const login: LoginFunction = async ({
+export const login: LoginFunction = async (
   formData,
   navigate,
-  showToast = true,
-}: LoginParams): Promise<boolean> => {
+  { showToast },
+): Promise<boolean> => {
   const response = await apiCall(
     {
       method: 'POST',
@@ -53,7 +42,7 @@ export const login: LoginFunction = async ({
       body: formData,
       options: { withCredentials: true },
     },
-    showToast,
+    showToast ?? true,
     'trpc',
   );
 
@@ -70,9 +59,9 @@ export const login: LoginFunction = async ({
   return Promise.resolve(true);
 };
 
-export const logout = async (
-  navigate: NavigateFunction,
-  showToast = true,
+export const logout: LogoutFunction = async (
+  navigate,
+  { showToast },
 ): Promise<boolean> => {
   const response = await apiCall(
     {

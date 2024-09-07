@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@components';
-import { RequestBody } from '@interfaces';
+import { RequestBody } from 'src/schemas';
 import { login } from '@services';
 import { submitForm, updateForm } from '@utils';
 
@@ -17,11 +17,9 @@ export const Login: React.FC = () => {
   };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    submitForm({
-      e,
-      formData,
-      apiFunction: login,
-      navigate,
+    submitForm(e, formData, login, navigate, {
+      showToast: true,
+      autoLogin: true,
     });
   };
 

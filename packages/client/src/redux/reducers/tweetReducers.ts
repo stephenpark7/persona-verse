@@ -1,5 +1,5 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
-import { State, TweetData } from '@interfaces';
+import { State, TweetData } from 'src/schemas';
 import { initialState } from '@redux';
 
 const setTweetsReducer: CaseReducer<

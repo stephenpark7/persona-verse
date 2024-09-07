@@ -3,7 +3,7 @@ import axios, {
   AxiosResponse,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { JsonResponse, ApiCall } from '@interfaces';
+import { JsonResponse, ApiCall } from 'src/schemas';
 import { apiConfig } from '@utils';
 
 export const sendHttpRequest = async (
@@ -11,7 +11,7 @@ export const sendHttpRequest = async (
 ): Promise<JsonResponse> => {
   const { method, controller, action, body, options, headers } = params;
 
-  const config: AxiosRequestConfig = {
+  const config = {
     url: apiConfig.urlWithParams(controller, action),
     headers: {
       'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export const sendHttpRequest = async (
     method,
     data: body,
     ...options,
-  };
+  } as AxiosRequestConfig<JsonResponse>;
 
   const response: AxiosResponse = await axios.request(config);
 

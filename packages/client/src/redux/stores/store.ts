@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { State } from '@interfaces';
+import { State } from 'src/schemas';
 import { tokenStorage } from '@utils';
 import {
   setJwtReducer,
