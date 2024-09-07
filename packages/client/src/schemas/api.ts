@@ -9,125 +9,116 @@ import { NavigateFunctionSchema } from './form';
 
 // TODO: rename since they are form fields
 
-export const UserSignupSchema = z.object({
+export const registerFormFields = z.object({
   username: z.string(),
   email: z.string(),
   password: z.string(),
 });
 
-export const UserLoginSchema = z.object({
+export const loginFormFields = z.object({
   username: z.string(),
   password: z.string(),
 });
 
-export const RefreshTokenResponseSchema = z.object({
+export type LoginFormFields = z.infer<typeof loginFormFields>;
+
+export const refreshTokenResponse = z.object({
   jwt: JwtSchema,
 });
 
-export const GetTweetsResponseSchema = z.object({
+export const getTweetsResponse = z.object({
   tweets: z.array(TweetSchema),
 });
 
-export const PostTweetResponseSchema = z.object({
+export const postTweetResponse = z.object({
   tweet: TweetSchema,
 });
 
-export const JsonResponseSchema = z
-  .object({
-    message: z.string(),
-  })
-  .extend(RefreshTokenResponseSchema.partial().shape)
-  .extend(GetTweetsResponseSchema.partial().shape)
-  .extend(PostTweetResponseSchema.partial().shape);
+// export const JsonResponseSchema = z
+//   .object({
+//     message: z.string(),
+//   })
+//   .extend(refreshTokenResponse.partial());
+// .extend(getTweetsResponse.partial().shape)x
+// .extend(postTweetResponse.partial().shape);
 // .extend(z.object({}).partial().shape);
 
-export const ApiProtocolSchema = z.enum(['rest', 'trpc']);
+export const apiProtocol = z.enum(['rest', 'trpc']);
 
-export const RequestBodySchema = z.object({
-  username: z.string().optional(),
-  email: z.string().optional(),
-  password: z.string().optional(),
-  message: z.string().optional(),
-});
+// Request Body
+
+export const requestBody = registerFormFields.merge(loginFormFields).partial();
+
+export type RequestBody = z.infer<typeof requestBody>;
 
 export const ApiCallSchema = z.object({
   method: z.string(),
   controller: z.string(),
   action: z.string(),
-  body: RequestBodySchema.optional(),
+  body: requestBody.optional(),
   options: RawAxiosRequestConfigSchema.optional(),
   headers: RawAxiosRequestHeadersSchema.optional(),
 });
 
-export const RegisterParamsSchema = z.object({
-  formData: UserSignupSchema,
-  navigate: NavigateFunctionSchema,
-  showToast: z.boolean().optional(),
-  autoLogin: z.boolean().optional(),
-});
+// Register
 
-export const LoginParamsSchema = z.object({
-  formData: UserLoginSchema,
-  navigate: NavigateFunctionSchema,
-  showToast: z.boolean().optional(),
-});
-
-export const LogoutParamsSchema = z.object({
-  navigate: NavigateFunctionSchema,
-  showToast: z.boolean().optional(),
-});
-
-export const RegisterFunctionSchema = z
+export const registerFunction = z
   .function()
   .args(
-    z.object({
-      username: z.string(),
-      email: z.string(),
-      password: z.string(),
-    }),
+    requestBody,
     NavigateFunctionSchema,
-    z.object({
-      showToast: z.boolean().optional(),
-      autoLogin: z.boolean().optional(),
-    }),
+    z
+      .object({
+        showToast: z.boolean(),
+        autoLogin: z.boolean(),
+      })
+      .partial(),
   )
   .returns(z.promise(z.boolean()));
 
-export const LoginFunctionSchema = z
+export type RegisterFunction = z.infer<typeof registerFunction>;
+
+// Login
+
+export const loginFunction = z
   .function()
   .args(
-    z.object({
-      username: z.string(),
-      password: z.string(),
-    }),
+    requestBody,
     NavigateFunctionSchema,
-    z.object({
-      showToast: z.boolean().optional(),
-    }),
+    z
+      .object({
+        showToast: z.boolean(),
+      })
+      .partial(),
   )
   .returns(z.promise(z.boolean()));
 
-export const LogoutFunctionSchema = z.function().args(
-  z.object({
-    username: z.string().optional(),
-    email: z.string().optional(),
-    password: z.string().optional(),
-  }),
+export type LoginFunction = z.infer<typeof loginFunction>;
+
+// Logout
+
+export const logoutFunction = z.function().args(
   NavigateFunctionSchema,
   z.object({
     showToast: z.boolean(),
   }),
 );
 
+export type LogoutFunction = z.infer<typeof logoutFunction>;
+
+// Api Function
+
 export const ApiFunctionSchema = z
   .function()
   .args(
-    z.object({
-      username: z.string().optional(),
-      email: z.string().optional(),
-      password: z.string().optional(),
-      message: z.string().optional(),
-    }),
+    z
+      .object({
+        username: z.string(),
+        email: z.string(),
+        password: z.string(),
+        message: z.string(),
+      })
+      .partial(),
     NavigateFunctionSchema,
     z.object({
       showToast: z.boolean().optional(),

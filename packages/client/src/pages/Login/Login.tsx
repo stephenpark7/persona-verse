@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@components';
-import { RequestBody, UserLoginSchema } from '@schemas';
+import { loginFormFields, RequestBody } from '@schemas';
 import { login } from '@services';
 import { submitForm, updateForm } from '@utils';
 
@@ -17,7 +17,7 @@ export const Login: React.FC = () => {
   };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    UserLoginSchema.parse(formData);
+    loginFormFields.parse(formData);
 
     submitForm(e, formData, login, navigate, {
       showToast: true,

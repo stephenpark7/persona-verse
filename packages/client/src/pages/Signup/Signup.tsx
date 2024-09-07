@@ -9,7 +9,6 @@ import { Input, Label } from '../../components/Form';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
-  // TODO: have an initial state constant for the form data
   const [formData, setFormData] = useState<RequestBody>({
     username: '',
     email: '',
@@ -23,14 +22,6 @@ export const Signup: React.FC = () => {
   // TODO: simply pass the function to form component instead of using wrapper methods
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    if (
-      formData.username === undefined ||
-      formData.email === undefined ||
-      formData.password === undefined
-    ) {
-      return;
-    }
-
     submitForm(e, formData, register, navigate, {
       showToast: true,
       autoLogin: true,

@@ -5,4 +5,4 @@ export * from './user';
 export * from './form';
 export * from './routes';
 
-export * from './types';
+// export * from './types';
