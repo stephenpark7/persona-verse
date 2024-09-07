@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Jwt } from './jwt';
+import { jwtSchema } from './jwt';
 import { TweetSchema } from './tweet';
 import {
   RawAxiosRequestConfigSchema,
@@ -21,7 +21,7 @@ export const loginFormFields = z.object({
 export type LoginFormFields = z.infer<typeof loginFormFields>;
 
 export const refreshTokenResponse = z.object({
-  jwt: z.custom<Jwt>(),
+  jwt: jwtSchema,
 });
 
 export const getTweetsResponse = z.object({
