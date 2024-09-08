@@ -15,8 +15,6 @@ export const loginFormFields = z.object({
   password: z.string(),
 });
 
-export type LoginFormFields = z.infer<typeof loginFormFields>;
-
 export const navigateFunction = z.custom<NavigateFunction>();
 
 export const SubmitFormFunctionSchema = z.function().args(
