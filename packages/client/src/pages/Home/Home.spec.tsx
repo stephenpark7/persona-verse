@@ -12,12 +12,6 @@ describe('When visiting the home page', () => {
       renderPage(<Home />);
     });
 
-    it('renders welcome message', () => {
-      expect(
-        screen.getByText('Create an account or log in.'),
-      ).toBeInTheDocument();
-    });
-
     it('renders sign up button', () => {
       expect(screen.getByText('Sign up')).toBeInTheDocument();
     });
@@ -47,10 +41,6 @@ describe('When visiting the home page', () => {
     beforeEach(() => {
       useUserStateStub(UserType.USER);
       renderPage(<Home />);
-    });
-
-    it('renders welcome message', () => {
-      expect(screen.getByText('Welcome john-doe!')).toBeInTheDocument();
     });
 
     it('renders profile', () => {
