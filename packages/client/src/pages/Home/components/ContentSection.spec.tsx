@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { BodyContent } from '@pages';
+import { ContentSection } from '@pages';
 import { beforeEach, describe, test, expect } from 'vitest';
 
-describe('BodyContent Component', () => {
+describe('ContentSection Component', () => {
   const contentText = (
     <>
       <div>Profile</div>
@@ -12,7 +12,7 @@ describe('BodyContent Component', () => {
   );
 
   beforeEach(() => {
-    render(<BodyContent content={contentText} />);
+    render(<ContentSection content={contentText} />);
   });
 
   test('renders the Profile content', () => {

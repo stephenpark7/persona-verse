@@ -1,21 +1,9 @@
 import React from 'react';
 import { useUserState } from '@hooks';
-import { LogoutButton, TweetContainer, Profile } from '@components';
-import { Header, WelcomeMessage, BodyContent } from './components';
-import { Buttons } from './components/Buttons';
+import { Header, WelcomeMessage, ContentSection } from './components';
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
-
-  const bodyContent = isLoggedIn ? (
-    <div>
-      <Profile />
-      <TweetContainer />
-      <LogoutButton />
-    </div>
-  ) : (
-    <Buttons />
-  );
 
   return (
     <div>
@@ -24,7 +12,7 @@ export const Home: React.FC = (): React.JSX.Element => {
         jwt={jwt}
         isLoggedIn={isLoggedIn}
       />
-      <BodyContent content={bodyContent} />
+      <ContentSection isLoggedIn={isLoggedIn} />
     </div>
   );
 };
