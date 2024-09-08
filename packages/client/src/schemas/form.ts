@@ -10,10 +10,14 @@ export const registerFormFields = z.object({
   password: z.string(),
 });
 
+export type RegisterFormFields = z.infer<typeof registerFormFields>;
+
 export const loginFormFields = z.object({
   username: z.string(),
   password: z.string(),
 });
+
+export type LoginFormFields = z.infer<typeof loginFormFields>;
 
 export const navigateFunction = z.custom<NavigateFunction>();
 
