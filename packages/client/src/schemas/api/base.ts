@@ -9,10 +9,12 @@ export const apiFunction = z.union([
 
 export type ApiFunction = z.infer<typeof apiFunction>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const apiProtocol = z.enum(['rest', 'trpc']);
 
 export type ApiProtocol = z.infer<typeof apiProtocol>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const httpRequestParams = z
   .object({
     method: z.string(),
