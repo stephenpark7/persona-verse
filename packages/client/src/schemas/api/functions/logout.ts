@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { navigateFunction } from '../form';
+import { navigateFunction } from '../../form';
 
 export const logoutFunction = z.function().args(
   navigateFunction,

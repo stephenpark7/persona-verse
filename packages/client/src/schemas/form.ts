@@ -1,6 +1,7 @@
 import type { NavigateFunction } from 'react-router-dom';
 import { z } from 'zod';
-import { ApiFunction, RequestBody } from './api';
+import { ApiFunction } from './api';
+import { RequestBody } from './request';
 import { FormEvent } from 'react';
 
 export const registerFormFields = z.object({

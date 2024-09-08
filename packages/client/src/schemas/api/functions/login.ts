@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { navigateFunction } from '../form';
-import { requestBody } from '../request';
+import { navigateFunction } from '../../form';
+import { requestBody } from '../../request';
 
 export const loginFunction = z
   .function()
