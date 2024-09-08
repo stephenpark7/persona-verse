@@ -1,23 +1,9 @@
 import { z } from 'zod';
-import { jwtSchema } from './jwt';
-import { TweetSchema } from './tweet';
 import {
   RawAxiosRequestConfigSchema,
   RawAxiosRequestHeadersSchema,
 } from './axios';
 import { navigateFunction, registerFormFields, loginFormFields } from './form';
-
-export const refreshTokenResponse = z.object({
-  jwt: jwtSchema,
-});
-
-export const getTweetsResponse = z.object({
-  tweets: z.array(TweetSchema),
-});
-
-export const postTweetResponse = z.object({
-  tweet: TweetSchema,
-});
 
 export const apiProtocol = z.enum(['rest', 'trpc']);
 
