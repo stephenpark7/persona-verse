@@ -3,13 +3,26 @@ import { z } from 'zod';
 import { ApiFunction, RequestBody } from './api';
 import { FormEvent } from 'react';
 
-export const NavigateFunctionSchema = z.custom<NavigateFunction>();
+export const registerFormFields = z.object({
+  username: z.string(),
+  email: z.string(),
+  password: z.string(),
+});
+
+export const loginFormFields = z.object({
+  username: z.string(),
+  password: z.string(),
+});
+
+export type LoginFormFields = z.infer<typeof loginFormFields>;
+
+export const navigateFunction = z.custom<NavigateFunction>();
 
 export const SubmitFormFunctionSchema = z.function().args(
   z.custom<FormEvent<HTMLFormElement>>(), // e
   z.custom<RequestBody>(), // formData
   z.custom<ApiFunction>(), // apiFunction
-  NavigateFunctionSchema, // navigate
+  navigateFunction, // navigate
   z.object({
     showToast: z.boolean(),
     autoLogin: z.boolean(),

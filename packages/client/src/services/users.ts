@@ -1,5 +1,10 @@
 import { store, setJwt, clearJwt } from '@redux';
-import { LoginFunction, LogoutFunction, RegisterFunction } from '@schemas';
+import {
+  LoginFunction,
+  LogoutFunction,
+  registerFormFields,
+  RegisterFunction,
+} from '@schemas';
 import { apiCall } from './base';
 
 export const register: RegisterFunction = async (
@@ -7,6 +12,8 @@ export const register: RegisterFunction = async (
   navigate,
   { showToast, autoLogin },
 ): Promise<boolean> => {
+  registerFormFields.parse(formData);
+
   const response = await apiCall(
     {
       method: 'POST',

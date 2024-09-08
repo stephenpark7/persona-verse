@@ -5,20 +5,7 @@ import {
   RawAxiosRequestConfigSchema,
   RawAxiosRequestHeadersSchema,
 } from './axios';
-import { NavigateFunctionSchema } from './form';
-
-export const registerFormFields = z.object({
-  username: z.string(),
-  email: z.string(),
-  password: z.string(),
-});
-
-export const loginFormFields = z.object({
-  username: z.string(),
-  password: z.string(),
-});
-
-export type LoginFormFields = z.infer<typeof loginFormFields>;
+import { navigateFunction, registerFormFields, loginFormFields } from './form';
 
 export const refreshTokenResponse = z.object({
   jwt: jwtSchema,
@@ -36,7 +23,7 @@ export const apiProtocol = z.enum(['rest', 'trpc']);
 
 // Request Body
 
-export const requestBody = registerFormFields.merge(loginFormFields).partial();
+export const requestBody = z.union([registerFormFields, loginFormFields]);
 
 export type RequestBody = z.infer<typeof requestBody>;
 
@@ -55,7 +42,7 @@ export const registerFunction = z
   .function()
   .args(
     requestBody,
-    NavigateFunctionSchema,
+    navigateFunction,
     z
       .object({
         showToast: z.boolean(),
@@ -73,7 +60,7 @@ export const loginFunction = z
   .function()
   .args(
     requestBody,
-    NavigateFunctionSchema,
+    navigateFunction,
     z
       .object({
         showToast: z.boolean(),
@@ -87,7 +74,7 @@ export type LoginFunction = z.infer<typeof loginFunction>;
 // Logout
 
 export const logoutFunction = z.function().args(
-  NavigateFunctionSchema,
+  navigateFunction,
   z.object({
     showToast: z.boolean(),
   }),
@@ -101,7 +88,7 @@ export const ApiFunctionSchema = z
   .function()
   .args(
     requestBody,
-    NavigateFunctionSchema,
+    navigateFunction,
     z.object({
       showToast: z.boolean().optional(),
       autoLogin: z.boolean().optional(),
