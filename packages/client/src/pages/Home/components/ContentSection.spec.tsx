@@ -1,29 +1,26 @@
+import { useUserStateStub } from '@mocks';
+import { beforeEach, describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ContentSection } from '@pages';
-import { beforeEach, describe, test, expect } from 'vitest';
+import { UserType } from '@factories';
 
 describe('ContentSection Component', () => {
-  const contentText = (
-    <>
-      <div>Profile</div>
-      <div>TweetContainer</div>
-      <div>LogoutButton</div>
-    </>
-  );
-
   beforeEach(() => {
-    render(<ContentSection content={contentText} />);
+    const useUserState = useUserStateStub(UserType.USER);
+    const { isLoggedIn } = useUserState();
+    render(<ContentSection isLoggedIn={isLoggedIn} />);
   });
 
-  test('renders the Profile content', () => {
+  test('renders the Profile component', () => {
     expect(screen.getByText('Profile')).toBeInTheDocument();
   });
 
-  test('renders the TweetContainer content', () => {
+  test('renders the TweetContainer component', () => {
     expect(screen.getByText('TweetContainer')).toBeInTheDocument();
   });
 
-  test('renders the LogoutButton content', () => {
+  test('renders the LogoutButton conmponent', () => {
+    screen.debug();
     expect(screen.getByText('LogoutButton')).toBeInTheDocument();
   });
 });

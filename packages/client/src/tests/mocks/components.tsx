@@ -6,5 +6,5 @@ vi.mock('@components', () => ({
   ),
   Profile: () => <div>Profile</div>,
   TweetContainer: () => <div>TweetContainer</div>,
-  LogoutButton: () => <button>Logout</button>,
+  LogoutButton: () => <button>LogoutButton</button>,
 }));
