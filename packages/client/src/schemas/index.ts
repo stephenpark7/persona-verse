@@ -6,4 +6,6 @@ export * from './form';
 export * from './routes';
 // export * from './response';
 
+export * from './functions';
+
 // export * from './types';
