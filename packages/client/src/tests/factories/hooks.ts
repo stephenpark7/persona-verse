@@ -33,8 +33,10 @@ export const useUserStateFactory = (type: UserType, overrides = {}) => {
     return { ...types[ind] };
   };
 
-  return {
-    ...getProperties(),
-    ...overrides,
+  return () => {
+    return {
+      ...getProperties(),
+      ...overrides,
+    };
   };
 };
