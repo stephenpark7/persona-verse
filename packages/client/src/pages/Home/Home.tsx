@@ -7,8 +7,6 @@ import { Buttons } from './components/Buttons';
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
 
-  // TODO: move to separate file
-
   const bodyContent = isLoggedIn ? (
     <div>
       <Profile />
