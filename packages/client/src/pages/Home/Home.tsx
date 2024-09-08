@@ -1,5 +1,4 @@
 import React from 'react';
-import { getDisplayName } from '@utils';
 import { useUserState } from '@hooks';
 import { LogoutButton, TweetContainer, Profile } from '@components';
 import { Header, WelcomeMessage, BodyContent } from './components';
@@ -9,10 +8,6 @@ export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
 
   // TODO: move to separate file
-
-  const welcomeMessageContent = isLoggedIn
-    ? `Welcome ${getDisplayName(jwt)}!`
-    : 'Create an account or log in.';
 
   const bodyContent = isLoggedIn ? (
     <div>
@@ -27,7 +22,10 @@ export const Home: React.FC = (): React.JSX.Element => {
   return (
     <div>
       <Header title="PersonaVerse" />
-      <WelcomeMessage message={welcomeMessageContent} />
+      <WelcomeMessage
+        jwt={jwt}
+        isLoggedIn={isLoggedIn}
+      />
       <BodyContent content={bodyContent} />
     </div>
   );
