@@ -8,6 +8,8 @@ import { Buttons } from './components/Buttons';
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
 
+  // TODO: move to separate file
+
   const welcomeMessageContent = isLoggedIn
     ? `Welcome ${getDisplayName(jwt)}!`
     : 'Create an account or log in.';

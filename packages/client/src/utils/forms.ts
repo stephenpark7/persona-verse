@@ -1,9 +1,5 @@
-import { register } from '@services';
-import {
-  RegisterFunctionSchema,
-  RequestBody,
-  SubmitFormFunction,
-} from 'src/schemas';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { RequestBody, SubmitFormFunction } from '@schemas';
 
 export const submitForm: SubmitFormFunction = async (
   e,
@@ -14,19 +10,13 @@ export const submitForm: SubmitFormFunction = async (
 ): Promise<void> => {
   e.preventDefault();
 
-  // validate form data
-
-  if (apiFunction === register) {
-    RegisterFunctionSchema.parse(formData);
-  }
-
   await apiFunction(formData, navigate, options);
 };
 
 export const updateForm = (
-  e: React.ChangeEvent<HTMLInputElement>,
+  e: ChangeEvent<HTMLInputElement>,
   formData: RequestBody,
-  setFormData: React.Dispatch<React.SetStateAction<RequestBody>>,
+  setFormData: Dispatch<SetStateAction<RequestBody>>,
 ): void => {
   const { value, name } = e.target;
   setFormData({

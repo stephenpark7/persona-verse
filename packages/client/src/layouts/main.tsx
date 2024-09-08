@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -6,9 +6,10 @@ interface MainLayoutProps {
 }
 
 export const MainLayout = ({ children, title }: MainLayoutProps) => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.title = title;
-  }, [title]);
+    console.log('MainLayout', title);
+  }, []);
 
   return <div className="m-5">{children}</div>;
 };

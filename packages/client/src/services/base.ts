@@ -1,7 +1,7 @@
-import { JsonResponse, ApiProtocol, ApiCall } from 'src/schemas';
+import { JsonResponse, ApiProtocol, ApiCall } from '@schemas';
 import { loginUser, logoutUser, registerUser } from '../trpc';
 import { displayErrorMessage, displaySuccessMessage } from '@utils';
-import type { UserSignupData, UserLoginData } from 'src/schemas';
+import type { UserSignupData, UserLoginData } from '@schemas';
 import { sendHttpRequest } from '.';
 
 export const apiCall = async (
