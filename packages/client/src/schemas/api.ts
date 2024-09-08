@@ -1,74 +1,21 @@
 import { z } from 'zod';
-import {
-  RawAxiosRequestConfigSchema,
-  RawAxiosRequestHeadersSchema,
-} from './axios';
-import { navigateFunction, registerFormFields, loginFormFields } from './form';
+// import {
+//   RawAxiosRequestConfigSchema,
+//   RawAxiosRequestHeadersSchema,
+// } from './axios';
+import { navigateFunction } from './form';
+import { requestBody } from './request';
 
-export const apiProtocol = z.enum(['rest', 'trpc']);
+// export const apiProtocol = z.enum(['rest', 'trpc']);
 
-// Request Body
-
-export const requestBody = z.union([registerFormFields, loginFormFields]);
-
-export type RequestBody = z.infer<typeof requestBody>;
-
-export const ApiCallSchema = z.object({
-  method: z.string(),
-  controller: z.string(),
-  action: z.string(),
-  body: requestBody.optional(),
-  options: RawAxiosRequestConfigSchema.optional(),
-  headers: RawAxiosRequestHeadersSchema.optional(),
-});
-
-// Register
-
-export const registerFunction = z
-  .function()
-  .args(
-    requestBody,
-    navigateFunction,
-    z
-      .object({
-        showToast: z.boolean(),
-        autoLogin: z.boolean(),
-      })
-      .partial(),
-  )
-  .returns(z.promise(z.boolean()));
-
-export type RegisterFunction = z.infer<typeof registerFunction>;
-
-// Login
-
-export const loginFunction = z
-  .function()
-  .args(
-    requestBody,
-    navigateFunction,
-    z
-      .object({
-        showToast: z.boolean(),
-      })
-      .partial(),
-  )
-  .returns(z.promise(z.boolean()));
-
-export type LoginFunction = z.infer<typeof loginFunction>;
-
-// Logout
-
-export const logoutFunction = z.function().args(
-  navigateFunction,
-  z.object({
-    showToast: z.boolean(),
-  }),
-);
-
-export type LogoutFunction = z.infer<typeof logoutFunction>;
-
-// Api Function
+// export const ApiCallSchema = z.object({
+//   method: z.string(),
+//   controller: z.string(),
+//   action: z.string(),
+//   body: requestBody.optional(),
+//   options: RawAxiosRequestConfigSchema.optional(),
+//   headers: RawAxiosRequestHeadersSchema.optional(),
+// });
 
 export const ApiFunctionSchema = z
   .function()
