@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { navigateFunction } from '../form';
 import { requestBody } from '../request';
 
-export const ApiFunctionSchema = z
+export const apiFunction = z
   .function()
   .args(
     requestBody,
@@ -14,4 +14,4 @@ export const ApiFunctionSchema = z
   )
   .returns(z.promise(z.boolean()));
 
-export type ApiFunction = z.infer<typeof ApiFunctionSchema>;
+export type ApiFunction = z.infer<typeof apiFunction>;
