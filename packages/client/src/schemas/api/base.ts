@@ -1,17 +1,10 @@
 import { z } from 'zod';
-import { navigateFunction } from '../form';
-import { requestBody } from '../request';
+import { registerFunction, loginFunction, logoutFunction } from './functions';
 
-export const apiFunction = z
-  .function()
-  .args(
-    requestBody,
-    navigateFunction,
-    z.object({
-      showToast: z.boolean().optional(),
-      autoLogin: z.boolean().optional(),
-    }),
-  )
-  .returns(z.promise(z.boolean()));
+export const apiFunction = z.union([
+  registerFunction,
+  loginFunction,
+  logoutFunction,
+]);
 
 export type ApiFunction = z.infer<typeof apiFunction>;
