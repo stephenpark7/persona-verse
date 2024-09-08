@@ -1,4 +1,5 @@
 In Progress:
+  ☐ Add autocomplete for input fields
   ☐ Complete signup page tailwindcss integration
   ☐ Refactor tests to use best practices
     ☐ GetByRole
