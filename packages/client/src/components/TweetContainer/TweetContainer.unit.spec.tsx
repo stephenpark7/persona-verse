@@ -1,15 +1,13 @@
-import '../../tests/mocks/components.unit';
-import { useUserStateStub } from '../../tests/mocks/hooks.unit';
-
-import { screen } from '@testing-library/react';
-import { TweetContainer } from '@components';
+import { useUserStateStub } from '@mocks';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { renderWithProviders } from '@core';
+import { screen } from '@testing-library/react';
 import { UserType } from '@factories';
+import { renderWithProviders } from '@core';
+import { TweetContainer } from '@components';
 
 describe('TweetContainer component', () => {
   beforeEach(() => {
-    useUserStateStub(UserType.User);
+    useUserStateStub(UserType.USER);
     renderWithProviders(<TweetContainer />);
   });
 

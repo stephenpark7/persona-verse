@@ -1,6 +1,6 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from 'server/src/trpc';
-import type { JsonResponse, UserLoginData, UserSignupData } from 'src/schemas';
+import type { JsonResponse, UserLoginData, UserSignupData } from '@schemas';
 import { apiConfig } from '@utils';
 
 const trpc = createTRPCProxyClient<AppRouter>({

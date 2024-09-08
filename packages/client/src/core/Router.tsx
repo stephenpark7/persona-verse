@@ -1,41 +1,18 @@
-import React from 'react';
+// import React, { useLayoutEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home, Login, Signup } from '@pages';
-import { MainLayout } from 'src/layouts/main';
+// import { MainLayout } from '@layouts';
+import { routes } from '@pages';
 
-interface Page {
-  path?: string;
-  element?: React.ReactNode;
-  title: string;
-}
-
-const pages: Page[] = [
-  {
-    path: '/signup',
-    element: <Signup />,
-    title: 'PersonaVerse - Sign up',
-  },
-  {
-    path: '/login',
-    element: <Login />,
-    title: 'PersonaVerse - Log in',
-  },
-  {
-    path: '/',
-    element: <Home />,
-    title: 'PersonaVerse',
-  },
-];
-
-export const router = createBrowserRouter(pages);
+export const router = createBrowserRouter(routes);
 
 export const Router: React.FC = () => {
-  const routeId = parseInt(router.state.matches[0].route.id);
-  const pageTitle = pages[routeId].title;
+  // const routeId = parseInt(router.state.matches[0].route.id);
+  // const pageTitle = routes[routeId].title;
+  // console.log(routes);
 
-  return (
-    <MainLayout title={pageTitle}>
-      <RouterProvider router={router} />
-    </MainLayout>
-  );
+  // useLayoutEffect(() => {
+  //   console.log(router);
+  // }, [router]);
+
+  return <RouterProvider router={router} />;
 };

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const JwtSchema = z.object({
+export const jwtSchema = z.object({
   token: z.string(),
   expiresAt: z.number(),
   payload: z.object({
@@ -9,4 +9,4 @@ export const JwtSchema = z.object({
   }),
 });
 
-export type JwtData = z.infer<typeof JwtSchema>;
+export type Jwt = z.infer<typeof jwtSchema>;

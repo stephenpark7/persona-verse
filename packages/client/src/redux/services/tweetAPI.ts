@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { TweetData } from 'src/schemas';
+import { TweetData } from '@schemas';
 import { getTweets, postTweet } from '@services';
 import { apiConfig } from '@utils';
 import { JWT } from '@shared';
