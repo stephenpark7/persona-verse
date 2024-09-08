@@ -1,6 +1,6 @@
 import React from 'react';
 import { LogoutButton, TweetContainer, Profile } from '@components';
-import { Buttons } from './Buttons';
+import { Buttons } from '../Buttons/Buttons';
 
 interface ContentSectionProps {
   isLoggedIn: boolean;

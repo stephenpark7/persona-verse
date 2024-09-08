@@ -2,7 +2,7 @@ import { useUserStateStub } from '@mocks';
 import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { UserType } from '@factories';
-import { WelcomeMessage } from '@pages';
+import { WelcomeMessage } from '@components';
 
 const renderWelcomeMessage = (userType: UserType) => {
   const useUserState = useUserStateStub(userType);

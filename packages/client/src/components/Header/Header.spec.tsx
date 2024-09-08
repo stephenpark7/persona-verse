@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Header } from '@pages';
+import { Header } from '@components';
 
 describe('Header Component', () => {
   const title = 'PersonaVerse';

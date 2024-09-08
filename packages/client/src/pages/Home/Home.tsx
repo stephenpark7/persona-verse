@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUserState } from '@hooks';
-import { Header, WelcomeMessage, ContentSection } from './components';
+import { Header, WelcomeMessage, ContentSection } from '@components';
 
 export const Home: React.FC = (): React.JSX.Element => {
   const { jwt, isLoggedIn } = useUserState();
