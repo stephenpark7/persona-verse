@@ -17,8 +17,7 @@ describe('Home page', () => {
     renderPage(<Home />);
   });
 
-  it.only('renders header component', () => {
-    screen.debug();
+  it('renders header component', () => {
     expect(screen.getByText('Header')).toBeInTheDocument();
   });
 
