@@ -1,11 +1,7 @@
 import { screen } from '@testing-library/react';
 import { PreloadedStateFactory } from '@factories';
 import { renderApp } from '@tests/utils';
-import { createBrowserRouter } from 'react-router-dom';
-import { routes } from '@pages';
 import { APP_TITLE } from '@utils';
-
-export const router = createBrowserRouter(routes);
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {

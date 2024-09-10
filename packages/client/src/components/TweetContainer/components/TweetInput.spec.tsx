@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { TweetInput } from './';
+import { TweetInput } from '.';
 import { beforeEach, describe, test, expect, vi } from 'vitest';
 
 describe('TweetInput component', () => {
