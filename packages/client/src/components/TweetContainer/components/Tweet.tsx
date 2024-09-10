@@ -1,8 +1,6 @@
 import React from 'react';
-import { TweetData } from '@schemas';
+import { Tweet as TweetProps } from '@schemas';
 import { getMonthAndDay } from '@utils';
-
-type TweetProps = TweetData;
 
 export const Tweet: React.FC<TweetProps> = ({ message, createdAt, User }) => {
   const username = User.username;
