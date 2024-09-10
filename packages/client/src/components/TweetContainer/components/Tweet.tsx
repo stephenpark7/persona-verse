@@ -1,42 +1,43 @@
 import React from 'react';
-import moment from 'moment';
 import { TweetData } from '@schemas';
-import './Tweet.css';
+import { getMonthAndDay } from '@utils';
 
 type TweetProps = TweetData;
 
 export const Tweet: React.FC<TweetProps> = ({ message, createdAt, User }) => {
   const username = User.username;
-  // TODO: move to a utility function
-  const tweetDate = moment(createdAt, 'YYYY-MM-DD').format('MMM D');
+  const tweetDate = getMonthAndDay(createdAt);
 
   return (
-    <div className="tweet-container">
-      <span
-        aria-label="display-name"
-        className="display-name"
-      >
-        {username}
-      </span>
-      <span
-        aria-label="username"
-        className="username"
-      >
-        @{username}
-      </span>
-      <span
-        aria-label="date"
-        className="date"
-      >
-        {tweetDate}
-      </span>
-      <br />
-      <span
-        aria-label="message"
-        className="text"
-      >
-        {message}
-      </span>
+    <div className="flex flex-col">
+      <div>
+        <span
+          aria-label="display-name"
+          className="font-bold"
+        >
+          {username}
+        </span>
+        <span
+          aria-label="username"
+          className="text-gray-500"
+        >
+          @{username}
+        </span>
+        <span
+          aria-label="date"
+          className="before:mr-1 before:content-['·'] ml-1 text-gray-500"
+        >
+          {tweetDate}
+        </span>
+      </div>
+      <div>
+        <span
+          aria-label="message"
+          className="text"
+        >
+          {message}
+        </span>
+      </div>
     </div>
   );
 };
