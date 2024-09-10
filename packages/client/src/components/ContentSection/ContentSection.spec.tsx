@@ -3,7 +3,6 @@ import { beforeEach, describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ContentSection } from '@components';
 import { UserType } from '@factories';
-import { BrowserRouter } from 'react-router-dom';
 import { renderWithProviders } from '@core';
 
 vi.mock('@components', async (importOriginal) => {
@@ -32,19 +31,15 @@ vi.mock('@components', async (importOriginal) => {
   };
 });
 
-describe('ContentSection Component', () => {
+describe('When rendering the content section', () => {
   describe('while logged out', () => {
     beforeEach(() => {
       const useUserState = useUserStateStub(UserType.GUEST);
       const { jwt, isLoggedIn } = useUserState();
-      render(
-        <BrowserRouter>
-          <ContentSection jwt={jwt} isLoggedIn={isLoggedIn} />
-        </BrowserRouter>,
-      );
+      render(<ContentSection jwt={jwt} isLoggedIn={isLoggedIn} />);
     });
 
-    it('renders the Buttons component', () => {
+    it('displays sign up and log in buttons', () => {
       expect(screen.getByText('Sign up')).toBeInTheDocument();
       expect(screen.getByText('Log in')).toBeInTheDocument();
     });
@@ -54,16 +49,10 @@ describe('ContentSection Component', () => {
     beforeEach(() => {
       const useUserState = useUserStateStub(UserType.USER);
       const { jwt, isLoggedIn } = useUserState();
-      // usePostTweetMutationStub();
-      renderWithProviders(
-        <BrowserRouter>
-          <ContentSection jwt={jwt} isLoggedIn={isLoggedIn} />
-        </BrowserRouter>,
-      );
+      renderWithProviders(<ContentSection jwt={jwt} isLoggedIn={isLoggedIn} />);
     });
 
-    it('renders the Profile component', () => {
-      screen.debug();
+    it('displays the profile', () => {
       expect(screen.getByText('Profile')).toBeInTheDocument();
     });
 

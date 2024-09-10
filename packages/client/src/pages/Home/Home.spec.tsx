@@ -1,5 +1,4 @@
 import { useUserStateStub } from '@mocks/hooks';
-import { describe, beforeEach, it, expect } from 'vitest';
 import { screen } from '@testing-library/react';
 import { UserType } from '@factories';
 import { renderPage } from '@helpers';
@@ -11,7 +10,7 @@ vi.mock('@components', () => ({
   ContentSection: () => <div>ContentSection</div>,
 }));
 
-describe('Home page', () => {
+describe('When rendering the home page', () => {
   beforeEach(() => {
     useUserStateStub(UserType.GUEST);
     renderPage(<Home />);

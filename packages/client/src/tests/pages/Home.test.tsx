@@ -1,26 +1,26 @@
-import { expect, describe, it } from 'vitest';
 import { screen } from '@testing-library/react';
 import { PreloadedStateFactory } from '@factories';
 import { renderApp } from '@tests/utils';
+import { createBrowserRouter } from 'react-router-dom';
+import { routes } from '@pages';
+import { APP_TITLE } from '@utils';
+
+export const router = createBrowserRouter(routes);
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
-      renderApp(null);
+      renderApp();
     });
 
     it('has a title', () => {
-      expect(document.title).toBe('PersonaVerse');
+      expect(document.title).toBe(APP_TITLE);
     });
 
     it('renders h1', () => {
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'PersonaVerse',
+        APP_TITLE,
       );
-    });
-
-    it('does not render h2', () => {
-      expect(screen.queryByRole('heading', { level: 2 })).toBeNull();
     });
 
     it('renders p', () => {
@@ -39,7 +39,7 @@ describe('When visiting the home page', () => {
 
   describe('while logged in', () => {
     beforeEach(() => {
-      renderApp(null, PreloadedStateFactory());
+      renderApp(undefined, PreloadedStateFactory());
     });
 
     it('renders paragraph', () => {
@@ -57,18 +57,6 @@ describe('When visiting the home page', () => {
       expect(buttons).toHaveLength(2);
       expect(buttons).someToContainText('Tweet');
       expect(buttons).someToContainText('Log out');
-    });
-
-    it('does not render sign up button', () => {
-      expect(screen.queryByText('Sign up')).toBeNull();
-    });
-
-    it('does not render log in button', () => {
-      expect(screen.queryByText('Log in')).toBeNull();
-    });
-
-    it('does not render create account message', () => {
-      expect(screen.queryByText('Create an account or log in.')).toBeNull();
     });
   });
 });

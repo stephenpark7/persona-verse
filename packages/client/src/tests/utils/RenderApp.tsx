@@ -3,7 +3,7 @@ import { renderWithProviders, Router } from '@core';
 import { RootState } from '@redux';
 
 export const renderApp = (
-  rootComponent: React.ReactElement | null = <Router />,
+  rootComponent?: React.ReactElement,
   preloadedState?: Partial<RootState>,
 ) => {
   renderWithProviders(rootComponent ?? <Router />, {

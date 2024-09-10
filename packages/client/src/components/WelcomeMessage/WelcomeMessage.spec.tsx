@@ -1,5 +1,4 @@
 import { useUserStateStub } from '@mocks';
-import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { UserType } from '@factories';
 import { WelcomeMessage } from '@components';
@@ -10,9 +9,9 @@ const renderWelcomeMessage = (userType: UserType) => {
   render(<WelcomeMessage jwt={jwt} isLoggedIn={isLoggedIn} />);
 };
 
-describe('WelcomeMessage Component', () => {
+describe('When rendering the welcome message', () => {
   describe('while logged out', () => {
-    test('renders the welcome message', () => {
+    it('displays a prompt to create an account or log in', () => {
       renderWelcomeMessage(UserType.GUEST);
       expect(
         screen.getByText('Create an account or log in.'),
@@ -21,7 +20,7 @@ describe('WelcomeMessage Component', () => {
   });
 
   describe('while logged in', () => {
-    test('renders the welcome message', () => {
+    it('displays a welcome message', () => {
       renderWelcomeMessage(UserType.USER);
       expect(screen.getByText('Welcome john-doe!')).toBeInTheDocument();
     });

@@ -32,7 +32,7 @@ export const Signup: React.FC = () => {
     <div>
       <div className="my-5">
         <div>
-          <Header title="Sign ups" />
+          <Header title="Sign up" />
           <h2 className="text-xl mb-3 font-medium">Create an account</h2>
           <form
             className="signup-form"

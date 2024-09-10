@@ -1,15 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { Header } from '@components';
+import { APP_TITLE } from '@utils';
 
-describe('Header Component', () => {
-  const title = 'PersonaVerse';
-
-  test('renders the title', () => {
-    render(<Header title={title} />);
+describe('When rendering the header', () => {
+  it('displays the title', () => {
+    render(<Header title={APP_TITLE} />);
 
     expect(
       screen.getByRole('heading', {
-        name: title,
+        name: APP_TITLE,
         level: 1,
       }),
     ).toBeInTheDocument();
