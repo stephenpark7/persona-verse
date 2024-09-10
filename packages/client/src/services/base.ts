@@ -1,4 +1,10 @@
-import { JsonResponse, ApiProtocol, HttpRequestParams } from '@schemas';
+import {
+  apiProtocol,
+  httpRequestParams,
+  JsonResponse,
+  HttpRequestParams,
+} from '@schemas';
+import type { ApiProtocol } from '@schemas';
 import { loginUser, logoutUser, registerUser } from '../trpc';
 import { displayErrorMessage, displaySuccessMessage } from '@utils';
 import type { RegisterFormFields, LoginFormFields } from '@schemas';
@@ -10,6 +16,9 @@ export const apiCall = async (
   protocol?: ApiProtocol,
 ): Promise<JsonResponse | void> => {
   try {
+    httpRequestParams.parse(params);
+    apiProtocol.parse(protocol);
+
     let response;
 
     if (protocol === 'trpc') {
