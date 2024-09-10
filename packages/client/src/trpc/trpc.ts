@@ -1,9 +1,12 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from 'server/src/trpc';
-import type {
-  JsonResponse,
-  RegisterFormFields,
-  LoginFormFields,
+import {
+  type JsonResponse,
+  type RegisterFormFields,
+  type LoginFormFields,
+  registerFormFields,
+  loginFormFields,
+  jsonResponse,
 } from '@schemas';
 import { apiConfig } from '@utils';
 
@@ -26,6 +29,12 @@ export const registerUser = async ({
   email,
   password,
 }: RegisterFormFields): Promise<JsonResponse> => {
+  registerFormFields.parse({
+    username,
+    email,
+    password,
+  });
+
   return await trpc.registerUser.mutate({
     username,
     email,
@@ -37,6 +46,11 @@ export const loginUser = async ({
   username,
   password,
 }: LoginFormFields): Promise<JsonResponse> => {
+  loginFormFields.parse({
+    username,
+    password,
+  });
+
   return await trpc.loginUser.mutate({
     username,
     password,
@@ -44,5 +58,7 @@ export const loginUser = async ({
 };
 
 export const logoutUser = async (): Promise<JsonResponse> => {
+  jsonResponse.parse({});
+
   return await trpc.logoutUser.mutate();
 };
