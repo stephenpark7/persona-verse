@@ -1,24 +1,29 @@
 import { JWT } from '@shared';
 import { store, setJwt } from '@redux';
+import {
+  httpRequestParams,
+  RefreshTokenResponse,
+  refreshTokenResponse,
+} from '@schemas';
 import { apiCall } from '.';
 
 export const refreshToken = async (): Promise<JWT | void> => {
-  const response = await apiCall(
-    {
-      method: 'POST',
-      controller: 'refresh',
-      action: '',
-      options: { withCredentials: true },
-    },
+  const params = {
+    method: 'POST',
+    controller: 'refresh',
+    action: '',
+    options: { withCredentials: true },
+  };
+
+  httpRequestParams.parse(params);
+
+  const response = (await apiCall(
+    params,
     false,
     'rest',
-  );
+  )) as RefreshTokenResponse;
 
-  if (!response) return;
-
-  if (!response.jwt) {
-    throw new Error('JWT data is missing.');
-  }
+  refreshTokenResponse.parse(response);
 
   store.dispatch(setJwt(response.jwt));
 

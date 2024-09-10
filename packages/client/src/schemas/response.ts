@@ -6,6 +6,8 @@ export const refreshTokenResponse = z.object({
   jwt: jwtSchema,
 });
 
+export type RefreshTokenResponse = z.infer<typeof refreshTokenResponse>;
+
 export const getTweetsResponse = z.object({
   tweets: z.array(tweetSchema),
 });
