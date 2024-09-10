@@ -17,6 +17,7 @@ vi.mock('@redux', async (importOriginal) => {
 export const useUserStateStub = (type: UserType) =>
   vi.mocked(useUserState).mockImplementation(useUserStateFactory(type));
 
+// TODO: use factory for below
 export const useGetTweetsQueryStub = (state: 'loading' | 'loaded') =>
   vi.mocked(useGetTweetsQuery).mockReturnValue({
     ...useGetTweetsQuery(),
