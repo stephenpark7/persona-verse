@@ -3,8 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { register } from '@services';
 import { submitForm } from '@utils';
-// import { useDocumentTitle } from '@hooks';
-import { Header } from '../Home/components';
+import { Header } from '@components';
 import { Input, Label } from '../../components/Form';
 
 export const Signup: React.FC = () => {
@@ -33,7 +32,7 @@ export const Signup: React.FC = () => {
     <div>
       <div className="my-5">
         <div>
-          <Header title="Register" />
+          <Header title="Sign up" />
           <h2 className="text-xl mb-3 font-medium">Create an account</h2>
           <form
             className="signup-form"

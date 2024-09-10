@@ -1,7 +1,5 @@
 import { jwtFactory } from './jwt';
 
-// TODO: rename to stub type, or traits, or something similar
-
 export enum UserType {
   GUEST = 'guest',
   USER = 'user',
@@ -33,8 +31,10 @@ export const useUserStateFactory = (type: UserType, overrides = {}) => {
     return { ...types[ind] };
   };
 
-  return {
-    ...getProperties(),
-    ...overrides,
+  return () => {
+    return {
+      ...getProperties(),
+      ...overrides,
+    };
   };
 };

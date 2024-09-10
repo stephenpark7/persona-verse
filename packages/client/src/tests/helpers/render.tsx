@@ -1,6 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
+
+// TODO: mock packages/client/src/core/Router.tsx instead of using BrowserRouter
 
 export const renderPage = (
   component: React.ReactElement,
@@ -10,5 +12,5 @@ export const renderPage = (
     vi.clearAllMocks();
   }
 
-  return render(<Router>{component}</Router>);
+  return render(<BrowserRouter>{component}</BrowserRouter>);
 };

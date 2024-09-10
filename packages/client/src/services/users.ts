@@ -67,19 +67,18 @@ export const login: LoginFunction = async (
 };
 
 export const logout: LogoutFunction = async (
+  _,
   navigate,
   { showToast },
 ): Promise<boolean> => {
-  const response = await apiCall(
-    {
-      method: 'POST',
-      controller: 'users',
-      action: 'logout',
-      options: { withCredentials: true },
-    },
-    showToast,
-    'trpc',
-  );
+  const params = {
+    method: 'POST',
+    controller: 'users',
+    action: 'logout',
+    options: { withCredentials: true },
+  };
+
+  const response = await apiCall(params, showToast, 'trpc');
 
   if (!response) {
     return Promise.resolve(false);

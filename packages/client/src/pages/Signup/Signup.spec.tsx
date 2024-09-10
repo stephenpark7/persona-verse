@@ -5,7 +5,7 @@ import { UserType } from '@factories';
 import { renderPage } from '@helpers';
 import { Signup } from '@pages';
 
-describe('When visiting the signup page', () => {
+describe('Signup page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
       useUserStateStub(UserType.GUEST);
@@ -14,7 +14,7 @@ describe('When visiting the signup page', () => {
 
     it('renders h1', () => {
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Register',
+        'Sign up',
       );
     });
 

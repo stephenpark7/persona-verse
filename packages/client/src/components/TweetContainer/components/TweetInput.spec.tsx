@@ -1,14 +1,8 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { TweetInput } from './';
-import { beforeEach, describe, test, expect, vi } from 'vitest';
+import { TweetInput } from '.';
 
-describe('TweetInput component', () => {
+describe('When rendering the tweet input', () => {
   const mockSetTweetInput = vi.fn();
-  // const mockUseState = vi.fn().mockImplementation(init => [init, mockSetTweetInput]);
-
-  // vi.spyOn(React, 'useState').mockImplementation(mockUseState);
-
   const tweetInput = '';
   const setTweetInput = mockSetTweetInput;
 
@@ -18,13 +12,13 @@ describe('TweetInput component', () => {
     );
   });
 
-  test('renders input field', () => {
+  it('renders input field', () => {
     expect(
       screen.getByPlaceholderText("What's happening?"),
     ).toBeInTheDocument();
   });
 
-  test('calls handleOnChange', () => {
+  it('calls handleOnChange', () => {
     const input = screen.getByPlaceholderText("What's happening?");
     fireEvent.change(input, {
       target: { value: 'test' },
@@ -32,7 +26,7 @@ describe('TweetInput component', () => {
     expect(mockSetTweetInput).toHaveBeenCalledWith('test');
   });
 
-  test('calls handleKeyUp', () => {
+  it('calls handleKeyUp', () => {
     const input = screen.getByPlaceholderText("What's happening?");
     fireEvent.change(input, {
       target: { value: 'test' },
