@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { State } from '@schemas';
+import { state, State } from '@schemas';
 import { tokenStorage } from '@utils';
 import {
   setJwtReducer,
@@ -17,6 +17,8 @@ export const initialState: State = {
     tweets: null,
   },
 };
+
+state.parse(initialState);
 
 export const userSlice = createSlice({
   name: 'user',
