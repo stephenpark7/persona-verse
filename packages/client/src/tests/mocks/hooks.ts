@@ -5,9 +5,6 @@ import { useGetTweetsQuery } from '@redux';
 
 vi.mock('@hooks', () => ({
   useUserState: vi.fn(),
-  // usePostTweetMutation: vi.fn(),
-  // useDispatch: vi.fn(),
-  // useAppStoreDispatch: vi.fn(),
 }));
 
 vi.mock('@redux', async (importOriginal) => {
