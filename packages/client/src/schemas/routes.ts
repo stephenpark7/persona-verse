@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
 import { z } from 'zod';
 
 export const routeSchema = z.object({
   path: z.string(),
-  element: z.custom<React.ReactNode>(),
+  element: z.custom<ReactNode>(),
   title: z.string(),
 });
 

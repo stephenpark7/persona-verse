@@ -10,26 +10,24 @@ export const registerFormFields = z.object({
   password: z.string(),
 });
 
-export type RegisterFormFields = z.infer<typeof registerFormFields>;
-
 export const loginFormFields = z.object({
   username: z.string(),
   password: z.string(),
 });
 
-export type LoginFormFields = z.infer<typeof loginFormFields>;
-
 export const navigateFunction = z.custom<NavigateFunction>();
 
 export const submitFormFunction = z.function().args(
-  z.custom<FormEvent<HTMLFormElement>>(), // e
-  z.custom<RequestBody>(), // formData
-  z.custom<ApiFunction>(), // apiFunction
-  navigateFunction, // navigate
+  z.custom<FormEvent<HTMLFormElement>>(),
+  z.custom<RequestBody>(),
+  z.custom<ApiFunction>(),
+  navigateFunction,
   z.object({
     showToast: z.boolean(),
     autoLogin: z.boolean(),
   }),
 );
 
+export type RegisterFormFields = z.infer<typeof registerFormFields>;
+export type LoginFormFields = z.infer<typeof loginFormFields>;
 export type SubmitFormFunction = z.infer<typeof submitFormFunction>;
