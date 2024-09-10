@@ -10,6 +10,13 @@ vi.mock('@hooks', () => ({
   // useAppStoreDispatch: vi.fn(),
 }));
 
+vi.mock('@redux', async (importOriginal) => {
+  return {
+    ...(await importOriginal<typeof import('@redux')>()),
+    useGetTweetsQuery: vi.fn(),
+  };
+});
+
 export const useUserStateStub = (type: UserType) =>
   vi.mocked(useUserState).mockImplementation(useUserStateFactory(type));
 
