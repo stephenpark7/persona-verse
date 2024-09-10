@@ -7,6 +7,7 @@ type TweetProps = TweetData;
 
 export const Tweet: React.FC<TweetProps> = ({ message, createdAt, User }) => {
   const username = User.username;
+  // TODO: move to a utility function
   const tweetDate = moment(createdAt, 'YYYY-MM-DD').format('MMM D');
 
   return (
