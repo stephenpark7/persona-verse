@@ -21,7 +21,7 @@ export type LoginFormFields = z.infer<typeof loginFormFields>;
 
 export const navigateFunction = z.custom<NavigateFunction>();
 
-export const SubmitFormFunctionSchema = z.function().args(
+export const submitFormFunctionSchema = z.function().args(
   z.custom<FormEvent<HTMLFormElement>>(), // e
   z.custom<RequestBody>(), // formData
   z.custom<ApiFunction>(), // apiFunction
@@ -32,4 +32,4 @@ export const SubmitFormFunctionSchema = z.function().args(
   }),
 );
 
-export type SubmitFormFunction = z.infer<typeof SubmitFormFunctionSchema>;
+export type SubmitFormFunction = z.infer<typeof submitFormFunctionSchema>;

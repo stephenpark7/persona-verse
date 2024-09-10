@@ -1,4 +1,4 @@
-import { UserSchema } from '@schemas';
+import { userSchema } from '@schemas';
 import { jwtFactory } from './jwt';
 import { RootState } from '@redux';
 
@@ -14,7 +14,7 @@ export const PreloadedStateFactory = (overrides = {}) => {
     user,
   };
 
-  UserSchema.parse({
+  userSchema.parse({
     ...preloadedState,
     ...overrides,
   });
