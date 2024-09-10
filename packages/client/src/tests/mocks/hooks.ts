@@ -1,9 +1,13 @@
 import { vi } from 'vitest';
 import { useUserState } from '@hooks';
 import { UserType, useUserStateFactory } from '@factories';
+import { useDispatch } from 'react-redux';
 
 vi.mock('@hooks', () => ({
   useUserState: vi.fn(),
+  usePostTweetMutation: vi.fn(),
+  useDispatch: vi.fn(),
+  useAppStoreDispatch: vi.fn(),
 }));
 
 export const useUserStateStub = (type: UserType) =>

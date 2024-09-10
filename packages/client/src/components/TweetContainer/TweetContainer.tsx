@@ -3,13 +3,20 @@ import { TweetInput } from './components/TweetInput';
 import { Tweets } from './components/Tweets';
 import { TweetButton } from './components/TweetButton';
 import { submitTweet } from '@utils';
-import { useUserState } from '@hooks';
 import { usePostTweetMutation } from '@redux';
+import { JWT } from '@shared';
+import { Profile } from '../Profile';
 
-export const TweetContainer: FC = (): JSX.Element => {
+interface TweetContainerProps {
+  jwt: JWT | null;
+  isLoggedIn: boolean;
+}
+
+export const TweetContainer: FC<TweetContainerProps> = ({
+  jwt,
+  isLoggedIn,
+}): JSX.Element => {
   const inputTextState = useState<string>('');
-
-  const { isLoggedIn, jwt } = useUserState();
 
   const [postTweet] = usePostTweetMutation();
 

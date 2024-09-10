@@ -22,8 +22,8 @@ vi.mock('@components', async (importOriginal) => {
 
 describe('TweetContainer component', () => {
   beforeEach(() => {
-    useUserStateStub(UserType.USER);
-    render(<TweetContainer />);
+    const { jwt, isLoggedIn } = useUserStateStub(UserType.USER)();
+    render(<TweetContainer jwt={jwt} isLoggedIn={isLoggedIn} />);
   });
 
   it('renders TweetInput component', () => {

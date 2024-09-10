@@ -12,7 +12,10 @@ export const Home: React.FC = (): React.JSX.Element => {
         jwt={jwt}
         isLoggedIn={isLoggedIn}
       />
-      <ContentSection isLoggedIn={isLoggedIn} />
+      <ContentSection
+        jwt={jwt}
+        isLoggedIn={isLoggedIn}
+      />
     </div>
   );
 };
