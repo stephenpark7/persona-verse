@@ -40,3 +40,5 @@ class ApiConfig {
 }
 
 export const apiConfig = new ApiConfig();
+
+export const APP_TITLE = 'PersonaVerse';

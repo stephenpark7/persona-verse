@@ -8,3 +8,23 @@ export const apiFunction = z.union([
 ]);
 
 export type ApiFunction = z.infer<typeof apiFunction>;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const apiProtocol = z.enum(['rest', 'trpc']);
+
+export type ApiProtocol = z.infer<typeof apiProtocol>;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const httpRequestParams = z
+  .object({
+    method: z.string(),
+    controller: z.string(),
+    action: z.string(),
+    options: z.object({
+      withCredentials: z.boolean(),
+    }),
+    body: z.object({}),
+  })
+  .partial();
+
+export type HttpRequestParams = z.infer<typeof httpRequestParams>;

@@ -8,7 +8,7 @@ interface MainLayoutProps {
 export const MainLayout = ({ children, title }: MainLayoutProps) => {
   useLayoutEffect(() => {
     document.title = title;
-    console.log('MainLayout', title);
+    // console.log('MainLayout', title);
   }, []);
 
   return <div className="m-5">{children}</div>;
