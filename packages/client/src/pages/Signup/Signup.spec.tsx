@@ -27,5 +27,11 @@ describe('Signup page', () => {
       ).toBeInTheDocument();
       expect(screen.getByText('Password')).toBeInTheDocument();
     });
+
+    it('renders submit button', () => {
+      expect(
+        screen.getByRole('button', { name: 'Sign up' }),
+      ).toBeInTheDocument();
+    });
   });
 });

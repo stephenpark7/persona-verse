@@ -1,5 +1,5 @@
 export * from './LogoutButton';
-export * from './Tweet';
+export * from './TweetContainer/components/Tweet';
 export * from './TweetContainer';
 export * from './Profile/Profile';
 

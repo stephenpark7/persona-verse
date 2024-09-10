@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { Tweets } from './Tweets';
 import { UserType } from '@factories';
 
-describe('When rendering the Tweets component', () => {
+describe('When rendering tweets', () => {
   describe('while loading', () => {
     beforeEach(() => {
       useUserStateStub(UserType.USER);
