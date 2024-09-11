@@ -1,3 +1,3 @@
 export * from './Label';
 export * from './Input';
-// export * from './Form';
+export * from './Form';
