@@ -20,11 +20,11 @@ describe('When rendering the home page', () => {
     expect(screen.getByText('Header')).toBeInTheDocument();
   });
 
-  it('renders the WelcomeMessage component', () => {
+  it('renders WelcomeMessage component', () => {
     expect(screen.getByText('WelcomeMessage')).toBeInTheDocument();
   });
 
-  it('renders the ContentSection component', () => {
+  it('renders ContentSection component', () => {
     expect(screen.getByText('ContentSection')).toBeInTheDocument();
   });
 });
