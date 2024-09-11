@@ -24,6 +24,8 @@ export const Input: FC<InputProps> = ({
 
   const { formData, setFormData } = formDataState;
 
+  requestBody.parse(formData);
+
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = e.target;
     setFormData({
