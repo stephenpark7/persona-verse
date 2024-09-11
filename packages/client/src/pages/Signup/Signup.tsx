@@ -2,7 +2,7 @@ import React, { useEffect, useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { register } from '@services';
-import { submitForm } from '@utils';
+import { APP_TITLE, submitForm } from '@utils';
 import { Header } from '@components';
 import { Input, Label } from '../../components/Form';
 
@@ -15,10 +15,8 @@ export const Signup: React.FC = () => {
   });
 
   useEffect(() => {
-    document.title = 'PersonaVerse - Sign up';
+    document.title = `${APP_TITLE} - Sign up`;
   }, []);
-
-  // TODO: simply pass the function to form component instead of using wrapper methods
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     submitForm(e, formData, register, navigate, {
