@@ -1,30 +1,18 @@
+import { requestBody } from '@schemas';
 import { ChangeEvent, FC } from 'react';
 import { z } from 'zod';
 
-const InputPropsSchema = z.object({
+const inputProps = z.object({
   label: z.string(),
   type: z.string(),
   value: z.string().optional(),
   formDataState: z.object({
-    formData: z.object({
-      username: z.string().optional(),
-      email: z.string().optional(),
-      password: z.string().optional(),
-    }),
-    setFormData: z
-      .function()
-      .args(
-        z.object({
-          username: z.string().optional(),
-          email: z.string().optional(),
-          password: z.string().optional(),
-        }),
-      )
-      .returns(z.void()),
+    formData: requestBody,
+    setFormData: z.function().args(requestBody).returns(z.void()),
   }),
 });
 
-type InputProps = z.infer<typeof InputPropsSchema>;
+type InputProps = z.infer<typeof inputProps>;
 
 export const Input: FC<InputProps> = ({
   label,
@@ -32,7 +20,7 @@ export const Input: FC<InputProps> = ({
   value,
   formDataState,
 }) => {
-  InputPropsSchema.parse({ label, type, value, formDataState });
+  inputProps.parse({ label, type, value, formDataState });
 
   const { formData, setFormData } = formDataState;
 
