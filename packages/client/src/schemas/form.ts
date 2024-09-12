@@ -4,6 +4,8 @@ import { ApiFunction } from './api';
 import { RequestBody } from './request';
 import { FormEvent } from 'react';
 
+// TODO: add validation for email and password
+
 export const registerFormFields = z.object({
   username: z.string(),
   email: z.string(),
