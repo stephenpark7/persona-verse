@@ -5,14 +5,14 @@ import { requestBody } from '../../request';
 export const registerFunction = z
   .function()
   .args(
-    requestBody,
-    navigateFunction,
-    z
-      .object({
+    z.object({
+      formData: requestBody,
+      navigateFunction: navigateFunction,
+      options: z.object({
         showToast: z.boolean(),
         autoLogin: z.boolean(),
-      })
-      .partial(),
+      }),
+    }),
   )
   .returns(z.promise(z.boolean()));
 

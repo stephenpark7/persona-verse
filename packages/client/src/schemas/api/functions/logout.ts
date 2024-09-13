@@ -4,13 +4,13 @@ import { navigateFunction } from '../../form';
 export const logoutFunction = z
   .function()
   .args(
-    z.object({}),
-    navigateFunction,
-    z
-      .object({
+    z.object({
+      formData: z.null(),
+      navigateFunction: navigateFunction,
+      options: z.object({
         showToast: z.boolean(),
-      })
-      .partial(),
+      }),
+    }),
   )
   .returns(z.promise(z.boolean()));
 

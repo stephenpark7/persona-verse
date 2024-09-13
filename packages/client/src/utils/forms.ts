@@ -3,21 +3,21 @@ import {
   requestBody,
   RequestBody,
   SubmitFormFunction,
-  submitFormFunction,
+  SubmitFormFunctionArgs,
 } from '@schemas';
 
-export const submitForm: SubmitFormFunction = async (
+export const submitForm: SubmitFormFunction = async ({
   e,
   formData,
   apiFunction,
   navigate,
   options,
-): Promise<void> => {
+}: SubmitFormFunctionArgs): Promise<void> => {
   e.preventDefault();
 
-  submitFormFunction.parse([e, formData, apiFunction, navigate, options]);
+  requestBody.parse(formData);
 
-  await apiFunction(formData, navigate, options);
+  await apiFunction({ formData, navigateFunction: navigate, options });
 };
 
 export const updateForm = (

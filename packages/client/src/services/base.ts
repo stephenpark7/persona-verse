@@ -1,20 +1,15 @@
-import {
-  apiProtocol,
-  httpRequestParams,
-  JsonResponse,
-  HttpRequestParams,
-} from '@schemas';
-import type { ApiProtocol } from '@schemas';
+import { apiProtocol, httpRequestParams, JsonResponse } from '@schemas';
+import type { ApiCallFunction } from '@schemas';
 import { loginUser, logoutUser, registerUser } from '../trpc';
 import { displayErrorMessage, displaySuccessMessage } from '@utils';
 import type { RegisterFormFields, LoginFormFields } from '@schemas';
 import { sendHttpRequest } from '.';
 
-export const apiCall = async (
-  params: HttpRequestParams,
-  showToast?: boolean,
-  protocol?: ApiProtocol,
-): Promise<JsonResponse | void> => {
+export const apiCall: ApiCallFunction = async ({
+  params,
+  showToast,
+  protocol,
+}): Promise<JsonResponse | void> => {
   try {
     httpRequestParams.parse(params);
     apiProtocol.parse(protocol);
@@ -43,7 +38,9 @@ export const apiCall = async (
 
     return response as JsonResponse;
   } catch (err) {
-    if (params.controller === 'tweets' && params.action === 'get') return;
+    if (params.controller === 'tweets' && params.action === 'get') {
+      return;
+    }
     displayErrorMessage(err);
     return;
   }

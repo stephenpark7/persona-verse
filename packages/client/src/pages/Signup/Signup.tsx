@@ -18,9 +18,15 @@ export const Signup: React.FC = () => {
   }, []);
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    submitForm(e, formData, register, navigate, {
-      showToast: true,
-      autoLogin: true,
+    submitForm({
+      e,
+      formData,
+      apiFunction: register,
+      navigate,
+      options: {
+        showToast: true,
+        autoLogin: true,
+      },
     });
   };
 
