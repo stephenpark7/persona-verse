@@ -5,7 +5,6 @@ export const logoutFunction = z
   .function()
   .args(
     z.object({
-      formData: z.null(),
       navigateFunction: navigateFunction,
       options: z.object({
         showToast: z.boolean(),
