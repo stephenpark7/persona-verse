@@ -1,16 +1,23 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { RequestBody, SubmitFormFunction } from '@schemas';
+import {
+  requestBody,
+  RequestBody,
+  SubmitFormFunction,
+  SubmitFormFunctionArgs,
+} from '@schemas';
 
-export const submitForm: SubmitFormFunction = async (
+export const submitForm: SubmitFormFunction = async ({
   e,
   formData,
   apiFunction,
   navigate,
   options,
-): Promise<void> => {
+}: SubmitFormFunctionArgs): Promise<void> => {
   e.preventDefault();
 
-  await apiFunction(formData, navigate, options);
+  requestBody.parse(formData);
+
+  await apiFunction({ formData, navigateFunction: navigate, options });
 };
 
 export const updateForm = (
@@ -19,6 +26,9 @@ export const updateForm = (
   setFormData: Dispatch<SetStateAction<RequestBody>>,
 ): void => {
   const { value, name } = e.target;
+
+  requestBody.parse(formData);
+
   setFormData({
     ...formData,
     [name]: value,

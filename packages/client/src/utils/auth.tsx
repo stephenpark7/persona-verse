@@ -1,13 +1,16 @@
 import { AxiosRequestConfig } from 'axios';
-import { JWT } from '@shared';
+import { jwtSchema, type Jwt } from '@schemas';
 
 export const canUseAuthorizationHeader = (
-  jwt: JWT,
+  jwt: Jwt,
   config: AxiosRequestConfig,
 ): boolean => {
-  if (!jwt.token) return false;
-  if (config.url?.endsWith('/api/refresh/')) return false;
-  if (config.headers?.Authorization) return false;
+  jwtSchema.parse(jwt);
+
+  if (config.url?.endsWith('/api/refresh/') || config.headers?.Authorization) {
+    return false;
+  }
+
   return true;
 };
 
@@ -16,8 +19,9 @@ export const canRefreshToken = (
   status: number,
   isRefreshing: boolean,
 ): boolean => {
-  if (status !== 401) return false;
-  if (url.endsWith('/api/refresh/')) return false;
-  if (isRefreshing) return false;
+  if (status !== 401 || url.endsWith('/api/refresh/') || isRefreshing) {
+    return false;
+  }
+
   return true;
 };

@@ -1,41 +1,59 @@
-// import React, { useState } from 'react';
-// import { Button } from '../Button';
+import { RequestBody } from '@schemas';
+import { Input, Label } from '../../components/Form';
+import { FC, FormEvent } from 'react';
 
-// export const Form: React.FC = (): React.JSX.Element => {
-//   const [formData, setFormData] = useState({ name: '', email: '' });
+interface FormProps {
+  handleFormSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  formData: RequestBody;
+  setFormData: (data: RequestBody) => void;
+}
 
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <div>
-//         <label htmlFor="name">Name:</label>
-//         <input
-//           type="text"
-//           id="name"
-//           name="name"
-//           value={formData.name}
-//           onChange={handleChange}
-//         />
-//       </div>
-//       <div>
-//         <label htmlFor="email">Email:</label>
-//         <input
-//           type="email"
-//           id="email"
-//           name="email"
-//           value={formData.email}
-//           onChange={handleChange}
-//         />
-//       </div>
-//       <Button variant="primary">Submit</Button>
-//     </form>
-//   );
-// };
+export const Form: FC<FormProps> = ({
+  handleFormSubmit,
+  formData,
+  setFormData,
+}) => {
+  return (
+    <form
+      className="mb-8"
+      onSubmit={handleFormSubmit}
+    >
+      <div className="flex flex-col gap-3">
+        <div className="flex">
+          <Label label="Username" />
+          <Input
+            label="Username"
+            type="text"
+            value={formData.username}
+            formDataState={{ formData, setFormData }}
+          />
+        </div>
+        <div className="flex">
+          <Label label="Email" />
+          <Input
+            label="Email"
+            type="text"
+            value={formData.email}
+            formDataState={{ formData, setFormData }}
+          />
+        </div>
+        <div className="flex mb-2">
+          <Label label="Password" />
+          <Input
+            label="Password"
+            type="password"
+            value={formData.password}
+            formDataState={{ formData, setFormData }}
+          />
+        </div>
+        <button
+          aria-label="Sign up"
+          type="submit"
+          className="border rounded-md p-3 hover:bg-gray-100"
+        >
+          Sign up
+        </button>
+      </div>
+    </form>
+  );
+};

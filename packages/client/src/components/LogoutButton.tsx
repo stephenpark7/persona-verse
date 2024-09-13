@@ -9,7 +9,10 @@ export const LogoutButton: React.FC = (): React.JSX.Element => {
   const dispatch = useAppStoreDispatch();
 
   const handleLogout = async () => {
-    await logout({}, navigate, { showToast: true });
+    await logout({
+      navigateFunction: navigate,
+      options: { showToast: true },
+    });
     dispatch(tweetAPI.util.invalidateTags(['Tweets']));
   };
 

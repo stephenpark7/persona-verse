@@ -1,6 +1,6 @@
 import { MainLayout } from '@layouts';
 import { Home, Login, Signup } from '@pages';
-import { Route, RouteSchema } from '@schemas';
+import { Route, routeSchema } from '@schemas';
 
 const layoutWrapper = (element: React.ReactNode, title: string) => (
   <MainLayout title={title}>{element}</MainLayout>
@@ -27,4 +27,4 @@ export const routes: Route[] = [
   return route;
 });
 
-RouteSchema.array().parse(routes);
+routeSchema.array().parse(routes);

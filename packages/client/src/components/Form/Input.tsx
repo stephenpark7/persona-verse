@@ -1,30 +1,18 @@
+import { requestBody } from '@schemas';
 import { ChangeEvent, FC } from 'react';
 import { z } from 'zod';
 
-const InputPropsSchema = z.object({
+const inputProps = z.object({
   label: z.string(),
   type: z.string(),
   value: z.string().optional(),
   formDataState: z.object({
-    formData: z.object({
-      username: z.string().optional(),
-      email: z.string().optional(),
-      password: z.string().optional(),
-    }),
-    setFormData: z
-      .function()
-      .args(
-        z.object({
-          username: z.string().optional(),
-          email: z.string().optional(),
-          password: z.string().optional(),
-        }),
-      )
-      .returns(z.void()),
+    formData: requestBody,
+    setFormData: z.function().args(requestBody).returns(z.void()),
   }),
 });
 
-type InputProps = z.infer<typeof InputPropsSchema>;
+type InputProps = z.infer<typeof inputProps>;
 
 export const Input: FC<InputProps> = ({
   label,
@@ -32,9 +20,11 @@ export const Input: FC<InputProps> = ({
   value,
   formDataState,
 }) => {
-  InputPropsSchema.parse({ label, type, value, formDataState });
+  inputProps.parse({ label, type, value, formDataState });
 
   const { formData, setFormData } = formDataState;
+
+  requestBody.parse(formData);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = e.target;
@@ -48,10 +38,11 @@ export const Input: FC<InputProps> = ({
     <input
       aria-label={label}
       type={type}
-      name={label}
+      name={label.toLowerCase()}
       value={value}
+      autoComplete={label.toLowerCase()}
       onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e)}
-      className="border border-gray-300 rounded-md"
+      className="border border-gray-300 rounded-md p-2 w-full"
     />
   );
 };

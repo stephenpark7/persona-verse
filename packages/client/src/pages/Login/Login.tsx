@@ -5,6 +5,8 @@ import { loginFormFields, RequestBody } from '@schemas';
 import { login } from '@services';
 import { submitForm, updateForm } from '@utils';
 
+// TODO: use form component
+
 export const Login: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<RequestBody>({

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { jwtSchema } from './jwt';
 
-export const TweetSchema = z.object({
+export const tweetSchema = z.object({
   id: z.number(),
   message: z.string(),
   createdAt: z.string(),
@@ -10,15 +10,15 @@ export const TweetSchema = z.object({
   }),
 });
 
-export const TweetPostSchema = z.object({
+export const tweetPostSchema = z.object({
   message: z.string(),
 });
 
-export const PostTweetSchema = z.object({
+export const postTweetSchema = z.object({
   jwt: jwtSchema,
-  payload: TweetPostSchema,
+  payload: tweetPostSchema,
 });
 
-export type TweetData = z.infer<typeof TweetSchema>;
-export type TweetPostData = z.infer<typeof TweetPostSchema>;
-export type PostTweetData = z.infer<typeof PostTweetSchema>;
+export type Tweet = z.infer<typeof tweetSchema>;
+export type TweetPostData = z.infer<typeof tweetPostSchema>;
+export type PostTweetData = z.infer<typeof postTweetSchema>;

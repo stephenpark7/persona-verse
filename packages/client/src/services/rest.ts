@@ -3,13 +3,15 @@ import axios, {
   AxiosResponse,
   RawAxiosRequestHeaders,
 } from 'axios';
-import { JsonResponse, ApiCall } from '@schemas';
+import { JsonResponse, HttpRequestParams, httpRequestParams } from '@schemas';
 import { apiConfig } from '@utils';
 
 export const sendHttpRequest = async (
-  params: ApiCall,
+  params: HttpRequestParams,
 ): Promise<JsonResponse> => {
-  const { method, controller, action, body, options, headers } = params;
+  const { method, controller, action, options, body, headers } = params;
+
+  httpRequestParams.parse(params);
 
   const config = {
     url: apiConfig.urlWithParams(controller, action),
