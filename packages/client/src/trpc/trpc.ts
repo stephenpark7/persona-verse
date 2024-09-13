@@ -6,7 +6,6 @@ import {
   type LoginFormFields,
   registerFormFields,
   loginFormFields,
-  jsonResponse,
 } from '@schemas';
 import { apiConfig } from '@utils';
 
