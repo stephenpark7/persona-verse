@@ -58,7 +58,5 @@ export const loginUser = async ({
 };
 
 export const logoutUser = async (): Promise<JsonResponse> => {
-  jsonResponse.parse({});
-
   return await trpc.logoutUser.mutate();
 };
