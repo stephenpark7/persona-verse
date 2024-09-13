@@ -15,7 +15,7 @@ export const Form: FC<FormProps> = ({
 }) => {
   return (
     <form
-      className="signup-form"
+      className="mb-8"
       onSubmit={handleFormSubmit}
     >
       <div className="flex flex-col gap-3">
@@ -37,7 +37,7 @@ export const Form: FC<FormProps> = ({
             formDataState={{ formData, setFormData }}
           />
         </div>
-        <div className="flex">
+        <div className="flex mb-2">
           <Label label="Password" />
           <Input
             label="Password"
@@ -46,14 +46,14 @@ export const Form: FC<FormProps> = ({
             formDataState={{ formData, setFormData }}
           />
         </div>
+        <button
+          aria-label="Sign up"
+          type="submit"
+          className="border rounded-md p-3 hover:bg-gray-100"
+        >
+          Sign up
+        </button>
       </div>
-      <button
-        aria-label="Sign up"
-        className="primary"
-        type="submit"
-      >
-        Sign up
-      </button>
     </form>
   );
 };

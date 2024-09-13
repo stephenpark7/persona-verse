@@ -42,7 +42,7 @@ export const Input: FC<InputProps> = ({
       value={value}
       autoComplete={label.toLowerCase()}
       onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e)}
-      className="border border-gray-300 rounded-md"
+      className="border border-gray-300 rounded-md p-2 w-full"
     />
   );
 };

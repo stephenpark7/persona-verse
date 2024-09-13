@@ -33,16 +33,21 @@ export const Signup: React.FC = () => {
   return (
     <div>
       <div className="my-5">
-        <div>
+        <div className="flex flex-col">
           <Header title="Sign up" />
-          <h2 className="text-xl mb-3 font-medium">Create an account</h2>
           <Form
             handleFormSubmit={handleFormSubmit}
             formData={formData}
             setFormData={setFormData}
           />
-          <p className="mt-3">
-            Already have an account? <Link to="/login">Log in</Link>
+          <p className="text-sm">
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              className="text-blue-500 hover:underline"
+            >
+              Click here to log in!
+            </Link>
           </p>
         </div>
       </div>
