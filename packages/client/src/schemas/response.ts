@@ -1,17 +1,17 @@
 import { z } from 'zod';
 import { jwtSchema } from './jwt';
-import { TweetSchema } from './tweet';
+import { tweetSchema } from './tweet';
 
 export const refreshTokenResponse = z.object({
   jwt: jwtSchema,
 });
 
 export const getTweetsResponse = z.object({
-  tweets: z.array(TweetSchema),
+  tweets: z.array(tweetSchema),
 });
 
 export const postTweetResponse = z.object({
-  tweet: TweetSchema,
+  tweet: tweetSchema,
 });
 
 export const jsonResponse = z
@@ -22,4 +22,5 @@ export const jsonResponse = z
   .extend(getTweetsResponse.partial().shape)
   .extend(postTweetResponse.partial().shape);
 
+export type RefreshTokenResponse = z.infer<typeof refreshTokenResponse>;
 export type JsonResponse = z.infer<typeof jsonResponse>;

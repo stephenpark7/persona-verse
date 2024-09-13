@@ -1,15 +1,19 @@
 import { useUserStateStub } from '@mocks';
-import { describe, beforeEach, it, expect } from 'vitest';
 import { screen } from '@testing-library/react';
 import { UserType } from '@factories';
 import { renderPage } from '@helpers';
 import { Signup } from '@pages';
+import { APP_TITLE } from '@utils';
 
 describe('Signup page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
       useUserStateStub(UserType.GUEST);
       renderPage(<Signup />);
+    });
+
+    it('has correct title', () => {
+      expect(document.title).toBe(`${APP_TITLE} - Sign up`);
     });
 
     it('renders h1', () => {
@@ -26,6 +30,12 @@ describe('Signup page', () => {
         screen.getByRole('textbox', { name: 'Email' }),
       ).toBeInTheDocument();
       expect(screen.getByText('Password')).toBeInTheDocument();
+    });
+
+    it('renders submit button', () => {
+      expect(
+        screen.getByRole('button', { name: 'Sign up' }),
+      ).toBeInTheDocument();
     });
   });
 });

@@ -2,9 +2,8 @@ import React, { useEffect, useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { register } from '@services';
-import { submitForm } from '@utils';
-import { Header } from '@components';
-import { Input, Label } from '../../components/Form';
+import { APP_TITLE, submitForm } from '@utils';
+import { Header, Form } from '@components';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -15,68 +14,50 @@ export const Signup: React.FC = () => {
   });
 
   useEffect(() => {
-    document.title = 'PersonaVerse - Sign up';
+    document.title = `${APP_TITLE} - Sign up`;
   }, []);
 
-  // TODO: simply pass the function to form component instead of using wrapper methods
-
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    submitForm(e, formData, register, navigate, {
-      showToast: true,
-      autoLogin: true,
+    submitForm({
+      e,
+      formData,
+      apiFunction: register,
+      navigate,
+      options: {
+        showToast: true,
+        autoLogin: true,
+      },
     });
   };
 
-  // TODO: modularize form components
+  const handleGoBack = () => {
+    navigate('/');
+  };
+
   return (
     <div>
       <div className="my-5">
-        <div>
+        <div className="flex flex-col">
           <Header title="Sign up" />
-          <h2 className="text-xl mb-3 font-medium">Create an account</h2>
-          <form
-            className="signup-form"
-            onSubmit={handleFormSubmit}
+          <Form
+            handleFormSubmit={handleFormSubmit}
+            formData={formData}
+            setFormData={setFormData}
+          />
+          <button
+            className="border rounded-md p-3 hover:bg-gray-100 mb-4 font-medium"
+            onClick={handleGoBack}
           >
-            <div className="flex flex-col gap-3">
-              <div className="flex">
-                <Label label="Username" />
-                <Input
-                  label="Username"
-                  type="text"
-                  value={formData.username}
-                  formDataState={{ formData, setFormData }}
-                />
-              </div>
-              <div className="flex">
-                <Label label="Email" />
-                <Input
-                  label="Email"
-                  type="text"
-                  value={formData.email}
-                  formDataState={{ formData, setFormData }}
-                />
-              </div>
-              <div className="flex">
-                <Label label="Password" />
-                <Input
-                  label="Password"
-                  type="password"
-                  value={formData.password}
-                  formDataState={{ formData, setFormData }}
-                />
-              </div>
-            </div>
-            <button
-              aria-label="Sign up"
-              className="primary"
-              type="submit"
+            Go back
+          </button>
+          <p className="text-sm">
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              className="text-blue-500 hover:underline"
             >
-              Sign up
-            </button>
-          </form>
-          <p className="mt-3">
-            Already have an account? <Link to="/login">Log in</Link>
+              Click here to log in!
+            </Link>
           </p>
         </div>
       </div>

@@ -10,6 +10,4 @@ const envSchema = z.object({
     .default('3001'),
 });
 
-type Env = z.infer<typeof envSchema>;
-
-export const ENV: Env = envSchema.parse(import.meta.env);
+export const ENV = envSchema.parse(import.meta.env);

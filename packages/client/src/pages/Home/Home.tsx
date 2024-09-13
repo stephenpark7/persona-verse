@@ -1,4 +1,3 @@
-import React from 'react';
 import { useUserState } from '@hooks';
 import { Header, WelcomeMessage, ContentSection } from '@components';
 

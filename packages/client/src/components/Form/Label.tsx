@@ -14,7 +14,7 @@ export const Label: FC<InputProps> = ({ label }) => {
 
   return (
     <label
-      className="min-w-32"
+      className="min-w-28 font-medium"
       htmlFor={label}
     >
       {label}
