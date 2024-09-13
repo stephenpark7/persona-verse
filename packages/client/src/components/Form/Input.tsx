@@ -38,8 +38,9 @@ export const Input: FC<InputProps> = ({
     <input
       aria-label={label}
       type={type}
-      name={label}
+      name={label.toLowerCase()}
       value={value}
+      autoComplete={label.toLowerCase()}
       onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e)}
       className="border border-gray-300 rounded-md"
     />
