@@ -1,17 +1,18 @@
-import { PostTweet, Tweet } from '@schemas';
+import { JWT } from '@shared';
+import { Tweet } from '@schemas';
 import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
 
 export const getTweets = async (): Promise<Tweet[]> => {
-  const response = await apiCall(
-    {
+  const response = await apiCall({
+    params: {
       method: 'GET',
       controller: 'tweets',
       action: 'get',
     },
-    false,
-    'rest',
-  );
+    showToast: false,
+    protocol: 'rest',
+  });
 
   if (!response) return [];
 
@@ -27,21 +28,24 @@ export const getTweets = async (): Promise<Tweet[]> => {
 export const postTweet = async ({
   jwt,
   payload,
-}: PostTweet): Promise<Tweet> => {
+}: {
+  jwt: JWT;
+  payload: { message: string };
+}): Promise<Tweet> => {
   if (!jwt) {
     throw new Error('Failed to post tweet.');
   }
 
-  const response = await apiCall(
-    {
+  const response = await apiCall({
+    params: {
       method: 'POST',
       controller: 'tweets',
       action: 'create',
       body: payload,
     },
-    true,
-    'rest',
-  );
+    showToast: true,
+    protocol: 'rest',
+  });
 
   if (!response || !response.tweet) {
     throw new Error('Failed to post tweet.');

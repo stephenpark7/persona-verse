@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { Input, Label } from '../../components/Form';
 import { FC, FormEvent } from 'react';
@@ -15,7 +16,7 @@ export const Form: FC<FormProps> = ({
 }) => {
   return (
     <form
-      className="mb-8"
+      className="mb-4"
       onSubmit={handleFormSubmit}
     >
       <div className="flex flex-col gap-3">
@@ -49,7 +50,7 @@ export const Form: FC<FormProps> = ({
         <button
           aria-label="Sign up"
           type="submit"
-          className="border rounded-md p-3 hover:bg-gray-100"
+          className="border rounded-md p-3 hover:bg-gray-100 font-medium"
         >
           Sign up
         </button>

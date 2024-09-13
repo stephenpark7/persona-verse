@@ -30,6 +30,10 @@ export const Signup: React.FC = () => {
     });
   };
 
+  const handleGoBack = () => {
+    navigate('/');
+  };
+
   return (
     <div>
       <div className="my-5">
@@ -40,6 +44,12 @@ export const Signup: React.FC = () => {
             formData={formData}
             setFormData={setFormData}
           />
+          <button
+            className="border rounded-md p-3 hover:bg-gray-100 mb-4 font-medium"
+            onClick={handleGoBack}
+          >
+            Go back
+          </button>
           <p className="text-sm">
             Already have an account?{' '}
             <Link
