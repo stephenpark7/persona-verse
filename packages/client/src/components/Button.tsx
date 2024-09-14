@@ -3,28 +3,27 @@ import React from 'react';
 // TODO: rename extraStyles to overrideCSS
 
 interface ButtonProps {
-  variant?: string;
-  type?: string;
-  onClickEvent?: (e: React.FormEvent) => void;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: (e: React.FormEvent) => void;
   children: React.ReactNode;
-  extraStyles?: string;
+  overrideCSS?: string;
   width?: string;
   height?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  // variant,
-  // type,
-  onClickEvent,
+  type = 'button',
+  onClick,
   children,
-  extraStyles,
+  overrideCSS,
   width,
   height,
 }): React.JSX.Element => {
   return (
     <button
-      onClick={(e: React.FormEvent) => onClickEvent && onClickEvent(e)}
-      className={`border border-black rounded bg-white ${height ?? 'h-9'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${extraStyles}`}
+      type={type}
+      onClick={(e: React.FormEvent) => onClick && onClick(e)}
+      className={`border border-black rounded bg-white ${height ?? 'h-9'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
     >
       {children}
     </button>

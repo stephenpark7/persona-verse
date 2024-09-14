@@ -5,6 +5,8 @@ import { ContentSection } from '@components';
 import { UserType } from '@factories';
 import { renderWithProviders } from '@core';
 
+// TODO: refactor mock to use test-id instead of putting text in the component
+
 vi.mock('@components', async (importOriginal) => {
   return {
     ...(await importOriginal<typeof import('@components')>()),
