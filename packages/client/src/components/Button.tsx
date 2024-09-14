@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       type={type}
       onClick={(e: React.FormEvent) => onClick && onClick(e)}
-      className={`border border-black rounded bg-white ${height ?? 'h-9'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
+      className={`border border-black rounded bg-white ${height ?? 'h-10'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
     >
       {children}
     </button>

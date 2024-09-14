@@ -30,10 +30,6 @@ export const Signup: React.FC = () => {
     });
   };
 
-  const handleGoBack = () => {
-    navigate('/');
-  };
-
   return (
     <div>
       <div className="my-5">
@@ -46,9 +42,9 @@ export const Signup: React.FC = () => {
           />
           <Button
             overrideCSS="w-full"
-            onClick={handleGoBack}
+            onClick={() => navigate('/')}
           >
-            Go back
+            Go back home
           </Button>
           <p className="text-sm mt-4">
             Already have an account?{' '}

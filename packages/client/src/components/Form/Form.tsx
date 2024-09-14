@@ -52,7 +52,7 @@ export const Form: FC<FormProps> = ({
           aria-label="Sign up"
           type="submit"
         >
-          Sign up
+          Create account
         </Button>
       </div>
     </form>
