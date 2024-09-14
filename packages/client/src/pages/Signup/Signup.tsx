@@ -46,7 +46,7 @@ export const Signup: React.FC = () => {
           />
           <Button
             overrideCSS="w-full"
-            onClickEvent={handleGoBack}
+            onClick={handleGoBack}
           >
             Go back
           </Button>

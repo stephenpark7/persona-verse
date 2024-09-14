@@ -18,7 +18,7 @@ export const LogoutButton: React.FC = (): React.JSX.Element => {
 
   return (
     <Button
-      onClickEvent={handleLogout}
+      onClick={handleLogout}
       width="w-20"
     >
       Log out

@@ -5,7 +5,7 @@ import React from 'react';
 interface ButtonProps {
   variant?: string;
   type?: 'button' | 'submit' | 'reset';
-  onClickEvent?: (e: React.FormEvent) => void;
+  onClick: (e: React.FormEvent) => void;
   children: React.ReactNode;
   overrideCSS?: string;
   width?: string;
@@ -15,7 +15,7 @@ interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({
   // variant,
   type = 'button',
-  onClickEvent,
+  onClick,
   children,
   overrideCSS,
   width,
@@ -24,7 +24,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      onClick={(e: React.FormEvent) => onClickEvent && onClickEvent(e)}
+      onClick={(e: React.FormEvent) => onClick && onClick(e)}
       className={`border border-black rounded bg-white ${height ?? 'h-9'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
     >
       {children}

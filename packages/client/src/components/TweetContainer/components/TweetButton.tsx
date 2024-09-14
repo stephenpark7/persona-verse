@@ -15,7 +15,7 @@ export const TweetButton: React.FC<TweetButtonProps> = ({ onPostTweet }) => {
       overrideCSS="mb-2"
       width="w-20"
       height="h-9"
-      onClickEvent={handleClickEvent}
+      onClick={handleClickEvent}
     >
       Tweet
     </Button>
