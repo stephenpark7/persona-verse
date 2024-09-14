@@ -1,19 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { App } from './App';
 
-const render = () => {
-  const root: HTMLElement = document.getElementById('root') as HTMLElement;
+export const render = () => {
+  const root = document.getElementById('root') as HTMLElement;
 
-  const rootElement = ReactDOM.createRoot(root);
+  if (root) {
+    const rootElement = createRoot(root);
 
-  const children = (
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
+    const children = (
+      <StrictMode>
+        <App />
+      </StrictMode>
+    );
 
-  rootElement.render(children);
+    rootElement.render(children);
+  } else {
+    throw new Error('Root element not found');
+  }
 };
 
 render();
