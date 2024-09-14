@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { register } from '@services';
 import { APP_TITLE, submitForm } from '@utils';
-import { Header, Form } from '@components';
+import { Header, Form, Button } from '@components';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -44,12 +44,12 @@ export const Signup: React.FC = () => {
             formData={formData}
             setFormData={setFormData}
           />
-          <button
-            className="border rounded-md p-3 hover:bg-gray-100 mb-4 font-medium"
-            onClick={handleGoBack}
+          <Button
+            // extraStyles="border rounded-md p-3 hover:bg-gray-100 mb-4 font-medium"
+            onClickEvent={handleGoBack}
           >
             Go back
-          </button>
+          </Button>
           <p className="text-sm">
             Already have an account?{' '}
             <Link

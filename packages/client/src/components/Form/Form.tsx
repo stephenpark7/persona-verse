@@ -1,6 +1,7 @@
 import { RequestBody } from '@schemas';
 import { Input, Label } from '../../components/Form';
 import { FC, FormEvent } from 'react';
+import { Button } from '@components';
 
 interface FormProps {
   handleFormSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -46,13 +47,13 @@ export const Form: FC<FormProps> = ({
             formDataState={{ formData, setFormData }}
           />
         </div>
-        <button
+        <Button
           aria-label="Sign up"
           type="submit"
-          className="border rounded-md p-3 hover:bg-gray-100 font-medium"
+          // className="border rounded-md p-3 hover:bg-gray-100 font-medium"
         >
           Sign up
-        </button>
+        </Button>
       </div>
     </form>
   );
