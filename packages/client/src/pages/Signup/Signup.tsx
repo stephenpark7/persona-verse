@@ -45,12 +45,12 @@ export const Signup: React.FC = () => {
             setFormData={setFormData}
           />
           <Button
-            // extraStyles="border rounded-md p-3 hover:bg-gray-100 mb-4 font-medium"
+            overrideCSS="w-full"
             onClickEvent={handleGoBack}
           >
             Go back
           </Button>
-          <p className="text-sm">
+          <p className="text-sm mt-4">
             Already have an account?{' '}
             <Link
               to="/login"

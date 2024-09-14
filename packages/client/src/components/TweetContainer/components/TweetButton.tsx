@@ -12,7 +12,7 @@ export const TweetButton: React.FC<TweetButtonProps> = ({ onPostTweet }) => {
 
   return (
     <Button
-      extraStyles="mb-2"
+      overrideCSS="mb-2"
       width="w-20"
       height="h-9"
       onClickEvent={handleClickEvent}

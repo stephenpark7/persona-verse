@@ -48,9 +48,9 @@ export const Form: FC<FormProps> = ({
           />
         </div>
         <Button
+          overrideCSS="w-full"
           aria-label="Sign up"
           type="submit"
-          // className="border rounded-md p-3 hover:bg-gray-100 font-medium"
         >
           Sign up
         </Button>
