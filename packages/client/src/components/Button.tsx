@@ -3,9 +3,8 @@ import React from 'react';
 // TODO: rename extraStyles to overrideCSS
 
 interface ButtonProps {
-  variant?: string;
   type?: 'button' | 'submit' | 'reset';
-  onClick: (e: React.FormEvent) => void;
+  onClick?: (e: React.FormEvent) => void;
   children: React.ReactNode;
   overrideCSS?: string;
   width?: string;
@@ -13,7 +12,6 @@ interface ButtonProps {
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  // variant,
   type = 'button',
   onClick,
   children,

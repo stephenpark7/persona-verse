@@ -21,9 +21,15 @@ export const Login: React.FC = () => {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     loginFormFields.parse(formData);
 
-    submitForm(e, formData, login, navigate, {
-      showToast: true,
-      autoLogin: true,
+    submitForm({
+      e,
+      formData,
+      apiFunction: login,
+      navigate,
+      options: {
+        showToast: true,
+        autoLogin: true,
+      },
     });
   };
 
@@ -52,14 +58,9 @@ export const Login: React.FC = () => {
                 required
               />
             </div>
-            <Button
-              variant="primary"
-              type="submit"
-            >
-              Log in
-            </Button>{' '}
+            <Button type="submit">Log in</Button>{' '}
             <Link to="/">
-              <Button variant="primary">Go Back</Button>
+              <Button>Go Back</Button>
             </Link>
           </form>
         </div>
