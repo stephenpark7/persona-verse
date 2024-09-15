@@ -1,6 +1,4 @@
-import React from 'react';
-
-// TODO: rename extraStyles to overrideCSS
+import { FC, FormEvent } from 'react';
 
 interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
@@ -11,7 +9,7 @@ interface ButtonProps {
   height?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
   type = 'button',
   onClick,
   children,
@@ -22,7 +20,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      onClick={(e: React.FormEvent) => onClick && onClick(e)}
+      onClick={(e: FormEvent) => onClick && onClick(e)}
       className={`border border-black rounded bg-white ${height ?? 'h-10'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
     >
       {children}
