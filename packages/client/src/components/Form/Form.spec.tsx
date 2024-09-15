@@ -27,6 +27,8 @@ describe('When rendering the form component', () => {
       screen.getByRole('textbox', { name: 'Username' }),
     ).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: 'Email' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Sign up' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Create account' }),
+    ).toBeInTheDocument();
   });
 });
