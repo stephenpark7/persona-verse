@@ -1,4 +1,5 @@
 import { FC, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
@@ -7,6 +8,7 @@ interface ButtonProps {
   overrideCSS?: string;
   width?: string;
   height?: string;
+  link?: string;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -16,8 +18,9 @@ export const Button: FC<ButtonProps> = ({
   overrideCSS,
   width,
   height,
+  link,
 }): React.JSX.Element => {
-  return (
+  const buttonJsx = (
     <button
       type={type}
       onClick={(e: FormEvent) => onClick && onClick(e)}
@@ -26,4 +29,6 @@ export const Button: FC<ButtonProps> = ({
       {children}
     </button>
   );
+
+  return link ? <Link to={link}>{buttonJsx}</Link> : buttonJsx;
 };

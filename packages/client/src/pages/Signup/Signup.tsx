@@ -42,7 +42,7 @@ export const Signup: React.FC = () => {
           />
           <Button
             overrideCSS="w-full"
-            onClick={() => navigate('/')}
+            link="/"
           >
             Go back home
           </Button>
