@@ -9,6 +9,7 @@ describe('When rendering tweets', () => {
       useUserStateStub(UserType.USER);
       useGetTweetsQueryStub('loading');
       render(<Tweets />);
+      screen.debug();
     });
 
     it('displays loading message', () => {

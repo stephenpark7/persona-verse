@@ -11,12 +11,13 @@ import {
 import { tweetAPI } from '../services';
 import { useDispatch } from 'react-redux';
 import { setDocTitleReducer } from '../reducers/docTitleReducers';
+import { routes } from '@pages';
 
 export const initialState: State = {
   value: {
     jwt: tokenStorage.getAccessToken(),
     tweets: null,
-    docTitle: 'PersonaVerse - Home',
+    docTitle: routes[routes.length - 1].title,
   },
 };
 
