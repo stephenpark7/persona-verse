@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form, Header } from '@components';
 import { loginFormFields, RequestBody } from '@schemas';
+import { submitForm } from '@utils';
 import { login } from '@services';
-import { submitForm, updateForm } from '@utils';
-
-// TODO: use form component
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -13,10 +11,6 @@ export const Login: React.FC = () => {
     username: '',
     password: '',
   });
-
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    updateForm(e, formData, setFormData);
-  };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     loginFormFields.parse(formData);
