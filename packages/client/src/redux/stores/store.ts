@@ -10,11 +10,13 @@ import {
 } from '../reducers';
 import { tweetAPI } from '../services';
 import { useDispatch } from 'react-redux';
+import { setDocTitleReducer } from '../reducers/docTitleReducers';
 
 export const initialState: State = {
   value: {
     jwt: tokenStorage.getAccessToken(),
     tweets: null,
+    docTitle: 'PersonaVerse - Home',
   },
 };
 
@@ -28,12 +30,22 @@ export const userSlice = createSlice({
     clearJwt: clearJwtReducer,
     setTweets: setTweetsReducer,
     addTweet: addTweetReducer,
+    setDocTitle: setDocTitleReducer,
+  },
+});
+
+export const browserSlice = createSlice({
+  name: 'browser',
+  initialState: initialState,
+  reducers: {
+    setDocTitle: setDocTitleReducer,
   },
 });
 
 export const rootReducer = combineReducers({
   user: userSlice.reducer,
   tweetAPI: tweetAPI.reducer,
+  doctTitle: browserSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

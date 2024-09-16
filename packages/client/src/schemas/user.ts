@@ -5,6 +5,7 @@ import { tweetSchema } from './tweet';
 export const stateProperties = z.object({
   jwt: jwtSchema.nullable(),
   tweets: z.array(tweetSchema).nullable(),
+  docTitle: z.string(),
 });
 
 export const state = z.object({

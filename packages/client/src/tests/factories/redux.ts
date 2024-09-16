@@ -6,7 +6,8 @@ export const PreloadedStateFactory = (overrides = {}) => {
   const stateData = {
     value: {
       jwt: jwtFactory(),
-      tweets: [],
+      tweets: null,
+      docTitle: 'PersonaVerse - Home',
     },
   };
 
