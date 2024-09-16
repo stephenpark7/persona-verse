@@ -1,30 +1,55 @@
-import { useUserStateStub, useGetTweetsQueryStub } from '@mocks/hooks';
-import { render, screen } from '@testing-library/react';
+import axios from 'axios';
+import {
+  jwtFactory,
+  preloadedStateFactory,
+  responseFactory,
+  tweetFactory,
+} from '@factories';
+import { screen, waitFor } from '@testing-library/react';
+import { renderApp } from '@tests/utils';
 import { Tweets } from './Tweets';
-import { UserType } from '@factories';
 
-describe('When rendering tweets', () => {
+vi.mock('@components', () => ({
+  Tweet: () => <div data-testid="tweet" />,
+}));
+
+vi.spyOn(axios, 'request').mockReturnValue(
+  Promise.resolve(
+    responseFactory({
+      data: {
+        tweets: [tweetFactory()],
+      },
+    }),
+  ),
+);
+
+const jwt = jwtFactory();
+const tweets = [tweetFactory()];
+const preloadedState = preloadedStateFactory({
+  user: {
+    value: {
+      jwt,
+      tweets,
+    },
+  },
+});
+
+describe('Rendering tweets', () => {
+  beforeEach(() => {
+    renderApp(<Tweets />, preloadedState);
+  });
+
   describe('while loading', () => {
-    beforeEach(() => {
-      useUserStateStub(UserType.USER);
-      useGetTweetsQueryStub('loading');
-      render(<Tweets />);
-    });
-
     it('displays loading message', () => {
       expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
   });
 
-  describe('while loaded', () => {
-    beforeEach(() => {
-      useUserStateStub(UserType.USER);
-      useGetTweetsQueryStub('loaded');
-      render(<Tweets />);
-    });
-
-    it('displays tweets', () => {
-      expect(screen.getByText('tweet_0')).toBeInTheDocument();
+  describe('after loading', () => {
+    it('displays tweets', async () => {
+      await waitFor(() => {
+        expect(screen.getByTestId('tweet')).toBeInTheDocument();
+      });
     });
   });
 });

@@ -2,18 +2,19 @@ import { z } from 'zod';
 import { jwtSchema } from './jwt';
 import { tweetSchema } from './tweet';
 
-export const stateProperties = z.object({
+export const userStateProps = z.object({
   jwt: jwtSchema.nullable(),
   tweets: z.array(tweetSchema).nullable(),
 });
 
-export const state = z.object({
-  value: stateProperties,
+export const userState = z.object({
+  value: userStateProps,
 });
 
 export const user = z.object({
-  user: state,
+  user: userState,
 });
 
 export type User = z.infer<typeof user>;
-export type State = z.infer<typeof state>;
+export type UserState = z.infer<typeof userState>;
+export type UserProps = z.infer<typeof userStateProps>;
