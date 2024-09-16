@@ -1,4 +1,3 @@
-import '../tests/mocks/components';
 import { useUserStateStub } from '../tests/mocks/hooks';
 
 import { render, screen } from '@testing-library/react';

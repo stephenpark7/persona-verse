@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { state, State } from '@schemas';
+import { Reducer, reducer } from '@schemas';
 import { tokenStorage } from '@utils';
 import {
   setJwtReducer,
@@ -13,19 +13,25 @@ import { useDispatch } from 'react-redux';
 import { setDocTitleReducer } from '../reducers/docTitleReducers';
 import { routes } from '@pages';
 
-export const initialState: State = {
-  value: {
-    jwt: tokenStorage.getAccessToken(),
-    tweets: null,
-    docTitle: routes[routes.length - 1].title,
+export const initialState: Reducer = {
+  user: {
+    value: {
+      jwt: tokenStorage.getAccessToken(),
+      tweets: null,
+    },
+  },
+  browser: {
+    value: {
+      docTitle: routes[routes.length - 1].title,
+    },
   },
 };
 
-state.parse(initialState);
+reducer.parse(initialState);
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState: initialState,
+  initialState: initialState.user,
   reducers: {
     setJwt: setJwtReducer,
     clearJwt: clearJwtReducer,
@@ -37,7 +43,7 @@ export const userSlice = createSlice({
 
 export const browserSlice = createSlice({
   name: 'browser',
-  initialState: initialState,
+  initialState: initialState.browser,
   reducers: {
     setDocTitle: setDocTitleReducer,
   },
@@ -46,7 +52,7 @@ export const browserSlice = createSlice({
 export const rootReducer = combineReducers({
   user: userSlice.reducer,
   tweetAPI: tweetAPI.reducer,
-  doctTitle: browserSlice.reducer,
+  browser: browserSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
