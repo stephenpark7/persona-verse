@@ -1,54 +1,55 @@
-import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
+import axios from 'axios';
+import {
+  jwtFactory,
+  preloadedStateFactory,
+  responseFactory,
+  tweetFactory,
+} from '@factories';
 import { screen, waitFor } from '@testing-library/react';
 import { renderApp } from '@tests/utils';
 import { Tweets } from './Tweets';
 
-describe('When rendering tweets', () => {
-  describe('while loading', () => {
-    beforeEach(() => {
-      renderApp(
-        <Tweets />,
-        preloadedStateFactory({
-          user: {
-            value: {
-              jwt: jwtFactory(),
-              tweets: [tweetFactory()],
-            },
-          },
-        }),
-      );
-    });
+vi.mock('@components', () => ({
+  Tweet: () => <div data-testid="tweet" />,
+}));
 
+vi.spyOn(axios, 'request').mockReturnValue(
+  Promise.resolve(
+    responseFactory({
+      data: {
+        tweets: [tweetFactory()],
+      },
+    }),
+  ),
+);
+
+const jwt = jwtFactory();
+const tweets = [tweetFactory()];
+const preloadedState = preloadedStateFactory({
+  user: {
+    value: {
+      jwt,
+      tweets,
+    },
+  },
+});
+
+describe('Rendering tweets', () => {
+  beforeEach(() => {
+    renderApp(<Tweets />, preloadedState);
+  });
+
+  describe('while loading', () => {
     it('displays loading message', () => {
       expect(screen.getByText('Loading...')).toBeInTheDocument();
     });
-
-    it('eventually displays tweets', async () => {
-      await waitFor(() =>
-        expect(screen.getByText('tweet_0')).toBeInTheDocument(),
-      );
-    });
   });
 
-  describe('while loaded', () => {
-    beforeEach(() => {
-      renderApp(
-        <Tweets />,
-        preloadedStateFactory({
-          user: {
-            value: {
-              jwt: jwtFactory(),
-              tweets: [tweetFactory()],
-            },
-          },
-        }),
-      );
-    });
-
+  describe('after loading', () => {
     it('displays tweets', async () => {
-      await waitFor(() =>
-        expect(screen.getByText('tweet_0')).toBeInTheDocument(),
-      );
+      await waitFor(() => {
+        expect(screen.getByTestId('tweet')).toBeInTheDocument();
+      });
     });
   });
 });
