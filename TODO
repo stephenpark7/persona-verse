@@ -1,8 +1,5 @@
 In Progress:
-  ☐ Add autocomplete for input fields
-  ☐ Complete signup page tailwindcss integration
-  ☐ Refactor tests to use best practices
-    ☐ GetByRole
+  ☐ Style login page
   ☐ Add more tests @started(24-08-21 02:24)
   ☐ Add more tRPC integration @started(24-08-21 02:25)
   ☐ Refactor backend @started(24-07-20 21:05)
@@ -28,7 +25,10 @@ To-Do:
   ☐ Migrate DB from Sequelize to TypeORM
   ☐ Use eslint in root instead of in each package
 Done:
-  ✔ Create mock/factory/stubs folder for tests @done(24-09-02 21:45)
+  ✔ Create mock/factory/stubs folder for tests @done(24-09-02 21:45)  ✔ Add autocomplete for input fields @done(24-09-13 00:07)
+  ✔ Complete signup page tailwindcss integration @done(24-09-13 00:07)
+  ✔ Refactor tests to use best practices @done(24-09-13 00:07)
+    ✔ GetByRole @done(24-09-13 00:07)
   ✔ Use tailwindcss instead of bootstrap @started(24-08-21 02:25) @done(24-09-02 21:45) @lasted(1w5d19h20m37s)
   ✔ Get Jest to play nicely with Vite @done(24-09-02 01:12)
   ✔ Change back refresh token expiration date to 7 days @done(24-09-02 01:12)

@@ -6,14 +6,14 @@ import { TweetContainer } from '@components';
 vi.mock('@components', async (importOriginal) => {
   return {
     ...(await importOriginal<typeof import('@components')>()),
-    TweetInput: () => <div>TweetInput</div>,
-    TweetButton: () => <div>TweetButton</div>,
-    Tweets: () => <div>Tweets</div>,
+    TweetInput: () => <div data-testid="tweet-input">TweetInput</div>,
+    TweetButton: () => <div data-testid="tweet-button">TweetButton</div>,
+    Tweets: () => <div data-testid="tweets">Tweets</div>,
     TweetContainer: () => (
-      <div>
-        <div>TweetInput</div>
-        <div>TweetButton</div>
-        <div>Tweets</div>
+      <div data-testid="tweet-container">
+        <div data-testid="tweet-input">TweetInput</div>
+        <div data-testid="tweet-button">TweetButton</div>
+        <div data-testid="tweets">Tweets</div>
       </div>
     ),
   };
@@ -26,14 +26,14 @@ describe('TweetContainer component', () => {
   });
 
   it('renders TweetInput component', () => {
-    expect(screen.getByText('TweetInput')).toBeInTheDocument();
+    expect(screen.getByTestId('tweet-input')).toBeInTheDocument();
   });
 
   it('renders TweetButton component', () => {
-    expect(screen.getByText('TweetButton')).toBeInTheDocument();
+    expect(screen.getByTestId('tweet-button')).toBeInTheDocument();
   });
 
   it('renders Tweets component', () => {
-    expect(screen.getByText('Tweets')).toBeInTheDocument();
+    expect(screen.getByTestId('tweets')).toBeInTheDocument();
   });
 });

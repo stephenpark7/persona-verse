@@ -8,23 +8,25 @@ import { renderWithProviders } from '@core';
 vi.mock('@components', async (importOriginal) => {
   return {
     ...(await importOriginal<typeof import('@components')>()),
-    Profile: () => <div>Profile</div>,
-    TweetContainer: () => <div>TweetContainer</div>,
-    LogoutButton: () => <div>LogoutButton</div>,
+    Profile: () => <div data-testid="profile">Profile</div>,
+    TweetContainer: () => (
+      <div data-testid="tweet-container">TweetContainer</div>
+    ),
+    LogoutButton: () => <div data-testid="logout-button">LogoutButton</div>,
     Buttons: () => (
-      <div>
-        <button>Sign up</button>
-        <button>Log in</button>
+      <div data-testid="buttons">
+        <button data-testid="sign-up">Sign up</button>
+        <button data-testid="log-in">Log in</button>
       </div>
     ),
     ContentSection: () => (
-      <div>
-        <div>Profile</div>
-        <div>TweetContainer</div>
-        <div>LogoutButton</div>
-        <div>
-          <button>Sign up</button>
-          <button>Log in</button>
+      <div data-testid="content-section">
+        <div data-testid="profile">Profile</div>
+        <div data-testid="tweet-container">TweetContainer</div>
+        <div data-testid="logout-button">LogoutButton</div>
+        <div data-testid="buttons">
+          <button data-testid="sign-up">Sign up</button>
+          <button data-testid="log-in">Log in</button>
         </div>
       </div>
     ),
@@ -40,8 +42,8 @@ describe('When rendering the content section', () => {
     });
 
     it('displays sign up and log in buttons', () => {
-      expect(screen.getByText('Sign up')).toBeInTheDocument();
-      expect(screen.getByText('Log in')).toBeInTheDocument();
+      expect(screen.getByTestId('sign-up')).toBeInTheDocument();
+      expect(screen.getByTestId('log-in')).toBeInTheDocument();
     });
   });
 
@@ -53,16 +55,16 @@ describe('When rendering the content section', () => {
     });
 
     it('displays the profile', () => {
-      expect(screen.getByText('Profile')).toBeInTheDocument();
+      expect(screen.getByTestId('profile')).toBeInTheDocument();
     });
 
     it('renders the TweetContainer component', () => {
-      expect(screen.getByText('TweetContainer')).toBeInTheDocument();
+      expect(screen.getByTestId('tweet-container')).toBeInTheDocument();
     });
 
-    it('renders the LogoutButton conmponent', () => {
+    it('renders the LogoutButton component', () => {
       screen.debug();
-      expect(screen.getByText('LogoutButton')).toBeInTheDocument();
+      expect(screen.getByTestId('logout-button')).toBeInTheDocument();
     });
   });
 });

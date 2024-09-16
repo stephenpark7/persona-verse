@@ -1,9 +1,10 @@
-import React, { useEffect, useState, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { register } from '@services';
 import { APP_TITLE, submitForm } from '@utils';
-import { Header, Form } from '@components';
+import { Header, Form, Button } from '@components';
+import { useDocumentTitle } from '@hooks';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -13,9 +14,7 @@ export const Signup: React.FC = () => {
     password: '',
   });
 
-  useEffect(() => {
-    document.title = `${APP_TITLE} - Sign up`;
-  }, []);
+  useDocumentTitle(`${APP_TITLE} - Sign up`);
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     submitForm({
@@ -30,27 +29,24 @@ export const Signup: React.FC = () => {
     });
   };
 
-  const handleGoBack = () => {
-    navigate('/');
-  };
-
   return (
     <div>
       <div className="my-5">
         <div className="flex flex-col">
           <Header title="Sign up" />
           <Form
+            type="signup"
             handleFormSubmit={handleFormSubmit}
             formData={formData}
             setFormData={setFormData}
           />
-          <button
-            className="border rounded-md p-3 hover:bg-gray-100 mb-4 font-medium"
-            onClick={handleGoBack}
+          <Button
+            overrideCSS="w-full"
+            link="/"
           >
-            Go back
-          </button>
-          <p className="text-sm">
+            Go back home
+          </Button>
+          <p className="text-sm mt-4">
             Already have an account?{' '}
             <Link
               to="/login"

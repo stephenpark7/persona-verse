@@ -1,32 +1,34 @@
-import React from 'react';
-
-// TODO: rename extraStyles to overrideCSS
+import { FC, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 interface ButtonProps {
-  variant?: string;
-  type?: string;
-  onClickEvent?: (e: React.FormEvent) => void;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: (e: React.FormEvent) => void;
   children: React.ReactNode;
-  extraStyles?: string;
+  overrideCSS?: string;
   width?: string;
   height?: string;
+  link?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  // variant,
-  // type,
-  onClickEvent,
+export const Button: FC<ButtonProps> = ({
+  type = 'button',
+  onClick,
   children,
-  extraStyles,
+  overrideCSS,
   width,
   height,
+  link,
 }): React.JSX.Element => {
-  return (
+  const buttonJsx = (
     <button
-      onClick={(e: React.FormEvent) => onClickEvent && onClickEvent(e)}
-      className={`border border-black rounded bg-white ${height ?? 'h-9'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${extraStyles}`}
+      type={type}
+      onClick={(e: FormEvent) => onClick && onClick(e)}
+      className={`border border-black rounded bg-white ${height ?? 'h-10'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
     >
       {children}
     </button>
   );
+
+  return link ? <Link to={link}>{buttonJsx}</Link> : buttonJsx;
 };

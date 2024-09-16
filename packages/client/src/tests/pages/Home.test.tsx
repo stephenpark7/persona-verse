@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { PreloadedStateFactory } from '@factories';
+import { preloadedStateFactory } from '@factories';
 import { renderApp } from '@tests/utils';
 import { APP_TITLE } from '@utils';
 
@@ -35,7 +35,7 @@ describe('When visiting the home page', () => {
 
   describe('while logged in', () => {
     beforeEach(() => {
-      renderApp(undefined, PreloadedStateFactory());
+      renderApp(undefined, preloadedStateFactory());
     });
 
     it('renders paragraph', () => {

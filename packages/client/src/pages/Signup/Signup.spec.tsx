@@ -34,7 +34,7 @@ describe('Signup page', () => {
 
     it('renders submit button', () => {
       expect(
-        screen.getByRole('button', { name: 'Sign up' }),
+        screen.getByRole('button', { name: 'Create account' }),
       ).toBeInTheDocument();
     });
   });

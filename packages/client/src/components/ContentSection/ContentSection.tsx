@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogoutButton, TweetContainer, Profile } from '@components';
+import { LogoutButton, TweetContainer } from '@components';
 import { Buttons } from '../Buttons/Buttons';
 import { JWT } from '@shared';
 
@@ -14,7 +14,6 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
 }) => {
   const content = isLoggedIn ? (
     <div>
-      <Profile />
       <TweetContainer
         jwt={jwt}
         isLoggedIn={isLoggedIn}

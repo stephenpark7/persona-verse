@@ -1,15 +1,17 @@
-import { Link } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { Input, Label } from '../../components/Form';
 import { FC, FormEvent } from 'react';
+import { Button } from '@components';
 
 interface FormProps {
+  type: 'login' | 'signup';
   handleFormSubmit: (e: FormEvent<HTMLFormElement>) => void;
   formData: RequestBody;
   setFormData: (data: RequestBody) => void;
 }
 
 export const Form: FC<FormProps> = ({
+  type,
   handleFormSubmit,
   formData,
   setFormData,
@@ -29,15 +31,17 @@ export const Form: FC<FormProps> = ({
             formDataState={{ formData, setFormData }}
           />
         </div>
-        <div className="flex">
-          <Label label="Email" />
-          <Input
-            label="Email"
-            type="text"
-            value={formData.email}
-            formDataState={{ formData, setFormData }}
-          />
-        </div>
+        {type === 'login' ? null : (
+          <div className="flex">
+            <Label label="Email" />
+            <Input
+              label="Email"
+              type="text"
+              value={formData.email}
+              formDataState={{ formData, setFormData }}
+            />
+          </div>
+        )}
         <div className="flex mb-2">
           <Label label="Password" />
           <Input
@@ -47,13 +51,23 @@ export const Form: FC<FormProps> = ({
             formDataState={{ formData, setFormData }}
           />
         </div>
-        <button
-          aria-label="Sign up"
-          type="submit"
-          className="border rounded-md p-3 hover:bg-gray-100 font-medium"
-        >
-          Sign up
-        </button>
+        {type === 'login' ? (
+          <Button
+            overrideCSS="w-full"
+            aria-label="Log in"
+            type="submit"
+          >
+            Log in
+          </Button>
+        ) : (
+          <Button
+            overrideCSS="w-full"
+            aria-label="Sign up"
+            type="submit"
+          >
+            Create account
+          </Button>
+        )}
       </div>
     </form>
   );
