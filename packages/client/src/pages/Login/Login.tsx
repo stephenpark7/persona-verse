@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@components';
+import { Button, Form, Header } from '@components';
 import { loginFormFields, RequestBody } from '@schemas';
 import { login } from '@services';
 import { submitForm, updateForm } from '@utils';
@@ -36,33 +36,29 @@ export const Login: React.FC = () => {
   return (
     <div>
       <div className="my-5">
-        <div>
-          <h1>Log in</h1>
-          <form onSubmit={handleFormSubmit}>
-            <div className="mt-3 mb-3">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                onChange={handleFormChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleFormChange}
-                autoComplete="password"
-                required
-              />
-            </div>
-            <Button type="submit">Log in</Button>{' '}
-            <Link to="/">
-              <Button>Go Back</Button>
+        <div className="flex flex-col">
+          <Header title="Log in" />
+          <Form
+            type="login"
+            handleFormSubmit={handleFormSubmit}
+            formData={formData}
+            setFormData={setFormData}
+          />
+          <Button
+            overrideCSS="w-full"
+            link="/"
+          >
+            Go back home
+          </Button>
+          <p className="text-sm mt-4">
+            {"Haven't signed up yet? "}
+            <Link
+              to="/signup"
+              className="text-blue-500 hover:underline"
+            >
+              Click here to create an account!
             </Link>
-          </form>
+          </p>
         </div>
       </div>
     </div>

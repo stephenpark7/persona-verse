@@ -36,6 +36,7 @@ export const Signup: React.FC = () => {
         <div className="flex flex-col">
           <Header title="Sign up" />
           <Form
+            type="signup"
             handleFormSubmit={handleFormSubmit}
             formData={formData}
             setFormData={setFormData}
