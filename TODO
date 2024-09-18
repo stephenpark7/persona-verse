@@ -1,5 +1,6 @@
 In Progress:
   ☐ Use redux to store title and update it from there @started(24-09-16 10:01)
+  ☐ Add test for refreshing tokens
   ☐ Add more tests @started(24-08-21 02:24)
   ☐ Add more tRPC integration @started(24-08-21 02:25)
   ☐ Refactor backend @started(24-07-20 21:05)
