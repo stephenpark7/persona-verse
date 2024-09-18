@@ -13,13 +13,13 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
   isLoggedIn,
 }) => {
   const content = isLoggedIn ? (
-    <div>
+    <>
       <TweetContainer
         jwt={jwt}
         isLoggedIn={isLoggedIn}
       />
       <LogoutButton />
-    </div>
+    </>
   ) : (
     <Buttons />
   );
