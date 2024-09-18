@@ -24,5 +24,5 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
     <Buttons />
   );
 
-  return <div className="flex gap-2">{content}</div>;
+  return <div className="flex flex-col gap-2">{content}</div>;
 };
