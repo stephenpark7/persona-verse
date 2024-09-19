@@ -11,7 +11,13 @@ export const Tweets: FC = (): JSX.Element => {
       return <p>Loading...</p>;
     }
 
-    return data?.slice(0, 5).map((data: TweetProps, idx: Key) => (
+    const tweets = data?.slice(0, 5);
+
+    if (!tweets.length) {
+      return <p>No tweets found.</p>;
+    }
+
+    return tweets.map((data: TweetProps, idx: Key) => (
       <Tweet
         key={idx}
         {...data}
@@ -21,7 +27,7 @@ export const Tweets: FC = (): JSX.Element => {
 
   return (
     <div className="flex flex-col ">
-      <span className="font-bold">Tweets</span>
+      <span className="text-xl font-semibold mb-2">Tweets</span>
       {renderTweets()}
     </div>
   );

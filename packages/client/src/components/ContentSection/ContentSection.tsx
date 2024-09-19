@@ -14,11 +14,11 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
 }) => {
   const content = isLoggedIn ? (
     <>
+      <LogoutButton />
       <TweetContainer
         jwt={jwt}
         isLoggedIn={isLoggedIn}
       />
-      <LogoutButton />
     </>
   ) : (
     <Buttons />
