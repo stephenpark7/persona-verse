@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form, Header } from '@components';
 import { loginFormFields, RequestBody } from '@schemas';
-import { APP_TITLE, submitForm } from '@utils';
-import { useDocumentTitle } from '@hooks';
+import { submitForm } from '@utils';
 import { login } from '@services';
 
 export const Login: React.FC = () => {
@@ -12,8 +11,6 @@ export const Login: React.FC = () => {
     username: '',
     password: '',
   });
-
-  useDocumentTitle(`${APP_TITLE} - Log in`);
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     loginFormFields.parse(formData);

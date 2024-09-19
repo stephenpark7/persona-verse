@@ -2,9 +2,8 @@ import React, { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { register } from '@services';
-import { APP_TITLE, submitForm } from '@utils';
+import { submitForm } from '@utils';
 import { Header, Form, Button } from '@components';
-import { useDocumentTitle } from '@hooks';
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -13,8 +12,6 @@ export const Signup: React.FC = () => {
     email: '',
     password: '',
   });
-
-  useDocumentTitle(`${APP_TITLE} - Sign up`);
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     submitForm({
