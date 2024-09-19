@@ -1,9 +1,13 @@
 import { MainLayout } from '@layouts';
 import { Home, Login, Signup } from '@pages';
 import { Route, routeSchema } from '@schemas';
+import { Navbar } from '@components';
 
 const layoutWrapper = (element: React.ReactNode, title: string) => (
-  <MainLayout title={title}>{element}</MainLayout>
+  <>
+    <Navbar />
+    <MainLayout title={title}>{element}</MainLayout>
+  </>
 );
 
 export const routes: Route[] = [
