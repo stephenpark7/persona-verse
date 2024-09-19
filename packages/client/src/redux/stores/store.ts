@@ -37,7 +37,6 @@ export const userSlice = createSlice({
     clearJwt: clearJwtReducer,
     setTweets: setTweetsReducer,
     addTweet: addTweetReducer,
-    setDocTitle: setDocTitleReducer,
   },
 });
 
