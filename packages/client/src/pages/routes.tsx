@@ -3,11 +3,13 @@ import { Home, Login, Signup, Dashboard } from '@pages';
 import { Route, routeSchema } from '@schemas';
 import { Navbar } from '@components';
 
-// TODO: redirect to /dashboard if user is logged in
-
-const layoutWrapper = (element: React.ReactNode, title: string) => (
+const layoutWrapper = (
+  element: React.ReactNode,
+  title: string,
+  hideNavbar = false,
+) => (
   <>
-    <Navbar />
+    {hideNavbar ? null : <Navbar />}
     <MainLayout title={title}>{element}</MainLayout>
   </>
 );
@@ -17,11 +19,13 @@ export const routes: Route[] = [
     path: '/signup',
     element: <Signup />,
     title: 'PersonaVerse - Sign up',
+    hideNavbar: true,
   },
   {
     path: '/login',
     element: <Login />,
     title: 'PersonaVerse - Log in',
+    hideNavbar: true,
   },
   {
     path: '/dashboard',
@@ -32,9 +36,10 @@ export const routes: Route[] = [
     path: '/',
     element: <Home />,
     title: 'PersonaVerse',
+    hideNavbar: true,
   },
 ].map((route) => {
-  route.element = layoutWrapper(route.element, route.title);
+  route.element = layoutWrapper(route.element, route.title, route.hideNavbar);
   return route;
 });
 
