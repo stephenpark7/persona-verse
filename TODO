@@ -1,4 +1,7 @@
 In Progress:
+  ☐ Create dashboard route
+  ☐ rm title from dashboard page
+  ☐ Navbar should not appear on landing page
   ☐ Navbar @started(24-09-19 12:01)
   ☐ Use redux to store title and update it from there @started(24-09-16 10:01)
   ☐ Add test for refreshing tokens

@@ -1,7 +1,9 @@
 import { MainLayout } from '@layouts';
-import { Home, Login, Signup } from '@pages';
+import { Home, Login, Signup, Dashboard } from '@pages';
 import { Route, routeSchema } from '@schemas';
 import { Navbar } from '@components';
+
+// TODO: redirect to /dashboard if user is logged in
 
 const layoutWrapper = (element: React.ReactNode, title: string) => (
   <>
@@ -20,6 +22,11 @@ export const routes: Route[] = [
     path: '/login',
     element: <Login />,
     title: 'PersonaVerse - Log in',
+  },
+  {
+    path: '/dashboard',
+    element: <Dashboard />,
+    title: 'PersonaVerse - Dashboard',
   },
   {
     path: '/',

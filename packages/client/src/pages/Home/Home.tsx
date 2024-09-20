@@ -1,10 +1,19 @@
+import { FC, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUserState } from '@hooks';
 import { Header, WelcomeMessage, ContentSection } from '@components';
 
-export const Home: React.FC = (): React.JSX.Element => {
+export const Home: FC = () => {
+  const navigate = useNavigate();
   const { jwt, isLoggedIn } = useUserState();
 
-  return (
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/dashboard');
+    }
+  }, []);
+
+  return !isLoggedIn ? (
     <>
       <Header title="PersonaVerse" />
       <WelcomeMessage
@@ -16,5 +25,5 @@ export const Home: React.FC = (): React.JSX.Element => {
         isLoggedIn={isLoggedIn}
       />
     </>
-  );
+  ) : null;
 };
