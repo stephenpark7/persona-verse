@@ -24,14 +24,14 @@ export const submitTweet = async ({
   const message = tweetInput;
 
   if (!message || message.length === 0) {
-    toast.error('Please enter a message');
+    toast.error('Please enter a message.');
     return;
   }
 
   setTweetInput('');
 
   if (!jwt) {
-    toast.error('Please login to post a tweet');
+    toast.error('Please login to post a tweet.');
     return;
   }
 
