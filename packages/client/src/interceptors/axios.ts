@@ -48,6 +48,7 @@ export const useAxiosInterceptors = (jwt: JWT) => {
         return axios.request(originalRequest);
       }
 
+      window.location.href = '/login';
       return Promise.reject(error);
     },
   );
