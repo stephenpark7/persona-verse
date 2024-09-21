@@ -14,7 +14,7 @@ describe('getDisplayName', () => {
         expected: 'object',
         received: 'null',
         path: [],
-        message: 'Expected object, received null.',
+        message: 'Expected object, received null',
       },
     ];
     const jwt = null;
