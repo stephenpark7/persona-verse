@@ -48,7 +48,7 @@ export const useAxiosInterceptors = (jwt: JWT) => {
         return axios.request(originalRequest);
       }
 
-      setTimeout(() => (window.location.href = '/login'), 1000);
+      setTimeout(() => (window.location.href = '/login'), 1500);
       return Promise.reject(error);
     },
   );
