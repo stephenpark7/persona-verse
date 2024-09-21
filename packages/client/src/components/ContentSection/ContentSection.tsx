@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogoutButton, TweetContainer } from '@components';
+import { TweetContainer } from '@components';
 import { Buttons } from '../Buttons/Buttons';
 import { JWT } from '@shared';
 
@@ -13,13 +13,10 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
   isLoggedIn,
 }) => {
   const content = isLoggedIn ? (
-    <>
-      <LogoutButton />
-      <TweetContainer
-        jwt={jwt}
-        isLoggedIn={isLoggedIn}
-      />
-    </>
+    <TweetContainer
+      jwt={jwt}
+      isLoggedIn={isLoggedIn}
+    />
   ) : (
     <Buttons />
   );

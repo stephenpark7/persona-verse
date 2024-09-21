@@ -1,47 +1,17 @@
-import { FC } from 'react';
+import { useState, FC } from 'react';
 import { Link } from 'react-router-dom';
+import { BurgerMenuSvg } from '../BurgerMenuSvg';
+import { Dropdown } from './Dropdown';
 
 export const Navbar: FC = () => {
-  const burgerMenuSvg = (
-    <svg
-      width="26px"
-      height="26px"
-      viewBox="0 0 12 12"
-      enableBackground="new 0 0 12 12"
-      version="1.1"
-      xmlSpace="preserve"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g>
-        <rect
-          fill="#000"
-          height="1"
-          width="11"
-          x="0.5"
-          y="5.5"
-        />
-
-        <rect
-          fill="#000"
-          height="1"
-          width="11"
-          x="0.5"
-          y="2.5"
-        />
-
-        <rect
-          fill="#000"
-          height="1"
-          width="11"
-          x="0.5"
-          y="8.5"
-        />
-      </g>
-    </svg>
-  );
+  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
   const handleBurgerMenuClick = (): void => {
-    console.log('Burger menu clicked');
+    setIsBurgerMenuOpen(() => !isBurgerMenuOpen);
+  };
+
+  const handleCloseBurgerMenu = (): void => {
+    setIsBurgerMenuOpen(false);
   };
 
   return (
@@ -65,8 +35,10 @@ export const Navbar: FC = () => {
         className="absolute right-3 top-4 cursor-pointer"
         onClick={handleBurgerMenuClick}
       >
-        {burgerMenuSvg}
+        <BurgerMenuSvg />
       </div>
+
+      {isBurgerMenuOpen && <Dropdown closeBurgerMenu={handleCloseBurgerMenu} />}
     </nav>
   );
 };

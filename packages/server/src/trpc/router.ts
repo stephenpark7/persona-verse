@@ -31,7 +31,7 @@ export const appRouter = router({
         }
       });
       ctx.res.clearCookie('pv-session', { path: '/' });
-      return { message: 'Successfully logged out' };
+      return { message: 'Successfully logged out.' };
     }),
 });
 
