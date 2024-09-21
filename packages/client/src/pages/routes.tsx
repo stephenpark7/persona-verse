@@ -1,9 +1,17 @@
 import { MainLayout } from '@layouts';
-import { Home, Login, Signup } from '@pages';
+import { Home, Login, Signup, Dashboard } from '@pages';
 import { Route, routeSchema } from '@schemas';
+import { Navbar } from '@components';
 
-const layoutWrapper = (element: React.ReactNode, title: string) => (
-  <MainLayout title={title}>{element}</MainLayout>
+const layoutWrapper = (
+  element: React.ReactNode,
+  title: string,
+  hideNavbar = false,
+) => (
+  <>
+    {hideNavbar ? null : <Navbar />}
+    <MainLayout title={title}>{element}</MainLayout>
+  </>
 );
 
 export const routes: Route[] = [
@@ -11,19 +19,27 @@ export const routes: Route[] = [
     path: '/signup',
     element: <Signup />,
     title: 'PersonaVerse - Sign up',
+    hideNavbar: true,
   },
   {
     path: '/login',
     element: <Login />,
     title: 'PersonaVerse - Log in',
+    hideNavbar: true,
+  },
+  {
+    path: '/dashboard',
+    element: <Dashboard />,
+    title: 'PersonaVerse - Dashboard',
   },
   {
     path: '/',
     element: <Home />,
     title: 'PersonaVerse',
+    hideNavbar: true,
   },
 ].map((route) => {
-  route.element = layoutWrapper(route.element, route.title);
+  route.element = layoutWrapper(route.element, route.title, route.hideNavbar);
   return route;
 });
 

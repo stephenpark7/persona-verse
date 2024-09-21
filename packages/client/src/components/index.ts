@@ -10,3 +10,5 @@ export * from './Header';
 export * from './ContentSection';
 export * from './WelcomeMessage';
 export * from './Buttons';
+
+export * from './Navbar';

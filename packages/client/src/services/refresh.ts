@@ -17,11 +17,11 @@ export const refreshToken = async (): Promise<JWT | void> => {
 
   httpRequestParams.parse(params);
 
-  const response = (await apiCall(
+  const response = (await apiCall({
     params,
-    false,
-    'rest',
-  )) as RefreshTokenResponse;
+    showToast: false,
+    protocol: 'rest',
+  })) as RefreshTokenResponse;
 
   refreshTokenResponse.parse(response);
 

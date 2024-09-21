@@ -1,15 +1,13 @@
-import React, { useLayoutEffect } from 'react';
+import { useDocumentTitle } from '@hooks';
+import { FC } from 'react';
 
 interface MainLayoutProps {
   children: React.ReactNode;
   title: string;
 }
 
-export const MainLayout = ({ children, title }: MainLayoutProps) => {
-  useLayoutEffect(() => {
-    document.title = title;
-    // console.log('MainLayout', title);
-  }, []);
+export const MainLayout: FC<MainLayoutProps> = ({ children, title }) => {
+  useDocumentTitle(title);
 
-  return <div className="m-5">{children}</div>;
+  return <div className="mx-4 my-6">{children}</div>;
 };

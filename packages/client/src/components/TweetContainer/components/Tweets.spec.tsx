@@ -11,6 +11,7 @@ import { Tweets } from './Tweets';
 
 vi.mock('@components', () => ({
   Tweet: () => <div data-testid="tweet" />,
+  Navbar: () => <div data-testid="navbar" />,
 }));
 
 vi.spyOn(axios, 'request').mockReturnValue(

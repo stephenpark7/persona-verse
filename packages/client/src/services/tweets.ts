@@ -3,7 +3,7 @@ import { Tweet } from '@schemas';
 import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
 
-export const getTweets = async (): Promise<Tweet[]> => {
+export const getTweets = async (): Promise<Tweet[] | null> => {
   const response = await apiCall({
     params: {
       method: 'GET',
@@ -14,7 +14,7 @@ export const getTweets = async (): Promise<Tweet[]> => {
     protocol: 'rest',
   });
 
-  if (!response) return [];
+  if (!response) return null;
 
   if (!response.tweets) {
     throw new Error('Failed to retrieve tweets.');
