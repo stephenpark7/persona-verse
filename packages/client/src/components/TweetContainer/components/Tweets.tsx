@@ -7,22 +7,26 @@ export const Tweets: FC = (): JSX.Element => {
   const { data, isLoading } = useGetTweetsQuery();
 
   const renderTweets = () => {
-    if (isLoading || !data) {
+    if (isLoading) {
       return <p>Loading...</p>;
     }
 
-    const tweets = data?.slice(0, 5);
-
-    if (!tweets.length) {
-      return <p>No tweets found.</p>;
+    if (!data) {
+      return <p>Error loading tweets.</p>;
     }
 
-    return tweets.map((data: TweetProps, idx: Key) => (
-      <Tweet
-        key={idx}
-        {...data}
-      />
-    ));
+    const tweets = data.slice(0, 5);
+
+    return tweets.length === 0 ? (
+      <p>No tweets found.</p>
+    ) : (
+      tweets.map((data: TweetProps, idx: Key) => (
+        <Tweet
+          key={idx}
+          {...data}
+        />
+      ))
+    );
   };
 
   return (
