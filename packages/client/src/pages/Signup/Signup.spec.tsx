@@ -1,5 +1,5 @@
 import { useUserStateStub } from '@mocks';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { UserType } from '@factories';
 import { renderPage } from '@helpers';
 import { Signup } from '@pages';
@@ -13,7 +13,7 @@ describe('Signup page', () => {
     });
 
     it('has correct title', () => {
-      expect(document.title).toBe(`${APP_TITLE} - Sign up`);
+      waitFor(() => expect(document.title).toBe(`${APP_TITLE} - Sign up`));
     });
 
     it('renders h1', () => {

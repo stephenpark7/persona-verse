@@ -2,7 +2,7 @@ import { useUserStateStub } from '../tests/mocks/hooks';
 
 import { render, screen } from '@testing-library/react';
 import { UserType } from '@factories';
-import { Router } from '@core';
+import { renderWithProviders, Router } from '@core';
 
 // vi.mock('src/layouts/main', () => ({
 //   MainLayout: ({
@@ -28,7 +28,7 @@ describe('Router', () => {
 
   beforeEach(() => {
     useUserStateStub(UserType.GUEST);
-    render(<Router />);
+    renderWithProviders(<Router />);
   });
 
   it.only('renders home page by default', () => {

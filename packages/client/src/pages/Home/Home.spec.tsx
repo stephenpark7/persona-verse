@@ -1,30 +1,36 @@
 import { useUserStateStub } from '@mocks/hooks';
 import { screen } from '@testing-library/react';
 import { UserType } from '@factories';
-import { renderPage } from '@helpers';
 import { Home } from '@pages';
+import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from '@core';
 
 vi.mock('@components', () => ({
-  Header: () => <div>Header</div>,
-  WelcomeMessage: () => <div>WelcomeMessage</div>,
-  ContentSection: () => <div>ContentSection</div>,
+  Header: () => <div data-testid="header" />,
+  WelcomeMessage: () => <div data-testid="welcomeMessage" />,
+  ContentSection: () => <div data-testid="contentSection" />,
+  Navbar: () => <div data-testid="navbar" />,
 }));
 
 describe('When rendering the home page', () => {
   beforeEach(() => {
     useUserStateStub(UserType.GUEST);
-    renderPage(<Home />);
+    renderWithProviders(
+      <BrowserRouter>
+        <Home />
+      </BrowserRouter>,
+    );
   });
 
   it('renders header component', () => {
-    expect(screen.getByText('Header')).toBeInTheDocument();
+    expect(screen.getByTestId('header')).toBeInTheDocument();
   });
 
   it('renders WelcomeMessage component', () => {
-    expect(screen.getByText('WelcomeMessage')).toBeInTheDocument();
+    expect(screen.getByTestId('welcomeMessage')).toBeInTheDocument();
   });
 
   it('renders ContentSection component', () => {
-    expect(screen.getByText('ContentSection')).toBeInTheDocument();
+    expect(screen.getByTestId('contentSection')).toBeInTheDocument();
   });
 });
