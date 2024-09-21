@@ -13,7 +13,7 @@ export const tweetAPI = createApi({
   baseQuery: baseQuery,
   tagTypes: ['Tweets'],
   endpoints: (builder) => ({
-    getTweets: builder.query<Tweet[], void>({
+    getTweets: builder.query<Tweet[] | null, void>({
       queryFn: async () => {
         const tweets = await getTweets();
         return { data: tweets };
