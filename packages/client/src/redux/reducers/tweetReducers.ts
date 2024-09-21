@@ -1,11 +1,11 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
-import { State, Tweet } from '@schemas';
+import { UserState, Tweet } from '@schemas';
 import { initialState } from '@redux';
 
 export const setTweetsReducer: CaseReducer<
-  State,
+  UserState,
   { payload: Tweet[]; type: string }
-> = (state: State = initialState, action: PayloadAction<Tweet[]>) => {
+> = (state: UserState = initialState.user, action: PayloadAction<Tweet[]>) => {
   if (!action.payload) return state;
   return {
     value: {
@@ -16,9 +16,9 @@ export const setTweetsReducer: CaseReducer<
 };
 
 export const addTweetReducer: CaseReducer<
-  State,
+  UserState,
   { payload: Tweet; type: string }
-> = (state: State = initialState, action: PayloadAction<Tweet>) => {
+> = (state: UserState = initialState.user, action: PayloadAction<Tweet>) => {
   if (!action.payload) return state;
   return {
     value: {

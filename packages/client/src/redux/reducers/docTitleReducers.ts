@@ -1,9 +1,12 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
-import { State } from '@schemas';
+import { BrowserState } from '@schemas';
 import { initialState } from '@redux';
 
-export const setDocTitleReducer: CaseReducer<State, PayloadAction<string>> = (
-  state: State = initialState,
+export const setDocTitleReducer: CaseReducer<
+  BrowserState,
+  PayloadAction<string>
+> = (
+  state: BrowserState = initialState.browser,
   action: PayloadAction<string>,
 ) => {
   if (!action.payload) return state;

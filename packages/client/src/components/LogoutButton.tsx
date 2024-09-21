@@ -20,6 +20,7 @@ export const LogoutButton: React.FC = (): React.JSX.Element => {
     <Button
       onClick={handleLogout}
       width="w-20"
+      overrideCSS="mb-2"
     >
       Log out
     </Button>

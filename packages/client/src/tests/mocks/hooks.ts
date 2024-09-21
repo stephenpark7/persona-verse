@@ -3,9 +3,12 @@ import { useUserState } from '@hooks';
 import { tweetFactory, UserType, useUserStateFactory } from '@factories';
 import { useGetTweetsQuery } from '@redux';
 
-vi.mock('@hooks', () => ({
-  useUserState: vi.fn(),
-}));
+vi.mock('@hooks', async (importOriginal) => {
+  return {
+    ...(await importOriginal<typeof import('@hooks')>()),
+    useUserState: vi.fn(),
+  };
+});
 
 vi.mock('@redux', async (importOriginal) => {
   return {

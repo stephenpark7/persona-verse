@@ -32,13 +32,15 @@ export const TweetContainer: FC<TweetContainerProps> = ({
   };
 
   return (
-    <div>
-      <TweetInput
-        state={tweetInputState}
-        onPostTweet={handlePostTweet}
-      />
-      <TweetButton onPostTweet={handlePostTweet} />
+    <>
+      <div className="mb-2">
+        <TweetInput
+          state={tweetInputState}
+          onPostTweet={handlePostTweet}
+        />
+        <TweetButton onPostTweet={handlePostTweet} />
+      </div>
       <Tweets />
-    </div>
+    </>
   );
 };

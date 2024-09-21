@@ -13,16 +13,16 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
   isLoggedIn,
 }) => {
   const content = isLoggedIn ? (
-    <div>
+    <>
+      <LogoutButton />
       <TweetContainer
         jwt={jwt}
         isLoggedIn={isLoggedIn}
       />
-      <LogoutButton />
-    </div>
+    </>
   ) : (
     <Buttons />
   );
 
-  return <div className="flex gap-2">{content}</div>;
+  return <div className="flex flex-col gap-2">{content}</div>;
 };
