@@ -1,5 +1,5 @@
 import { MainLayout } from '@layouts';
-import { Home, Login, Signup, Dashboard } from '@pages';
+import { Home, Login, Signup, Dashboard, Profile } from '@pages';
 import { Route, routeSchema } from '@schemas';
 import { Navbar } from '@components';
 
@@ -31,6 +31,11 @@ export const routes: Route[] = [
     path: '/dashboard',
     element: <Dashboard />,
     title: 'PersonaVerse - Dashboard',
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
+    title: 'PersonaVerse - Profile',
   },
   {
     path: '/',
