@@ -26,18 +26,18 @@ export const Navbar: FC = () => {
     >
       <Logo />
 
-      <div
-        className="absolute right-3 top-4 cursor-pointer"
-        onClick={() => setIsBurgerMenuOpen(true)}
-      >
-        <BurgerMenuSvg />
-      </div>
-
-      {isBurgerMenuOpen && (
+      {isBurgerMenuOpen ? (
         <Dropdown
           isBurgerMenuOpen={isBurgerMenuOpen}
           closeBurgerMenu={() => setIsBurgerMenuOpen(false)}
         />
+      ) : (
+        <div
+          className="absolute right-3 top-4 cursor-pointer"
+          onClick={() => setIsBurgerMenuOpen(true)}
+        >
+          <BurgerMenuSvg />
+        </div>
       )}
     </nav>
   );
