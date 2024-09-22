@@ -3,6 +3,9 @@ import { Home, Login, Signup, Dashboard, Profile } from '@pages';
 import { Route, routeSchema } from '@schemas';
 import { Navbar } from '@components';
 
+// TODO: add public and private routes
+// for Dashboard and Profile
+
 const layoutWrapper = (
   element: React.ReactNode,
   title: string,
