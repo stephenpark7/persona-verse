@@ -24,11 +24,16 @@ const RouteWrapper: FC<RouteWrapperProps> = ({
   const { isLoggedIn } = useUserState();
 
   useEffect(() => {
-    if (isPrivate && !isLoggedIn) {
-      toast.error('You must be logged in to view this page.');
-      navigate('/login');
-    }
-  }, [isLoggedIn]);
+    const checkAuth = async () => {
+      if (isPrivate && !isLoggedIn) {
+        navigate('/login');
+        toast.error('You must be logged in to access this page.');
+      }
+    };
+
+    const timeout = setTimeout(checkAuth, 0);
+    return () => clearTimeout(timeout);
+  }, [isLoggedIn, navigate]);
 
   const renderRoute = () => {
     if (isPrivate && !isLoggedIn) {
