@@ -6,14 +6,6 @@ import { Logo } from '../Logo/Logo';
 export const Navbar: FC = () => {
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
-  const handleBurgerMenuClick = (): void => {
-    setIsBurgerMenuOpen(() => !isBurgerMenuOpen);
-  };
-
-  const handleCloseBurgerMenu = (): void => {
-    setIsBurgerMenuOpen(false);
-  };
-
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (e.target instanceof HTMLElement && !e.target.closest('.dropdown')) {
@@ -36,7 +28,7 @@ export const Navbar: FC = () => {
 
       <div
         className="absolute right-3 top-4 cursor-pointer"
-        onClick={handleBurgerMenuClick}
+        onClick={() => setIsBurgerMenuOpen(true)}
       >
         <BurgerMenuSvg />
       </div>
@@ -44,7 +36,7 @@ export const Navbar: FC = () => {
       {isBurgerMenuOpen && (
         <Dropdown
           isBurgerMenuOpen={isBurgerMenuOpen}
-          closeBurgerMenu={handleCloseBurgerMenu}
+          closeBurgerMenu={() => setIsBurgerMenuOpen(false)}
         />
       )}
     </nav>
