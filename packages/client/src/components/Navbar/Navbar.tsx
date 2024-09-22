@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { useEffect, useState, useRef, FC } from 'react';
 import { Link } from 'react-router-dom';
 import { BurgerMenuSvg } from '../BurgerMenuSvg';
 import { Dropdown } from './Dropdown';
@@ -13,6 +13,19 @@ export const Navbar: FC = () => {
   const handleCloseBurgerMenu = (): void => {
     setIsBurgerMenuOpen(false);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (e.target instanceof HTMLElement && !e.target.closest('.dropdown')) {
+        setIsBurgerMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav
@@ -38,7 +51,12 @@ export const Navbar: FC = () => {
         <BurgerMenuSvg />
       </div>
 
-      {isBurgerMenuOpen && <Dropdown closeBurgerMenu={handleCloseBurgerMenu} />}
+      {isBurgerMenuOpen && (
+        <Dropdown
+          isBurgerMenuOpen={isBurgerMenuOpen}
+          closeBurgerMenu={handleCloseBurgerMenu}
+        />
+      )}
     </nav>
   );
 };
