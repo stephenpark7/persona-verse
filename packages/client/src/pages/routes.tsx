@@ -4,8 +4,8 @@ import { Home, Login, Signup, Dashboard, Profile } from '@pages';
 import { Route, routeSchema } from '@schemas';
 import { Navbar } from '@components';
 
-const layoutWrapper = (
-  element: React.ReactNode,
+const routeWrapper = (
+  element: ReactNode,
   title: string,
   hideNavbar = false,
 ) => (
@@ -62,7 +62,7 @@ export const routes: Route[] = [
     private: false,
   },
 ].map((route) => {
-  route.element = layoutWrapper(
+  route.element = routeWrapper(
     route.private ? (
       <PrivateRoute element={route.element} />
     ) : (
