@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { AppStore, RootState, setupStore, store } from '@redux';
 import { render } from '@testing-library/react';
@@ -17,7 +17,7 @@ export const renderWithProviders = (
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) => {
-  const Wrapper = ({ children }: { children: React.ReactNode }) => {
+  const Wrapper = ({ children }: { children: ReactNode }) => {
     return <Provider store={store}>{children}</Provider>;
   };
 
@@ -28,7 +28,7 @@ export const renderWithProviders = (
 };
 
 interface ReduxProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const ReduxProvider = ({

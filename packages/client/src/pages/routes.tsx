@@ -4,11 +4,17 @@ import { Home, Login, Signup, Dashboard, Profile } from '@pages';
 import { Route, routeSchema } from '@schemas';
 import { Navbar } from '@components';
 
-const routeWrapper = (
-  element: ReactNode,
-  title: string,
+interface RouteWrapperProps {
+  element: ReactNode;
+  title: string;
+  hideNavbar?: boolean;
+}
+
+const routeWrapper: FC<RouteWrapperProps> = ({
+  element,
+  title,
   hideNavbar = false,
-) => (
+}) => (
   <>
     {hideNavbar ? null : <Navbar />}
     <MainLayout title={title}>{element}</MainLayout>
