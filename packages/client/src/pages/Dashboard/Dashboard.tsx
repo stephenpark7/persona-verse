@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useUserState } from '@hooks';
 import { Header, WelcomeMessage, ContentSection } from '@components';
 
-// TODO move logout to navbar
-
 export const Dashboard: FC = () => {
   const navigate = useNavigate();
   const { jwt, isLoggedIn } = useUserState();
