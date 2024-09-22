@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, FC } from 'react';
+import { useEffect, useState, FC } from 'react';
 import { Link } from 'react-router-dom';
 import { BurgerMenuSvg } from '../BurgerMenuSvg';
 import { Dropdown } from './Dropdown';
