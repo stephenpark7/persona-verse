@@ -1,7 +1,7 @@
 import { useEffect, useState, FC } from 'react';
-import { Link } from 'react-router-dom';
 import { BurgerMenuSvg } from '../BurgerMenuSvg';
 import { Dropdown } from './Dropdown';
+import { Logo } from '../Logo/Logo';
 
 export const Navbar: FC = () => {
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
@@ -32,17 +32,7 @@ export const Navbar: FC = () => {
       className="bg-white h-14 px-3 py-2 select-none shadow-md sticky top-0 z-50"
       role="navigation"
     >
-      <div className="w-8">
-        <Link
-          className="w-8 block"
-          to="/"
-        >
-          <span className="font-semibold text-4xl">P</span>
-          <span className="text-gray-500 font-thin text-4xl right-3 relative">
-            V
-          </span>
-        </Link>
-      </div>
+      <Logo />
 
       <div
         className="absolute right-3 top-4 cursor-pointer"
