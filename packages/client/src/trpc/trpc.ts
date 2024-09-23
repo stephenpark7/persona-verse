@@ -10,6 +10,7 @@ import {
 } from '@schemas';
 import { apiConfig } from '@utils';
 import { store } from '@redux';
+import { refreshToken } from '@services';
 
 // const fetchHeaders = (
 //   url: URL | RequestInfo,
@@ -40,11 +41,7 @@ import { store } from '@redux';
 // const ac = new AbortController();
 
 const authLink: TRPCLink<AppRouter> = () => {
-  // here we just got initialized in the app - this happens once per app
-  // useful for storing cache for instance
   return ({ next, op }) => {
-    // this is when passing the result to the next link
-    // each link needs to return an observable which propagates results
     return observable((observer) => {
       console.log('performing operation:', op);
       const unsubscribe = next(op).subscribe({
@@ -52,11 +49,16 @@ const authLink: TRPCLink<AppRouter> = () => {
           console.log('we received value', value);
           observer.next(value);
         },
-        error(err) {
-          console.log('we received error', err);
+        async error(err) {
+          const response = err.meta?.response as Response;
+          if (response.status === 401) {
+            const token = await refreshToken();
+            console.log(token);
+          }
           observer.error(err);
         },
         complete() {
+          console.log('we are done');
           observer.complete();
         },
       });

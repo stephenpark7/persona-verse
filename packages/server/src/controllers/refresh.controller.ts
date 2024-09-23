@@ -5,6 +5,10 @@ import { db } from '@db';
 
 const { User, RevokedToken } = db.models;
 
+// TODO: refactor from REST to TRPC
+// don't res.status(200)
+// but return the data directly instead
+
 export const refresh = async (req: Request, res: Response) => {
   try {
     const refreshToken = req.session.refreshToken;
