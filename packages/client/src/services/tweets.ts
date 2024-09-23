@@ -2,28 +2,7 @@ import { JWT } from '@shared';
 import { Tweet } from '@schemas';
 import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
-
-export const getTweets = async (): Promise<Tweet[] | null> => {
-  const response = await apiCall({
-    params: {
-      method: 'GET',
-      controller: 'tweets',
-      action: 'get',
-    },
-    showToast: false,
-    protocol: 'trpc',
-  });
-
-  if (!response) return null;
-
-  if (!response.tweets) {
-    throw new Error('Failed to retrieve tweets.');
-  }
-
-  store.dispatch(setTweets(response.tweets));
-
-  return response.tweets;
-};
+import { createTweet, getTweets as trpcGetTweets } from 'src/trpc';
 
 export const postTweet = async ({
   jwt,
@@ -40,8 +19,7 @@ export const postTweet = async ({
     params: {
       method: 'POST',
       controller: 'tweets',
-      action: 'create',
-      body: payload,
+      action: () => createTweet(payload.message),
     },
     showToast: true,
     protocol: 'trpc',
@@ -58,4 +36,26 @@ export const postTweet = async ({
   store.dispatch(addTweet(response.tweet));
 
   return response.tweet;
+};
+
+export const getTweets = async (): Promise<Tweet[] | null> => {
+  const response = await apiCall({
+    params: {
+      method: 'GET',
+      controller: 'tweets',
+      action: trpcGetTweets,
+    },
+    showToast: false,
+    protocol: 'trpc',
+  });
+
+  if (!response) return null;
+
+  if (!response.tweets) {
+    throw new Error('Failed to retrieve tweets.');
+  }
+
+  store.dispatch(setTweets(response.tweets));
+
+  return response.tweets;
 };

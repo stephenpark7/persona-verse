@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { db } from '@db';
 import { AuthenticatedRequest, RequestBody } from '@interfaces';
+import winston from 'winston';
 
 const { Tweet } = db.models;
 
@@ -34,6 +35,8 @@ export const tweetCreate = async (req: AuthenticatedRequest, res: Response) => {
 
 export const tweetGet = async (req: AuthenticatedRequest, res: Response) => {
   try {
+    winston.log('info', JSON.stringify(req.userId));
+
     const tweets = await Tweet.findAll({
       attributes: [ 'message', 'likes', 'createdAt' ],
       where: {

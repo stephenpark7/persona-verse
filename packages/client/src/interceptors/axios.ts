@@ -8,6 +8,36 @@ import { clearJwt, store } from '@redux';
 let isRefreshing = false;
 
 export const useAxiosInterceptors = (jwt: JWT) => {
+  let isFetching = false;
+
+  window.fetch = async (...args) => {
+    const [url, options] = args as [string, RequestInit];
+
+    const config = {
+      url,
+      method: options.method,
+      headers: options.headers,
+      data: options.body,
+    } as AxiosRequestConfig;
+
+    if (isFetching) return;
+
+    if (canUseAuthorizationHeader(jwt, config)) {
+      console.log(url, options);
+      isFetching = true;
+      return await fetch(url, {
+        ...options,
+        headers: {
+          ...options.headers,
+          Authorization: `Bearer ${jwt?.token}`,
+        },
+      });
+    } else {
+      isFetching = true;
+      return await fetch(url, options);
+    }
+  };
+
   axios.interceptors.request.use(
     (config) => {
       if (canUseAuthorizationHeader(jwt, config)) {
