@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form, Header } from '@components';
 import { loginFormFields, RequestBody } from '@schemas';
-import { useUserState } from '@hooks';
 import { submitForm } from '@utils';
 import { login } from '@services';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useUserState();
   const [formData, setFormData] = useState<RequestBody>({
     username: '',
     password: '',
   });
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/dashboard');
-    }
-  }, [isLoggedIn, navigate]);
-
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     loginFormFields.parse(formData);
 

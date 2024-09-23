@@ -2,8 +2,10 @@ import { useEffect, useState, FC } from 'react';
 import { BurgerMenuSvg } from '../BurgerMenuSvg';
 import { Dropdown } from './Dropdown';
 import { Logo } from '../Logo/Logo';
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar: FC = () => {
+  const navigate = useNavigate();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -12,12 +14,13 @@ export const Navbar: FC = () => {
         setIsBurgerMenuOpen(false);
       }
     };
+    setIsBurgerMenuOpen(false);
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <nav

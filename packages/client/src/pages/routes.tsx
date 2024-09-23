@@ -12,6 +12,7 @@ interface RouteWrapperProps {
   title: string;
   hideNavbar?: boolean;
   isPrivate?: boolean;
+  redirect?: string;
 }
 
 const RouteWrapper: FC<RouteWrapperProps> = ({
@@ -19,6 +20,7 @@ const RouteWrapper: FC<RouteWrapperProps> = ({
   title,
   hideNavbar = false,
   isPrivate = false,
+  redirect,
 }) => {
   const navigate = useNavigate();
   const { isLoggedIn } = useUserState();
@@ -31,12 +33,22 @@ const RouteWrapper: FC<RouteWrapperProps> = ({
       }
     };
 
-    const timeout = setTimeout(checkAuth, 0);
+    const checkRedirect = async () => {
+      if (isLoggedIn && redirect) {
+        navigate(redirect);
+      }
+    };
+
+    const timeout = setTimeout(() => {
+      checkAuth();
+      checkRedirect();
+    }, 0);
+
     return () => clearTimeout(timeout);
   }, [isLoggedIn, navigate]);
 
   const renderRoute = () => {
-    if (isPrivate && !isLoggedIn) {
+    if ((isPrivate && !isLoggedIn) || (isLoggedIn && redirect)) {
       return <p>Redirecting...</p>;
     }
 
@@ -73,12 +85,14 @@ export const routes: Route[] = [
     element: <Signup />,
     title: 'PersonaVerse - Sign up',
     hideNavbar: true,
+    redirect: '/dashboard',
   },
   {
     path: '/login',
     element: <Login />,
     title: 'PersonaVerse - Log in',
     hideNavbar: true,
+    redirect: '/dashboard',
   },
   {
     path: '/dashboard',
@@ -98,6 +112,7 @@ export const routes: Route[] = [
     title: 'PersonaVerse',
     hideNavbar: true,
     private: false,
+    redirect: '/dashboard',
   },
 ].map((route) => {
   route.element = (
@@ -105,6 +120,7 @@ export const routes: Route[] = [
       title={route.title}
       hideNavbar={route.hideNavbar}
       isPrivate={route.private}
+      redirect={route.redirect}
     >
       {route.element}
     </RouteWrapper>

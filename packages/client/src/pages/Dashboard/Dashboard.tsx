@@ -1,17 +1,9 @@
-import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC } from 'react';
 import { useUserState } from '@hooks';
 import { Header, WelcomeMessage, ContentSection } from '@components';
 
 export const Dashboard: FC = () => {
-  const navigate = useNavigate();
   const { jwt, isLoggedIn } = useUserState();
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  }, []);
 
   return isLoggedIn ? (
     <>
