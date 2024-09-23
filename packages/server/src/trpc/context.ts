@@ -1,27 +1,28 @@
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { NextFunction, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import jwt from 'jsonwebtoken';
 import { AuthenticatedRequest, JWTPayload } from '@interfaces';
 import { sendUnauthorizedResponse } from '@utils';
-import winston from 'winston';
+interface ExtendedRequest extends Request {
+  userId?: number;
+}
 
 export const auth = async (
-  req: AuthenticatedRequest, 
+  req: ExtendedRequest, 
   res: Response, 
   next: NextFunction,
 ): Promise<Response | void> => {
-
-  winston.log('info', req.url);
-  if (req.url.startsWith('/loginUser')) {
+  if (req.url.startsWith('/loginUser') || 
+      req.url.startsWith('/registerUser') || 
+      req.url.startsWith('logoutUser')
+  ) {
     return next();
   }
 
   const headers = req.headers as IncomingHttpHeaders;
   const token = headers['authorization']?.split(' ')[1];
   const secret: jwt.Secret = process.env.JWT_SECRET as jwt.Secret;
-
-  // winston.log('info', headers);
 
   if (!token) {
     return sendUnauthorizedResponse(res, 'No token provided.', 401);
@@ -45,7 +46,6 @@ export const auth = async (
   });
 };
 
-// Create context with authentication
 export const createContext = async ({
   req,
   res,
@@ -64,7 +64,6 @@ export const createContext = async ({
     req,
     res,
     session: req.session,
-    userId: (req as AuthenticatedRequest).userId,
   };
 };
 

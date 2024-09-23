@@ -5,15 +5,15 @@ import { z } from 'zod';
 export const tweetRoutes = {
   createTweet: publicProcedure
     .input(z.object({
-      content: z.string(),
+      message: z.string(),
     }))
     .mutation(async ({ ctx }) => {
-      const tweet = await tweetCreate(ctx.req, ctx.res);
+      const tweet = await tweetCreate(ctx.req);
       return tweet;
     }),
   getTweets: publicProcedure
     .query(async ({ ctx }) => {
-      const tweets = await tweetGet(ctx.req, ctx.res);
+      const tweets = await tweetGet(ctx.req);
       return tweets;
     }),
 };
