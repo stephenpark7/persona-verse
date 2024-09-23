@@ -11,7 +11,7 @@ export const getTweets = async (): Promise<Tweet[] | null> => {
       action: 'get',
     },
     showToast: false,
-    protocol: 'rest',
+    protocol: 'trpc',
   });
 
   if (!response) return null;
@@ -44,7 +44,7 @@ export const postTweet = async ({
       body: payload,
     },
     showToast: true,
-    protocol: 'rest',
+    protocol: 'trpc',
   });
 
   if (!response || !response.tweet) {

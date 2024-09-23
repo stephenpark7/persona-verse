@@ -59,3 +59,13 @@ export const loginUser = async ({
 export const logoutUser = async (): Promise<JsonResponse> => {
   return await trpc.logoutUser.mutate();
 };
+
+export const createTweet = async (content: string): Promise<JsonResponse> => {
+  return await trpc.createTweet.mutate({
+    content,
+  });
+};
+
+export const getTweets = async (): Promise<JsonResponse> => {
+  return await trpc.getTweets.query();
+};
