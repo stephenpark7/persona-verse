@@ -1,6 +1,9 @@
+// import { useUserState } from '@hooks';
 import { FC } from 'react';
 
 export const Profile: FC = () => {
+  // const { jwt, isLoggedIn } = useUserState();
+
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
