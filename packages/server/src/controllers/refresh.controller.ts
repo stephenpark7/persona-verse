@@ -44,6 +44,11 @@ export const refreshJwt = async (req: Request): Promise<JsonResponse> => {
     if (!accessToken) {
       throw new Error('Failed to generate access token.');
     }
+
+    RevokedToken.create({
+      jti,
+      UserId: payload.userId,
+    });
   
     return {
       message: 'Token refreshed.',

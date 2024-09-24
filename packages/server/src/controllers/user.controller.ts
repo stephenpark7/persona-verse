@@ -11,6 +11,7 @@ import {
   validateLogin,
   verifyToken, 
 } from '@utils';
+import { RefreshToken } from '@models';
 
 const { User, RevokedToken, UserProfile } = db.models;
 
@@ -54,6 +55,11 @@ export const userLogin = async ({
 
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload!);
+
+  RefreshToken.create({
+    jti: refreshToken.payload.jti,
+    UserId: payload.userId,
+  });
 
   if (!accessToken || !refreshToken) {
     throw new Error('Error occurred while logging in.');
