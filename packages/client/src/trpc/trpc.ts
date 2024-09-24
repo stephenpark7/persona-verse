@@ -10,7 +10,6 @@ import {
 } from '@schemas';
 import { apiConfig } from '@utils';
 import { store } from '@redux';
-import { refreshToken } from '@services';
 
 // const fetchHeaders = (
 //   url: URL | RequestInfo,
@@ -52,7 +51,7 @@ const authLink: TRPCLink<AppRouter> = () => {
         async error(err) {
           const response = err.meta?.response as Response;
           if (response.status === 401) {
-            const token = await refreshToken();
+            const token = await refreshJwt();
             console.log(token);
           }
           observer.error(err);
@@ -166,4 +165,8 @@ export const createTweet = async (message: string): Promise<JsonResponse> => {
 
 export const getTweets = async (): Promise<JsonResponse> => {
   return await trpc.getTweets.query();
+};
+
+export const refreshJwt = async (): Promise<JsonResponse> => {
+  return await trpc.refreshJwt.mutate();
 };

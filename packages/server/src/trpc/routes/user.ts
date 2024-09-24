@@ -10,8 +10,7 @@ export const userRoutes = {
       password: z.string(),
     }))
     .mutation(async ({ input }) => {
-      const user = await userCreate(input);
-      return user;
+      return await userCreate(input);
     }),
   loginUser: publicProcedure
     .input(z.object({
@@ -19,8 +18,7 @@ export const userRoutes = {
       password: z.string(),
     }))
     .mutation(async ({ input, ctx }) => {
-      const user = await userLogin(input, ctx.req);
-      return user;
+      return await userLogin(input, ctx.req);
     }),
   logoutUser: publicProcedure
     .mutation(async ({ ctx }) => {
@@ -28,6 +26,7 @@ export const userRoutes = {
       ctx.session.destroy((err: Error) => {
         if (err) {
           console.error('Error while destroying session: ', err);
+          return { message: 'Error while logging out.' };
         }
       });
       ctx.res.clearCookie('pv-session', { path: '/' });

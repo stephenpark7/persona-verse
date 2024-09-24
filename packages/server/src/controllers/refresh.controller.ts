@@ -1,40 +1,36 @@
-import { Request, Response } from 'express';
-import { sendUnauthorizedResponse } from '@utils';
+import { Request } from 'express';
 import { generateAccessToken, verifyToken } from '@utils';
 import { db } from '@db';
 
 const { User, RevokedToken } = db.models;
 
-// TODO: refactor from REST to TRPC
-// don't res.status(200)
-// but return the data directly instead
-
-export const refresh = async (req: Request, res: Response) => {
+export const refreshJwt = async (req: Request) => {
   try {
     const refreshToken = req.session.refreshToken;
+    console.log('refreshToken:', refreshToken);
 
     if (!refreshToken) {
-      return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
+      throw new Error('Session expired. Please login again.');
     }
 
     const { jti, userId } = verifyToken(refreshToken.token);
 
     if (!jti) {
-      return sendUnauthorizedResponse(res, 'Token does not have a jti.', 401);
+      throw new Error('Token does not have a jti.');
     }
 
     if (userId === undefined || userId === null) {
-      return sendUnauthorizedResponse(res, 'Token does not have a userId.', 401);
+      throw new Error('Token does not have a userId.');
     }
 
     const user = await User.findByPk(userId);
 
     if (!user) {
-      return sendUnauthorizedResponse(res, 'User not found.', 401);
+      throw new Error('User not found.');
     }
 
     if (await RevokedToken.findByPk(jti)) {
-      return sendUnauthorizedResponse(res, 'Refresh token is revoked.', 401);
+      throw new Error('Token already revoked.');
     }
 
     const payload = {
@@ -45,15 +41,15 @@ export const refresh = async (req: Request, res: Response) => {
     const accessToken = generateAccessToken(payload);
 
     if (!accessToken) {
-      return sendUnauthorizedResponse(res, 'Failed to generate access token.', 400);
+      throw new Error('Failed to generate access token.');
     }
 
-    res.status(200).json({
+    return {
       message: 'Token refreshed.',
       jwt: accessToken,
-    });
+    };
   } catch (_err: unknown) {
-    return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 400);
+    throw new Error('Error while refreshing token.');
   }
 };
 

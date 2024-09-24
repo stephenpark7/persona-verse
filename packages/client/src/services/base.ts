@@ -15,7 +15,6 @@ export const apiCall: ApiCallFunction = async ({
     let response;
 
     if (protocol === 'trpc') {
-      // console.log(params);
       if (params.action instanceof Function) {
         response = await params.action();
       } else {

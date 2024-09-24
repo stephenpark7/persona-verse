@@ -8,12 +8,10 @@ export const tweetRoutes = {
       message: z.string(),
     }))
     .mutation(async ({ ctx }) => {
-      const tweet = await tweetCreate(ctx.req);
-      return tweet;
+      return await tweetCreate(ctx.req);
     }),
   getTweets: publicProcedure
     .query(async ({ ctx }) => {
-      const tweets = await tweetGet(ctx.req);
-      return tweets;
+      return await tweetGet(ctx.req);
     }),
 };
