@@ -15,7 +15,7 @@ export const apiCall: ApiCallFunction = async ({
 
     if (protocol === 'trpc') {
       if (params.action instanceof Function) {
-        response = await params.action();
+        response = await params.action({});
       } else {
         throw new Error('Invalid API action.');
       }
