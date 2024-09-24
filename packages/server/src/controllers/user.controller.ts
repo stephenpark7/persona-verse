@@ -14,6 +14,8 @@ import {
 
 const { User, RevokedToken, UserProfile } = db.models;
 
+// TODO: add try catch block for error handling
+
 export const userCreate = async ({ 
   username, 
   email, 

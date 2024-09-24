@@ -3,6 +3,8 @@ import { AuthenticatedRequest, RequestBody } from '@interfaces';
 
 const { Tweet } = db.models;
 
+// TODO: add try catch block for error handling
+
 export const tweetCreate = async (req: AuthenticatedRequest) => {
   const { message } = req.body[0] as RequestBody;
   const userId = req.userId;
