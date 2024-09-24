@@ -15,7 +15,7 @@ import {
   TrpcFunction,
 } from '@schemas';
 import { apiConfig } from '@utils';
-import { clearJwt, setJwt, store } from '@redux';
+import { clearJwt, setJwt, store, tweetAPI } from '@redux';
 
 // TODO: refactor and modularize
 
@@ -38,6 +38,7 @@ const authLink: TRPCLink<AppRouter> = () => {
               try {
                 const response = await refreshJwt({});
                 store.dispatch(setJwt(response.jwt as Jwt));
+                store.dispatch(tweetAPI.util.invalidateTags(['Tweets']));
                 makeRequest(operation);
               } catch (_err) {
                 store.dispatch(clearJwt());
