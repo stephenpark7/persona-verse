@@ -15,10 +15,8 @@ import { setJwt, store } from '@redux';
 const authLink: TRPCLink<AppRouter> = () => {
   return ({ next, op }) => {
     return observable((observer) => {
-      console.log('performing operation:', op);
       const unsubscribe = next(op).subscribe({
         next(value) {
-          console.log('we received value', value);
           observer.next(value);
         },
         async error(err) {
@@ -27,11 +25,11 @@ const authLink: TRPCLink<AppRouter> = () => {
             const response = await refreshJwt();
             store.dispatch(setJwt(response.jwt as Jwt));
             // TODO: store.dispatch(setJwt(token));
+            // TODO: retry the original request
           }
           observer.error(err);
         },
         complete() {
-          console.log('we are done');
           observer.complete();
         },
       });
