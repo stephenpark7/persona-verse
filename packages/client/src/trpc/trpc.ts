@@ -34,7 +34,7 @@ const authLink: TRPCLink<AppRouter> = () => {
             if (response.status === 401 && retryCount < maxRetries) {
               retryCount++;
               try {
-                const response = await refreshJwt();
+                const response = await refreshJwt({});
                 store.dispatch(setJwt(response.jwt as Jwt));
                 makeRequest(operation);
               } catch (_err) {
