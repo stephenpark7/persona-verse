@@ -7,6 +7,7 @@ import {
   clearJwtReducer,
   addTweetReducer,
   setTweetsReducer,
+  setProfileReducer,
 } from '../reducers';
 import { tweetAPI } from '../services';
 import { useDispatch } from 'react-redux';
@@ -40,6 +41,7 @@ export const userSlice = createSlice({
     clearJwt: clearJwtReducer,
     setTweets: setTweetsReducer,
     addTweet: addTweetReducer,
+    setProfile: setProfileReducer,
   },
 });
 
@@ -51,7 +53,7 @@ export const browserSlice = createSlice({
   },
 });
 
-export const rootReducer = combineReducers({
+const rootReducer = combineReducers({
   user: userSlice.reducer,
   tweetAPI: tweetAPI.reducer,
   browser: browserSlice.reducer,
@@ -70,8 +72,6 @@ export const setupStore = (preloadedState?: Partial<RootState>) => {
 
 export type AppStore = ReturnType<typeof setupStore>;
 
-export type AppDispatch = AppStore['dispatch'];
-
-export const useAppStoreDispatch = useDispatch<AppDispatch>;
+export const useAppStoreDispatch = useDispatch<AppStore['dispatch']>;
 
 export const store = setupStore();
