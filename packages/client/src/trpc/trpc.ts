@@ -1,4 +1,10 @@
-import { createTRPCProxyClient, httpBatchLink, TRPCLink } from '@trpc/client';
+import {
+  createTRPCProxyClient,
+  httpBatchLink,
+  type Operation,
+  TRPCClientError,
+  TRPCLink,
+} from '@trpc/client';
 import { observable } from '@trpc/server/observable';
 import type { AppRouter } from 'server/src/trpc';
 import {
@@ -10,30 +16,44 @@ import {
   type Jwt,
 } from '@schemas';
 import { apiConfig } from '@utils';
-import { setJwt, store } from '@redux';
+import { clearJwt, setJwt, store } from '@redux';
+
+let retryCount = 0;
 
 const authLink: TRPCLink<AppRouter> = () => {
   return ({ next, op }) => {
+    const maxRetries = 1;
+
     return observable((observer) => {
-      const unsubscribe = next(op).subscribe({
-        next(value) {
-          observer.next(value);
-        },
-        async error(err) {
-          const response = err.meta?.response as Response;
-          if (response.status === 401) {
-            const response = await refreshJwt();
-            store.dispatch(setJwt(response.jwt as Jwt));
-            // TODO: store.dispatch(setJwt(token));
-            // TODO: retry the original request
-          }
-          observer.error(err);
-        },
-        complete() {
-          observer.complete();
-        },
-      });
-      return unsubscribe;
+      const makeRequest = (operation: Operation) => {
+        const unsubscribe = next(operation).subscribe({
+          next(value) {
+            observer.next(value);
+          },
+          async error(err) {
+            const response = err.meta?.response as Response;
+            if (response.status === 401 && retryCount < maxRetries) {
+              retryCount++;
+              try {
+                const response = await refreshJwt();
+                store.dispatch(setJwt(response.jwt as Jwt));
+                makeRequest(operation);
+              } catch (_err) {
+                store.dispatch(clearJwt());
+                observer.error(_err as TRPCClientError<AppRouter>);
+              }
+            } else {
+              observer.error(err);
+            }
+          },
+          complete() {
+            observer.complete();
+          },
+        });
+        return unsubscribe;
+      };
+
+      return makeRequest(op);
     });
   };
 };

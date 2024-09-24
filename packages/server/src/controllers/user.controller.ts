@@ -80,16 +80,6 @@ export const userLogin = async ({
   };
 };
 
-// TODO: a refresh token might be expired
-// but the access token might still be valid
-// in that case, we should still be able to
-// log the user out.
-// - Do not throw an error if the refresh token is expired or invalid
-// - If it is expired or invalid, log the user out anyway
-
-// Reminder falsy values are:
-// '', 0, false, null, or undefined
-
 export const userLogout = async (
   req: Request,
 ) => {
