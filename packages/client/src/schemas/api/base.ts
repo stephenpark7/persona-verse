@@ -7,7 +7,9 @@ export const apiProtocol = z.enum(['rest', 'trpc']);
 export const httpRequestParams = z.object({
   method: z.string(),
   controller: z.string(),
-  action: z.string(),
+  action: z
+    .string()
+    .or(z.function().returns(z.custom<Promise<JsonResponse>>())),
   options: z
     .object({
       withCredentials: z.boolean(),

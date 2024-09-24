@@ -12,3 +12,4 @@ export * from './WelcomeMessage';
 export * from './Buttons';
 
 export * from './Navbar';
+export * from './Logo';

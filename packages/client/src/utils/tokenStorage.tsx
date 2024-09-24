@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { JWT } from '@shared';
+import type { Jwt } from '@schemas';
 import { jwtSchema } from '@schemas';
 
 const TokenStorageSchema = z.object({
@@ -14,17 +14,17 @@ const TokenStorageSchema = z.object({
 // TODO: shorten the name of methods, for example: getAccessToken -> getToken
 
 class TokenStorage {
-  getAccessToken: () => JWT | null;
-  setAccessToken: (jwt: JWT | null) => void;
+  getAccessToken: () => Jwt | null;
+  setAccessToken: (jwt: Jwt | null) => void;
   clearAccessToken: () => void;
 
   constructor() {
     const data = {
-      getAccessToken: (): JWT | null => {
+      getAccessToken: (): Jwt | null => {
         const value: string | null = localStorage.getItem('jwt');
         return value ? jwtSchema.parse(JSON.parse(value)) : null;
       },
-      setAccessToken: (jwt: JWT | null) => {
+      setAccessToken: (jwt: Jwt | null) => {
         if (!jwt) {
           localStorage.removeItem('jwt');
           return;

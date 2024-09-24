@@ -1,11 +1,14 @@
 import { store, setJwt, clearJwt } from '@redux';
 import {
+  LoginFormFields,
   LoginFunction,
   LogoutFunction,
+  RegisterFormFields,
   registerFormFields,
   RegisterFunction,
 } from '@schemas';
 import { apiCall } from './base';
+import { loginUser, logoutUser, registerUser } from '../trpc';
 
 export const register: RegisterFunction = async ({
   formData: formData,
@@ -18,11 +21,11 @@ export const register: RegisterFunction = async ({
     params: {
       method: 'POST',
       controller: 'users',
-      action: 'signup',
+      action: () => registerUser(formData as RegisterFormFields),
       body: formData,
     },
     showToast: showToast ?? true,
-    protocol: 'trpc' as const,
+    protocol: 'trpc',
   });
 
   if (!response) {
@@ -48,7 +51,7 @@ export const login: LoginFunction = async ({
   const params = {
     method: 'POST',
     controller: 'users',
-    action: 'login',
+    action: () => loginUser(formData as LoginFormFields),
     body: formData,
     options: { withCredentials: true },
   };
@@ -79,7 +82,7 @@ export const logout: LogoutFunction = async ({
   const params = {
     method: 'POST',
     controller: 'users',
-    action: 'logout',
+    action: logoutUser,
     options: { withCredentials: true },
   };
 

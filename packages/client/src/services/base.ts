@@ -1,8 +1,6 @@
 import { apiProtocol, httpRequestParams, JsonResponse } from '@schemas';
 import type { ApiCallFunction } from '@schemas';
-import { loginUser, logoutUser, registerUser } from '../trpc';
 import { displayErrorMessage, displaySuccessMessage } from '@utils';
-import type { RegisterFormFields, LoginFormFields } from '@schemas';
 import { sendHttpRequest } from '.';
 
 export const apiCall: ApiCallFunction = async ({
@@ -17,12 +15,8 @@ export const apiCall: ApiCallFunction = async ({
     let response;
 
     if (protocol === 'trpc') {
-      if (params.action === 'signup') {
-        response = await registerUser(params.body as RegisterFormFields);
-      } else if (params.action === 'login') {
-        response = await loginUser(params.body as LoginFormFields);
-      } else if (params.action === 'logout') {
-        response = await logoutUser();
+      if (params.action instanceof Function) {
+        response = await params.action();
       } else {
         throw new Error('Invalid API action.');
       }

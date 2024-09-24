@@ -1,55 +1,50 @@
-import { Request, Response } from 'express';
-import { sendUnauthorizedResponse } from '@utils';
+import { Request } from 'express';
 import { generateAccessToken, verifyToken } from '@utils';
 import { db } from '@db';
 
 const { User, RevokedToken } = db.models;
 
-export const refresh = async (req: Request, res: Response) => {
-  try {
-    const refreshToken = req.session.refreshToken;
-
-    if (!refreshToken) {
-      return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
-    }
-
-    const { jti, userId } = verifyToken(refreshToken.token);
-
-    if (!jti) {
-      return sendUnauthorizedResponse(res, 'Token does not have a jti.', 401);
-    }
-
-    if (userId === undefined || userId === null) {
-      return sendUnauthorizedResponse(res, 'Token does not have a userId.', 401);
-    }
-
-    const user = await User.findByPk(userId);
-
-    if (!user) {
-      return sendUnauthorizedResponse(res, 'User not found.', 401);
-    }
-
-    if (await RevokedToken.findByPk(jti)) {
-      return sendUnauthorizedResponse(res, 'Refresh token is revoked.', 401);
-    }
-
-    const payload = {
-      userId: parseInt(user.get('id') as string),
-      username: user.get('username') as string,
-    };
-
-    const accessToken = generateAccessToken(payload);
-
-    if (!accessToken) {
-      return sendUnauthorizedResponse(res, 'Failed to generate access token.', 400);
-    }
-
-    res.status(200).json({
-      message: 'Token refreshed.',
-      jwt: accessToken,
-    });
-  } catch (_err: unknown) {
-    return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 400);
+export const refreshJwt = async (req: Request) => {
+  const refreshToken = req.session.refreshToken;
+console.log(refreshToken);
+  if (!refreshToken) {
+    throw new Error('Session expired. Please login again.');
   }
+
+  const { jti, userId } = verifyToken(refreshToken.token);
+
+  if (!jti) {
+    throw new Error('Token does not have a jti.');
+  }
+
+  if (userId === undefined || userId === null) {
+    throw new Error('Token does not have a userId.');
+  }
+
+  const user = await User.findByPk(userId);
+
+  if (!user) {
+    throw new Error('User not found.');
+  }
+
+  if (await RevokedToken.findByPk(jti)) {
+    throw new Error('Token already revoked.');
+  }
+
+  const payload = {
+    userId: parseInt(user.get('id') as string),
+    username: user.get('username') as string,
+  };
+
+  const accessToken = generateAccessToken(payload);
+
+  if (!accessToken) {
+    throw new Error('Failed to generate access token.');
+  }
+
+  return {
+    message: 'Token refreshed.',
+    jwt: accessToken,
+  };
 };
 

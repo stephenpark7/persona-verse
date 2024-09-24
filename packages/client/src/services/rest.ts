@@ -14,7 +14,7 @@ export const sendHttpRequest = async (
   httpRequestParams.parse(params);
 
   const config = {
-    url: apiConfig.urlWithParams(controller, action),
+    url: apiConfig.urlWithParams(controller, action as string),
     headers: {
       'Content-Type': 'application/json',
       ...headers,

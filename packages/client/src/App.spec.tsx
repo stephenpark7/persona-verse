@@ -1,14 +1,15 @@
+import { ReactNode } from 'react';
 import { screen, render } from '@testing-library/react';
 import { App } from './App';
 
 vi.mock('@core', () => ({
-  ReduxProvider: ({ children }: { children: React.ReactNode }) => (
+  ReduxProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="redux-provider">{children}</div>
   ),
-  Router: ({ children }: { children: React.ReactNode }) => (
+  Router: ({ children }: { children: ReactNode }) => (
     <div data-testid="router">{children}</div>
   ),
-  Toast: ({ children }: { children: React.ReactNode }) => (
+  Toast: ({ children }: { children: ReactNode }) => (
     <div data-testid="toast">{children}</div>
   ),
 }));

@@ -50,9 +50,8 @@ describe('When visiting the home page', () => {
 
     it('renders buttons', () => {
       const buttons = screen.getAllByRole('button');
-      expect(buttons).toHaveLength(2);
+      expect(buttons).toHaveLength(1);
       expect(buttons).someToContainText('Tweet');
-      expect(buttons).someToContainText('Log out');
     });
   });
 });

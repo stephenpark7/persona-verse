@@ -1,12 +1,11 @@
 import { PayloadAction, CaseReducer } from '@reduxjs/toolkit';
-import { UserState } from '@schemas';
+import { Jwt, UserState } from '@schemas';
 import { initialState } from '@redux';
 import { tokenStorage } from '@utils';
-import type { JWT } from '@shared';
 
-export const setJwtReducer: CaseReducer<UserState, PayloadAction<JWT>> = (
+export const setJwtReducer: CaseReducer<UserState, PayloadAction<Jwt>> = (
   state: UserState = initialState.user,
-  action: PayloadAction<JWT>,
+  action: PayloadAction<Jwt>,
 ) => {
   if (!action.payload) return state;
   tokenStorage.setAccessToken(action.payload);
