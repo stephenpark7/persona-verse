@@ -6,8 +6,8 @@ import { db } from '@db';
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 export const generateAccessToken = (payload: JWTPayload) => {
-  const options = { expiresIn: '2s' };
-  const expiresAt = Date.now() + 2 * 1000;
+  const options = { expiresIn: '30m' };
+  const expiresAt = Date.now() + 30 * 60 * 1000;
   const token = jwt.sign({ ...payload, expiresAt }, JWT_SECRET, options);
   return {
     token,
@@ -17,8 +17,8 @@ export const generateAccessToken = (payload: JWTPayload) => {
 };
 
 export const generateRefreshToken = (payload: JWTPayload) => {
-  const options = { expiresIn: '2s' };
-  const expiresAt = Date.now() + 2 * 1000;
+  const options = { expiresIn: '7d' };
+  const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
   const jti = uuidv4();
   const token = jwt.sign({ ...payload, jti, expiresAt }, JWT_SECRET, options);
   return {
