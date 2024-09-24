@@ -1,5 +1,5 @@
 // import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
-import { JWT } from '@shared';
+import { Jwt } from '@schemas';
 // import { refreshToken } from '@services';
 // import { canRefreshToken, canUseAuthorizationHeader } from '@utils';
 // import { tokenStorage } from '@utils';
@@ -7,7 +7,7 @@ import { JWT } from '@shared';
 
 // const isRefreshing = false;
 
-export const useAxiosInterceptors = (jwt: JWT) => {
+export const useAxiosInterceptors = (jwt: Jwt) => {
   console.log(jwt);
   // axios.interceptors.request.use(
   //   (config) => {

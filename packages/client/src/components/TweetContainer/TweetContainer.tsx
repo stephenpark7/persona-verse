@@ -4,10 +4,10 @@ import { Tweets } from './components/Tweets';
 import { TweetButton } from './components/TweetButton';
 import { submitTweet } from '@utils';
 import { usePostTweetMutation } from '@redux';
-import { JWT } from '@shared';
+import { Jwt } from '@schemas';
 
 interface TweetContainerProps {
-  jwt: JWT | null;
+  jwt: Jwt | null;
   isLoggedIn: boolean;
 }
 

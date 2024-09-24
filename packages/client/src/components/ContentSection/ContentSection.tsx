@@ -1,10 +1,10 @@
 import React from 'react';
 import { TweetContainer } from '@components';
 import { Buttons } from '../Buttons/Buttons';
-import { JWT } from '@shared';
+import { Jwt } from '@schemas';
 
 interface ContentSectionProps {
-  jwt: JWT | null;
+  jwt: Jwt | null;
   isLoggedIn: boolean;
 }
 

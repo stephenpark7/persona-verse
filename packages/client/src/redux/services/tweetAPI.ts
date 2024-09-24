@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Tweet } from '@schemas';
 import { getTweets, postTweet } from '@services';
 import { apiConfig } from '@utils';
-import { JWT } from '@shared';
+import { Jwt } from '@schemas';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: apiConfig.baseUrl,
@@ -23,7 +23,7 @@ export const tweetAPI = createApi({
     postTweet: builder.mutation<
       Tweet,
       {
-        jwt: JWT;
+        jwt: Jwt;
         payload: { message: string };
       }
     >({

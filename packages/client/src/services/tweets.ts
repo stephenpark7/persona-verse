@@ -1,4 +1,4 @@
-import { JWT } from '@shared';
+import { Jwt } from '@schemas';
 import { Tweet } from '@schemas';
 import { store, addTweet, setTweets } from '@redux';
 import { apiCall } from '.';
@@ -8,7 +8,7 @@ export const postTweet = async ({
   jwt,
   payload,
 }: {
-  jwt: JWT;
+  jwt: Jwt;
   payload: { message: string };
 }): Promise<Tweet> => {
   if (!jwt) {
