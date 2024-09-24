@@ -62,19 +62,16 @@ describe('When visiting the home page', () => {
       });
     });
 
-    it.skip('renders textbox', () => {
+    it('renders textbox', () => {
       expect(screen.getByRole('textbox').getAttribute('placeholder')).toBe(
         "What's happening?",
       );
     });
 
-    it.skip('renders buttons', async () => {
-      const buttons = screen.getAllByRole('button');
-      screen.debug();
-      await waitFor(() => {
-        expect(buttons).toHaveLength(1);
-        expect(buttons).someToContainText('Tweet');
-      });
+    it('renders button', async () => {
+      expect(
+        screen.queryByRole('button', { name: 'Tweet' }),
+      ).toBeInTheDocument();
     });
   });
 });
