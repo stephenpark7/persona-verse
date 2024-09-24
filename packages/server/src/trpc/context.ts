@@ -13,12 +13,14 @@ export const auth = async (
   res: Response, 
   next: NextFunction,
 ): Promise<Response | void> => {
-  if (req.url.startsWith('/loginUser') || 
-      req.url.startsWith('/registerUser') || 
-      req.url.startsWith('logoutUser')
+  if (req.url.startsWith('/registerUser') || 
+      req.url.startsWith('/loginUser') || 
+      req.url.startsWith('/logoutUser') ||
+      req.url.startsWith('/refreshJwt')
   ) {
     return next();
   }
+  // console.log(req.url);
 
   const headers = req.headers as IncomingHttpHeaders;
   const token = headers['authorization']?.split(' ')[1];

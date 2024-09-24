@@ -7,10 +7,12 @@ export const tweetCreate = async (req: AuthenticatedRequest) => {
   const { message } = req.body[0] as RequestBody;
   const userId = req.userId;
 
-  console.log('message:', message);
-
   if (message.length === 0) {
     throw new Error('Message cannot be empty.');
+  }
+
+  if (userId === undefined || userId === null) {
+    throw new Error('User not found.');
   }
 
   const tweet = await Tweet.create({
@@ -30,7 +32,6 @@ export const tweetCreate = async (req: AuthenticatedRequest) => {
 };
 
 export const tweetGet = async (req: AuthenticatedRequest) => {
-  // try {
   const tweets = await Tweet.findAll({
     attributes: [ 'message', 'likes', 'createdAt' ],
     where: {
@@ -47,7 +48,4 @@ export const tweetGet = async (req: AuthenticatedRequest) => {
     message: 'Tweets retrieved.',
     tweets: tweets,
   };
-  // } catch (_err: unknown) {
-  //   res.status(500).json({ message: 'Error getting tweets.' });
-  // }
 };

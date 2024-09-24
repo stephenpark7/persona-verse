@@ -7,37 +7,10 @@ import {
   type LoginFormFields,
   registerFormFields,
   loginFormFields,
+  type Jwt,
 } from '@schemas';
 import { apiConfig } from '@utils';
-import { store } from '@redux';
-
-// const fetchHeaders = (
-//   url: URL | RequestInfo,
-//   options: RequestInit | undefined,
-// ) => {
-//   // if (
-//   //   (url as string).endsWith('/api/refresh/') ||
-//   //   options?.headers?.Authorization
-//   // ) {
-//   //   return options;
-//   // }
-
-//   const token = store.getState().user.value.jwt?.token;
-//   if (!token) {
-//     return options;
-//   }
-
-//   options = options || {};
-//   options.headers = options?.headers || new Headers();
-//   options.headers = {
-//     ...options?.headers,
-//     Authorization: `Bearer ${token}`,
-//   };
-
-//   return options;
-// };
-
-// const ac = new AbortController();
+import { setJwt, store } from '@redux';
 
 const authLink: TRPCLink<AppRouter> = () => {
   return ({ next, op }) => {
@@ -51,8 +24,9 @@ const authLink: TRPCLink<AppRouter> = () => {
         async error(err) {
           const response = err.meta?.response as Response;
           if (response.status === 401) {
-            const token = await refreshJwt();
-            console.log(token);
+            const response = await refreshJwt();
+            store.dispatch(setJwt(response.jwt as Jwt));
+            // TODO: store.dispatch(setJwt(token));
           }
           observer.error(err);
         },
@@ -71,54 +45,38 @@ const trpc = createTRPCProxyClient<AppRouter>({
     authLink,
     httpBatchLink({
       url: apiConfig.trpcUrl,
-      // fetch: async (url, options) => {
-      //   const originalRequest = fetch(url, {
-      //     ...options,
-      //     credentials: 'include',
-      //   });
-      //   return originalRequest;
-      // },
-      headers() {
+      fetch: async (url, options) => {
+        const requestURL = new URL(url as string);
+        const originalRequest = fetch(url, {
+          ...options,
+          credentials:
+            requestURL.pathname.endsWith('loginUser') ||
+            requestURL.pathname.endsWith('logoutUser') ||
+            requestURL.pathname.endsWith('refreshJwt')
+              ? 'include'
+              : 'omit',
+        });
+        return originalRequest;
+      },
+      headers(url) {
         const token = store.getState().user.value.jwt?.token;
-        if (!token) {
+        const path = url.opList[0].path;
+        if (
+          !token ||
+          path === 'registerUser' ||
+          path === 'loginUser' ||
+          path === 'logoutUser' ||
+          path === 'refreshJwt'
+        ) {
           return {};
         }
         return {
           Authorization: `Bearer ${token}`,
         };
       },
-      // async fetch(url, options) {
-      //   const originalRequest = fetch(url, {
-      //     ...fetchHeaders(url, options),
-      //     credentials: 'include',
-      //   });
-      //   const response = await originalRequest;
-      //   console.log(response.status);
-      //   if (response.status === 401) {
-      //     const accessToken = await refreshToken();
-      //     console.log('accessToken', accessToken);
-      //     if (!accessToken) {
-      //       store.dispatch(clearJwt());
-      //       return originalRequest;
-      //     }
-      //     const headers = fetchHeaders(url, options)?.headers;
-      //     return fetch(url, {
-      //       ...options,
-      //       headers: {
-      //         ...headers,
-      //         Authorization: `Bearer ${accessToken.token}`,
-      //       },
-      //     });
-      //   }
-      //   return originalRequest;
-      // },
     }),
   ],
 });
-
-// const query = trpc.getTweets.query(undefined, { signal: ac.signal });
-// console.log(query);
-// ac.abort();
 
 export const registerUser = async ({
   username,

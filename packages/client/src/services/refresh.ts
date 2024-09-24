@@ -6,12 +6,13 @@ import {
   refreshTokenResponse,
 } from '@schemas';
 import { apiCall } from '.';
+import { refreshJwt as refreshJwtTRPC } from '../trpc';
 
 export const refreshJwt = async (): Promise<JsonResponse> => {
   const params = {
     method: 'POST',
     controller: 'refresh',
-    action: () => refreshJwt(),
+    action: () => refreshJwtTRPC(),
     options: { withCredentials: true },
   };
 
