@@ -17,6 +17,8 @@ import {
 import { apiConfig } from '@utils';
 import { clearJwt, setJwt, store } from '@redux';
 
+// TODO: refactor and modularize
+
 let retryCount = 0;
 
 const authLink: TRPCLink<AppRouter> = () => {
