@@ -2,8 +2,6 @@ import { screen, waitFor } from '@testing-library/react';
 import { preloadedStateFactory } from '@factories';
 import { renderApp } from '@tests/utils';
 import { APP_TITLE } from '@utils';
-import { Home } from '@pages';
-import { useGetTweetsQueryStub } from '@mocks';
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
