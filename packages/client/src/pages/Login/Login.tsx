@@ -11,7 +11,6 @@ export const Login: React.FC = () => {
     username: '',
     password: '',
   });
-
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     loginFormFields.parse(formData);
 

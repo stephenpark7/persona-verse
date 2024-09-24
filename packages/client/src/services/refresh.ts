@@ -1,17 +1,18 @@
-import { JWT } from '@shared';
 import { store, setJwt } from '@redux';
 import {
   httpRequestParams,
+  JsonResponse,
   RefreshTokenResponse,
   refreshTokenResponse,
 } from '@schemas';
 import { apiCall } from '.';
+import { refreshJwt as refreshJwtTRPC } from '../trpc';
 
-export const refreshToken = async (): Promise<JWT | void> => {
+export const refreshJwt = async (): Promise<JsonResponse> => {
   const params = {
     method: 'POST',
     controller: 'refresh',
-    action: '',
+    action: () => refreshJwtTRPC(),
     options: { withCredentials: true },
   };
 
@@ -20,12 +21,12 @@ export const refreshToken = async (): Promise<JWT | void> => {
   const response = (await apiCall({
     params,
     showToast: false,
-    protocol: 'rest',
+    protocol: 'trpc',
   })) as RefreshTokenResponse;
 
   refreshTokenResponse.parse(response);
 
   store.dispatch(setJwt(response.jwt));
 
-  return response.jwt;
+  return { message: 'Token successfully refreshed.', jwt: response.jwt };
 };

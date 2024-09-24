@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@components';
 import { logout } from '@services';
 import { useAppStoreDispatch, tweetAPI } from '@redux';
 
@@ -16,13 +15,5 @@ export const LogoutButton: React.FC = (): React.JSX.Element => {
     dispatch(tweetAPI.util.invalidateTags(['Tweets']));
   };
 
-  return (
-    <Button
-      onClick={handleLogout}
-      width="w-20"
-      overrideCSS="mb-2"
-    >
-      Log out
-    </Button>
-  );
+  return <div onClick={handleLogout}>Log out</div>;
 };

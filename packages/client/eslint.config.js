@@ -59,7 +59,7 @@ export default [
         },
         {
           selector: 'ExportDefaultDeclaration',
-          message: 'Use named exports instead',
+          message: 'Use named exports instead.',
         },
       ],
       '@typescript-eslint/no-invalid-void-type': ['off'],

@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify';
-import type { JWT } from '@shared';
+import type { Jwt } from '@schemas';
 import { tweetAPI } from '@redux';
 
 interface handlePostTweet {
   isLoggedIn: boolean;
-  jwt: JWT | null;
+  jwt: Jwt | null;
   tweetInput: string;
   setTweetInput: React.Dispatch<React.SetStateAction<string>>;
   postTweet: ReturnType<typeof tweetAPI.usePostTweetMutation>[0];

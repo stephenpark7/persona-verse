@@ -1,8 +1,8 @@
+import { FC, ReactNode } from 'react';
 import { useDocumentTitle } from '@hooks';
-import { FC } from 'react';
 
 interface MainLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   title: string;
 }
 
