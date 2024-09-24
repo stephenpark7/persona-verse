@@ -18,7 +18,7 @@ export const postTweet = async ({
   const params = {
     method: 'POST',
     controller: 'tweets',
-    action: () => createTweet(payload.message),
+    action: () => createTweet({ message: payload.message }),
   };
 
   const response = await apiCall({

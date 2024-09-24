@@ -4,12 +4,26 @@ import { JsonResponse, RequestBody } from '@schemas';
 
 export const apiProtocol = z.enum(['rest', 'trpc']);
 
+export const trpcFunction = z
+  .function()
+  .args(
+    z
+      .object({
+        username: z.string(),
+        email: z.string(),
+        password: z.string(),
+        message: z.string(),
+      })
+      .partial(),
+  )
+  .returns(z.custom<Promise<JsonResponse>>());
+
+export type TrpcFunction = z.infer<typeof trpcFunction>;
+
 export const httpRequestParams = z.object({
   method: z.string(),
   controller: z.string(),
-  action: z
-    .string()
-    .or(z.function().returns(z.custom<Promise<JsonResponse>>())),
+  action: z.custom<TrpcFunction>(),
   options: z
     .object({
       withCredentials: z.boolean(),

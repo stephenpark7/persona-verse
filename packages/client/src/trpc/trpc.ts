@@ -14,6 +14,7 @@ import {
   registerFormFields,
   loginFormFields,
   type Jwt,
+  TrpcFunction,
 } from '@schemas';
 import { apiConfig } from '@utils';
 import { clearJwt, setJwt, store } from '@redux';
@@ -96,11 +97,15 @@ const trpc = createTRPCProxyClient<AppRouter>({
   ],
 });
 
-export const registerUser = async ({
+export const registerUser: TrpcFunction = async ({
   username,
   email,
   password,
-}: RegisterFormFields): Promise<JsonResponse> => {
+}): Promise<JsonResponse> => {
+  if (!username || !email || !password) {
+    throw new Error('Failed to register user.');
+  }
+
   registerFormFields.parse({
     username,
     email,
@@ -114,10 +119,14 @@ export const registerUser = async ({
   });
 };
 
-export const loginUser = async ({
+export const loginUser: TrpcFunction = async ({
   username,
   password,
-}: LoginFormFields): Promise<JsonResponse> => {
+}): Promise<JsonResponse> => {
+  if (!username || !password) {
+    throw new Error('Failed to login user.');
+  }
+
   loginFormFields.parse({
     username,
     password,
@@ -129,20 +138,26 @@ export const loginUser = async ({
   });
 };
 
-export const logoutUser = async (): Promise<JsonResponse> => {
+export const logoutUser: TrpcFunction = async (): Promise<JsonResponse> => {
   return await trpc.logoutUser.mutate();
 };
 
-export const createTweet = async (message: string): Promise<JsonResponse> => {
+export const createTweet: TrpcFunction = async ({
+  message,
+}): Promise<JsonResponse> => {
+  if (!message) {
+    throw new Error('Failed to create tweet');
+  }
+
   return await trpc.createTweet.mutate({
     message,
   });
 };
 
-export const getTweets = async (): Promise<JsonResponse> => {
+export const getTweets: TrpcFunction = async (): Promise<JsonResponse> => {
   return await trpc.getTweets.query();
 };
 
-export const refreshJwt = async (): Promise<JsonResponse> => {
+export const refreshJwt: TrpcFunction = async (): Promise<JsonResponse> => {
   return await trpc.refreshJwt.mutate();
 };

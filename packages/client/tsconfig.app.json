@@ -33,7 +33,6 @@
       "@utils": ["./src/utils/index"],
       "@pages": ["./src/pages/index"],
       "@services": ["./src/services/index"],
-      "@interceptors": ["./src/interceptors/index"],
       "@factories": ["./src/tests/factories/index"],
       "@mocks": ["./src/tests/mocks/index"],
       "@mocks/*": ["./src/tests/mocks/*"],
