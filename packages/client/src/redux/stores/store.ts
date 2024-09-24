@@ -13,11 +13,14 @@ import { useDispatch } from 'react-redux';
 import { setDocTitleReducer } from '../reducers/docTitleReducers';
 import { routes } from '@pages';
 
+// TODO: create reducer for profile
+
 export const initialState: Reducer = {
   user: {
     value: {
       jwt: tokenStorage.getAccessToken(),
       tweets: null,
+      profile: null,
     },
   },
   browser: {
