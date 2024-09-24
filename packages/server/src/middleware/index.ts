@@ -2,7 +2,6 @@ import * as express from 'express';
 import { Express } from 'express';
 import { corsMiddleware } from './cors';
 import { cookies } from './cookies';
-import { router } from './router';
 import { httpLogger } from './httpLogger';
 import { errorLogger } from './errorLogger';
 
@@ -16,7 +15,6 @@ export const setupMiddleware = function (this: Express) {
   this.use(express.urlencoded({ extended: true }));
   this.use(cookies);
   this.use(httpLogger);
-  this.use('/', router);
   this.use(errorLogger);
   this.use(
     '/trpc',
