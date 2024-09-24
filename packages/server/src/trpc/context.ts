@@ -39,7 +39,7 @@ export const auth = async (
     }
 
     const decodedToken = decoded as JWTPayload;
-    if (decodedToken.userId === undefined || decodedToken.userId === null) {
+    if (decodedToken.userId == null) {
       return sendUnauthorizedResponse(res, 'Token does not have a userId.', 401);
     }
 

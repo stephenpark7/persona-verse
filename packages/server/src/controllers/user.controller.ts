@@ -83,37 +83,25 @@ export const userLogin = async ({
 export const userLogout = async (
   req: Request,
 ) => {
-  if (!req.session) {
-    throw new Error('Session not found.');
+  if (req.session) {
+    const refreshToken = req.session.refreshToken;
+
+    if (refreshToken) {
+      const { jti, userId } = verifyToken(refreshToken.token);
+
+      if (jti != null && userId != null) {
+        const user = await User.findByPk(userId);
+
+        if (user) {
+          const revokedToken = await RevokedToken.findByPk(jti);
+
+          if (!revokedToken) {
+            await generateRevokedToken(userId);
+          }
+        }
+      }
+    }
   }
-
-  const refreshToken = req.session.refreshToken;
-
-  if (!refreshToken) {
-    throw new Error('Refresh token not found.');
-  }
-
-  const { jti, userId } = verifyToken(refreshToken.token);
-
-  if (!jti) {
-    throw new Error('Token does not have a jti.');
-  }
-
-  if (userId === undefined || userId === null) {
-    throw new Error('Token does not have a userId.');
-  }
-
-  const user = await User.findByPk(userId);
-
-  if (!user) {
-    return new Error('User not found.');
-  }
-
-  if (await RevokedToken.findByPk(jti)) {
-    throw new Error('Token already revoked.');
-  }
-
-  await generateRevokedToken(userId);
 
   return { message: 'Logged out successfully.' };
 };
