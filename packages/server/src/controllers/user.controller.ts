@@ -80,40 +80,38 @@ export const userLogin = async ({
   };
 };
 
+// TODO: a refresh token might be expired
+// but the access token might still be valid
+// in that case, we should still be able to
+// log the user out.
+// - Do not throw an error if the refresh token is expired or invalid
+// - If it is expired or invalid, log the user out anyway
+
+// Reminder falsy values are:
+// '', 0, false, null, or undefined
+
 export const userLogout = async (
   req: Request,
 ) => {
-  if (!req.session) {
-    throw new Error('Session not found.');
+  if (req.session) {
+    const refreshToken = req.session.refreshToken;
+
+    if (refreshToken) {
+      const { jti, userId } = verifyToken(refreshToken.token);
+
+      if (jti != null && userId != null) {
+        const user = await User.findByPk(userId);
+
+        if (user) {
+          const revokedToken = await RevokedToken.findByPk(jti);
+
+          if (!revokedToken) {
+            await generateRevokedToken(userId);
+          }
+        }
+      }
+    }
   }
-
-  const refreshToken = req.session.refreshToken;
-
-  if (!refreshToken) {
-    throw new Error('Refresh token not found.');
-  }
-
-  const { jti, userId } = verifyToken(refreshToken.token);
-
-  if (!jti) {
-    throw new Error('Token does not have a jti.');
-  }
-
-  if (userId === undefined || userId === null) {
-    throw new Error('Token does not have a userId.');
-  }
-
-  const user = await User.findByPk(userId);
-
-  if (!user) {
-    return new Error('User not found.');
-  }
-
-  if (await RevokedToken.findByPk(jti)) {
-    throw new Error('Token already revoked.');
-  }
-
-  await generateRevokedToken(userId);
 
   return { message: 'Logged out successfully.' };
 };
