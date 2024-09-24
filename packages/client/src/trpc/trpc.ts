@@ -9,8 +9,6 @@ import { observable } from '@trpc/server/observable';
 import type { AppRouter } from 'server/src/trpc';
 import {
   type JsonResponse,
-  type RegisterFormFields,
-  type LoginFormFields,
   registerFormFields,
   loginFormFields,
   type Jwt,
