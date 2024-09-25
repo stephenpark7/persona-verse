@@ -1,7 +1,6 @@
-import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-export type ApiError = AxiosError | Error | unknown;
+export type ApiError = Error | { response?: { data?: unknown } } | unknown;
 
 export const displayErrorMessage = (
   err: ApiError,
@@ -9,14 +8,22 @@ export const displayErrorMessage = (
 ): string => {
   let message = 'An unexpected error occurred.';
 
-  if (err instanceof AxiosError) {
-    message = err.response?.data.message || err.message;
-  } else if (err instanceof Error) {
+  if (err instanceof Error) {
     message = err.message;
+  } else if (isApiErrorWithResponse(err)) {
+    if (err.response?.data) {
+      message = err.response.data as string;
+    }
   }
 
   toast.error(message, { autoClose });
   return message;
+};
+
+const isApiErrorWithResponse = (
+  err: unknown,
+): err is { response: { data?: unknown } } => {
+  return !!err && typeof err === 'object' && 'response' in err;
 };
 
 export const displaySuccessMessage = (
