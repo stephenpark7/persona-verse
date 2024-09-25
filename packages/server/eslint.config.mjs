@@ -58,4 +58,25 @@ export default tseslint.config({
   },
 },{
   ignores: [ 'coverage', 'dist', 'node_modules' ],
-});
+},{
+  files: [ '**/**/*.{test,spec}.{ts}' ],
+  languageOptions: {
+    globals: {
+      ...vitest.environments.env.globals,
+    },
+    sourceType: 'module',
+  },
+  plugins: {
+    vitest,
+  },
+  settings: {
+    vitest: {
+      typecheck: true,
+    },
+  },
+  rules: {
+    ...vitest.configs.recommended.rules,
+    'vitest/max-nested-describe': [ 'error', { max: 3 } ],
+  },
+},
+);
