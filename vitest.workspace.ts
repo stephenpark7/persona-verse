@@ -7,5 +7,11 @@ export default defineWorkspace([
     test: {
       setupFiles: './packages/client/src/tests/vitest.setup.ts',
     },
+  },
+  {
+    extends: './packages/server/vitest.config.ts',
+    test: {
+      setupFiles: './packages/server/src/tests/vitest.setup.ts',
+    },
   }
 ]);
