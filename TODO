@@ -1,5 +1,6 @@
 In Progress:
-  ☐ Remove shared types in favor for ZOD types
+  ☐ Remove shared types in favor for ZOD types @started(24-09-25 05:14)
+  ☐ Refactor, clean up unused code @started(24-09-25 05:14)
   ☐ Add test for refreshing tokens
   ☐ Add more tests @started(24-08-21 02:24)
   ☐ Add more tRPC integration @started(24-08-21 02:25)
