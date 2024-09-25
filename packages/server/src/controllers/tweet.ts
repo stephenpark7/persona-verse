@@ -37,15 +37,15 @@ export const tweetCreate = async (req: AuthenticatedRequest) => {
 
 export const tweetGet = async (req: AuthenticatedRequest) => {
   const tweets = await Tweet.findAll({
-    attributes: [ 'message', 'likes', 'createdAt' ],
+    attributes: ['message', 'likes', 'createdAt'],
     where: {
       UserId: req.userId,
     },
     include: {
       association: 'User',
-      attributes: [ 'username' ],
+      attributes: ['username'],
     },
-    order: [ [ 'createdAt', 'DESC' ] ],
+    order: [['createdAt', 'DESC']],
   });
 
   return {

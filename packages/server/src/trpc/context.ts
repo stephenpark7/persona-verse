@@ -6,14 +6,15 @@ import type { AuthenticatedRequest, JwtPayload } from '@shared';
 import { sendUnauthorizedResponse } from '@utils';
 
 export const auth = async (
-  req: AuthenticatedRequest, 
-  res: Response, 
+  req: AuthenticatedRequest,
+  res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {
-  if (req.url.startsWith('/registerUser') || 
-      req.url.startsWith('/loginUser') || 
-      req.url.startsWith('/logoutUser') ||
-      req.url.startsWith('/refreshJwt')
+  if (
+    req.url.startsWith('/registerUser') ||
+    req.url.startsWith('/loginUser') ||
+    req.url.startsWith('/logoutUser') ||
+    req.url.startsWith('/refreshJwt')
   ) {
     return next();
   }
@@ -30,14 +31,22 @@ export const auth = async (
   jwt.verify(token, secret, async (err, decoded) => {
     if (err) {
       if (err.name === 'TokenExpiredError') {
-        return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
+        return sendUnauthorizedResponse(
+          res,
+          'Session expired. Please login again.',
+          401,
+        );
       }
       return sendUnauthorizedResponse(res, err.message, 401);
     }
 
     const decodedToken = decoded as JwtPayload;
     if (decodedToken.userId == null) {
-      return sendUnauthorizedResponse(res, 'Token does not have a userId.', 401);
+      return sendUnauthorizedResponse(
+        res,
+        'Token does not have a userId.',
+        401,
+      );
     }
 
     req.userId = decodedToken.userId;

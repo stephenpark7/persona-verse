@@ -3,26 +3,29 @@ import { sequelize } from '@db/sequelize';
 
 export class Tweet extends Model {}
 
-Tweet.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+Tweet.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    message: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    likes: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
-  message: {
-    type: DataTypes.STRING,
-    allowNull: false,
+  {
+    sequelize,
+    modelName: 'Tweet',
   },
-  likes: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
-  },
-}, {
-  sequelize,
-  modelName: 'Tweet',
-});
+);

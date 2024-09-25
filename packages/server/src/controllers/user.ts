@@ -1,14 +1,14 @@
 import { Request } from 'express';
 import { db } from '@db';
-import { 
+import {
   compare,
-  generateAccessToken, 
-  generateRefreshToken, 
+  generateAccessToken,
+  generateRefreshToken,
   generateRevokedToken,
   hash,
   validateCreate,
   validateLogin,
-  verifyToken, 
+  verifyToken,
 } from '@utils';
 import { RefreshToken } from '@models';
 import { CreateUserParams } from '@schemas';
@@ -18,11 +18,10 @@ const { User, RevokedToken, UserProfile } = db.models;
 
 // TODO: add try catch block for error handling
 
-
-export const userCreate: CreateUserParams = async ({ 
-  username, 
-  email, 
-  password, 
+export const userCreate: CreateUserParams = async ({
+  username,
+  email,
+  password,
 }): Promise<{ message: string }> => {
   await validateCreate(username, email, password);
 
@@ -37,29 +36,45 @@ export const userCreate: CreateUserParams = async ({
   return { message: 'User created successfully.' };
 };
 
-export const userLogin = async ({ 
-  username, 
-  password, 
-}: {
-  username: string, 
-  password: string,
-}, req: Request,
-): Promise<{ message: string, jwt: Jwt, profile: InstanceType<typeof UserProfile> | null } | { message: string }> => {
+export const userLogin = async (
+  {
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  },
+  req: Request,
+): Promise<
+  | {
+      message: string;
+      jwt: Jwt;
+      profile: InstanceType<typeof UserProfile> | null;
+    }
+  | { message: string }
+> => {
   const user = await validateLogin(username, password);
 
-  const isAuthenticated = await compare(password, user!.get('password') as string);
+  if (!user) {
+    throw new Error('Invalid credentials.');
+  }
+
+  const isAuthenticated = await compare(
+    password,
+    user.get('password') as string,
+  );
 
   if (!isAuthenticated) {
     throw new Error('Invalid credentials.');
   }
 
   const payload: JwtPayload = {
-    userId: parseInt(user!.get('id') as string),
+    userId: parseInt(user.get('id') as string),
     username: username,
   };
 
   const accessToken = generateAccessToken(payload);
-  const refreshToken = generateRefreshToken(payload!);
+  const refreshToken = generateRefreshToken(payload);
 
   RefreshToken.create({
     jti: refreshToken.payload.jti,
@@ -74,28 +89,26 @@ export const userLogin = async ({
     req.session.refreshToken = refreshToken;
   }
 
-  const [ profile ] = await UserProfile.findOrCreate({
+  const [profile] = await UserProfile.findOrCreate({
     where: { UserId: payload.userId },
     defaults: {
       displayName: username,
     },
-    attributes: [ 'displayName', 'picture', 'bio' ],
+    attributes: ['displayName', 'picture', 'bio'],
   });
 
   if (!profile) {
     throw new Error('Error occurred while logging in.');
   }
 
-  return { 
-    message: 'Logged in successfully.', 
-    jwt: accessToken, 
-    profile: profile, 
+  return {
+    message: 'Logged in successfully.',
+    jwt: accessToken,
+    profile: profile,
   };
 };
 
-export const userLogout = async (
-  req: Request,
-) => {
+export const userLogout = async (req: Request) => {
   if (req.session) {
     const refreshToken = req.session.refreshToken;
 
