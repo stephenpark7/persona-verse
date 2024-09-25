@@ -1,11 +1,11 @@
-import * as express from 'express';
-import { Express } from 'express';
+import express, { Express } from 'express';
+import * as trpcExpress from '@trpc/server/adapters/express';
+
 import { corsMiddleware } from './cors';
 import { cookies } from './cookies';
 import { httpLogger } from './httpLogger';
 import { errorLogger } from './errorLogger';
 
-import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter, createContext } from '../trpc';
 import { startServer } from '../server';
 

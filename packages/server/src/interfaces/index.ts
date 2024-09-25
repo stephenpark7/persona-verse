@@ -1,3 +1,5 @@
+// TODO: refactor to used zod instead
+
 import { Request } from 'express';
 import { Model, ModelStatic } from 'sequelize';
 
@@ -8,12 +10,6 @@ export interface AuthenticatedRequest extends Request {
 
 export interface RequestBody {
   message: string;
-}
-
-export interface JWT {
-  token: string;
-  expiresAt: number;
-  payload: JWTPayload;
 }
 
 export interface JWTPayload {
@@ -30,5 +26,3 @@ export interface ModelDefinitions {
   RefreshToken: ModelStatic<Model>;
   UserProfile: ModelStatic<Model>;
 }
-
-export * from './user.controller.interface';

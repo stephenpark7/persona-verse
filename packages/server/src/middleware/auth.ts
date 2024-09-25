@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import jwt from 'jsonwebtoken';
-import { AuthenticatedRequest, JWTPayload } from '@interfaces';
+import type { AuthenticatedRequest, JwtPayload } from '@shared';
 import { sendUnauthorizedResponse } from '@utils';
 
 export const auth = async (
@@ -25,7 +25,7 @@ export const auth = async (
       return sendUnauthorizedResponse(res, err.message, 401);
     }
 
-    const decodedToken = decoded as JWTPayload;
+    const decodedToken = decoded as JwtPayload;
     if (decodedToken.userId === undefined || decodedToken.userId === null) {
       return sendUnauthorizedResponse(res, 'Token does not have a userId.', 401);
     }

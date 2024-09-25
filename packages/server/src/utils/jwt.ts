@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
-import { JWTPayload } from '@interfaces';
+import { JwtPayload } from '@shared';
 import { db } from '@db';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
-export const generateAccessToken = (payload: JWTPayload) => {
+export const generateAccessToken = (payload: JwtPayload) => {
   const options = { expiresIn: '30m' };
   const expiresAt = Date.now() + 30 * 60 * 1000;
   const token = jwt.sign({ ...payload, expiresAt }, JWT_SECRET, options);
@@ -16,7 +16,7 @@ export const generateAccessToken = (payload: JWTPayload) => {
   };
 };
 
-export const generateRefreshToken = (payload: JWTPayload) => {
+export const generateRefreshToken = (payload: JwtPayload) => {
   const options = { expiresIn: '7d' };
   const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
   const jti = uuidv4();
@@ -35,6 +35,6 @@ export const generateRevokedToken = async (userId: number) => {
   return await db.models.RevokedToken.create({ UserId: userId });
 };
 
-export const verifyToken = (token: string): JWTPayload => {
-  return jwt.verify(token, JWT_SECRET) as JWTPayload;
+export const verifyToken = (token: string): JwtPayload => {
+  return jwt.verify(token, JWT_SECRET) as JwtPayload;
 };

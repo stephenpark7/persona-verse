@@ -5,7 +5,7 @@
     "paths": {
       "@controllers": [ "/packages/server/src/controllers/index" ],
       "@db": [ "/packages/server/src/db/index" ],
-      "@interfaces": [ "/packages/server/src/interfaces/index" ],
+      "@schemas": [ "/packages/server/src/schemas/index" ],
       "@middlewares": [ "/packages/server/src/middlewares/index" ],
       "@models": [ "/packages/server/src/models/index" ],
       "@routes": [ "/packages/server/src/routes/index" ],

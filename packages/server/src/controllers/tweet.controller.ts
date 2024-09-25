@@ -1,12 +1,14 @@
 import { db } from '@db';
-import { AuthenticatedRequest, RequestBody } from '@interfaces';
+import type { AuthenticatedRequest } from '@shared';
 
 const { Tweet } = db.models;
 
 // TODO: add try catch block for error handling
 
 export const tweetCreate = async (req: AuthenticatedRequest) => {
-  const { message } = req.body[0] as RequestBody;
+  const body = req.body[0];
+  const { message } = body;
+  // const { message } = req.body[0] as Request;
   const userId = req.userId;
 
   if (message.length === 0) {

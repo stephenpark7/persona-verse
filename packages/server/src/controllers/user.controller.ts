@@ -1,6 +1,5 @@
 import { Request } from 'express';
 import { db } from '@db';
-import { CreateParams, JWT, JWTPayload, LoginParams } from '@interfaces';
 import { 
   compare,
   generateAccessToken, 
@@ -12,16 +11,19 @@ import {
   verifyToken, 
 } from '@utils';
 import { RefreshToken } from '@models';
+import { CreateUserParams } from '@schemas';
+import type { Jwt, JwtPayload } from '@shared';
 
 const { User, RevokedToken, UserProfile } = db.models;
 
 // TODO: add try catch block for error handling
 
-export const userCreate = async ({ 
+
+export const userCreate: CreateUserParams = async ({ 
   username, 
   email, 
   password, 
-}: CreateParams): Promise<{ message: string }> => {
+}): Promise<{ message: string }> => {
   await validateCreate(username, email, password);
 
   const hashedPassword = await hash(password);
@@ -38,8 +40,11 @@ export const userCreate = async ({
 export const userLogin = async ({ 
   username, 
   password, 
-}: LoginParams, req: Request,
-): Promise<{ message: string, jwt: JWT, profile: InstanceType<typeof UserProfile> | null } | { message: string }> => {
+}: {
+  username: string, 
+  password: string,
+}, req: Request,
+): Promise<{ message: string, jwt: Jwt, profile: InstanceType<typeof UserProfile> | null } | { message: string }> => {
   const user = await validateLogin(username, password);
 
   const isAuthenticated = await compare(password, user!.get('password') as string);
@@ -48,7 +53,7 @@ export const userLogin = async ({
     throw new Error('Invalid credentials.');
   }
 
-  const payload: JWTPayload = {
+  const payload: JwtPayload = {
     userId: parseInt(user!.get('id') as string),
     username: username,
   };
