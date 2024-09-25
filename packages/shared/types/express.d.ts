@@ -1,9 +1,10 @@
 import { setupMiddleware } from 'server/src/middleware';
 import { startServer } from 'server/src/server';
+import { Jwt } from './jwt';
 
 declare module 'express-session' {
   interface SessionData {
-    refreshToken: JWT;
+    refreshToken: Jwt;
     clearSession: () => void;
   }
 

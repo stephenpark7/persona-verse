@@ -23,7 +23,6 @@ export default [
   },
   {
     files: ['**/**/*.{mjs,js,mts,ts,tsx}'],
-    ignores: ['**/**/*.{test,spec}.{js,ts,tsx}'],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,
@@ -112,17 +111,17 @@ export default [
     },
   },
   eslintPluginPrettierRecommended,
-  {
-    files: ['**/**/*.{test,spec}.{ts}'],
-    rules: {
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-        },
-      ],
-    },
-  },
+  // {
+  //   files: ['**/**/*.{test,spec}.{ts}'],
+  //   rules: {
+  //     'prettier/prettier': [
+  //       'error',
+  //       {
+  //         singleQuote: true,
+  //       },
+  //     ],
+  //   },
+  // },
   {
     ignores: ['coverage', 'dist', 'node_modules'],
   },

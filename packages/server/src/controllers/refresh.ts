@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import type { Request } from 'express';
 import { generateAccessToken, verifyToken } from '@utils';
 import { db } from '@db';
 import { JsonResponse } from '@shared';
