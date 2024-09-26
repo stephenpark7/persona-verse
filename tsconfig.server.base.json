@@ -2,7 +2,7 @@
   "include": [ "./packages/server/src/**/*" ],
   "compilerOptions": {
     "baseUrl": "./",
-    "paths": {
+    "paths": { 
       "@controllers": [ "./packages/server/src/controllers/index" ],
       "@db": [ "./packages/server/src/db/index" ],
       "@schemas": [ "./packages/server/src/schemas/index" ],
@@ -11,7 +11,7 @@
       "@routes": [ "./packages/server/src/routes/index" ],
       "@trpc": [ "./packages/server/src/trpc/index" ],
       "@utils": [ "./packages/server/src/utils/index" ],
-      "@shared": [ "./packages/shared/types/index" ]
+      "@shared": [ "./packages/shared/index" ]
     }
   }
 }

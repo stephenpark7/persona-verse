@@ -32,7 +32,7 @@
       "@routes": ["./src/routes/index"],
       "@trpc": ["./src/trpc/index"],
       "@utils": ["./src/utils/index"],
-      "@shared": ["../shared/types/index"]
+      "@shared": ["../shared/index"]
     }
   }
 }

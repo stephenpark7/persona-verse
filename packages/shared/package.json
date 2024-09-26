@@ -1,0 +1,11 @@
+{
+  "name": "shared",
+  "version": "0.0.0",
+  "description": "",
+  "author": "Stephen Park",
+  "private": true,
+  "type": "commonjs",
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}

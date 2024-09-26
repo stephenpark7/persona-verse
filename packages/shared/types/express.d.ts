@@ -7,7 +7,6 @@ declare module 'express-session' {
     refreshToken: Jwt;
     clearSession: () => void;
   }
-
 }
 declare module 'express-serve-static-core' {
   interface Application {
