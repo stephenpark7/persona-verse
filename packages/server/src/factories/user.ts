@@ -1,5 +1,5 @@
 import { User } from '@models';
-import { User as UserParams } from '@schemas';
+import { user, User as UserParams } from '@schemas';
 
 export const userFactory = async (
   params: UserParams = {
@@ -8,6 +8,6 @@ export const userFactory = async (
     password: 'password',
   },
 ) => {
-  const user = await User.create(params);
-  return user;
+  user.parse(params);
+  return (await User.create(params)).get();
 };

@@ -1,14 +1,23 @@
 import type { Request } from 'express';
 import { refreshJwt } from './refresh';
-import { refreshTokenFactory, userFactory } from '../factories';
+import {
+  // jwtPayloadFactory,
+  refreshTokenFactory,
+  userFactory,
+} from '../factories';
 
 describe('Refresh Controller', () => {
   it('should return a new access token', async () => {
-    const user = await userFactory();
+    const { id, username } = await userFactory();
+
+    // const jwtPayload = jwtPayloadFactory({
+    //   userId: id,
+    //   username: username,
+    // });
 
     const token = refreshTokenFactory({
-      userId: user.getDataValue('id'),
-      username: user.getDataValue('username'),
+      userId: id,
+      username,
     });
 
     // TODO: create requestFactory

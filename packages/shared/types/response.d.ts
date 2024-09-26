@@ -3,10 +3,12 @@ import { z } from 'zod';
 import { jwt as jwtSchema } from './jwt';
 
 export const refreshTokenResponse = z.object({
+  message: z.string(),
   jwt: jwtSchema,
 });
 
 export const getTweetsResponse = z.object({
+  message: z.string(),
   tweets: z.array(tweetSchema),
 });
 

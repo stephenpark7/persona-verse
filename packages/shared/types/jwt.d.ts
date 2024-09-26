@@ -1,11 +1,5 @@
 import { z } from 'zod';
 
-export const jwt = z.object({
-  token: z.string(),
-  expiresAt: z.number(),
-  payload: jwtPayload,
-});
-
 export const jwtPayload = z.object({
   userId: z.number(),
   username: z.string(),
@@ -20,6 +14,13 @@ export const accessToken = z.object({
 });
 
 export const refreshToken = z.object({
+  token: z.string(),
+  expiresAt: z.number(),
+  payload: jwtPayload,
+});
+
+
+export const jwt = z.object({
   token: z.string(),
   expiresAt: z.number(),
   payload: jwtPayload,

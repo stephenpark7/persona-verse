@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.server.base.json",
-  "include": ["./src/**/*", "../shared/types", "vitest.config.mts"],
+  "include": ["./src/**/*", "vitest.config.mts"],
   "compilerOptions": {
     "allowImportingTsExtensions": false,
     "baseUrl": "./",
