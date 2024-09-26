@@ -1,12 +1,14 @@
 import type { Request } from 'express';
 import { generateAccessToken, verifyToken } from '@utils';
 import { db } from '@db';
-import { JsonResponse } from '@shared';
+import { RefreshTokenResponse } from '@shared';
 import { TRPCError } from '@trpc/server';
 
 const { User, RevokedToken } = db.models;
 
-export const refreshJwt = async (req: Request): Promise<JsonResponse> => {
+export const refreshJwt = async (
+  req: Request,
+): Promise<RefreshTokenResponse> => {
   try {
     const refreshToken = req.session.refreshToken;
 

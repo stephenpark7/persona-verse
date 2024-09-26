@@ -1,20 +1,17 @@
 import type { Request } from 'express';
 import { refreshJwt } from './refresh';
-import { generateRefreshToken } from '@utils';
-import { userFactory } from '../factories';
-import { User } from '@models';
+import { refreshTokenFactory, userFactory } from '../factories';
 
 describe('Refresh Controller', () => {
   it('should return a new access token', async () => {
-    const user = await User.create(userFactory());
+    const user = await userFactory();
 
-    const token = generateRefreshToken({
+    const token = refreshTokenFactory({
       userId: user.getDataValue('id'),
       username: user.getDataValue('username'),
-      // expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
-      // jti: 'test-jti',
     });
 
+    // TODO: create requestFactory
     const req = {
       session: {
         refreshToken: token,
@@ -24,5 +21,11 @@ describe('Refresh Controller', () => {
     const result = await refreshJwt(req);
 
     expect(result).toHaveProperty('message', 'Token refreshed.');
+
+    expect(result.jwt.token).not.toEqual(token.token);
+    expect(result.jwt.expiresAt).toBeGreaterThan(Date.now());
+    expect(result.jwt.payload.userId).toEqual(token.payload.userId);
+    expect(result.jwt.payload.username).toEqual(token.payload.username);
+    expect(result.jwt.payload.jti).not.toEqual(token.payload.jti);
   });
 });

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { tweetSchema } from './tweet';
-import { jwtSchema } from './jwt';
+// import { tweetSchema } from './tweet';
+import { jwt as jwtSchema } from './jwt';
 
 export const refreshTokenResponse = z.object({
   jwt: jwtSchema,
@@ -10,9 +10,9 @@ export const getTweetsResponse = z.object({
   tweets: z.array(tweetSchema),
 });
 
-export const postTweetResponse = z.object({
-  tweet: tweetSchema,
-});
+// export const postTweetResponse = z.object({
+//   tweet: tweetSchema,
+// });
 
 export const jsonResponse = z
   .object({
