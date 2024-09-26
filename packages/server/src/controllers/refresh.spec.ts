@@ -3,15 +3,8 @@ import { refreshJwt } from './refresh';
 import { generateRefreshToken } from '@utils';
 import { userFactory } from '../factories';
 import { User } from '@models';
-import { sequelize } from '@db/sequelize';
-
-// TODO: move beforeAll and afterAll to a global setup file
 
 describe('Refresh Controller', () => {
-  beforeAll(async () => {
-    await sequelize.sync({ force: true });
-  });
-
   it('should return a new access token', async () => {
     const user = await User.create(userFactory());
 
@@ -31,10 +24,5 @@ describe('Refresh Controller', () => {
     const result = await refreshJwt(req);
 
     expect(result).toHaveProperty('message', 'Token refreshed.');
-  });
-
-  afterAll(async () => {
-    await sequelize.sync({ force: true });
-    await sequelize.close();
   });
 });
