@@ -40,7 +40,6 @@
       "@services": ["./src/services/index"],
       "@factories": ["./src/tests/factories/index"],
       "@mocks": ["./src/tests/mocks/index"],
-      "@mocks/*": ["./src/tests/mocks/*"],
       "@matchers": ["./src/tests/matchers/index"],
       "@helpers": ["./src/tests/helpers/index"],
       "@layouts": ["./src/layouts/index"],
