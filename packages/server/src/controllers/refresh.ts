@@ -1,8 +1,8 @@
 import type { Request } from 'express';
+import { TRPCError } from '@trpc/server';
+import type { RefreshTokenResponse } from '@shared/types';
 import { generateAccessToken, verifyToken } from '@utils';
 import { db } from '@db';
-import type { RefreshTokenResponse } from '@shared/types';
-import { TRPCError } from '@trpc/server';
 
 const { User, RevokedToken } = db.models;
 
