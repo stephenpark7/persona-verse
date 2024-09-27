@@ -1,5 +1,5 @@
 import { db } from '@db';
-import type { AuthenticatedRequest } from '../types';
+import type { AuthenticatedRequest } from '@shared/types';
 
 const { Tweet } = db.models;
 

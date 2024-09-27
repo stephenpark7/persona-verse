@@ -1,4 +1,4 @@
-import type { JwtPayload } from '../types';
+import type { JwtPayload } from '@shared/types';
 import { jwtPayload } from '@shared/schemas';
 
 export const jwtPayloadFactory = (payload: JwtPayload) => {

@@ -2,7 +2,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import { NextFunction, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import jwt from 'jsonwebtoken';
-import type { AuthenticatedRequest, JwtPayload } from '../types';
+import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
 
 export const auth = async (
