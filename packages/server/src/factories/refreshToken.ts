@@ -1,5 +1,5 @@
-import type { JwtPayload } from '@shared';
-import { jwtPayload } from '@shared';
+import type { JwtPayload } from '@shared/types';
+// import { jwtPayload } from '@shared';
 import { generateRefreshToken } from '@utils';
 
 export const refreshTokenFactory = (payload: JwtPayload) => {

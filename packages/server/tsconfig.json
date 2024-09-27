@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.server.base.json",
-  "include": ["./src/**/*", "vitest.config.mts", "../shared/**/*"],
+  "include": ["./src/**/*", "vitest.config.ts"],
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "baseUrl": "./",
@@ -33,7 +33,7 @@
       "@routes": ["./src/routes/index"],
       "@trpc": ["./src/trpc/index"],
       "@utils": ["./src/utils/index"],
-      "@shared": ["../shared/index"]
+      "@shared/*": ["../shared/*/index"]
     }
   }
 }

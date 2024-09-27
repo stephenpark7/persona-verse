@@ -12,7 +12,7 @@ import {
 } from '@utils';
 import { RefreshToken } from '@models';
 import { CreateUserParams } from '@schemas';
-import type { Jwt, JwtPayload } from '@shared';
+import type { Jwt, JwtPayload } from '@shared/types';
 
 const { User, RevokedToken, UserProfile } = db.models;
 

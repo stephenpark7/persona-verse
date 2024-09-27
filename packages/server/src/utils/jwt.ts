@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
-import { AccessToken, JwtPayload, RefreshToken } from '@shared';
+import type { AccessToken, JwtPayload, RefreshToken } from '@shared/types';
 import { db } from '@db';
 import { RevokedToken } from '@models';
 
