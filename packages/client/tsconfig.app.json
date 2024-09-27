@@ -2,6 +2,7 @@
   "include": ["./src/**/*"],
   "compilerOptions": {
     "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "composite": true,
     "forceConsistentCasingInFileNames": true,
