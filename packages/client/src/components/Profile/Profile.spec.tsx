@@ -1,4 +1,4 @@
-import { useUserStateStub } from '@mocks/hooks';
+import { useUserStateStub } from '@mocks';
 // import { screen } from '@testing-library/react';
 import { UserType } from '@factories';
 import { renderPage } from '@helpers';
