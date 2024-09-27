@@ -11,7 +11,6 @@
       "@routes": [ "./packages/server/src/routes/index" ],
       "@trpc": [ "./packages/server/src/trpc/index" ],
       "@utils": [ "./packages/server/src/utils/index" ],
-      "@shared/*": [ "./packages/shared/*/index" ]
     }
   }
 }

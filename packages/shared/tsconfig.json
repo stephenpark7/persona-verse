@@ -20,6 +20,9 @@
     "target": "ESNext",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "useDefineForClassFields": true,
-    "types": ["node", "vitest/globals", "vitest"]
+    "types": ["node", "vitest/globals", "vitest"],
+    "paths": {
+      "@shared": ["./src/index"],
+    }
   }
 }

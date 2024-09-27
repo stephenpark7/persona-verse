@@ -22,7 +22,7 @@ export default [
     },
   },
   {
-    files: ['**/**/*.{js,ts}'],
+    files: ['**/**/*.{mjs,mts,js,ts}'],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,

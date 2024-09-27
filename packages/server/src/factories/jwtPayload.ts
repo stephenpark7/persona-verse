@@ -1,5 +1,5 @@
-import type { JwtPayload } from '@shared/types';
-import { jwtPayload } from '@shared/schemas';
+import type { JwtPayload } from '../types';
+import { jwtPayload } from '../schemas';
 
 export const jwtPayloadFactory = (payload: JwtPayload) => {
   jwtPayload.parse(payload);
