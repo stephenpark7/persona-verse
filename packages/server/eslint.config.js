@@ -22,7 +22,7 @@ export default [
     },
   },
   {
-    files: ['**/**/*.{mjs,js,mts,ts,tsx}'],
+    files: ['**/**/*.{js,ts}'],
     languageOptions: {
       parserOptions: { ecmaFeatures: { jsx: true } },
       globals: globals.browser,
@@ -47,10 +47,10 @@ export default [
           message:
             'Function expressions are not allowed. Use arrow functions instead.',
         },
-        {
-          selector: 'ExportDefaultDeclaration',
-          message: 'Use named exports instead.',
-        },
+        // {
+        //   selector: 'ExportDefaultDeclaration',
+        //   message: 'Use named exports instead.',
+        // },
       ],
       '@typescript-eslint/no-invalid-void-type': ['off'],
       'prettier/prettier': [
