@@ -40,7 +40,7 @@
       "@helpers": ["./src/tests/helpers/index"],
       "@layouts": ["./src/layouts/index"],
       "@tests/utils": ["./src/tests/utils/index"],
-      "@shared": ["../shared/types/index"]
+      "@shared/types": ["../shared/src/types/index"]
     }
   }
 }

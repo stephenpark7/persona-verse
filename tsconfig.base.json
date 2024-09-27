@@ -18,7 +18,7 @@
       "@helpers": [ "./packages/client/src/tests/helpers/index" ],
       "@layouts": [ "./packages/client/src/layouts/index" ],
       "@tests/utils": [ "./packages/client/src/tests/utils/index" ],
-      "@shared": [ "./packages/shared/types/index" ]
+      "@shared": [ "./packages/shared/src/types/index.d.ts" ]
     }
   }
 }

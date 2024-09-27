@@ -1,9 +1,9 @@
 import React from 'react';
 import { getDisplayName } from '@utils';
-import { JWT } from '@shared';
+import type { Jwt } from '@shared/types';
 
 interface WelcomeMessageProps {
-  jwt: JWT | null;
+  jwt: Jwt;
   isLoggedIn: boolean;
 }
 
