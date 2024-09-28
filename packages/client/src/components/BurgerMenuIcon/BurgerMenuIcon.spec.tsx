@@ -1,10 +1,9 @@
-import { renderWithBrowserRouter } from '@helpers';
+import { render, screen } from '@tests/helpers';
 import { BurgerMenuIcon } from './BurgerMenuIcon';
-import { screen } from '@helpers';
 
 describe('When rendering the burger menu icon', () => {
   beforeEach(() => {
-    renderWithBrowserRouter(<BurgerMenuIcon />);
+    render(<BurgerMenuIcon />);
   });
 
   it('displays the burger menu icon', () => {

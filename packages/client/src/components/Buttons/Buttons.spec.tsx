@@ -1,5 +1,5 @@
 import { Buttons } from '@components';
-import { screen, renderWithBrowserRouter } from '@helpers';
+import { screen, renderWithBrowserRouter } from '@tests/helpers';
 
 describe('When rendering the buttons', () => {
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import { useUserStateStub } from '@mocks';
 // import { screen } from '@testing-library/react';
 import { UserType } from '@factories';
-import { renderPage } from '@helpers';
+import { renderPage } from '@tests/helpers';
 import { Profile } from '@components';
 
 describe('When rendering the profile', () => {
