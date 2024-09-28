@@ -53,6 +53,7 @@ export const Form: FC<FormProps> = ({
         </div>
         {type === 'login' ? (
           <Button
+            name="form-login"
             overrideCSS="w-full"
             aria-label="Log in"
             type="submit"
@@ -61,6 +62,7 @@ export const Form: FC<FormProps> = ({
           </Button>
         ) : (
           <Button
+            name="form-signup"
             overrideCSS="w-full"
             aria-label="Sign up"
             type="submit"

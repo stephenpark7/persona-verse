@@ -15,14 +15,12 @@ export const postTweet = async ({
     throw new Error('Failed to post tweet.');
   }
 
-  const params = {
-    method: 'POST',
-    controller: 'tweets',
-    action: () => createTweet(payload.message),
-  };
-
   const response = await apiCall({
-    params,
+    params: {
+      method: 'POST',
+      controller: 'tweets',
+      action: () => createTweet({ message: payload.message }),
+    },
     showToast: true,
     protocol: 'trpc',
   });

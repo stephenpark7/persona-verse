@@ -1,15 +1,18 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '@db/sequelize';
+import { sequelize } from '@db';
 
 export class RefreshToken extends Model {}
 
-RefreshToken.init({
-  jti: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
+RefreshToken.init(
+  {
+    jti: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
   },
-}, {
-  sequelize,
-  modelName: 'RefreshToken',
-});
+  {
+    sequelize,
+    modelName: 'RefreshToken',
+  },
+);

@@ -1,6 +1,5 @@
-import React from 'react';
-import { TweetContainer } from '@components';
-import { Buttons } from '../Buttons/Buttons';
+import type { FC } from 'react';
+import { Buttons, TweetContainer } from '@components';
 import { Jwt } from '@schemas';
 
 interface ContentSectionProps {
@@ -8,7 +7,7 @@ interface ContentSectionProps {
   isLoggedIn: boolean;
 }
 
-export const ContentSection: React.FC<ContentSectionProps> = ({
+export const ContentSection: FC<ContentSectionProps> = ({
   jwt,
   isLoggedIn,
 }) => {

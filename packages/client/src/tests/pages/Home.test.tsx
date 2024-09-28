@@ -1,7 +1,22 @@
-import { screen } from '@testing-library/react';
-import { preloadedStateFactory } from '@factories';
+import { screen, waitFor } from '@testing-library/react';
+import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
 import { renderApp } from '@tests/utils';
 import { APP_TITLE } from '@utils';
+
+const jwt = jwtFactory();
+const tweets = [tweetFactory()];
+const preloadedState = preloadedStateFactory({
+  user: {
+    value: {
+      jwt,
+      tweets,
+    },
+  },
+});
+
+vi.mock('@services', () => ({
+  getTweets: async () => tweets,
+}));
 
 describe('When visiting the home page', () => {
   describe('while logged out', () => {
@@ -35,11 +50,16 @@ describe('When visiting the home page', () => {
 
   describe('while logged in', () => {
     beforeEach(() => {
-      renderApp(undefined, preloadedStateFactory());
+      renderApp(undefined, preloadedState);
     });
 
-    it('renders paragraph', () => {
-      expect(screen.getAllByRole('paragraph')).someToContainText('Loading...');
+    it('renders paragraph', async () => {
+      screen.debug();
+      await waitFor(() => {
+        expect(screen.getByRole('paragraph')).toHaveTextContent(
+          `Welcome ${jwt.payload.username}!`,
+        );
+      });
     });
 
     it('renders textbox', () => {
@@ -48,10 +68,10 @@ describe('When visiting the home page', () => {
       );
     });
 
-    it('renders buttons', () => {
-      const buttons = screen.getAllByRole('button');
-      expect(buttons).toHaveLength(1);
-      expect(buttons).someToContainText('Tweet');
+    it('renders button', async () => {
+      expect(
+        screen.queryByRole('button', { name: 'Tweet' }),
+      ).toBeInTheDocument();
     });
   });
 });

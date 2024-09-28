@@ -1,12 +1,11 @@
-import * as express from 'express';
-import { Express } from 'express';
+import express, { Express } from 'express';
+import * as trpcExpress from '@trpc/server/adapters/express';
+
 import { corsMiddleware } from './cors';
 import { cookies } from './cookies';
-import { router } from './router';
 import { httpLogger } from './httpLogger';
 import { errorLogger } from './errorLogger';
 
-import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter, createContext } from '../trpc';
 import { startServer } from '../server';
 
@@ -16,7 +15,6 @@ export const setupMiddleware = function (this: Express) {
   this.use(express.urlencoded({ extended: true }));
   this.use(cookies);
   this.use(httpLogger);
-  this.use('/', router);
   this.use(errorLogger);
   this.use(
     '/trpc',

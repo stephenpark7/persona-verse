@@ -1,0 +1,37 @@
+{
+  "include": ["./src/**/*.ts"],
+  "compilerOptions": {
+    "allowImportingTsExtensions": false,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "composite": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "lib": ["ESNext"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "useDefineForClassFields": true,
+    "types": ["node", "vitest/globals", "vitest", "./src/types/index.d.ts"],
+    "paths": {
+      "@models": ["../server/src/models"],
+      "@db": ["../server/src/db"],
+      "@utils": ["../server/src/utils"],
+      "@controllers": ["../server/src/controllers"],
+      "@schemas": ["../server/src/schemas"],
+      "@shared/schemas": ["./src/schemas/index"],
+      "@shared/types": ["./src/types/index"],
+    }
+  }
+}

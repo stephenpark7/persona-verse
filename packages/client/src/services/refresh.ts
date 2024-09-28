@@ -12,7 +12,7 @@ export const refreshJwt = async (): Promise<JsonResponse> => {
   const params = {
     method: 'POST',
     controller: 'refresh',
-    action: () => refreshJwtTRPC(),
+    action: refreshJwtTRPC,
     options: { withCredentials: true },
   };
 

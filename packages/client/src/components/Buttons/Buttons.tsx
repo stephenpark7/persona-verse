@@ -1,11 +1,21 @@
-import React from 'react';
+import type { FC } from 'react';
 import { Button } from '@components';
 
-export const Buttons: React.FC = () => {
+export const Buttons: FC = () => {
   return (
     <div className="flex gap-2">
-      <Button link="/signup">Sign up</Button>
-      <Button link="/login">Log in</Button>
+      <Button
+        name="signup"
+        link="/signup"
+      >
+        {'Sign up'}
+      </Button>
+      <Button
+        name="login"
+        link="/login"
+      >
+        {'Log in'}
+      </Button>
     </div>
   );
 };
