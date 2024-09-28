@@ -5,13 +5,13 @@ export const Buttons: FC = () => {
   return (
     <div className="flex gap-2">
       <Button
-        name="sign-up"
+        name="signup"
         link="/signup"
       >
         {'Sign up'}
       </Button>
       <Button
-        name="log-in"
+        name="login"
         link="/login"
       >
         {'Log in'}

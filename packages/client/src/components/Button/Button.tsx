@@ -1,6 +1,7 @@
 import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { ButtonProps } from '@types';
+import type { ButtonProps } from '@types';
+import { buttonProps } from '@schemas';
 
 export const Button: FC<ButtonProps> = ({
   name,
@@ -12,6 +13,17 @@ export const Button: FC<ButtonProps> = ({
   height,
   link,
 }): React.JSX.Element => {
+  buttonProps.parse({
+    name,
+    type,
+    onClick,
+    children,
+    overrideCSS,
+    width,
+    height,
+    link,
+  });
+
   let element = (
     <button
       name={name}

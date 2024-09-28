@@ -38,6 +38,7 @@ export const Login: React.FC = () => {
             setFormData={setFormData}
           />
           <Button
+            name="go-back"
             overrideCSS="w-full"
             link="/"
           >
