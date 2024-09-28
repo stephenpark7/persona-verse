@@ -1,5 +1,5 @@
 // import { useUserState } from '@hooks';
-import { FC } from 'react';
+import type { FC } from 'react';
 
 export const Profile: FC = () => {
   // const { jwt, isLoggedIn } = useUserState();

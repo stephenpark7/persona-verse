@@ -7,7 +7,6 @@ describe('When rendering the buttons', () => {
   });
 
   it('displays sign up and log in buttons', () => {
-    screen.debug();
     expect(screen.getByTestId('sign-up-button')).toBeInTheDocument();
     expect(screen.getByTestId('log-in-button')).toBeInTheDocument();
   });
