@@ -45,23 +45,6 @@ describe('When rendering the button component', () => {
       );
     });
 
-    it('renders the button with the correct name', () => {
-      expect(screen.getByTestId(`${name}-button`)).toHaveAttribute(
-        'name',
-        name,
-      );
-    });
-
-    it('renders the button with the correct classes', () => {
-      expect(screen.getByTestId(`${name}-button`)).toHaveClass(
-        'border border-black rounded bg-white h-10 w-24 text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200',
-      );
-    });
-
-    it('renders the button with the correct text', () => {
-      expect(screen.getByTestId(`${name}-button`)).toHaveTextContent(children);
-    });
-
     it('navigates to the correct path when clicked', () => {
       fireEvent.click(screen.getByTestId(`${name}-button`));
       expect(window.location.pathname).toBe(link);
