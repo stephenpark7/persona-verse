@@ -2,8 +2,6 @@ import type { FC } from 'react';
 import type { ContentSectionProps } from '@types';
 import { Buttons, TweetContainer } from '@components';
 
-// TODO: add test-id to HTML elements in TweetContainer
-
 export const ContentSection: FC<ContentSectionProps> = ({
   jwt,
   isLoggedIn,
