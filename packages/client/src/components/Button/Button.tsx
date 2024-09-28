@@ -24,6 +24,7 @@ export const Button: FC<ButtonProps> = ({
 }): React.JSX.Element => {
   let element = (
     <button
+      name={name}
       className={`border border-black rounded bg-white ${height ?? 'h-10'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
       data-testid={`${name}-button`}
       onClick={(e: FormEvent) => onClick && onClick(e)}

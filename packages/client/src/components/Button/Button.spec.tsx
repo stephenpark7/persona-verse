@@ -7,7 +7,9 @@ describe('When rendering the button component', () => {
     beforeEach(() => {
       render(
         <Router>
-          <Button link="/signup">Sign up</Button>
+          <Button name="sign-up" link="/signup">
+            Sign up
+          </Button>
         </Router>,
       );
     });
