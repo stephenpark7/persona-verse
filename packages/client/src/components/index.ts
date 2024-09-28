@@ -1,3 +1,5 @@
+export * from './BurgerMenuIcon';
+
 export * from './LogoutButton';
 export * from './TweetContainer/components/Tweet';
 export * from './TweetContainer';

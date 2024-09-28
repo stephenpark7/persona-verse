@@ -1,5 +1,5 @@
 import { useEffect, useState, FC } from 'react';
-import { BurgerMenuSvg } from '../BurgerMenuSvg';
+import { BurgerMenuIcon } from '../BurgerMenuIcon';
 import { Dropdown } from './Dropdown';
 import { Logo } from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
@@ -39,7 +39,7 @@ export const Navbar: FC = () => {
           className="absolute right-3 top-4 cursor-pointer"
           onClick={() => setIsBurgerMenuOpen(true)}
         >
-          <BurgerMenuSvg />
+          <BurgerMenuIcon />
         </div>
       )}
     </nav>
