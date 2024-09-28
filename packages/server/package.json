@@ -6,7 +6,7 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "start": "npm run tsc && NODE_ENV=development TS_NODE_BASEURL=./dist node -r tsconfig-paths/register ./dist/src/app.js",
+    "start": "npm run tsc && NODE_ENV=development TS_NODE_BASEURL=./dist node -r tsconfig-paths/register ./dist/server/src/app.js",
     "dev": "tsc-watch --onSuccess \"npm run start\"",
     "build": "npm run lint && tsc --build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
