@@ -31,6 +31,7 @@
     ],
     "useDefineForClassFields": true,
     "paths": {
+      "@assets/images/*": ["./src/assets/images/*"],
       "@components": ["./src/components/index"],
       "@core": ["./src/core/index"],
       "@hooks": ["./src/hooks/index"],
