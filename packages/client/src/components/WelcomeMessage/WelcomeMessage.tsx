@@ -15,5 +15,12 @@ export const WelcomeMessage: React.FC<WelcomeMessageProps> = ({
     ? `Welcome ${getDisplayName(jwt)}!`
     : 'Create an account or log in.';
 
-  return <p className="text-lg mb-4">{message}</p>;
+  return (
+    <p
+      data-testid="welcome-message"
+      className="text-lg mb-4"
+    >
+      {message}
+    </p>
+  );
 };

@@ -19,12 +19,20 @@ export const renderPage = (
 export const renderWithRouter = (
   ui: React.ReactElement,
   preloadedState?: Partial<RootState>,
-) =>
-  preloadedState
-    ? renderWithProviders(<BrowserRouter>{ui}</BrowserRouter>, {
-        preloadedState,
-      })
-    : render(<BrowserRouter>{ui}</BrowserRouter>);
+) => {
+  if (preloadedState) {
+    return renderWithProviders(<BrowserRouter>{ui}</BrowserRouter>, {
+      preloadedState,
+    });
+  } else {
+    return render(<BrowserRouter>{ui}</BrowserRouter>);
+  }
+};
+// preloadedState
+//   ? renderWithProviders(<BrowserRouter>{ui}</BrowserRouter>, {
+//       preloadedState,
+//     })
+//   : render(<BrowserRouter>{ui}</BrowserRouter>);
 
 export const renderApp = (
   rootComponent?: React.ReactElement,

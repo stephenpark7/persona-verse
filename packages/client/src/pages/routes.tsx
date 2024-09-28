@@ -49,7 +49,7 @@ const RouteWrapper: FC<RouteWrapperProps> = ({
 
   const renderRoute = () => {
     if ((isPrivate && !isLoggedIn) || (isLoggedIn && redirect)) {
-      return <p>Redirecting...</p>;
+      return <p data-testid="paragraph">Redirecting...</p>;
     }
 
     return isPrivate && isLoggedIn ? (

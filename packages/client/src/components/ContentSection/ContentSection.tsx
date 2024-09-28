@@ -15,5 +15,12 @@ export const ContentSection: FC<ContentSectionProps> = ({
     <Buttons />
   );
 
-  return <div className="flex flex-col gap-2">{content}</div>;
+  return (
+    <div
+      data-testid="content-section"
+      className="flex flex-col gap-2"
+    >
+      {content}
+    </div>
+  );
 };

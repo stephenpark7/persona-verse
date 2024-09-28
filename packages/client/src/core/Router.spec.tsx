@@ -1,14 +1,37 @@
-import { screen } from '@testing-library/react';
-import { renderWithProviders, Router } from '@core';
+import { screen, renderApp } from '@tests/helpers';
+import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
 
-describe('Router', () => {
-  beforeEach(() => {
-    renderWithProviders(<Router />);
+const jwt = jwtFactory();
+const tweets = [tweetFactory()];
+const preloadedState = preloadedStateFactory({
+  user: {
+    value: {
+      jwt,
+      tweets,
+    },
+  },
+});
+
+describe('When rendering the router', () => {
+  describe('while logged out', () => {
+    beforeEach(() => {
+      renderApp();
+    });
+
+    it('renders home page by default', () => {
+      expect(screen.getByTestId('header')).toHaveTextContent('PersonaVerse');
+    });
   });
 
-  it.only('renders home page by default', () => {
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'PersonaVerse',
-    );
+  describe('while logged in', () => {
+    beforeEach(() => {
+      renderApp(undefined, preloadedState);
+    });
+
+    it('redirects to dashboard', async () => {
+      expect(screen.getByTestId('paragraph')).toHaveTextContent(
+        'Redirecting...',
+      );
+    });
   });
 });
