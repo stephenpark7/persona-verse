@@ -2,9 +2,6 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { render as origRender } from '@testing-library/react';
 
-// TODO: mock packages/client/src/core/Router.tsx instead of using BrowserRouter
-// ? not sure if necessary.
-
 export const render = (ui: React.ReactElement) => origRender(ui);
 
 export const renderPage = (
