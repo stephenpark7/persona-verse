@@ -10,3 +10,8 @@ export const useTweets = () =>
   useSelector(
     (state: ReturnType<typeof store.getState>) => state.user.value.tweets,
   );
+
+export const useProfile = () =>
+  useSelector(
+    (state: ReturnType<typeof store.getState>) => state.user.value.profile,
+  );

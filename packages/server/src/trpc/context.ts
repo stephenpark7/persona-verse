@@ -1,22 +1,20 @@
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { NextFunction, Response, Request } from 'express';
+import { NextFunction, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import jwt from 'jsonwebtoken';
-import { AuthenticatedRequest, JWTPayload } from '@interfaces';
+import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
-interface ExtendedRequest extends Request {
-  userId?: number;
-}
 
 export const auth = async (
-  req: ExtendedRequest, 
-  res: Response, 
+  req: AuthenticatedRequest,
+  res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {
-  if (req.url.startsWith('/registerUser') || 
-      req.url.startsWith('/loginUser') || 
-      req.url.startsWith('/logoutUser') ||
-      req.url.startsWith('/refreshJwt')
+  if (
+    req.url.startsWith('/registerUser') ||
+    req.url.startsWith('/loginUser') ||
+    req.url.startsWith('/logoutUser') ||
+    req.url.startsWith('/refreshJwt')
   ) {
     return next();
   }
@@ -33,14 +31,22 @@ export const auth = async (
   jwt.verify(token, secret, async (err, decoded) => {
     if (err) {
       if (err.name === 'TokenExpiredError') {
-        return sendUnauthorizedResponse(res, 'Session expired. Please login again.', 401);
+        return sendUnauthorizedResponse(
+          res,
+          'Session expired. Please login again.',
+          401,
+        );
       }
       return sendUnauthorizedResponse(res, err.message, 401);
     }
 
-    const decodedToken = decoded as JWTPayload;
+    const decodedToken = decoded as JwtPayload;
     if (decodedToken.userId == null) {
-      return sendUnauthorizedResponse(res, 'Token does not have a userId.', 401);
+      return sendUnauthorizedResponse(
+        res,
+        'Token does not have a userId.',
+        401,
+      );
     }
 
     req.userId = decodedToken.userId;
@@ -53,7 +59,7 @@ export const createContext = async ({
   res,
 }: trpcExpress.CreateExpressContextOptions) => {
   await new Promise<void>((resolve, reject) => {
-    auth(req as AuthenticatedRequest, res, (err) => {
+    auth(req as unknown as AuthenticatedRequest, res, (err) => {
       if (err) {
         reject(err);
       } else {

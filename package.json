@@ -19,5 +19,8 @@
   ],
   "dependencies": {
     "patch-package": "^8.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
   }
 }

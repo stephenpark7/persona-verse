@@ -1,11 +1,5 @@
 import { sequelize } from './sequelize';
-import { 
-  User, 
-  Tweet, 
-  RevokedToken, 
-  RefreshToken, 
-  UserProfile, 
-} from '@models';
+import { User, Tweet, RevokedToken, RefreshToken, UserProfile } from '@models';
 
 const setupAssociations = (): void => {
   User.hasMany(Tweet);

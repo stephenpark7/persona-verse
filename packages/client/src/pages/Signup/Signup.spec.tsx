@@ -1,7 +1,7 @@
 import { useUserStateStub } from '@mocks';
 import { screen, waitFor } from '@testing-library/react';
 import { UserType } from '@factories';
-import { renderPage } from '@helpers';
+import { renderPage } from '@tests/helpers';
 import { Signup } from '@pages';
 import { APP_TITLE } from '@utils';
 

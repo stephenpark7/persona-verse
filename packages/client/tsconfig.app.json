@@ -1,12 +1,12 @@
 {
-  "extends": "../../tsconfig.base.json",
   "include": ["./src/**/*"],
   "compilerOptions": {
     "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "composite": true,
-    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
@@ -25,23 +25,24 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "useDefineForClassFields": true,
     "paths": {
+      "@assets/images/*": ["./src/assets/images/*"],
+      "@assets/styles/*": ["./src/assets/styles/*"],
       "@components": ["./src/components/index"],
       "@core": ["./src/core/index"],
       "@hooks": ["./src/hooks/index"],
       "@schemas": ["src/schemas/index"],
+      "@types": ["./src/types/index"],
       "@redux": ["./src/redux/index"],
       "@utils": ["./src/utils/index"],
       "@pages": ["./src/pages/index"],
       "@services": ["./src/services/index"],
-      "@interceptors": ["./src/interceptors/index"],
       "@factories": ["./src/tests/factories/index"],
       "@mocks": ["./src/tests/mocks/index"],
-      "@mocks/*": ["./src/tests/mocks/*"],
       "@matchers": ["./src/tests/matchers/index"],
-      "@helpers": ["./src/tests/helpers/index"],
+      "@tests/helpers": ["./src/tests/helpers/index"],
       "@layouts": ["./src/layouts/index"],
       "@tests/utils": ["./src/tests/utils/index"],
-      "@shared": ["../shared/types/index"]
+      "@shared/types": ["../shared/src/types/index"]
     }
   }
 }

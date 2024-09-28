@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { routes } from '@pages';
 

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Tweet as TweetProps } from '@schemas';
 import { getMonthAndDay } from '@utils';
 

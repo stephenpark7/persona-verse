@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { z } from 'zod';
 
 const labelSchema = z.string();

@@ -5,7 +5,9 @@ export const errorLogger = (() => {
   return expressWinston.errorLogger({
     transports: [
       new winston.transports.Console(),
-      new winston.transports.File({ filename: `logs/${process.env.NODE_ENV}.log` }),
+      new winston.transports.File({
+        filename: `logs/${process.env.NODE_ENV}.log`,
+      }),
     ],
     format: winston.format.combine(
       winston.format.colorize(),

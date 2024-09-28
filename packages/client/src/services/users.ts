@@ -48,16 +48,14 @@ export const login: LoginFunction = async ({
   navigateFunction: navigate,
   options: { showToast },
 }): Promise<boolean> => {
-  const params = {
-    method: 'POST',
-    controller: 'users',
-    action: () => loginUser(formData as LoginFormFields),
-    body: formData,
-    options: { withCredentials: true },
-  };
-
   const response = await apiCall({
-    params,
+    params: {
+      method: 'POST',
+      controller: 'users',
+      action: () => loginUser(formData as LoginFormFields),
+      body: formData,
+      options: { withCredentials: true },
+    },
     showToast: showToast ?? true,
     protocol: 'trpc',
   });
@@ -79,15 +77,13 @@ export const logout: LogoutFunction = async ({
   navigateFunction: navigate,
   options: { showToast },
 }): Promise<boolean> => {
-  const params = {
-    method: 'POST',
-    controller: 'users',
-    action: logoutUser,
-    options: { withCredentials: true },
-  };
-
   const response = await apiCall({
-    params: params,
+    params: {
+      method: 'POST',
+      controller: 'users',
+      action: logoutUser,
+      options: { withCredentials: true },
+    },
     showToast: showToast,
     protocol: 'trpc',
   });

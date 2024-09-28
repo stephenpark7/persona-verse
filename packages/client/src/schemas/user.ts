@@ -1,10 +1,12 @@
 import { z } from 'zod';
-import { jwtSchema } from './jwt';
-import { tweetSchema } from './tweet';
+import { Jwt } from './jwt';
+import { Tweet } from './tweet';
+import { Profile } from './profile';
 
 export const userStateProps = z.object({
-  jwt: jwtSchema.nullable(),
-  tweets: z.array(tweetSchema).nullable(),
+  jwt: z.custom<Jwt>().nullable(),
+  tweets: z.array(z.custom<Tweet>()).nullable(),
+  profile: z.custom<Profile>().nullable(),
 });
 
 export const userState = z.object({

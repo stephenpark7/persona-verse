@@ -1,28 +1,7 @@
-import axios from 'axios';
-import {
-  jwtFactory,
-  preloadedStateFactory,
-  responseFactory,
-  tweetFactory,
-} from '@factories';
+import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
 import { screen, waitFor } from '@testing-library/react';
 import { renderApp } from '@tests/utils';
 import { Tweets } from './Tweets';
-
-vi.mock('@components', () => ({
-  Tweet: () => <div data-testid="tweet" />,
-  Navbar: () => <div data-testid="navbar" />,
-}));
-
-vi.spyOn(axios, 'request').mockReturnValue(
-  Promise.resolve(
-    responseFactory({
-      data: {
-        tweets: [tweetFactory()],
-      },
-    }),
-  ),
-);
 
 const jwt = jwtFactory();
 const tweets = [tweetFactory()];
@@ -34,6 +13,15 @@ const preloadedState = preloadedStateFactory({
     },
   },
 });
+
+vi.mock('@components', () => ({
+  Tweet: () => <div data-testid="tweet" />,
+  Navbar: () => <div data-testid="navbar" />,
+}));
+
+vi.mock('@services', () => ({
+  getTweets: async () => tweets,
+}));
 
 describe('Rendering tweets', () => {
   beforeEach(() => {
