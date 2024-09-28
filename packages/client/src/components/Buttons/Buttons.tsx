@@ -1,7 +1,7 @@
-import React from 'react';
+import { FC } from 'react';
 import { Button } from '@components';
 
-export const Buttons: React.FC = () => {
+export const Buttons: FC = () => {
   return (
     <div className="flex gap-2">
       <Button link="/signup">Sign up</Button>
