@@ -1,6 +1,5 @@
 import type { FC } from 'react';
-import { TweetContainer } from '@components';
-import { Buttons } from '../Buttons/Buttons';
+import { Buttons, TweetContainer } from '@components';
 import { Jwt } from '@schemas';
 
 interface ContentSectionProps {
