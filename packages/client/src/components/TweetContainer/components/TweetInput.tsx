@@ -21,7 +21,10 @@ export const TweetInput: React.FC<TweetInputProps> = ({
     setValue(e.target.value);
 
   return (
-    <div className="mt-3 mb-3">
+    <div
+      data-testid="tweet-input"
+      className="mt-3 mb-3"
+    >
       <input
         className="border border-black rounded w-80 h-9 p-2"
         type="text"

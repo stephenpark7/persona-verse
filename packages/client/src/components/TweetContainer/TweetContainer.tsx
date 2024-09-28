@@ -4,22 +4,15 @@ import { Tweets } from './components/Tweets';
 import { TweetButton } from './components/TweetButton';
 import { submitTweet } from '@utils';
 import { usePostTweetMutation } from '@redux';
-import { Jwt } from '@schemas';
-
-interface TweetContainerProps {
-  jwt: Jwt | null;
-  isLoggedIn: boolean;
-}
+import type { TweetContainerProps } from '@types';
 
 export const TweetContainer: FC<TweetContainerProps> = ({
   jwt,
   isLoggedIn,
 }): JSX.Element => {
   const tweetInputState = useState<string>('');
-
-  const [postTweet] = usePostTweetMutation();
-
   const [tweetInput, setTweetInput] = tweetInputState;
+  const [postTweet] = usePostTweetMutation();
 
   const handlePostTweet = () => {
     submitTweet({
@@ -32,7 +25,7 @@ export const TweetContainer: FC<TweetContainerProps> = ({
   };
 
   return (
-    <>
+    <div data-testid="tweet-container">
       <div className="mb-2">
         <TweetInput
           state={tweetInputState}
@@ -41,6 +34,6 @@ export const TweetContainer: FC<TweetContainerProps> = ({
         <TweetButton onPostTweet={handlePostTweet} />
       </div>
       <Tweets />
-    </>
+    </div>
   );
 };

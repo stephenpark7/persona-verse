@@ -30,7 +30,10 @@ export const Tweets: FC = (): JSX.Element => {
   };
 
   return (
-    <div className="flex flex-col ">
+    <div
+      data-testid="tweets"
+      className="flex flex-col"
+    >
       <span className="text-xl font-semibold mb-2">Tweets</span>
       {renderTweets()}
     </div>

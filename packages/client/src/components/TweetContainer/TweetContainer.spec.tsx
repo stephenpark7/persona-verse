@@ -1,28 +1,13 @@
 import { useUserStateStub } from '@mocks';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { UserType } from '@factories';
 import { TweetContainer } from '@components';
-
-vi.mock('@components', async (importOriginal) => {
-  return {
-    ...(await importOriginal<typeof import('@components')>()),
-    TweetInput: () => <div data-testid="tweet-input">TweetInput</div>,
-    TweetButton: () => <div data-testid="tweet-button">TweetButton</div>,
-    Tweets: () => <div data-testid="tweets">Tweets</div>,
-    TweetContainer: () => (
-      <div data-testid="tweet-container">
-        <div data-testid="tweet-input">TweetInput</div>
-        <div data-testid="tweet-button">TweetButton</div>
-        <div data-testid="tweets">Tweets</div>
-      </div>
-    ),
-  };
-});
+import { renderWithProviders } from '@core';
 
 describe('TweetContainer component', () => {
   beforeEach(() => {
     const { jwt, isLoggedIn } = useUserStateStub(UserType.USER)();
-    render(<TweetContainer jwt={jwt} isLoggedIn={isLoggedIn} />);
+    renderWithProviders(<TweetContainer jwt={jwt} isLoggedIn={isLoggedIn} />);
   });
 
   it('renders TweetInput component', () => {
