@@ -5,6 +5,7 @@ export const BurgerMenuIcon = () => {
     <img
       src={BurgerMenuIconSvg}
       alt="Burger menu icon"
+      data-testid="burger-menu-icon"
     />
   );
 };
