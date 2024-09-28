@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 // TODO: mock packages/client/src/core/Router.tsx instead of using BrowserRouter
+// ? not sure if necessary.
 
 export const renderPage = (
   component: React.ReactElement,
@@ -14,3 +15,6 @@ export const renderPage = (
 
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
+
+export const renderWithBrowserRouter = (ui: React.ReactElement) =>
+  render(<BrowserRouter>{ui}</BrowserRouter>);

@@ -2,6 +2,7 @@ import { FC, FormEvent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 interface ButtonProps {
+  name: string;
   type?: 'button' | 'submit' | 'reset';
   onClick?: (e: FormEvent) => void;
   children: ReactNode;
@@ -12,6 +13,7 @@ interface ButtonProps {
 }
 
 export const Button: FC<ButtonProps> = ({
+  name,
   type = 'button',
   onClick,
   children,
@@ -20,15 +22,20 @@ export const Button: FC<ButtonProps> = ({
   height,
   link,
 }): React.JSX.Element => {
-  const buttonJsx = (
+  let element = (
     <button
-      type={type}
-      onClick={(e: FormEvent) => onClick && onClick(e)}
       className={`border border-black rounded bg-white ${height ?? 'h-10'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
+      data-testid={`${name}-button`}
+      onClick={(e: FormEvent) => onClick && onClick(e)}
+      type={type}
     >
       {children}
     </button>
   );
 
-  return link ? <Link to={link}>{buttonJsx}</Link> : buttonJsx;
+  if (link) {
+    element = <Link to={link}>{element}</Link>;
+  }
+
+  return element;
 };

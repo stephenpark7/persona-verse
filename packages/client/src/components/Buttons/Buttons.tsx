@@ -4,8 +4,18 @@ import { Button } from '@components';
 export const Buttons: FC = () => {
   return (
     <div className="flex gap-2">
-      <Button link="/signup">Sign up</Button>
-      <Button link="/login">Log in</Button>
+      <Button
+        name="sign-up"
+        link="/signup"
+      >
+        Sign up
+      </Button>
+      <Button
+        name="log-in"
+        link="/login"
+      >
+        Log in
+      </Button>
     </div>
   );
 };
