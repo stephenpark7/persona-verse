@@ -1,16 +1,6 @@
-import { FC, FormEvent, ReactNode } from 'react';
+import { FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-
-interface ButtonProps {
-  name: string;
-  type?: 'button' | 'submit' | 'reset';
-  onClick?: (e: FormEvent) => void;
-  children: ReactNode;
-  overrideCSS?: string;
-  width?: string;
-  height?: string;
-  link?: string;
-}
+import { ButtonProps } from '@types';
 
 export const Button: FC<ButtonProps> = ({
   name,

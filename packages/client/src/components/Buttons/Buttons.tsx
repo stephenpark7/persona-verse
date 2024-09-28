@@ -8,13 +8,13 @@ export const Buttons: FC = () => {
         name="sign-up"
         link="/signup"
       >
-        Sign up
+        {'Sign up'}
       </Button>
       <Button
         name="log-in"
         link="/login"
       >
-        Log in
+        {'Log in'}
       </Button>
     </div>
   );

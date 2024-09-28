@@ -37,6 +37,7 @@
       "@core": ["./src/core/index"],
       "@hooks": ["./src/hooks/index"],
       "@schemas": ["src/schemas/index"],
+      "@types": ["./src/types/index"],
       "@redux": ["./src/redux/index"],
       "@utils": ["./src/utils/index"],
       "@pages": ["./src/pages/index"],
