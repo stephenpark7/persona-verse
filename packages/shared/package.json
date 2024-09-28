@@ -9,7 +9,7 @@
     "typescript": "^5.5.4"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "npm run lint && tsc",
     "lint": "eslint ."
   }
 }
