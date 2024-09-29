@@ -42,3 +42,5 @@ export const renderApp = (
     preloadedState,
   });
 };
+
+// NOTE: we could also just mock routes for router

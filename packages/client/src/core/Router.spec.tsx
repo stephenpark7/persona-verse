@@ -1,5 +1,7 @@
 import { screen, renderApp } from '@tests/helpers';
 import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
+import { Router } from './Router';
+import { waitFor } from '@testing-library/react';
 
 const jwt = jwtFactory();
 const tweets = [tweetFactory()];
@@ -15,23 +17,41 @@ const preloadedState = preloadedStateFactory({
 describe('When rendering the router', () => {
   describe('while logged out', () => {
     beforeEach(() => {
-      renderApp();
+      renderApp(<Router />);
     });
 
-    it('renders home page by default', () => {
-      expect(screen.getByTestId('header')).toHaveTextContent('PersonaVerse');
+    describe('when on home page', () => {
+      it('does not redirect', () => {
+        expect(window.location.pathname).toBe('/');
+      });
+
+      it('has correct title', () => {
+        expect(document.title).toBe('PersonaVerse');
+      });
     });
   });
 
   describe('while logged in', () => {
     beforeEach(() => {
-      renderApp(undefined, preloadedState);
+      renderApp(<Router />, preloadedState);
     });
 
-    it('redirects to dashboard', async () => {
-      expect(screen.getByTestId('paragraph')).toHaveTextContent(
-        'Redirecting...',
-      );
+    describe('when on home page', () => {
+      it('displays loading message', () => {
+        expect(screen.getByTestId('paragraph')).toHaveTextContent(
+          'Redirecting...',
+        );
+      });
+
+      it('redirects to dashboard', async () => {
+        await waitFor(() => {
+          expect(window.location.pathname).toBe('/dashboard');
+        });
+      });
+
+      it('has correct title', () => {
+        expect(document.title).toBe('PersonaVerse - Dashboard');
+      });
     });
   });
 });

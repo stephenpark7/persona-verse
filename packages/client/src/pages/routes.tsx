@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 import { MainLayout } from '@layouts';
 import { Home, Login, Signup, Dashboard, Profile } from '@pages';
 import { Route, routeSchema } from '@schemas';
-import { Navbar } from '@components';
 import { useUserState } from '@hooks';
+import { Navbar } from '@components';
 
 interface RouteWrapperProps {
   children: ReactNode;
