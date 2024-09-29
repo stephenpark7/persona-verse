@@ -41,6 +41,7 @@
       "@matchers": ["./src/tests/matchers/index"],
       "@tests/helpers": ["./src/tests/helpers/index"],
       "@layouts": ["./src/layouts/index"],
+      "@router": ["./src/router/index"],
       "@tests/utils": ["./src/tests/utils/index"],
       "@shared/types": ["../shared/src/types/index"]
     }

@@ -1,6 +1,6 @@
 import { screen, renderApp } from '@tests/helpers';
 import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
-import { Router } from './Router';
+import { Router } from '@router';
 import { waitFor } from '@testing-library/react';
 
 const jwt = jwtFactory();
