@@ -1,16 +1,24 @@
-import { usePostTweetMutationStub, useUserStateStub } from '@mocks';
 import { renderWithRouter, screen } from '@tests/helpers';
-import { UserType } from '@factories';
+import { jwtFactory, preloadedStateFactory } from '@factories';
 import { ContentSection } from '@components';
 
 describe('When rendering the content section', () => {
   describe('while logged out', () => {
     beforeEach(() => {
-      const { jwt, isLoggedIn } = useUserStateStub(UserType.GUEST)();
-      renderWithRouter(<ContentSection jwt={jwt} isLoggedIn={isLoggedIn} />);
+      const jwt = jwtFactory();
+      const isLoggedIn = false;
+      const preloadedState = preloadedStateFactory({
+        jwt: null,
+        tweets: null,
+      });
+
+      renderWithRouter(
+        <ContentSection jwt={jwt} isLoggedIn={isLoggedIn} />,
+        preloadedState,
+      );
     });
 
-    it.skip('displays sign up and log in buttons', () => {
+    it('displays sign up and log in buttons', () => {
       expect(screen.getByTestId('signup-button')).toBeInTheDocument();
       expect(screen.getByTestId('login-button')).toBeInTheDocument();
     });
@@ -18,10 +26,15 @@ describe('When rendering the content section', () => {
 
   describe('while logged in', () => {
     beforeEach(() => {
-      // const ptm = usePostTweetMutationStub();
-      // console.log('ptm: ' + ptm);
-      const { jwt, isLoggedIn } = useUserStateStub(UserType.USER)();
-      renderWithRouter(<ContentSection jwt={jwt} isLoggedIn={isLoggedIn} />);
+      const isLoggedIn = true;
+      const preloadedState = preloadedStateFactory();
+      const { user } = preloadedState;
+      const jwt = user?.value.jwt || null;
+
+      renderWithRouter(
+        <ContentSection jwt={jwt} isLoggedIn={isLoggedIn} />,
+        preloadedState,
+      );
     });
 
     it('displays the tweet container', () => {
