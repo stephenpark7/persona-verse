@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from 'react';
+import { type FC, ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { MainLayout } from '@layouts';

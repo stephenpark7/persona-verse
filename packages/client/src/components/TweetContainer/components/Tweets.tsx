@@ -1,4 +1,4 @@
-import { FC, JSX, Key } from 'react';
+import type { FC, JSX, Key } from 'react';
 import { Tweet as TweetProps } from '@schemas';
 import { useGetTweetsQuery } from '@redux';
 import { Tweet } from '@components';

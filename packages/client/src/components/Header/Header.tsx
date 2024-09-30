@@ -1,10 +1,10 @@
-import React from 'react';
+import type { FC } from 'react';
 
 export interface HeaderProps {
   title: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title }) => {
+export const Header: FC<HeaderProps> = ({ title }) => {
   return (
     <h1
       data-testid="header"

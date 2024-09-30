@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { getDisplayName } from '@utils';
 import type { Jwt } from '@shared/types';
 
@@ -7,7 +7,7 @@ interface WelcomeMessageProps {
   isLoggedIn: boolean;
 }
 
-export const WelcomeMessage: React.FC<WelcomeMessageProps> = ({
+export const WelcomeMessage: FC<WelcomeMessageProps> = ({
   jwt,
   isLoggedIn,
 }) => {

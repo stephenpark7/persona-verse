@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { ToastContainer, Bounce } from 'react-toastify';
 
 export const Toast: FC = () => {

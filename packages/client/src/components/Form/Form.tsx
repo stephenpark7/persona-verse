@@ -1,6 +1,6 @@
 import { RequestBody } from '@schemas';
 import { Input, Label } from '../../components/Form';
-import { FC, FormEvent } from 'react';
+import { type FC, FormEvent } from 'react';
 import { Button } from '@components';
 
 interface FormProps {

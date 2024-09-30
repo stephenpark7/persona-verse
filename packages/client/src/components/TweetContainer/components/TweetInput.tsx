@@ -1,11 +1,11 @@
-import React from 'react';
+import type { FC } from 'react';
 
 interface TweetInputProps {
   state: [string, React.Dispatch<React.SetStateAction<string>>];
   onPostTweet: () => void;
 }
 
-export const TweetInput: React.FC<TweetInputProps> = ({
+export const TweetInput: FC<TweetInputProps> = ({
   state,
   onPostTweet,
 }): React.JSX.Element => {
