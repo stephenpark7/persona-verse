@@ -1,8 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { render as origRender } from '@testing-library/react';
-import { renderWithProviders } from '@core';
+import { type RootState, renderWithProviders } from '@redux';
 import { Router } from '@router';
-import type { RootState } from '@redux';
 
 export const render = (ui: React.ReactElement) => origRender(ui);
 

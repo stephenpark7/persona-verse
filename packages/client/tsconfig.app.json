@@ -28,7 +28,6 @@
       "@assets/images/*": ["./src/assets/images/*"],
       "@assets/styles/*": ["./src/assets/styles/*"],
       "@components": ["./src/components/index"],
-      "@core": ["./src/core/index"],
       "@hooks": ["./src/hooks/index"],
       "@schemas": ["src/schemas/index"],
       "@types": ["./src/types/index"],

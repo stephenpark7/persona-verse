@@ -1,7 +1,7 @@
-import React from 'react';
+import { FC } from 'react';
 import { ToastContainer, Bounce } from 'react-toastify';
 
-export const Toast: React.FC = () => {
+export const Toast: FC = () => {
   return (
     <ToastContainer
       position="top-right"

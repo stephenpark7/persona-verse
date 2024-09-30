@@ -8,5 +8,6 @@ export * from './Logo';
 export * from './LogoutButton';
 export * from './Navbar';
 export * from './Profile';
+export * from './Toast';
 export * from './TweetContainer';
 export * from './WelcomeMessage';

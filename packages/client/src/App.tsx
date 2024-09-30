@@ -1,6 +1,7 @@
 import React from 'react';
-import { ReduxProvider, Toast } from '@core';
 import { Router } from '@router';
+import { ReduxProvider } from '@redux';
+import { Toast } from '@components';
 import 'react-toastify/dist/ReactToastify.css';
 import '@assets/styles/App.css';
 
