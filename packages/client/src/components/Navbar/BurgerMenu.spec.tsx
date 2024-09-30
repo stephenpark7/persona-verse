@@ -3,7 +3,7 @@ import { BurgerMenu } from './BurgerMenu';
 
 const setIsBurgerMenuOpen = vi.fn();
 
-describe('When rendering the burger menu', () => {
+describe('BurgerMenu', () => {
   beforeEach(() => {
     renderWithRouter(<BurgerMenu setIsBurgerMenuOpen={setIsBurgerMenuOpen} />);
   });
