@@ -1,7 +1,7 @@
 import { renderWithRouter, screen, fireEvent } from '@tests/helpers';
 import { preloadedStateFactory } from '@factories';
-import { LogoutButton } from '@components';
 import { logout } from '@services';
+import { LogoutButton } from '@components';
 
 vi.mock('@services', () => ({
   logout: vi.fn(),
