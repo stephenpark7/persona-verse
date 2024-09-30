@@ -1,16 +1,29 @@
 import { renderWithRouter, screen } from '@tests/helpers';
 import { Logo } from '@components';
+import { act } from 'react';
 
-describe('When rendering the logo', () => {
+describe('Logo', () => {
   beforeEach(() => {
     renderWithRouter(<Logo />);
   });
 
-  it('displays the logo', () => {
+  it('renders the logo', () => {
     expect(screen.getByTestId('logo')).toBeInTheDocument();
   });
 
-  it('displays the logo link', () => {
+  it('renders the logo link', () => {
     expect(screen.getByTestId('logo-link')).toHaveAttribute('href', '/');
+  });
+
+  describe('when clicking the logo link', () => {
+    beforeEach(() => {
+      act(() => {
+        screen.getByTestId('logo-link').click();
+      });
+    });
+
+    it('navigates to the home page', () => {
+      expect(window.location.pathname).toEqual('/');
+    });
   });
 });

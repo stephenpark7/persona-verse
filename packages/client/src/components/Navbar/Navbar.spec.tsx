@@ -1,6 +1,6 @@
 import { act } from 'react';
 import { renderWithRouter, screen } from '@tests/helpers';
-import { Navbar } from '@components';
+import { Navbar } from './Navbar';
 
 describe('Navbar', () => {
   beforeEach(() => {
@@ -54,6 +54,22 @@ describe('Navbar', () => {
       it('hides the dropdown menu', () => {
         expect(screen.queryByTestId('navbar-dropdown')).not.toBeInTheDocument();
       });
+    });
+  });
+
+  describe('when clicking the logo', () => {
+    beforeEach(() => {
+      act(() => {
+        screen.getByTestId('logo').click();
+      });
+    });
+
+    it('hides the dropdown menu', () => {
+      expect(screen.queryByTestId('navbar-dropdown')).not.toBeInTheDocument();
+    });
+
+    it('renders the burger menu', () => {
+      expect(screen.getByTestId('navbar-burger-menu')).toBeInTheDocument();
     });
   });
 });
