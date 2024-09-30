@@ -1,16 +1,13 @@
-import { render, screen } from '@testing-library/react';
-import { Header } from '@components';
+import { render, screen } from '@tests/helpers';
 import { APP_TITLE } from '@utils';
+import { Header } from '@components';
 
 describe('When rendering the header', () => {
   it('displays the title', () => {
-    render(<Header title={APP_TITLE} />);
+    beforeEach(() => {
+      render(<Header title={APP_TITLE} />);
+    });
 
-    expect(
-      screen.getByRole('heading', {
-        name: APP_TITLE,
-        level: 1,
-      }),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId('header')).toHaveTextContent(APP_TITLE);
   });
 });
