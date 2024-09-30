@@ -12,7 +12,7 @@ describe('When rendering the navbar', () => {
   });
 
   it('renders the burger menu', () => {
-    expect(screen.getByTestId('burger-menu')).toBeInTheDocument();
+    expect(screen.getByTestId('navbar-burger-menu')).toBeInTheDocument();
   });
 
   it('does not render the dropdown menu', () => {
@@ -22,12 +22,14 @@ describe('When rendering the navbar', () => {
   describe('when clicking the menu button', () => {
     beforeEach(() => {
       act(() => {
-        screen.getByTestId('burger-menu').click();
+        screen.getByTestId('navbar-burger-menu').click();
       });
     });
 
     it('hides the burger menu', () => {
-      expect(screen.queryByTestId('burger-menu')).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId('navbar-burger-menu'),
+      ).not.toBeInTheDocument();
     });
 
     it('displays the dropdown menu', () => {
@@ -46,7 +48,7 @@ describe('When rendering the navbar', () => {
       });
 
       it('displays the burger menu', () => {
-        expect(screen.getByTestId('burger-menu')).toBeInTheDocument();
+        expect(screen.getByTestId('navbar-burger-menu')).toBeInTheDocument();
       });
     });
   });
