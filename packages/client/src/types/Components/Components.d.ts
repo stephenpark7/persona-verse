@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { contentSectionProps } from '@schemas';
+import { contentSectionProps, tweetContainerProps } from '@schemas';
 
 export type ContentSectionProps = z.infer<typeof contentSectionProps>;
 

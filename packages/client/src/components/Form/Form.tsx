@@ -1,7 +1,7 @@
 import { RequestBody } from '@schemas';
-import { Input, Label } from '../../components/Form';
 import { type FC, FormEvent } from 'react';
 import { Button } from '@components';
+import { Input, Label } from './';
 
 interface FormProps {
   type: 'login' | 'signup';
