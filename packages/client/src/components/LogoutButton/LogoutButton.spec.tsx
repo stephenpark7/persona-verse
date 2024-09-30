@@ -10,12 +10,7 @@ vi.mock('@services', () => ({
 describe('When rendering the logout button', () => {
   describe('while logged in', () => {
     beforeEach(() => {
-      const preloadedState = preloadedStateFactory({
-        jwt: 'some-jwt-token',
-        tweets: [],
-      });
-
-      renderWithRouter(<LogoutButton />, preloadedState);
+      renderWithRouter(<LogoutButton />, preloadedStateFactory());
     });
 
     it('renders the logout button', () => {
