@@ -11,7 +11,10 @@ interface DropdownProps {
 
 export const Dropdown: FC<DropdownProps> = ({ closeBurgerMenu }) => {
   return (
-    <div className="dropdown absolute right-0 top-0 bg-white border border-gray-200 border-opacity-80 rounded-md drop-shadow-lg">
+    <div
+      data-testid="navbar-dropdown"
+      className="dropdown absolute right-0 top-0 bg-white border border-gray-200 border-opacity-80 rounded-md drop-shadow-lg"
+    >
       <div className="flex flex-col min-w-24 min-h-12 justify-center p-3">
         <ul className="flex flex-col items-end justify-end gap-3">
           <Item>

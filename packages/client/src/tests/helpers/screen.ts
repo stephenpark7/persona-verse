@@ -4,4 +4,5 @@ export const screen = {
   debug: origScreen.debug,
   getByTestId: origScreen.getByTestId,
   getByText: origScreen.getByText,
+  queryByTestId: origScreen.queryByTestId,
 };
