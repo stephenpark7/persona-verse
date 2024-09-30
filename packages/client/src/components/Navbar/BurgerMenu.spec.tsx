@@ -8,13 +8,17 @@ describe('When rendering the burger menu', () => {
     renderWithRouter(<BurgerMenu setIsBurgerMenuOpen={setIsBurgerMenuOpen} />);
   });
 
+  it('renders the burger menu', () => {
+    expect(screen.getByTestId('navbar-burger-menu')).toBeInTheDocument();
+  });
+
   it('renders the burger menu icon', () => {
-    expect(screen.getByTestId('burger-menu-icon')).toBeInTheDocument();
+    expect(screen.getByTestId('navbar-burger-menu-icon')).toBeInTheDocument();
   });
 
   describe('when clicking the burger menu icon', () => {
     beforeEach(() => {
-      screen.getByTestId('burger-menu-icon').click();
+      screen.getByTestId('navbar-burger-menu-icon').click();
     });
 
     it('calls setIsBurgerMenuOpen with true', () => {
