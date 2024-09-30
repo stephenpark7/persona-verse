@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Routes } from './Routes';
 
-export const router = createBrowserRouter(Routes);
+const router = createBrowserRouter(Routes);
 
 export const Router: FC = () => {
   return <RouterProvider router={router} />;
