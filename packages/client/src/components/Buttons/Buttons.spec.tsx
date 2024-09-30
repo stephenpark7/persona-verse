@@ -1,9 +1,9 @@
 import { Buttons } from '@components';
-import { screen, renderWithBrowserRouter } from '@tests/helpers';
+import { screen, renderWithRouter } from '@tests/helpers';
 
 describe('When rendering the buttons', () => {
   beforeEach(() => {
-    renderWithBrowserRouter(<Buttons />);
+    renderWithRouter(<Buttons />);
   });
 
   it('displays sign up and log in buttons', () => {

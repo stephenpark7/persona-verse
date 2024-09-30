@@ -35,7 +35,9 @@ export const Navbar: FC = () => {
           closeBurgerMenu={() => setIsBurgerMenuOpen(false)}
         />
       ) : (
+        // TODO: refactor burger menu to a separate component
         <div
+          data-testid="burger-menu"
           className="absolute right-3 top-4 cursor-pointer"
           onClick={() => setIsBurgerMenuOpen(true)}
         >

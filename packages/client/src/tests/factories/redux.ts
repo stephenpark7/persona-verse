@@ -1,12 +1,15 @@
 import { UserState, reducer, Reducer, BrowserState } from '@schemas';
 import { RootState } from '@redux';
 import { jwtFactory } from './jwt';
+import { tweetFactory } from './tweet';
 
 export const preloadedStateFactory = (overrides = {}) => {
   const userStateData: UserState = {
     value: {
       jwt: jwtFactory(),
-      tweets: null,
+      tweets: [tweetFactory()],
+      profile: null,
+      ...overrides,
     },
   };
 
@@ -25,7 +28,6 @@ export const preloadedStateFactory = (overrides = {}) => {
 
   const preloadedState: Partial<RootState> = {
     ...reducerData,
-    ...overrides,
   };
 
   reducer.parse(preloadedState);

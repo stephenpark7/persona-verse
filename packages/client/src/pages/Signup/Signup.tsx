@@ -1,11 +1,11 @@
-import React, { useState, FormEvent } from 'react';
+import { type FC, useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RequestBody } from '@schemas';
 import { register } from '@services';
 import { submitForm } from '@utils';
 import { Header, Form, Button } from '@components';
 
-export const Signup: React.FC = () => {
+export const Signup: FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<RequestBody>({
     username: '',

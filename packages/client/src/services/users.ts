@@ -1,4 +1,4 @@
-import { store, setJwt, clearJwt } from '@redux';
+import { store, setJwt, clearJwt, tweetAPI } from '@redux';
 import {
   LoginFormFields,
   LoginFunction,
@@ -93,6 +93,7 @@ export const logout: LogoutFunction = async ({
   }
 
   store.dispatch(clearJwt());
+  store.dispatch(tweetAPI.util.invalidateTags(['Tweets']));
   navigate('/');
   return Promise.resolve(true);
 };

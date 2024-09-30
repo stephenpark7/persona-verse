@@ -2,8 +2,12 @@ import { Link } from 'react-router-dom';
 
 export const Logo = () => {
   return (
-    <div className="w-8">
+    <div
+      data-testid="logo"
+      className="w-8"
+    >
       <Link
+        data-testid="logo-link"
         className="w-8 block"
         to="/"
       >
