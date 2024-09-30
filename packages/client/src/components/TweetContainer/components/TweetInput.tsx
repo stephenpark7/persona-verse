@@ -1,11 +1,11 @@
-import React from 'react';
+import type { FC } from 'react';
 
 interface TweetInputProps {
   state: [string, React.Dispatch<React.SetStateAction<string>>];
   onPostTweet: () => void;
 }
 
-export const TweetInput: React.FC<TweetInputProps> = ({
+export const TweetInput: FC<TweetInputProps> = ({
   state,
   onPostTweet,
 }): React.JSX.Element => {
@@ -21,7 +21,10 @@ export const TweetInput: React.FC<TweetInputProps> = ({
     setValue(e.target.value);
 
   return (
-    <div className="mt-3 mb-3">
+    <div
+      data-testid="tweet-input"
+      className="mt-3 mb-3"
+    >
       <input
         className="border border-black rounded w-80 h-9 p-2"
         type="text"

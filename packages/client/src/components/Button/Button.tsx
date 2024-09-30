@@ -1,4 +1,4 @@
-import { FC, FormEvent } from 'react';
+import { type FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import type { ButtonProps } from '@types';
 import { buttonProps } from '@schemas';

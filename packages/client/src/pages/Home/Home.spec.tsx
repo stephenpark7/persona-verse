@@ -1,36 +1,29 @@
-import { useUserStateStub } from '@mocks';
 import { screen } from '@testing-library/react';
-import { UserType } from '@factories';
+import { renderWithRouter } from '@tests/helpers';
+import { preloadedStateFactory } from '@factories';
 import { Home } from '@pages';
-import { BrowserRouter } from 'react-router-dom';
-import { renderWithProviders } from '@core';
-
-vi.mock('@components', () => ({
-  Header: () => <div data-testid="header" />,
-  WelcomeMessage: () => <div data-testid="welcomeMessage" />,
-  ContentSection: () => <div data-testid="contentSection" />,
-  Navbar: () => <div data-testid="navbar" />,
-}));
 
 describe('When rendering the home page', () => {
-  beforeEach(() => {
-    useUserStateStub(UserType.GUEST);
-    renderWithProviders(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>,
-    );
-  });
+  describe('while logged out', () => {
+    beforeEach(() => {
+      const preloadedState = preloadedStateFactory({
+        jwt: null,
+        tweets: null,
+      });
 
-  it('renders header component', () => {
-    expect(screen.getByTestId('header')).toBeInTheDocument();
-  });
+      renderWithRouter(<Home />, preloadedState);
+    });
 
-  it('renders WelcomeMessage component', () => {
-    expect(screen.getByTestId('welcomeMessage')).toBeInTheDocument();
-  });
+    it('renders header component', () => {
+      expect(screen.getByTestId('header')).toBeInTheDocument();
+    });
 
-  it('renders ContentSection component', () => {
-    expect(screen.getByTestId('contentSection')).toBeInTheDocument();
+    it('renders WelcomeMessage component', () => {
+      expect(screen.getByTestId('welcome-message')).toBeInTheDocument();
+    });
+
+    it('renders ContentSection component', () => {
+      expect(screen.getByTestId('content-section')).toBeInTheDocument();
+    });
   });
 });

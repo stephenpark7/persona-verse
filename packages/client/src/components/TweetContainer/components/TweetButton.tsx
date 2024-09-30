@@ -1,11 +1,11 @@
-import React from 'react';
+import type { FC } from 'react';
 import { Button } from '@components';
 
 interface TweetButtonProps {
   onPostTweet: () => void;
 }
 
-export const TweetButton: React.FC<TweetButtonProps> = ({ onPostTweet }) => {
+export const TweetButton: FC<TweetButtonProps> = ({ onPostTweet }) => {
   const handleClickEvent = () => {
     onPostTweet();
   };

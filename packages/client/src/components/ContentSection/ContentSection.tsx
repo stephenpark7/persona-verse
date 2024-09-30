@@ -1,11 +1,6 @@
 import type { FC } from 'react';
+import type { ContentSectionProps } from '@types';
 import { Buttons, TweetContainer } from '@components';
-import { Jwt } from '@schemas';
-
-interface ContentSectionProps {
-  jwt: Jwt | null;
-  isLoggedIn: boolean;
-}
 
 export const ContentSection: FC<ContentSectionProps> = ({
   jwt,
@@ -20,5 +15,12 @@ export const ContentSection: FC<ContentSectionProps> = ({
     <Buttons />
   );
 
-  return <div className="flex flex-col gap-2">{content}</div>;
+  return (
+    <div
+      data-testid="content-section"
+      className="flex flex-col gap-2"
+    >
+      {content}
+    </div>
+  );
 };

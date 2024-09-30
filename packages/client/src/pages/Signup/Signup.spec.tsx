@@ -1,15 +1,13 @@
-import { useUserStateStub } from '@mocks';
 import { screen, waitFor } from '@testing-library/react';
-import { UserType } from '@factories';
-import { renderPage } from '@tests/helpers';
+import { renderWithRouter } from '@tests/helpers';
 import { Signup } from '@pages';
 import { APP_TITLE } from '@utils';
+import { jwtFactory, preloadedStateFactory } from '@factories';
 
 describe('Signup page', () => {
   describe('while logged out', () => {
     beforeEach(() => {
-      useUserStateStub(UserType.GUEST);
-      renderPage(<Signup />);
+      renderWithRouter(<Signup />);
     });
 
     it('has correct title', () => {
@@ -36,6 +34,20 @@ describe('Signup page', () => {
       expect(
         screen.getByRole('button', { name: 'Create account' }),
       ).toBeInTheDocument();
+    });
+  });
+
+  describe('while logged in', () => {
+    beforeEach(() => {
+      const jwt = jwtFactory();
+      const preloadedState = preloadedStateFactory({
+        jwt,
+      });
+      renderWithRouter(<Signup />, preloadedState);
+    });
+
+    it('redirects to home page', () => {
+      waitFor(() => expect(window.location.pathname).toBe('/'));
     });
   });
 });

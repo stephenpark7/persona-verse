@@ -1,18 +1,6 @@
-import { requestBody } from '@schemas';
-import { ChangeEvent, FC } from 'react';
-import { z } from 'zod';
-
-const inputProps = z.object({
-  label: z.string(),
-  type: z.string(),
-  value: z.string().optional(),
-  formDataState: z.object({
-    formData: requestBody,
-    setFormData: z.function().args(requestBody).returns(z.void()),
-  }),
-});
-
-type InputProps = z.infer<typeof inputProps>;
+import type { ChangeEvent, FC } from 'react';
+import type { InputProps } from '@types';
+import { inputProps, requestBody } from '@schemas';
 
 export const Input: FC<InputProps> = ({
   label,

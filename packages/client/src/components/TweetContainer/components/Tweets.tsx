@@ -1,4 +1,4 @@
-import { FC, JSX, Key } from 'react';
+import type { FC, JSX, Key } from 'react';
 import { Tweet as TweetProps } from '@schemas';
 import { useGetTweetsQuery } from '@redux';
 import { Tweet } from '@components';
@@ -30,7 +30,10 @@ export const Tweets: FC = (): JSX.Element => {
   };
 
   return (
-    <div className="flex flex-col ">
+    <div
+      data-testid="tweets"
+      className="flex flex-col"
+    >
       <span className="text-xl font-semibold mb-2">Tweets</span>
       {renderTweets()}
     </div>

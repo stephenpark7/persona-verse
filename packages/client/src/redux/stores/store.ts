@@ -12,7 +12,7 @@ import {
 import { tweetAPI } from '../services';
 import { useDispatch } from 'react-redux';
 import { setDocTitleReducer } from '../reducers/docTitleReducers';
-import { routes } from '@pages';
+// import { routes } from '@pages';
 
 // TODO: create reducer for profile
 
@@ -26,7 +26,7 @@ export const initialState: Reducer = {
   },
   browser: {
     value: {
-      docTitle: routes[routes.length - 1].title,
+      docTitle: 'PersonaVerse', //routes[routes.length - 1].title,
     },
   },
 };

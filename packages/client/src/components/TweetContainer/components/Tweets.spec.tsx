@@ -1,6 +1,6 @@
 import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
 import { screen, waitFor } from '@testing-library/react';
-import { renderApp } from '@tests/utils';
+import { renderApp } from '@tests/helpers';
 import { Tweets } from './Tweets';
 
 const jwt = jwtFactory();
