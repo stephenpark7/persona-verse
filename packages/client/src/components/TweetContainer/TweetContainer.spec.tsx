@@ -1,7 +1,9 @@
-import { screen } from '@testing-library/react';
+import { screen, fireEvent, renderWithRouter } from '@tests/helpers';
 import { jwtFactory, preloadedStateFactory } from '@factories';
+import * as utils from '@utils';
 import { TweetContainer } from '@components';
-import { renderWithRouter } from '@tests/helpers';
+
+const submitTweetSpy = vi.spyOn(utils, 'submitTweet');
 
 describe('TweetContainer component', () => {
   describe('while logged in', () => {
@@ -27,6 +29,16 @@ describe('TweetContainer component', () => {
 
     it('renders Tweets component', () => {
       expect(screen.getByTestId('tweets')).toBeInTheDocument();
+    });
+
+    describe('when the tweet button is clicked', () => {
+      beforeEach(() => {
+        fireEvent.click(screen.getByTestId('tweet-button'));
+      });
+
+      it('calls handlePostTweet', () => {
+        expect(submitTweetSpy).toHaveBeenCalled();
+      });
     });
   });
 });
