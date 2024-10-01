@@ -24,7 +24,7 @@ export const Button: FC<ButtonProps> = ({
     link,
   });
 
-  let element = (
+  const element = (
     <button
       name={name}
       className={`border border-black rounded bg-white ${height ?? 'h-10'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
@@ -36,9 +36,5 @@ export const Button: FC<ButtonProps> = ({
     </button>
   );
 
-  if (link) {
-    element = <Link to={link}>{element}</Link>;
-  }
-
-  return element;
+  return link ? <Link to={link}>{element}</Link> : element;
 };
