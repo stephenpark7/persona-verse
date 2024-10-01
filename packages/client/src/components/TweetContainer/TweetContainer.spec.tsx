@@ -5,11 +5,11 @@ import { TweetContainer } from '@components';
 
 const submitTweetSpy = vi.spyOn(utils, 'submitTweet');
 
-describe('TweetContainer component', () => {
+describe('TweetContainer', () => {
   describe('while logged in', () => {
     beforeEach(() => {
       const jwt = jwtFactory();
-      const isLoggedIn = false;
+      const isLoggedIn = true;
       const preloadedState = preloadedStateFactory({
         jwt,
       });
@@ -17,6 +17,10 @@ describe('TweetContainer component', () => {
         <TweetContainer jwt={jwt} isLoggedIn={isLoggedIn} />,
         preloadedState,
       );
+    });
+
+    it('renders TweetContainer component', () => {
+      expect(screen.getByTestId('tweet-container')).toBeInTheDocument();
     });
 
     it('renders TweetInput component', () => {
@@ -39,6 +43,24 @@ describe('TweetContainer component', () => {
       it('calls handlePostTweet', () => {
         expect(submitTweetSpy).toHaveBeenCalled();
       });
+    });
+  });
+
+  describe('while logged out', () => {
+    beforeEach(() => {
+      const jwt = null;
+      const isLoggedIn = false;
+      const preloadedState = preloadedStateFactory({
+        jwt,
+      });
+      renderWithRouter(
+        <TweetContainer jwt={jwt} isLoggedIn={isLoggedIn} />,
+        preloadedState,
+      );
+    });
+
+    it('does not render TweetContainer component', () => {
+      expect(screen.queryByTestId('tweet-container')).not.toBeInTheDocument();
     });
   });
 });
