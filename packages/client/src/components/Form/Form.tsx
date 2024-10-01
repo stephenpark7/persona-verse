@@ -10,6 +10,10 @@ interface FormProps {
   setFormData: (data: RequestBody) => void;
 }
 
+// TODO: refactor formDataState into formDataHook
+// use [ formData, setFormData ] = useState<RequestBody>({ username: '', email: '', password: '' });
+// instead of { formData, setFormData }
+
 export const Form: FC<FormProps> = ({
   type,
   handleFormSubmit,
