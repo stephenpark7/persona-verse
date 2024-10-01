@@ -14,6 +14,7 @@ export const Label: FC<InputProps> = ({ value }) => {
 
   return (
     <label
+      aria-label="label"
       className="min-w-28 font-medium"
       htmlFor={value}
     >
