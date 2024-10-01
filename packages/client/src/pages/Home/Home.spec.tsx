@@ -15,7 +15,7 @@ describe('When rendering the home page', () => {
     });
 
     it('renders header component', () => {
-      expect(screen.getByTestId('header')).toBeInTheDocument();
+      expect(screen.getByLabelText('header')).toBeInTheDocument();
     });
 
     it('renders WelcomeMessage component', () => {

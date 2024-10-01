@@ -8,7 +8,9 @@ describe('When rendering the burger menu icon', () => {
   });
 
   it('displays the burger menu icon', () => {
-    expect(screen.getByTestId('navbar-burger-menu-icon')).toBeInTheDocument();
+    expect(
+      screen.getByRole('img', { name: 'Burger menu icon' }),
+    ).toBeInTheDocument();
   });
 
   it('displays the burger menu icon image with the correct alt text', () => {
