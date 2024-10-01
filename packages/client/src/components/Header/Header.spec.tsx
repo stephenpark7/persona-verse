@@ -9,6 +9,6 @@ describe('When rendering the header', () => {
   });
 
   it('displays the title', () => {
-    expect(screen.getByTestId('header')).toHaveTextContent(APP_TITLE);
+    expect(screen.getByLabelText('header')).toHaveTextContent(APP_TITLE);
   });
 });
