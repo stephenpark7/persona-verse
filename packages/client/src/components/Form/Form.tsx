@@ -18,6 +18,7 @@ export const Form: FC<FormProps> = ({
 }) => {
   return (
     <form
+      aria-label="form"
       className="mb-4"
       onSubmit={handleFormSubmit}
     >
