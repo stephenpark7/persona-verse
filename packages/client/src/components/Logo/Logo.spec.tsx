@@ -12,13 +12,13 @@ describe('Logo', () => {
   });
 
   it('renders the logo link', () => {
-    expect(screen.getByTestId('logo-link')).toHaveAttribute('href', '/');
+    expect(screen.getByLabelText('logo-link')).toHaveAttribute('href', '/');
   });
 
   describe('when clicking the logo link', () => {
     beforeEach(() => {
       act(() => {
-        screen.getByTestId('logo-link').click();
+        screen.getByLabelText('logo-link').click();
       });
     });
 
