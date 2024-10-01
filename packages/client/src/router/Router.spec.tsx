@@ -1,7 +1,8 @@
-import { screen, renderApp } from '@tests/helpers';
+import { screen, renderWithRouter } from '@tests/helpers';
 import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
 import { Router } from '@router';
 import { waitFor } from '@testing-library/react';
+import { renderWithProviders } from '@redux';
 
 const jwt = jwtFactory();
 const tweets = [tweetFactory()];
@@ -17,7 +18,7 @@ const preloadedState = preloadedStateFactory({
 describe('When rendering the router', () => {
   describe('while logged out', () => {
     beforeEach(() => {
-      renderApp(<Router />);
+      renderWithRouter(undefined, undefined, Router);
     });
 
     describe('when on home page', () => {
@@ -33,7 +34,7 @@ describe('When rendering the router', () => {
 
   describe('while logged in', () => {
     beforeEach(() => {
-      renderApp(<Router />, preloadedState);
+      renderWithProviders(<Router />, { preloadedState });
     });
 
     describe('when on home page', () => {
