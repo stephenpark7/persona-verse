@@ -5,7 +5,6 @@ import { Item } from './Item';
 import { CloseButton } from './CloseButton';
 
 interface DropdownProps {
-  isBurgerMenuOpen: boolean;
   closeBurgerMenu: () => void;
 }
 

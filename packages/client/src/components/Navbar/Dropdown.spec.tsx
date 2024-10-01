@@ -5,9 +5,7 @@ const closeBurgerMenu = vi.fn();
 
 describe('Dropdown', () => {
   beforeEach(() => {
-    renderWithRouter(
-      <Dropdown isBurgerMenuOpen={false} closeBurgerMenu={closeBurgerMenu} />,
-    );
+    renderWithRouter(<Dropdown closeBurgerMenu={closeBurgerMenu} />);
   });
 
   it('renders the dropdown', () => {
