@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { Tweet } from '@components';
 import { tweetFactory } from '@factories';
+import { Tweet } from '@components';
 
 const { id, message, createdAt, date, User } = tweetFactory();
 

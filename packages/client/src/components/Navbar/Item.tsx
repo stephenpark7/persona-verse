@@ -6,7 +6,10 @@ interface ItemProps {
 
 export const Item: FC<ItemProps> = ({ children }) => {
   return (
-    <li className="text-lg text-gray-900 cursor-pointer hover:text-gray-500 ease-in-out duration-200">
+    <li
+      data-testid="navbar-dropdown-item"
+      className="text-lg text-gray-900 cursor-pointer hover:text-gray-500 ease-in-out duration-200"
+    >
       {children}
     </li>
   );

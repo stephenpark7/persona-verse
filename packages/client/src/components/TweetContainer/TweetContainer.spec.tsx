@@ -1,13 +1,15 @@
-import { screen } from '@testing-library/react';
+import { screen, fireEvent, renderWithRouter } from '@tests/helpers';
 import { jwtFactory, preloadedStateFactory } from '@factories';
+import * as utils from '@utils';
 import { TweetContainer } from '@components';
-import { renderWithRouter } from '@tests/helpers';
 
-describe('TweetContainer component', () => {
+const submitTweetSpy = vi.spyOn(utils, 'submitTweet');
+
+describe('TweetContainer', () => {
   describe('while logged in', () => {
     beforeEach(() => {
       const jwt = jwtFactory();
-      const isLoggedIn = false;
+      const isLoggedIn = true;
       const preloadedState = preloadedStateFactory({
         jwt,
       });
@@ -15,6 +17,10 @@ describe('TweetContainer component', () => {
         <TweetContainer jwt={jwt} isLoggedIn={isLoggedIn} />,
         preloadedState,
       );
+    });
+
+    it('renders TweetContainer component', () => {
+      expect(screen.getByTestId('tweet-container')).toBeInTheDocument();
     });
 
     it('renders TweetInput component', () => {
@@ -27,6 +33,35 @@ describe('TweetContainer component', () => {
 
     it('renders Tweets component', () => {
       expect(screen.getByTestId('tweets')).toBeInTheDocument();
+    });
+
+    describe('when the tweet button is clicked', () => {
+      beforeEach(() => {
+        fireEvent.click(screen.getByTestId('tweet-button'));
+      });
+
+      it('calls handlePostTweet', () => {
+        expect(submitTweetSpy).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('while logged out', () => {
+    beforeEach(() => {
+      const jwt = null;
+      const isLoggedIn = false;
+      const preloadedState = preloadedStateFactory({
+        jwt: null,
+        isLoggedIn: false,
+      });
+      renderWithRouter(
+        <TweetContainer jwt={jwt} isLoggedIn={isLoggedIn} />,
+        preloadedState,
+      );
+    });
+
+    it('does not render TweetContainer component', () => {
+      expect(screen.queryByTestId('tweet-container')).not.toBeInTheDocument();
     });
   });
 });

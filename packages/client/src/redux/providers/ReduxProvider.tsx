@@ -1,23 +1,34 @@
-import { ReactNode } from 'react';
+import type { ReactNode, PropsWithChildren, ReactElement } from 'react';
 import { Provider } from 'react-redux';
 import { AppStore, RootState, setupStore, store } from '@redux';
+import type { RenderOptions } from '@tests/helpers';
 import { render } from '@testing-library/react';
-import type { RenderOptions } from '@testing-library/react';
+
+// TODO: use zod for interfaces/types
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>;
   store?: AppStore;
 }
 
-export const renderWithProviders = (
-  ui: React.ReactElement,
-  {
+type RenderWithProviders = (
+  ui: ReactElement,
+  options?: ExtendedRenderOptions,
+) => {
+  store: AppStore;
+};
+
+export const renderWithProviders: RenderWithProviders = (
+  ui,
+  extendedRenderOptions = {},
+) => {
+  const {
     preloadedState = {},
     store = setupStore(preloadedState),
     ...renderOptions
-  }: ExtendedRenderOptions = {},
-) => {
-  const Wrapper = ({ children }: { children: ReactNode }) => {
+  } = extendedRenderOptions;
+
+  const Wrapper = ({ children }: PropsWithChildren) => {
     return <Provider store={store}>{children}</Provider>;
   };
 
