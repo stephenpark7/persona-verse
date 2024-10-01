@@ -51,7 +51,8 @@ describe('TweetContainer', () => {
       const jwt = null;
       const isLoggedIn = false;
       const preloadedState = preloadedStateFactory({
-        jwt,
+        jwt: null,
+        isLoggedIn: false,
       });
       renderWithRouter(
         <TweetContainer jwt={jwt} isLoggedIn={isLoggedIn} />,

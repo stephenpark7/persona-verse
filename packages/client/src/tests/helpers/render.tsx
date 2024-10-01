@@ -1,9 +1,13 @@
 import { BrowserRouter } from 'react-router-dom';
-import { render as origRender } from '@testing-library/react';
+import {
+  RenderOptions as origRenderOptions,
+  render as origRender,
+} from '@testing-library/react';
 import { type RootState, renderWithProviders } from '@redux';
 import { Router } from '@router';
 
-export const render = (ui: React.ReactElement) => origRender(ui);
+export const render = (ui: React.ReactElement, options?: RenderOptions) =>
+  origRender(ui, options);
 
 export const renderPage = (
   component: React.ReactElement,
@@ -14,6 +18,15 @@ export const renderPage = (
   }
 
   return render(<BrowserRouter>{component}</BrowserRouter>);
+};
+
+export const renderApp = (
+  rootComponent?: React.ReactElement,
+  preloadedState?: Partial<RootState>,
+) => {
+  renderWithProviders(rootComponent ?? <Router />, {
+    preloadedState,
+  });
 };
 
 export const renderWithRouter = (
@@ -28,19 +41,5 @@ export const renderWithRouter = (
     return render(<BrowserRouter>{ui}</BrowserRouter>);
   }
 };
-// preloadedState
-//   ? renderWithProviders(<BrowserRouter>{ui}</BrowserRouter>, {
-//       preloadedState,
-//     })
-//   : render(<BrowserRouter>{ui}</BrowserRouter>);
 
-export const renderApp = (
-  rootComponent?: React.ReactElement,
-  preloadedState?: Partial<RootState>,
-) => {
-  renderWithProviders(rootComponent ?? <Router />, {
-    preloadedState,
-  });
-};
-
-// NOTE: we could also just mock routes for router
+export type RenderOptions = origRenderOptions;
