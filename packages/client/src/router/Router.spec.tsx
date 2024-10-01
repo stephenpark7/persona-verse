@@ -2,7 +2,6 @@ import { screen, renderWithRouter } from '@tests/helpers';
 import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
 import { Router } from '@router';
 import { waitFor } from '@testing-library/react';
-import { renderWithProviders } from '@redux';
 
 const jwt = jwtFactory();
 const tweets = [tweetFactory()];
@@ -34,7 +33,7 @@ describe('When rendering the router', () => {
 
   describe('while logged in', () => {
     beforeEach(() => {
-      renderWithProviders(<Router />, { preloadedState });
+      renderWithRouter(undefined, preloadedState, Router);
     });
 
     describe('when on home page', () => {

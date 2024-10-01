@@ -4,6 +4,8 @@ import { AppStore, RootState, setupStore, store } from '@redux';
 import type { RenderOptions } from '@tests/helpers';
 import { render } from '@testing-library/react';
 
+// TODO: use zod for interfaces/types
+
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>;
   store?: AppStore;
