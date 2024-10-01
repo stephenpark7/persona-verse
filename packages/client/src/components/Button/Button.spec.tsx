@@ -35,7 +35,7 @@ describe('Button', () => {
     });
   });
 
-  describe('and the button has a link prop', () => {
+  describe('when the button has a link prop', () => {
     beforeEach(() => {
       renderButton({ name, link, children });
     });
