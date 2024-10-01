@@ -32,7 +32,7 @@ describe('Signup page', () => {
 
     it('renders submit button', () => {
       expect(
-        screen.getByRole('button', { name: 'Create account' }),
+        screen.getByRole('button', { name: 'form-signup-button' }),
       ).toBeInTheDocument();
     });
   });

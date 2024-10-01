@@ -26,9 +26,9 @@ export const Button: FC<ButtonProps> = ({
 
   const element = (
     <button
+      aria-label={`${name}-button`}
       name={name}
       className={`border border-black rounded bg-white ${height ?? 'h-10'} ${width ?? 'w-24'} text-md hover:bg-black hover:text-white transition-colors ease-in-out duration-200 ${overrideCSS}`}
-      data-testid={`${name}-button`}
       onClick={(e: FormEvent) => onClick && onClick(e)}
       type={type}
     >

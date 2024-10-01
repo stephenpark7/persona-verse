@@ -22,9 +22,8 @@ describe('When rendering the content section', () => {
       expect(screen.getByTestId('content-section')).toBeInTheDocument();
     });
 
-    it('displays sign up and log in buttons', () => {
-      expect(screen.getByTestId('signup-button')).toBeInTheDocument();
-      expect(screen.getByTestId('login-button')).toBeInTheDocument();
+    it('displays buttons', () => {
+      expect(screen.getByTestId('buttons')).toBeInTheDocument();
     });
   });
 

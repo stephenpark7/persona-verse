@@ -32,7 +32,7 @@ describe('When rendering the form component', () => {
         screen.getByRole('textbox', { name: 'Email' }),
       ).toBeInTheDocument();
       expect(
-        screen.getByRole('button', { name: 'Create account' }),
+        screen.getByRole('button', { name: 'form-signup-button' }),
       ).toBeInTheDocument();
     });
 
