@@ -13,12 +13,14 @@ describe('BurgerMenu', () => {
   });
 
   it('renders the burger menu icon', () => {
-    expect(screen.getByTestId('navbar-burger-menu-icon')).toBeInTheDocument();
+    expect(
+      screen.getByRole('img', { name: 'Burger menu icon' }),
+    ).toBeInTheDocument();
   });
 
   describe('when clicking the burger menu icon', () => {
     beforeEach(() => {
-      screen.getByTestId('navbar-burger-menu-icon').click();
+      screen.getByRole('img', { name: 'Burger menu icon' }).click();
     });
 
     it('calls setIsBurgerMenuOpen with true', () => {

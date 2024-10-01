@@ -14,16 +14,14 @@ describe('When rendering the burger menu icon', () => {
   });
 
   it('displays the burger menu icon image with the correct alt text', () => {
-    expect(screen.getByTestId('navbar-burger-menu-icon')).toHaveAttribute(
-      'alt',
-      'Burger menu icon',
-    );
+    expect(
+      screen.getByRole('img', { name: 'Burger menu icon' }),
+    ).toHaveAttribute('alt', 'Burger menu icon');
   });
 
   it('displays the burger menu icon image with the correct source', () => {
-    expect(screen.getByTestId('navbar-burger-menu-icon')).toHaveAttribute(
-      'src',
-      BurgerMenuIconSvg,
-    );
+    expect(
+      screen.getByRole('img', { name: 'Burger menu icon' }),
+    ).toHaveAttribute('src', BurgerMenuIconSvg);
   });
 });
