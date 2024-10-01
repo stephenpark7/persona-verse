@@ -1,8 +1,8 @@
 import { useEffect, useState, FC } from 'react';
-import { BurgerMenuIcon } from '../BurgerMenuIcon';
-import { Dropdown } from './Dropdown';
-import { Logo } from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
+import { Logo } from '../Logo';
+import { Dropdown } from './Dropdown';
+import { BurgerMenu } from './BurgerMenu';
 
 export const Navbar: FC = () => {
   const navigate = useNavigate();
@@ -24,25 +24,18 @@ export const Navbar: FC = () => {
 
   return (
     <nav
+      data-testid="navbar"
       className="bg-white h-14 px-3 py-2 select-none shadow-md sticky top-0 z-50"
       role="navigation"
     >
       <Logo />
-
       {isBurgerMenuOpen ? (
         <Dropdown
           isBurgerMenuOpen={isBurgerMenuOpen}
           closeBurgerMenu={() => setIsBurgerMenuOpen(false)}
         />
       ) : (
-        // TODO: refactor burger menu to a separate component
-        <div
-          data-testid="burger-menu"
-          className="absolute right-3 top-4 cursor-pointer"
-          onClick={() => setIsBurgerMenuOpen(true)}
-        >
-          <BurgerMenuIcon />
-        </div>
+        <BurgerMenu setIsBurgerMenuOpen={setIsBurgerMenuOpen} />
       )}
     </nav>
   );

@@ -18,10 +18,20 @@ export const Dropdown: FC<DropdownProps> = ({ closeBurgerMenu }) => {
       <div className="flex flex-col min-w-24 min-h-12 justify-center p-3">
         <ul className="flex flex-col items-end justify-end gap-3">
           <Item>
-            <Link to="/">Dashboard</Link>
+            <Link
+              data-testid="navbar-dropdown-dashboard-link"
+              to="/"
+            >
+              Dashboard
+            </Link>
           </Item>
           <Item>
-            <Link to="/profile">Profile</Link>
+            <Link
+              data-testid="navbar-dropdown-profile-link"
+              to="/profile"
+            >
+              Profile
+            </Link>
           </Item>
           <Item>
             <LogoutButton />

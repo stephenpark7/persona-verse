@@ -1,46 +1,23 @@
+import type { ReactElement, FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { render as origRender } from '@testing-library/react';
+import {
+  RenderOptions as origRenderOptions,
+  render as origRender,
+} from '@testing-library/react';
 import { type RootState, renderWithProviders } from '@redux';
-import { Router } from '@router';
 
-export const render = (ui: React.ReactElement) => origRender(ui);
-
-export const renderPage = (
-  component: React.ReactElement,
-  clearAllMocks = true,
-) => {
-  if (clearAllMocks) {
-    vi.clearAllMocks();
-  }
-
-  return render(<BrowserRouter>{component}</BrowserRouter>);
-};
+export const render = origRender;
 
 export const renderWithRouter = (
-  ui: React.ReactElement,
+  ui?: ReactElement,
   preloadedState?: Partial<RootState>,
+  router: FC | typeof BrowserRouter = BrowserRouter,
 ) => {
-  if (preloadedState) {
-    return renderWithProviders(<BrowserRouter>{ui}</BrowserRouter>, {
-      preloadedState,
-    });
-  } else {
-    return render(<BrowserRouter>{ui}</BrowserRouter>);
-  }
-};
-// preloadedState
-//   ? renderWithProviders(<BrowserRouter>{ui}</BrowserRouter>, {
-//       preloadedState,
-//     })
-//   : render(<BrowserRouter>{ui}</BrowserRouter>);
+  const RouterComponent = router;
 
-export const renderApp = (
-  rootComponent?: React.ReactElement,
-  preloadedState?: Partial<RootState>,
-) => {
-  renderWithProviders(rootComponent ?? <Router />, {
+  return renderWithProviders(<RouterComponent>{ui}</RouterComponent>, {
     preloadedState,
   });
 };
 
-// NOTE: we could also just mock routes for router
+export type RenderOptions = origRenderOptions;

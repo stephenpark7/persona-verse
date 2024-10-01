@@ -1,6 +1,6 @@
 import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
 import { screen, waitFor } from '@testing-library/react';
-import { renderApp } from '@tests/helpers';
+import { renderWithRouter } from '@tests/helpers';
 import { Tweets } from './Tweets';
 
 const jwt = jwtFactory();
@@ -25,7 +25,7 @@ vi.mock('@services', () => ({
 
 describe('Rendering tweets', () => {
   beforeEach(() => {
-    renderApp(<Tweets />, preloadedState);
+    renderWithRouter(<Tweets />, preloadedState);
   });
 
   describe('while loading', () => {
