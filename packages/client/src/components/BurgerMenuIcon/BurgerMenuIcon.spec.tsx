@@ -2,24 +2,24 @@ import { render, screen } from '@tests/helpers';
 import BurgerMenuIconSvg from '@assets/images/burger-menu-icon.svg';
 import { BurgerMenuIcon } from './BurgerMenuIcon';
 
-describe('When rendering the burger menu icon', () => {
+describe('BurgerMenuIcon', () => {
   beforeEach(() => {
     render(<BurgerMenuIcon />);
   });
 
-  it('displays the burger menu icon', () => {
+  it('renders the burger menu icon image', () => {
     expect(
       screen.getByRole('img', { name: 'Burger menu icon' }),
     ).toBeInTheDocument();
   });
 
-  it('displays the burger menu icon image with the correct alt text', () => {
+  it('renders the burger menu icon image with the correct alt text', () => {
     expect(
       screen.getByRole('img', { name: 'Burger menu icon' }),
     ).toHaveAttribute('alt', 'Burger menu icon');
   });
 
-  it('displays the burger menu icon image with the correct source', () => {
+  it('renders the burger menu icon image with the correct src', () => {
     expect(
       screen.getByRole('img', { name: 'Burger menu icon' }),
     ).toHaveAttribute('src', BurgerMenuIconSvg);
