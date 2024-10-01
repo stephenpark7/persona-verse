@@ -38,7 +38,38 @@ describe('When rendering the form component', () => {
 
     it('does not display the log in button', () => {
       expect(
-        screen.queryByRole('button', { name: 'Log in' }),
+        screen.queryByRole('button', { name: 'form-login-button' }),
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  describe('and the type is login', () => {
+    beforeEach(() => {
+      render(
+        <Form
+          type={'login'}
+          handleFormSubmit={handleFormSubmit}
+          setFormData={setFormData}
+          formData={formData}
+        />,
+      );
+    });
+
+    it('displays the form', () => {
+      expect(
+        screen.getByRole('textbox', { name: 'Username' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole('textbox', { name: 'Email' }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'form-login-button' }),
+      ).toBeInTheDocument();
+    });
+
+    it('does not display the sign up button', () => {
+      expect(
+        screen.queryByRole('button', { name: 'form-signup-button' }),
       ).not.toBeInTheDocument();
     });
   });
