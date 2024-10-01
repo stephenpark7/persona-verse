@@ -4,7 +4,7 @@ import { Tweet } from '@components';
 
 const { id, message, createdAt, date, User } = tweetFactory();
 
-describe('When rendering a tweet', () => {
+describe('Tweet', () => {
   beforeEach(() => {
     render(
       <Tweet id={id} message={message} createdAt={createdAt} User={User} />,
