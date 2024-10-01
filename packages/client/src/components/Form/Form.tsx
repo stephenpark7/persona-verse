@@ -23,49 +23,47 @@ export const Form: FC<FormProps> = ({
     >
       <div className="flex flex-col gap-3">
         <div className="flex">
-          <Label label="Username" />
+          <Label value="Username" />
           <Input
-            label="Username"
             type="text"
+            label="Username"
             value={formData.username}
             formDataState={{ formData, setFormData }}
           />
         </div>
         {type === 'login' ? null : (
           <div className="flex">
-            <Label label="Email" />
+            <Label value="Email" />
             <Input
-              label="Email"
               type="text"
+              label="Email"
               value={formData.email}
               formDataState={{ formData, setFormData }}
             />
           </div>
         )}
         <div className="flex mb-2">
-          <Label label="Password" />
+          <Label value="Password" />
           <Input
-            label="Password"
             type="password"
+            label="Password"
             value={formData.password}
             formDataState={{ formData, setFormData }}
           />
         </div>
         {type === 'login' ? (
           <Button
+            type="submit"
             name="form-login"
             overrideCSS="w-full"
-            aria-label="Log in"
-            type="submit"
           >
             Log in
           </Button>
         ) : (
           <Button
+            type="submit"
             name="form-signup"
             overrideCSS="w-full"
-            aria-label="Sign up"
-            type="submit"
           >
             Create account
           </Button>

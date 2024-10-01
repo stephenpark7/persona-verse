@@ -3,12 +3,12 @@ import type { InputProps } from '@types';
 import { inputProps, requestBody } from '@schemas';
 
 export const Input: FC<InputProps> = ({
-  label,
   type,
+  label,
   value,
   formDataState,
 }) => {
-  inputProps.parse({ label, type, value, formDataState });
+  inputProps.parse({ type, label, value, formDataState });
 
   const { formData, setFormData } = formDataState;
 

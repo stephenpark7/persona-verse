@@ -3,13 +3,13 @@ import { Form } from '@components';
 
 const handleFormSubmit = vi.fn();
 
+const setFormData = vi.fn();
+
 const formData = {
   username: '',
   email: '',
   password: '',
 };
-
-const setFormData = vi.fn();
 
 describe('When rendering the form component', () => {
   describe('and the type is signup', () => {
@@ -18,8 +18,8 @@ describe('When rendering the form component', () => {
         <Form
           type={'signup'}
           handleFormSubmit={handleFormSubmit}
-          formData={formData}
           setFormData={setFormData}
+          formData={formData}
         />,
       );
     });
