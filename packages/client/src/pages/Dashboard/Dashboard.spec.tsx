@@ -28,5 +28,17 @@ describe('Dashboard', () => {
     it('renders the dashboard', () => {
       expect(screen.getByTestId('dashboard')).toBeInTheDocument();
     });
+
+    it('renders the header', () => {
+      expect(screen.getByLabelText('header')).toBeInTheDocument();
+    });
+
+    it('renders the welcome message', () => {
+      expect(screen.getByLabelText('welcome-message')).toBeInTheDocument();
+    });
+
+    it('renders the content section', () => {
+      expect(screen.getByTestId('content-section')).toBeInTheDocument();
+    });
   });
 });
