@@ -27,7 +27,7 @@ export const Login: FC = () => {
   };
 
   return (
-    <div>
+    <div data-testid="login">
       <div className="my-5">
         <div className="flex flex-col">
           <Header title="Log in" />
@@ -47,6 +47,7 @@ export const Login: FC = () => {
           <p className="text-sm mt-4">
             {"Haven't signed up yet? "}
             <Link
+              aria-label="signup-link"
               to="/signup"
               className="text-blue-500 hover:underline"
             >
