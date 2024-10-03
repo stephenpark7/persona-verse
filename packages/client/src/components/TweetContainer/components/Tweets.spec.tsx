@@ -1,6 +1,5 @@
+import { screen, waitFor, renderWithRouter } from '@tests/helpers';
 import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
-import { screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from '@tests/helpers';
 import { Tweets } from './Tweets';
 
 const jwt = jwtFactory();
@@ -13,11 +12,6 @@ const preloadedState = preloadedStateFactory({
     },
   },
 });
-
-vi.mock('@components', () => ({
-  Tweet: () => <div data-testid="tweet" />,
-  Navbar: () => <div data-testid="navbar" />,
-}));
 
 vi.mock('@services', () => ({
   getTweets: async () => tweets,

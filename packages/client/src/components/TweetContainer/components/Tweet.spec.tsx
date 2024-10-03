@@ -11,6 +11,10 @@ describe('Tweet', () => {
     );
   });
 
+  it('renders the component', () => {
+    expect(screen.getByTestId('tweet')).toBeInTheDocument();
+  });
+
   it('displays the display name', () => {
     expect(screen.getByLabelText('display-name')).toHaveTextContent(
       User.username,
