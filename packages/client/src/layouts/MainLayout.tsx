@@ -9,5 +9,12 @@ interface MainLayoutProps {
 export const MainLayout: FC<MainLayoutProps> = ({ children, title }) => {
   useDocumentTitle(title);
 
-  return <div className="mx-4 my-6">{children}</div>;
+  return (
+    <div
+      data-testid="layout"
+      className="mx-4 my-6"
+    >
+      {children}
+    </div>
+  );
 };
