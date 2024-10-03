@@ -37,5 +37,6 @@ describe('TweetInput', () => {
     });
     fireEvent.keyUp(input, { key: 'Enter' });
     expect(setTweetInputMock).toHaveBeenCalledWith('test');
+    expect(onPostTweetMock).toHaveBeenCalled();
   });
 });
