@@ -22,6 +22,10 @@ describe('Tweets', () => {
     renderWithRouter(<Tweets />, preloadedState);
   });
 
+  it('renders the component', () => {
+    expect(screen.getByTestId('tweets')).toBeInTheDocument();
+  });
+
   describe('while loading', () => {
     it('displays loading message', () => {
       expect(screen.getByText('Loading...')).toBeInTheDocument();
