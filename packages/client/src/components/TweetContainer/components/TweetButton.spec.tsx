@@ -3,7 +3,7 @@ import { TweetButton } from './TweetButton';
 
 const mockOnPostTweet = vi.fn();
 
-describe('When rendering the TweetButton', () => {
+describe('TweetButton', () => {
   beforeEach(() => {
     render(<TweetButton onPostTweet={mockOnPostTweet} />);
   });

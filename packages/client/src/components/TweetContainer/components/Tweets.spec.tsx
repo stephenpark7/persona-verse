@@ -17,7 +17,7 @@ vi.mock('@services', () => ({
   getTweets: async () => tweets,
 }));
 
-describe('Rendering tweets', () => {
+describe('Tweets', () => {
   beforeEach(() => {
     renderWithRouter(<Tweets />, preloadedState);
   });
