@@ -1,4 +1,4 @@
-import { screen, renderWithRouter } from '@tests/helpers';
+import { screen, renderWithRouter, waitFor } from '@tests/helpers';
 import { preloadedStateFactory } from '@factories';
 import { Login } from '@pages';
 
@@ -33,6 +33,16 @@ describe('Login', () => {
       expect(screen.getByLabelText('signup-link')).toBeInTheDocument();
     });
   });
-});
 
-// TODO: redirect to dashboard if user is logged in
+  describe('while logged in', () => {
+    beforeEach(() => {
+      const preloadedState = preloadedStateFactory();
+
+      renderWithRouter(<Login />, preloadedState);
+    });
+
+    it('redirects to home page', () => {
+      waitFor(() => expect(window.location.pathname).toBe('/'));
+    });
+  });
+});
