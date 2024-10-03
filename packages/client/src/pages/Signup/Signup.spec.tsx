@@ -1,8 +1,7 @@
-import { screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from '@tests/helpers';
-import { Signup } from '@pages';
-import { APP_TITLE } from '@utils';
+import { screen, waitFor, renderWithRouter } from '@tests/helpers';
 import { jwtFactory, preloadedStateFactory } from '@factories';
+import { APP_TITLE } from '@utils';
+import { Signup } from '@pages';
 
 describe('Signup page', () => {
   describe('while logged out', () => {
