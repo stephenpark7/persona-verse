@@ -1,5 +1,6 @@
 import { screen, renderWithRouter, waitFor } from '@tests/helpers';
 import { preloadedStateFactory } from '@factories';
+import { APP_TITLE } from '@utils';
 import { Login } from '@pages';
 
 describe('Login', () => {
@@ -15,6 +16,11 @@ describe('Login', () => {
 
     it('renders login component', () => {
       expect(screen.getByTestId('login')).toBeInTheDocument();
+    });
+
+    // waitFor not working
+    it.skip('has correct title', () => {
+      waitFor(() => expect(document.title).toBe(`${APP_TITLE} - Log in`));
     });
 
     it('renders header component', () => {

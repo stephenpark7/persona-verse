@@ -27,7 +27,7 @@ export const Signup: FC = () => {
   };
 
   return (
-    <div>
+    <div data-testid="signup">
       <div className="my-5">
         <div className="flex flex-col">
           <Header title="Sign up" />
