@@ -1,9 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@tests/helpers';
 import { TweetButton } from './TweetButton';
 
-describe('When rendering the TweetButton', () => {
-  const mockOnPostTweet = vi.fn();
+const mockOnPostTweet = vi.fn();
 
+describe('When rendering the TweetButton', () => {
   beforeEach(() => {
     render(<TweetButton onPostTweet={mockOnPostTweet} />);
   });
@@ -13,8 +13,7 @@ describe('When rendering the TweetButton', () => {
   });
 
   it('calls handleClickEvent on button click', () => {
-    const button = screen.getByText('Tweet');
-    fireEvent.click(button);
+    fireEvent.click(screen.getByText('Tweet'));
     expect(mockOnPostTweet).toHaveBeenCalled();
   });
 });
