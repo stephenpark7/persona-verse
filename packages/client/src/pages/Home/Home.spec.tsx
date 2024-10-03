@@ -19,7 +19,7 @@ describe('When rendering the home page', () => {
     });
 
     it('renders WelcomeMessage component', () => {
-      expect(screen.getByTestId('welcome-message')).toBeInTheDocument();
+      expect(screen.getByLabelText('welcome-message')).toBeInTheDocument();
     });
 
     it('renders ContentSection component', () => {
