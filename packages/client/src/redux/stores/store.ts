@@ -4,7 +4,6 @@ import { Reducer, reducer } from '@schemas';
 import { tokenStorage } from '@utils';
 import * as reducers from '../reducers';
 import { tweetAPI } from '../services';
-import { setDocTitleReducer } from '../reducers/docTitleReducers';
 
 export const initialState: Reducer = {
   user: {
@@ -39,7 +38,7 @@ export const browserSlice = createSlice({
   name: 'browser',
   initialState: initialState.browser,
   reducers: {
-    setDocTitle: setDocTitleReducer,
+    setDocTitle: reducers.setDocTitleReducer,
   },
 });
 

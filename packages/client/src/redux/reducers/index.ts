@@ -1,3 +1,4 @@
+export * from './docTitleReducers';
 export * from './jwtReducers';
-export * from './tweetReducers';
 export * from './profileReducers';
+export * from './tweetReducers';
