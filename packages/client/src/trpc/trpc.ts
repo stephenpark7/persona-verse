@@ -147,7 +147,7 @@ export const createTweet: TrpcFunction = async ({
   message,
 }): Promise<JsonResponse> => {
   if (!message) {
-    throw new Error('Failed to create tweet');
+    throw new Error('Failed to create tweet.');
   }
 
   return await trpc.createTweet.mutate({
