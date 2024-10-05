@@ -44,8 +44,8 @@ export const browserSlice = createSlice({
 
 const rootReducer = combineReducers({
   user: userSlice.reducer,
-  tweetAPI: tweetAPI.reducer,
   browser: browserSlice.reducer,
+  tweetAPI: tweetAPI.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
