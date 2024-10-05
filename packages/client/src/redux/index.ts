@@ -1,4 +1,3 @@
-export * from './actions';
 export * from './providers';
 export * from './reducers';
 export * from './selectors';

@@ -34,6 +34,9 @@ export const userSlice = createSlice({
   },
 });
 
+export const { setJwt, clearJwt, setTweets, addTweet, setProfile } =
+  userSlice.actions;
+
 export const browserSlice = createSlice({
   name: 'browser',
   initialState: initialState.browser,
@@ -41,6 +44,8 @@ export const browserSlice = createSlice({
     setDocTitle: reducers.setDocTitleReducer,
   },
 });
+
+export const { setDocTitle } = browserSlice.actions;
 
 const rootReducer = combineReducers({
   user: userSlice.reducer,
