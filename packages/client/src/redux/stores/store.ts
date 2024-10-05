@@ -5,6 +5,8 @@ import { tokenStorage } from '@utils';
 import * as reducers from '../reducers';
 import { tweetAPI } from '../services';
 
+// TODO: use thunks for async actions
+
 export const initialState: Reducer = {
   user: {
     value: {
