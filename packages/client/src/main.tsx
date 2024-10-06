@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 
-export const render = () => {
+const render = () => {
   const root = document.getElementById('root') as HTMLElement;
 
   if (root) {

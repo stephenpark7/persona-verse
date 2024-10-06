@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import type { Jwt } from '@schemas';
+import { type Jwt, jwtSchema } from '@schemas';
 import { tweetAPI } from '@redux';
 
 interface handlePostTweet {
@@ -28,6 +28,8 @@ export const submitTweet = async ({
     toast.error('Please login to post a tweet.');
     return;
   }
+
+  jwtSchema.parse(jwt);
 
   postTweet({
     jwt,
