@@ -8,6 +8,8 @@ In Progress:
   ☐ Refactor backend @started(24-07-20 21:05)
   ☐ Refactor frontend @started(24-07-20 21:15)
 To-Do:
+  ☐ Look into MSW for mocking requests
+    ☐ Add spec for clientside tRPC
   ☐ Should automated test on commit
   ☐ Fix broken tests
   ☐ Refactor more
