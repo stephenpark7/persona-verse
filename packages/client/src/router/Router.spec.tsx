@@ -1,5 +1,9 @@
 import { screen, renderWithRouter } from '@tests/helpers';
-import { jwtFactory, preloadedStateFactory, tweetFactory } from '@tests/factories';
+import {
+  jwtFactory,
+  preloadedStateFactory,
+  tweetFactory,
+} from '@tests/factories';
 import { Router } from '@router';
 import { waitFor } from '@testing-library/react';
 
