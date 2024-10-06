@@ -1,6 +1,5 @@
-import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
-import { screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from '@tests/helpers';
+import { screen, waitFor, renderWithRouter } from '@tests/helpers';
+import { jwtFactory, preloadedStateFactory, tweetFactory } from '@tests/factories';
 import { Tweets } from './Tweets';
 
 const jwt = jwtFactory();
@@ -14,18 +13,17 @@ const preloadedState = preloadedStateFactory({
   },
 });
 
-vi.mock('@components', () => ({
-  Tweet: () => <div data-testid="tweet" />,
-  Navbar: () => <div data-testid="navbar" />,
-}));
-
 vi.mock('@services', () => ({
   getTweets: async () => tweets,
 }));
 
-describe('Rendering tweets', () => {
+describe('Tweets', () => {
   beforeEach(() => {
     renderWithRouter(<Tweets />, preloadedState);
+  });
+
+  it('renders the component', () => {
+    expect(screen.getByTestId('tweets')).toBeInTheDocument();
   });
 
   describe('while loading', () => {

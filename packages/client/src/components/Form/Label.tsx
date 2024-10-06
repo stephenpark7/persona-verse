@@ -6,18 +6,19 @@ const labelSchema = z.string();
 type Label = z.infer<typeof labelSchema>;
 
 interface InputProps {
-  label: Label;
+  value: Label;
 }
 
-export const Label: FC<InputProps> = ({ label }) => {
-  labelSchema.parse(label);
+export const Label: FC<InputProps> = ({ value }) => {
+  labelSchema.parse(value);
 
   return (
     <label
+      aria-label="label"
       className="min-w-28 font-medium"
-      htmlFor={label}
+      htmlFor={value}
     >
-      {label}
+      {value}
     </label>
   );
 };

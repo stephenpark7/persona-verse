@@ -9,10 +9,10 @@ import { observable } from '@trpc/server/observable';
 import type { AppRouter } from 'server/src/trpc';
 import {
   type JsonResponse,
+  type Jwt,
+  type TrpcFunction,
   registerFormFields,
   loginFormFields,
-  type Jwt,
-  TrpcFunction,
 } from '@schemas';
 import { apiConfig } from '@utils';
 import { clearJwt, setJwt, store, tweetAPI } from '@redux';
@@ -147,7 +147,7 @@ export const createTweet: TrpcFunction = async ({
   message,
 }): Promise<JsonResponse> => {
   if (!message) {
-    throw new Error('Failed to create tweet');
+    throw new Error('Failed to create tweet.');
   }
 
   return await trpc.createTweet.mutate({

@@ -1,20 +1,11 @@
-import { combineReducers } from 'redux';
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
+import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit';
 import { Reducer, reducer } from '@schemas';
 import { tokenStorage } from '@utils';
-import {
-  setJwtReducer,
-  clearJwtReducer,
-  addTweetReducer,
-  setTweetsReducer,
-  setProfileReducer,
-} from '../reducers';
+import * as reducers from '../reducers';
 import { tweetAPI } from '../services';
-import { useDispatch } from 'react-redux';
-import { setDocTitleReducer } from '../reducers/docTitleReducers';
-// import { routes } from '@pages';
 
-// TODO: create reducer for profile
+// TODO: use thunks for async actions
 
 export const initialState: Reducer = {
   user: {
@@ -26,7 +17,7 @@ export const initialState: Reducer = {
   },
   browser: {
     value: {
-      docTitle: 'PersonaVerse', //routes[routes.length - 1].title,
+      docTitle: 'PersonaVerse',
     },
   },
 };
@@ -37,26 +28,31 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: initialState.user,
   reducers: {
-    setJwt: setJwtReducer,
-    clearJwt: clearJwtReducer,
-    setTweets: setTweetsReducer,
-    addTweet: addTweetReducer,
-    setProfile: setProfileReducer,
+    setJwt: reducers.setJwtReducer,
+    clearJwt: reducers.clearJwtReducer,
+    setTweets: reducers.setTweetsReducer,
+    addTweet: reducers.addTweetReducer,
+    setProfile: reducers.setProfileReducer,
   },
 });
+
+export const { setJwt, clearJwt, setTweets, addTweet, setProfile } =
+  userSlice.actions;
 
 export const browserSlice = createSlice({
   name: 'browser',
   initialState: initialState.browser,
   reducers: {
-    setDocTitle: setDocTitleReducer,
+    setDocTitle: reducers.setDocTitleReducer,
   },
 });
 
+export const { setDocTitle } = browserSlice.actions;
+
 const rootReducer = combineReducers({
   user: userSlice.reducer,
-  tweetAPI: tweetAPI.reducer,
   browser: browserSlice.reducer,
+  tweetAPI: tweetAPI.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

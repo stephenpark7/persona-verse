@@ -3,7 +3,10 @@ import { Button } from '@components';
 
 export const Buttons: FC = () => {
   return (
-    <div className="flex gap-2">
+    <div
+      data-testid="buttons"
+      className="flex gap-2"
+    >
       <Button
         name="signup"
         link="/signup"

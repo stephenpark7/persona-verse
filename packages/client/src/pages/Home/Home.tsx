@@ -6,7 +6,7 @@ export const Home: FC = () => {
   const { jwt, isLoggedIn } = useUserState();
 
   return !isLoggedIn ? (
-    <>
+    <div data-testid="home">
       <Header title="PersonaVerse" />
       <WelcomeMessage
         jwt={jwt}
@@ -16,6 +16,6 @@ export const Home: FC = () => {
         jwt={jwt}
         isLoggedIn={isLoggedIn}
       />
-    </>
+    </div>
   ) : null;
 };

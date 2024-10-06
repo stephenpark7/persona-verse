@@ -5,7 +5,6 @@ import { Item } from './Item';
 import { CloseButton } from './CloseButton';
 
 interface DropdownProps {
-  isBurgerMenuOpen: boolean;
   closeBurgerMenu: () => void;
 }
 
@@ -19,7 +18,7 @@ export const Dropdown: FC<DropdownProps> = ({ closeBurgerMenu }) => {
         <ul className="flex flex-col items-end justify-end gap-3">
           <Item>
             <Link
-              data-testid="navbar-dropdown-dashboard-link"
+              aria-label="navbar-dropdown-dashboard-link"
               to="/"
             >
               Dashboard
@@ -27,7 +26,7 @@ export const Dropdown: FC<DropdownProps> = ({ closeBurgerMenu }) => {
           </Item>
           <Item>
             <Link
-              data-testid="navbar-dropdown-profile-link"
+              aria-label="navbar-dropdown-profile-link"
               to="/profile"
             >
               Profile

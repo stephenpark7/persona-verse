@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, JSX } from 'react';
 
 interface TweetInputProps {
   state: [string, React.Dispatch<React.SetStateAction<string>>];
@@ -8,7 +8,7 @@ interface TweetInputProps {
 export const TweetInput: FC<TweetInputProps> = ({
   state,
   onPostTweet,
-}): React.JSX.Element => {
+}): JSX.Element => {
   const [value, setValue] = state;
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {

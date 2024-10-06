@@ -1,11 +1,10 @@
 import type { ReactElement, FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { type RootState, renderWithProviders } from '@redux';
 import {
-  RenderOptions as origRenderOptions,
+  type RenderOptions as origRenderOptions,
   render as origRender,
 } from '@testing-library/react';
-import { type RootState, renderWithProviders } from '@redux';
-
 export const render = origRender;
 
 export const renderWithRouter = (

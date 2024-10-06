@@ -1,4 +1,4 @@
-import { jwtFactory } from '@factories';
+import { jwtFactory } from '@tests/factories';
 import { getDisplayName } from './user';
 
 describe('getDisplayName', () => {

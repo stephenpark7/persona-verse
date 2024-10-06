@@ -5,9 +5,7 @@ const closeBurgerMenu = vi.fn();
 
 describe('Dropdown', () => {
   beforeEach(() => {
-    renderWithRouter(
-      <Dropdown isBurgerMenuOpen={false} closeBurgerMenu={closeBurgerMenu} />,
-    );
+    renderWithRouter(<Dropdown closeBurgerMenu={closeBurgerMenu} />);
   });
 
   it('renders the dropdown', () => {
@@ -16,15 +14,14 @@ describe('Dropdown', () => {
 
   it('renders a link to the dashboard', () => {
     expect(
-      screen.getByTestId('navbar-dropdown-dashboard-link'),
+      screen.getByLabelText('navbar-dropdown-dashboard-link'),
     ).toHaveAttribute('href', '/');
   });
 
   it('renders a link to the profile', () => {
-    expect(screen.getByTestId('navbar-dropdown-profile-link')).toHaveAttribute(
-      'href',
-      '/profile',
-    );
+    expect(
+      screen.getByLabelText('navbar-dropdown-profile-link'),
+    ).toHaveAttribute('href', '/profile');
   });
 
   it('renders a logout button', () => {

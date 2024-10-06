@@ -30,10 +30,7 @@ export const Navbar: FC = () => {
     >
       <Logo />
       {isBurgerMenuOpen ? (
-        <Dropdown
-          isBurgerMenuOpen={isBurgerMenuOpen}
-          closeBurgerMenu={() => setIsBurgerMenuOpen(false)}
-        />
+        <Dropdown closeBurgerMenu={() => setIsBurgerMenuOpen(false)} />
       ) : (
         <BurgerMenu setIsBurgerMenuOpen={setIsBurgerMenuOpen} />
       )}

@@ -7,7 +7,10 @@ export const Tweet: FC<TweetProps> = ({ message, createdAt, User }) => {
   const tweetDate = getMonthAndDay(createdAt);
 
   return (
-    <div className="flex flex-col">
+    <div
+      data-testid="tweet"
+      className="flex flex-col"
+    >
       <div>
         <span
           aria-label="display-name"

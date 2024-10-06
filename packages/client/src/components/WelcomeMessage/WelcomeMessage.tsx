@@ -17,7 +17,7 @@ export const WelcomeMessage: FC<WelcomeMessageProps> = ({
 
   return (
     <p
-      data-testid="welcome-message"
+      aria-label="welcome-message"
       className="text-lg mb-4"
     >
       {message}

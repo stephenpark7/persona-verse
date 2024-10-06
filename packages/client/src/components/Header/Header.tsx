@@ -7,7 +7,7 @@ export interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ title }) => {
   return (
     <h1
-      data-testid="header"
+      aria-label="header"
       className="font-semibold text-3xl mb-4"
     >
       {title}
