@@ -1,5 +1,5 @@
 import { renderWithRouter, screen } from '@tests/helpers';
-import { preloadedStateFactory } from '@factories';
+import { preloadedStateFactory } from '@tests/factories';
 import { APP_TITLE } from '@utils';
 import { Header } from './';
 
@@ -9,6 +9,6 @@ describe('When rendering the header', () => {
   });
 
   it('displays the title', () => {
-    expect(screen.getByTestId('header')).toHaveTextContent(APP_TITLE);
+    expect(screen.getByLabelText('header')).toHaveTextContent(APP_TITLE);
   });
 });

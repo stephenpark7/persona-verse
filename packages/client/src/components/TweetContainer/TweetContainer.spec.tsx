@@ -1,5 +1,5 @@
 import { screen, fireEvent, renderWithRouter } from '@tests/helpers';
-import { jwtFactory, preloadedStateFactory } from '@factories';
+import { jwtFactory, preloadedStateFactory } from '@tests/factories';
 import * as utils from '@utils';
 import { TweetContainer } from '@components';
 
@@ -28,7 +28,9 @@ describe('TweetContainer', () => {
     });
 
     it('renders TweetButton component', () => {
-      expect(screen.getByTestId('tweet-button')).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'tweet-button' }),
+      ).toBeInTheDocument();
     });
 
     it('renders Tweets component', () => {
@@ -37,7 +39,7 @@ describe('TweetContainer', () => {
 
     describe('when the tweet button is clicked', () => {
       beforeEach(() => {
-        fireEvent.click(screen.getByTestId('tweet-button'));
+        fireEvent.click(screen.getByRole('button', { name: 'tweet-button' }));
       });
 
       it('calls handlePostTweet', () => {

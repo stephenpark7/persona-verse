@@ -1,32 +1,39 @@
 In Progress:
-  ☐ Remove shared types in favor for ZOD types @started(24-09-25 05:14)
-  ☐ Refactor, clean up unused code @started(24-09-25 05:14)
-  ☐ Add test for refreshing tokens
-  ☐ Add more tests @started(24-08-21 02:24)
-  ☐ Add more tRPC integration @started(24-08-21 02:25)
-  ☐ Refactor backend @started(24-07-20 21:05)
-  ☐ Refactor frontend @started(24-07-20 21:15)
+  Frontend:
+    ☐ Add profile page @started(24-10-05 21:35)
+      ☐ Add profile picture
+        ☐ Add bio
+        ☐ Add settings
+          ☐ Add Dark mode
+    ☐ Add Pagination for tweets/
+    ☐ Add CSS Animations on tweets/create
+  Backend:
+    ☐ Add Forgot your password
+    ☐ Add test for refreshing tokens
+    ☐ Refactor backend @started(24-07-20 21:05)
 To-Do:
-  ☐ Should automated test on commit
-  ☐ Fix broken tests
-  ☐ Refactor more
-  ☐ Adding loading spinners
+  Frontend:
+  ☐ Look into MSW for mocking requests
+    ☐ Add spec for clientside tRPC
   ☐ Check token is expired on client before sending a request
   ☐ Tests for local storage
+  ☐ Adding loading spinners
   ☐ Investigate, if still an issue (not sure?): Fix issue where it fails to resend the request after getting a new token
-  ☐ Add profile page
-    ☐ Add profile picture
-      ☐ Add bio
-      ☐ Add settings
-        ☐ Add Dark mode
-  ☐ Add Forgot your password
-  ☐ Add Pagination for tweets/get
-  ☐ Add CSS Animations on tweets/create
-  ☐ Add test for refresh token
-  ☐ Amend commit messages to be more descriptive
-  ☐ Migrate DB from Sequelize to TypeORM
-  ☐ Use eslint in root instead of in each package
+  Backend:
+    ☐ Migrate DB from Sequelize to TypeORM
+  General:
+    ☐ Should run npm test on commit, if tests fail, don't commit
+    ☐ Amend commit messages to be more descriptive
+    ☐ Use eslint in root instead of in each package
 Done:
+  ✔ Refactor more @done(24-10-05 21:35)
+  ✔ Fix broken tests @done(24-10-05 21:35)
+  ✔ Add more tests @started(24-08-21 02:24) @done(24-10-05 21:34) @lasted(6w3d19h10m30s)
+  ✔ Refactor frontend @started(24-07-20 21:15) @done(24-10-05 21:34) @lasted(11w19m26s)
+  ✔ Add more tRPC integration @started(24-08-21 02:25) @done(24-10-05 21:34) @lasted(6w3d19h9m20s)
+  ✔ Remove shared types in favor for ZOD types @started(24-09-25 05:14) @done(24-10-05 21:34) @lasted(1w3d16h20m5s)
+  ✔ Refactor, clean up unused code @started(24-09-25 05:14) @done(24-10-05 21:33) @lasted(1w3d16h19m55s)
+  ✔ Try not to use screen.getByTestId() in favor of screen.getByRole() or screen.getByLabelText() @started(24-09-25 05:14) @done(24-10-05 21:33) @lasted(1w3d16h19m40s)
   ✔ Use redux to store title and update it from there @started(24-09-16 10:01) @done(24-09-23 02:47) @lasted(6d16h46m55s)
   ✔ Navbar @started(24-09-19 12:01) @done(24-09-23 02:47) @lasted(3d14h46m50s)
   ✔ Navbar should not appear on landing page @done(24-09-23 02:47)

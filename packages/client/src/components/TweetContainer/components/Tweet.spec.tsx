@@ -1,14 +1,18 @@
 import { render, screen } from '@testing-library/react';
-import { tweetFactory } from '@factories';
+import { tweetFactory } from '@tests/factories';
 import { Tweet } from '@components';
 
 const { id, message, createdAt, date, User } = tweetFactory();
 
-describe('When rendering a tweet', () => {
+describe('Tweet', () => {
   beforeEach(() => {
     render(
       <Tweet id={id} message={message} createdAt={createdAt} User={User} />,
     );
+  });
+
+  it('renders the component', () => {
+    expect(screen.getByTestId('tweet')).toBeInTheDocument();
   });
 
   it('displays the display name', () => {

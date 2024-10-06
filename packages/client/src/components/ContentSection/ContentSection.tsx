@@ -6,13 +6,13 @@ export const ContentSection: FC<ContentSectionProps> = ({
   jwt,
   isLoggedIn,
 }) => {
-  const content = isLoggedIn ? (
+  const content = !isLoggedIn ? (
+    <Buttons />
+  ) : (
     <TweetContainer
       jwt={jwt}
       isLoggedIn={isLoggedIn}
     />
-  ) : (
-    <Buttons />
   );
 
   return (

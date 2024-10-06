@@ -1,5 +1,5 @@
 import { renderWithRouter, screen, fireEvent } from '@tests/helpers';
-import { preloadedStateFactory } from '@factories';
+import { preloadedStateFactory } from '@tests/factories';
 import { logout } from '@services';
 import { LogoutButton } from '@components';
 

@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Tweet } from '@schemas';
+import { type Jwt, Tweet } from '@schemas';
 import { getTweets, postTweet } from '@services';
 import { apiConfig } from '@utils';
-import { Jwt } from '@schemas';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: apiConfig.baseUrl,

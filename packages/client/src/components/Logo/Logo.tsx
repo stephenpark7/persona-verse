@@ -7,7 +7,7 @@ export const Logo = () => {
       className="w-8"
     >
       <Link
-        data-testid="logo-link"
+        aria-label="logo-link"
         className="w-8 block"
         to="/"
       >

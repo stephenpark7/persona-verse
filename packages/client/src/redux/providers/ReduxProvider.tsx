@@ -1,4 +1,4 @@
-import type { ReactNode, PropsWithChildren, ReactElement } from 'react';
+import type { ReactNode, PropsWithChildren, ReactElement, JSX } from 'react';
 import { Provider } from 'react-redux';
 import { AppStore, RootState, setupStore, store } from '@redux';
 import type { RenderOptions } from '@tests/helpers';
@@ -44,6 +44,6 @@ interface ReduxProviderProps {
 
 export const ReduxProvider = ({
   children,
-}: ReduxProviderProps): React.JSX.Element => {
+}: ReduxProviderProps): JSX.Element => {
   return <Provider store={store}>{children}</Provider>;
 };

@@ -1,14 +1,18 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { TweetInput } from '.';
 
-describe('When rendering the tweet input', () => {
-  const mockSetTweetInput = vi.fn();
-  const tweetInput = '';
-  const setTweetInput = mockSetTweetInput;
+const setTweetInputMock = vi.fn();
+const onPostTweetMock = vi.fn();
+const tweetInput = '';
+const setTweetInput = setTweetInputMock;
 
+describe('TweetInput', () => {
   beforeEach(() => {
     render(
-      <TweetInput state={[tweetInput, setTweetInput]} onPostTweet={vi.fn()} />,
+      <TweetInput
+        state={[tweetInput, setTweetInput]}
+        onPostTweet={onPostTweetMock}
+      />,
     );
   });
 
@@ -23,7 +27,7 @@ describe('When rendering the tweet input', () => {
     fireEvent.change(input, {
       target: { value: 'test' },
     });
-    expect(mockSetTweetInput).toHaveBeenCalledWith('test');
+    expect(setTweetInputMock).toHaveBeenCalledWith('test');
   });
 
   it('calls handleKeyUp', () => {
@@ -32,6 +36,7 @@ describe('When rendering the tweet input', () => {
       target: { value: 'test' },
     });
     fireEvent.keyUp(input, { key: 'Enter' });
-    expect(mockSetTweetInput).toHaveBeenCalledWith('test');
+    expect(setTweetInputMock).toHaveBeenCalledWith('test');
+    expect(onPostTweetMock).toHaveBeenCalled();
   });
 });
