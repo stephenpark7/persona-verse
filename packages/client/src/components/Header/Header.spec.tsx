@@ -1,5 +1,5 @@
 import { renderWithRouter, screen } from '@tests/helpers';
-import { preloadedStateFactory } from '@factories';
+import { preloadedStateFactory } from '@tests/factories';
 import { APP_TITLE } from '@utils';
 import { Header } from './';
 

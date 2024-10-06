@@ -1,5 +1,5 @@
 import { screen, fireEvent, renderWithRouter } from '@tests/helpers';
-import { jwtFactory, preloadedStateFactory } from '@factories';
+import { jwtFactory, preloadedStateFactory } from '@tests/factories';
 import * as utils from '@utils';
 import { TweetContainer } from '@components';
 

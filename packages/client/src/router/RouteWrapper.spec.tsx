@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { renderWithRouter } from '@tests/helpers';
-import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
+import { jwtFactory, preloadedStateFactory, tweetFactory } from '@tests/factories';
 import { RouteWrapper } from './RouteWrapper';
 
 const title = 'PersonaVerse - Dashboard';

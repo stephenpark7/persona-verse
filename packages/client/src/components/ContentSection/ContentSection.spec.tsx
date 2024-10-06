@@ -1,5 +1,5 @@
 import { renderWithRouter, screen } from '@tests/helpers';
-import { jwtFactory, preloadedStateFactory } from '@factories';
+import { jwtFactory, preloadedStateFactory } from '@tests/factories';
 import { ContentSection } from '@components';
 
 describe('When rendering the content section', () => {

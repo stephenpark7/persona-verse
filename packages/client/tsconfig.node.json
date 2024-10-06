@@ -41,10 +41,10 @@
       "@utils": ["./src/utils/index"],
       "@pages": ["./src/pages/index"],
       "@services": ["./src/services/index"],
-      "@factories": ["./src/tests/factories/index"],
-      "@matchers": ["./src/tests/matchers/index"],
       "@layouts": ["./src/layouts/index"],
       "@router": ["./src/router/index"],
+      "@tests/factories": ["./src/tests/factories/index"],
+      "@tests/matchers": ["./src/tests/matchers/index"],
       "@tests/helpers": ["./src/tests/helpers/index"],
       "@tests/utils": ["./src/tests/utils/index"],
       "@shared/types": ["../shared/src/types/index"]

@@ -1,5 +1,5 @@
 import { screen, waitFor, renderWithRouter } from '@tests/helpers';
-import { jwtFactory, preloadedStateFactory, tweetFactory } from '@factories';
+import { jwtFactory, preloadedStateFactory, tweetFactory } from '@tests/factories';
 import { Tweets } from './Tweets';
 
 const jwt = jwtFactory();

@@ -1,5 +1,5 @@
 import { screen, waitFor, renderWithRouter } from '@tests/helpers';
-import { jwtFactory, preloadedStateFactory } from '@factories';
+import { jwtFactory, preloadedStateFactory } from '@tests/factories';
 import { APP_TITLE } from '@utils';
 import { Signup } from '@pages';
 

@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { renderWithRouter } from '@tests/helpers';
-import { preloadedStateFactory } from '@factories';
+import { preloadedStateFactory } from '@tests/factories';
 import { Home } from '@pages';
 
 describe('Home', () => {

@@ -1,5 +1,5 @@
 import { renderWithRouter, screen } from '@tests/helpers';
-import { jwtFactory, preloadedStateFactory } from '@factories';
+import { jwtFactory, preloadedStateFactory } from '@tests/factories';
 import { WelcomeMessage } from '@components';
 
 const jwt = jwtFactory();

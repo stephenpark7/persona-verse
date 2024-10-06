@@ -1,5 +1,5 @@
 import { screen, renderWithRouter, waitFor } from '@tests/helpers';
-import { preloadedStateFactory } from '@factories';
+import { preloadedStateFactory } from '@tests/factories';
 import { APP_TITLE } from '@utils';
 import { Login } from '@pages';
 
