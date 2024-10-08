@@ -28,22 +28,21 @@ export const userCreate: CreateUserParams = async ({
   const hashedPassword = await hash(password);
 
   await User.create({
-    username: username,
-    email: email,
+    username,
+    email,
     password: hashedPassword,
   });
 
   return { message: 'User created successfully.' };
 };
 
+interface LoginParams {
+  username: string;
+  password: string;
+}
+
 export const userLogin = async (
-  {
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  },
+  { username, password }: LoginParams,
   req: Request,
 ): Promise<
   | {

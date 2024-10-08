@@ -1,4 +1,4 @@
-import { Sequelize, Options } from 'sequelize';
+import { Sequelize, type Options } from 'sequelize';
 
 const sequelizeOptions: Options = {
   database: process.env.DB_NAME,
