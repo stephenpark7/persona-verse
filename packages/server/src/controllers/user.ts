@@ -11,7 +11,7 @@ import {
 } from '@utils';
 import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
 import { CreateUserParams } from '@schemas';
-import type { Jwt, JwtPayload } from '@shared/types';
+import type { AuthenticatedRequest, Jwt, JwtPayload } from '@shared/types';
 
 export const userCreate: CreateUserParams = async ({
   username,
@@ -38,7 +38,7 @@ interface LoginParams {
 
 export const userLogin = async (
   { username, password }: LoginParams,
-  req: Request,
+  req: AuthenticatedRequest,
 ): Promise<
   | {
       message: string;

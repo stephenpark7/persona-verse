@@ -1,8 +1,8 @@
-import { User } from './user.model';
-import { Tweet } from './tweet.model';
-import { RevokedToken } from './revokedToken.model';
-import { RefreshToken } from './refreshToken.model';
-import { UserProfile } from './userProfile.model';
+import { User } from './User';
+import { Tweet } from './Tweet';
+import { RevokedToken } from './RevokedToken';
+import { RefreshToken } from './RefreshToken';
+import { UserProfile } from './UserProfile';
 
 User.hasMany(Tweet);
 User.hasMany(RevokedToken);

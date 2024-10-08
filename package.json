@@ -9,7 +9,11 @@
     "client": "cd packages/client && npm run dev",
     "lint": "cd packages/client && npm run lint && cd ../server && npm run lint",
     "clean": "rm -f package-lock.json && rm -rf node_modules && rm -rf packages/server/node_modules && rm -rf packages/server/dist && rm -rf packages/client/node_modules && rm -rf packages/client/dist",
-    "test": "vitest",
+    "test": "NODE_ENV=test vitest",
+    "test:server": "NODE_ENV=test vitest --run --project server",
+    "test:server:watch": "NODE_ENV=test vitest --project server",
+    "test:client": "NODE_ENV=test vitest --run --project client",
+    "test:client:watch": "NODE_ENV=test vitest --project client",
     "postinstall": "patch-package"
   },
   "workspaces": [

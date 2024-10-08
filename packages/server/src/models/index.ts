@@ -1,6 +1,6 @@
-export * from './user.model';
-export * from './tweet.model';
-export * from './revokedToken.model';
-export * from './refreshToken.model';
-export * from './userProfile.model';
+export * from './User';
+export * from './Tweet';
+export * from './RevokedToken';
+export * from './RefreshToken';
+export * from './UserProfile';
 import './associations';

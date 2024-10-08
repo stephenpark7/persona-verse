@@ -1,8 +1,9 @@
-import { userCreate } from './user';
+import { AuthenticatedRequest } from '@shared/types';
+import { userCreate, userLogin } from './user';
 
 describe('User Controller', () => {
   describe('userCreate', () => {
-    describe('when body is missing fields', () => {
+    describe('when body is missing', () => {
       it('throws an error', async () => {
         const req = {
           username: '',
@@ -17,9 +18,9 @@ describe('User Controller', () => {
     describe('when username is invalid', () => {
       it('throws an error', async () => {
         const req = {
-          username: '-',
-          email: 'tes@test.com',
-          password: 'Password123!',
+          username: '$',
+          email: 'test',
+          password: 'password',
         };
         await expect(() => userCreate(req)).rejects.toThrow(
           'Invalid username.',
@@ -30,8 +31,8 @@ describe('User Controller', () => {
       it('throws an error', async () => {
         const req = {
           username: 'test',
-          email: 'test.com',
-          password: 'Password',
+          email: 'test',
+          password: 'password',
         };
         await expect(() => userCreate(req)).rejects.toThrow(
           'Invalid email address.',
@@ -59,6 +60,80 @@ describe('User Controller', () => {
         };
         const res = await userCreate(req);
         expect(res).toHaveProperty('message', 'User created successfully.');
+      });
+    });
+  });
+
+  describe('userLogin', () => {
+    describe('when body is missing', () => {
+      it('throws an error', async () => {
+        const req = {
+          session: {
+            refreshToken: '',
+          },
+        } as AuthenticatedRequest;
+        await expect(() =>
+          userLogin(
+            {
+              username: '',
+              password: '',
+            },
+            req,
+          ),
+        ).rejects.toThrow('Missing field(s).');
+      });
+    });
+    describe('when username is invalid', () => {
+      it('throws an error', async () => {
+        const req = {
+          session: {
+            refreshToken: '',
+          },
+        } as AuthenticatedRequest;
+        await expect(() =>
+          userLogin(
+            {
+              username: '$',
+              password: 'password',
+            },
+            req,
+          ),
+        ).rejects.toThrow('Invalid username/password.');
+      });
+    });
+    describe('when password is invalid', () => {
+      it('throws an error', async () => {
+        const req = {
+          session: {
+            refreshToken: '',
+          },
+        } as AuthenticatedRequest;
+        await expect(() =>
+          userLogin(
+            {
+              username: 'test',
+              password: 'password',
+            },
+            req,
+          ),
+        ).rejects.toThrow('Invalid credentials.');
+      });
+    });
+    describe('when body is valid', () => {
+      it('logs in a user', async () => {
+        const req = {
+          session: {
+            refreshToken: '',
+          },
+        } as AuthenticatedRequest;
+        const res = await userLogin(
+          {
+            username: 'test',
+            password: 'Password123!',
+          },
+          req,
+        );
+        expect(res).toHaveProperty('message', 'Logged in successfully.');
       });
     });
   });
