@@ -45,4 +45,6 @@ describe('Refresh Controller', () => {
       ).rejects.toThrow('Session expired. Please login again.');
     });
   });
+
+  // TODO: add more tests for edge cases
 });
