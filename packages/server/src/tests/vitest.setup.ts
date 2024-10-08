@@ -1,7 +1,7 @@
-import { sequelize } from '@db';
+import { sequelize, setupDatabase } from '@db';
 
 beforeAll(async () => {
-  await sequelize.sync({ force: true });
+  await setupDatabase();
 });
 
 afterAll(async () => {
