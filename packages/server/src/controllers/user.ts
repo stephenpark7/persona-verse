@@ -1,5 +1,4 @@
 import type { Request } from 'express';
-import { db } from '@db';
 import {
   compare,
   generateAccessToken,
@@ -10,13 +9,9 @@ import {
   validateLogin,
   verifyToken,
 } from '@utils';
-import { RefreshToken } from '@models';
+import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
 import { CreateUserParams } from '@schemas';
 import type { Jwt, JwtPayload } from '@shared/types';
-
-const { User, RevokedToken, UserProfile } = db.models;
-
-// TODO: add try catch block for error handling
 
 export const userCreate: CreateUserParams = async ({
   username,
