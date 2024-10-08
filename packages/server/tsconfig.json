@@ -33,6 +33,7 @@
       "@routes": ["./src/routes/index"],
       "@trpc": ["./src/trpc/index"],
       "@utils": ["./src/utils/index"],
+      "@tests/factories": ["./src/tests/factories/index"],
       "@shared/schemas": ["../shared/src/schemas/index"],
       "@shared/types": ["../shared/src/types/index"]
     }
