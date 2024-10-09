@@ -1,6 +1,7 @@
 import {
   createTRPCProxyClient,
   httpBatchLink,
+  httpLink,
   type Operation,
   TRPCClientError,
   TRPCLink,
@@ -33,7 +34,6 @@ const authLink: TRPCLink<AppRouter> = () => {
             observer.next(value);
           },
           async error(err) {
-            console.log(err);
             const response = err.meta?.response as Response;
             if (response.status === 401 && retryCount < maxRetries) {
               retryCount++;
@@ -62,13 +62,10 @@ const authLink: TRPCLink<AppRouter> = () => {
   };
 };
 
-// NOTE: no batch support for MSW yet
-// const trpcMsw = createTRPCMsw<AppRouter>();
-
 const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     authLink,
-    httpBatchLink({
+    httpLink({
       url: apiConfig.trpcUrl,
       fetch: async (url, options) => {
         const requestURL = new URL(url as string);
@@ -85,7 +82,8 @@ const trpc = createTRPCProxyClient<AppRouter>({
       },
       headers(url) {
         const token = store.getState().user.value.jwt?.token;
-        const path = url.opList[0].path;
+        // const path = url.opList[0].path;
+        const path = url.op.path;
         if (
           !token ||
           path === 'registerUser' ||
