@@ -22,7 +22,13 @@ describe.skip('Refresh Controller', () => {
       });
 
       it('returns a new access token', async () => {
-        res = await refreshJwt(requestFactory(refreshToken));
+        res = await refreshJwt(
+          requestFactory({
+            session: {
+              refreshToken,
+            },
+          }),
+        );
         expect(res).toHaveProperty('message', 'Token refreshed.');
         expect(res).toHaveProperty('jwt');
         expect(res.jwt.expiresAt).toBeGreaterThan(Date.now());
@@ -42,7 +48,13 @@ describe.skip('Refresh Controller', () => {
 
       it('throws an error', async () => {
         await expect(() =>
-          refreshJwt(requestFactory(refreshToken)),
+          refreshJwt(
+            requestFactory({
+              session: {
+                refreshToken,
+              },
+            }),
+          ),
         ).rejects.toThrow('Session expired. Please login again.');
       });
 

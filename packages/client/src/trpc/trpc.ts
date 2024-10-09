@@ -6,6 +6,7 @@ import {
   TRPCLink,
 } from '@trpc/client';
 import { observable } from '@trpc/server/observable';
+import { createTRPCMsw } from 'msw-trpc';
 import type { AppRouter } from 'server/src/trpc';
 import {
   type JsonResponse,
@@ -32,6 +33,7 @@ const authLink: TRPCLink<AppRouter> = () => {
             observer.next(value);
           },
           async error(err) {
+            console.log(err);
             const response = err.meta?.response as Response;
             if (response.status === 401 && retryCount < maxRetries) {
               retryCount++;
@@ -59,6 +61,9 @@ const authLink: TRPCLink<AppRouter> = () => {
     });
   };
 };
+
+// NOTE: no batch support for MSW yet
+// const trpcMsw = createTRPCMsw<AppRouter>();
 
 const trpc = createTRPCProxyClient<AppRouter>({
   links: [

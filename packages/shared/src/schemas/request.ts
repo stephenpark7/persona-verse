@@ -5,6 +5,7 @@ export const request = z.object({
   body: z.unknown().optional(),
   query: z.record(z.string()).optional(),
   params: z.record(z.string()).optional(),
+  url: z.string(),
 });
 
 export const authenticatedRequest = request.extend({

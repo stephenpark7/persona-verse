@@ -1,10 +1,7 @@
-import { JwtPayload } from '@shared/types';
 import type { Request } from 'express';
 
-export const requestFactory = (refreshToken: JwtPayload): Request => {
+export const requestFactory = (override = {}): Request => {
   return {
-    session: {
-      refreshToken,
-    },
+    ...override,
   } as Request;
 };

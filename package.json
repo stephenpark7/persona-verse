@@ -25,6 +25,8 @@
     "patch-package": "^8.0.0"
   },
   "devDependencies": {
+    "msw": "^2.4.9",
+    "msw-trpc": "^2.0.0-beta.1",
     "typescript": "^5.5.4"
   }
 }
