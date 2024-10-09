@@ -1,13 +1,11 @@
 import {
-  createTRPCProxyClient,
-  httpBatchLink,
-  httpLink,
   type Operation,
-  TRPCClientError,
-  TRPCLink,
+  type TRPCLink,
+  type TRPCClientError,
+  createTRPCProxyClient,
+  httpLink,
 } from '@trpc/client';
 import { observable } from '@trpc/server/observable';
-import { createTRPCMsw } from 'msw-trpc';
 import type { AppRouter } from 'server/src/trpc';
 import {
   type JsonResponse,
@@ -18,8 +16,6 @@ import {
 } from '@schemas';
 import { apiConfig } from '@utils';
 import { clearJwt, setJwt, store, tweetAPI } from '@redux';
-
-// TODO: refactor and modularize
 
 let retryCount = 0;
 
@@ -65,6 +61,8 @@ const authLink: TRPCLink<AppRouter> = () => {
 const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     authLink,
+    // NOTE: msw-trpc does not support batch requests yet
+    // httpBatchLink({
     httpLink({
       url: apiConfig.trpcUrl,
       fetch: async (url, options) => {
@@ -82,6 +80,7 @@ const trpc = createTRPCProxyClient<AppRouter>({
       },
       headers(url) {
         const token = store.getState().user.value.jwt?.token;
+        // NOTE: msw-trpc does not support batch requests yet
         // const path = url.opList[0].path;
         const path = url.op.path;
         if (
