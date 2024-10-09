@@ -1,8 +1,15 @@
-import { sequelize } from '@db';
+import { setupDatabase, sequelize } from '@db';
 
 beforeAll(async () => {
-  await sequelize.sync({ force: true });
+  // TODO: need to make sure all tables exist
+  // and associations are set up
+  // await sequelize.sync({ force: true });
+  await setupDatabase();
 });
+
+// afterEach(async () => {
+//   await sequelize.truncate({ cascade: true });
+// });
 
 afterAll(async () => {
   await sequelize.close();

@@ -27,4 +27,6 @@ describe('Profile', () => {
   it('renders the bio', () => {
     expect(screen.getByRole('paragraph', { name: 'bio' })).toBeInTheDocument();
   });
+
+  // add tests to ensure username and bio are correct
 });

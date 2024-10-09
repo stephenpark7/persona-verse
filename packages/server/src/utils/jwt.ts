@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import type { AccessToken, JwtPayload, RefreshToken } from '@shared/types';
-import { db } from '@db';
 import { RevokedToken } from '@models';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
@@ -35,7 +34,7 @@ export const generateRefreshToken = (payload: JwtPayload): RefreshToken => {
 export const generateRevokedToken = async (
   userId: number,
 ): Promise<RevokedToken> => {
-  return await db.models.RevokedToken.create({ UserId: userId });
+  return await RevokedToken.create({ UserId: userId });
 };
 
 export const verifyToken = (token: string): JwtPayload => {

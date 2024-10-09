@@ -1,34 +1,22 @@
-import { db } from '@db';
 import type { AuthenticatedRequest } from '@shared/types';
-
-const { Tweet } = db.models;
-
-// TODO: add try catch block for error handling
+import { extractUserIdFromRequest, extractMessageFromRequest } from '@utils';
+import { Tweet } from '@models';
 
 export const tweetCreate = async (req: AuthenticatedRequest) => {
-  const body = req.body[0];
-  const { message } = body;
-  // const { message } = req.body[0] as Request;
-  const userId = req.userId;
+  const userId = extractUserIdFromRequest(req);
 
-  if (message.length === 0) {
-    throw new Error('Message cannot be empty.');
-  }
-
-  if (userId === undefined || userId === null) {
-    throw new Error('User not found.');
-  }
+  const message = extractMessageFromRequest(req);
 
   const tweet = await Tweet.create({
     UserId: userId,
-    message: message,
+    message,
     likes: 0,
   });
 
   return {
     message: 'Tweet posted.',
     tweet: {
-      message: message,
+      message,
       likes: 0,
       createdAt: tweet.getDataValue('createdAt'),
     },
@@ -36,10 +24,12 @@ export const tweetCreate = async (req: AuthenticatedRequest) => {
 };
 
 export const tweetGet = async (req: AuthenticatedRequest) => {
+  const userId = extractUserIdFromRequest(req);
+
   const tweets = await Tweet.findAll({
     attributes: ['message', 'likes', 'createdAt'],
     where: {
-      UserId: req.userId,
+      UserId: userId,
     },
     include: {
       association: 'User',

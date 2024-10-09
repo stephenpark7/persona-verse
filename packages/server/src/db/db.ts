@@ -1,16 +1,10 @@
 import { sequelize } from './sequelize';
+import * as models from '@models';
 import { setupDatabase } from './setupDatabase';
-import { User, Tweet, RevokedToken, RefreshToken, UserProfile } from '@models';
+
+// TODO: refactor to use a singleton pattern
 
 export const db = (() => {
-  const models = {
-    User,
-    Tweet,
-    RevokedToken,
-    RefreshToken,
-    UserProfile,
-  };
-
   return {
     sequelize,
     setupDatabase,

@@ -1,6 +1,6 @@
-import { setupMiddleware } from 'server/src/middleware';
 import { startServer } from 'server/src/server';
-import { Jwt } from './jwt';
+import { setupMiddleware } from 'server/src/middleware';
+import type { Jwt } from './jwt';
 
 declare module 'express-session' {
   interface SessionData {

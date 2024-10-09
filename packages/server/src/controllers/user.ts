@@ -1,5 +1,4 @@
 import type { Request } from 'express';
-import { db } from '@db';
 import {
   compare,
   generateAccessToken,
@@ -10,13 +9,9 @@ import {
   validateLogin,
   verifyToken,
 } from '@utils';
-import { RefreshToken } from '@models';
+import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
 import { CreateUserParams } from '@schemas';
-import type { Jwt, JwtPayload } from '@shared/types';
-
-const { User, RevokedToken, UserProfile } = db.models;
-
-// TODO: add try catch block for error handling
+import type { AuthenticatedRequest, Jwt, JwtPayload } from '@shared/types';
 
 export const userCreate: CreateUserParams = async ({
   username,
@@ -28,23 +23,22 @@ export const userCreate: CreateUserParams = async ({
   const hashedPassword = await hash(password);
 
   await User.create({
-    username: username,
-    email: email,
+    username,
+    email,
     password: hashedPassword,
   });
 
   return { message: 'User created successfully.' };
 };
 
+interface LoginParams {
+  username: string;
+  password: string;
+}
+
 export const userLogin = async (
-  {
-    username,
-    password,
-  }: {
-    username: string;
-    password: string;
-  },
-  req: Request,
+  { username, password }: LoginParams,
+  req: AuthenticatedRequest,
 ): Promise<
   | {
       message: string;

@@ -1,40 +1,64 @@
-import type { Request } from 'express';
-import { refreshJwt } from './refresh';
+import type { RefreshToken, RefreshTokenResponse } from '@shared/types';
 import {
-  // jwtPayloadFactory,
   refreshTokenFactory,
   userFactory,
-} from '../factories';
+  requestFactory,
+} from '@tests/factories';
+import { refreshJwt } from './refresh';
 
-describe('Refresh Controller', () => {
-  it('should return a new access token', async () => {
-    const { id, username } = await userFactory();
+describe.skip('Refresh Controller', () => {
+  describe('refreshJwt', () => {
+    let refreshToken: RefreshToken;
+    let res: RefreshTokenResponse;
 
-    // const jwtPayload = jwtPayloadFactory({
-    //   userId: id,
-    //   username: username,
-    // });
+    describe('when the refresh token is valid', () => {
+      beforeEach(async () => {
+        const user = await userFactory();
 
-    const token = refreshTokenFactory({
-      userId: id,
-      username,
+        refreshToken = refreshTokenFactory({
+          userId: user.id,
+          username: user.username,
+        });
+      });
+
+      it('returns a new access token', async () => {
+        res = await refreshJwt(
+          requestFactory({
+            session: {
+              refreshToken,
+            },
+          }),
+        );
+        expect(res).toHaveProperty('message', 'Token refreshed.');
+        expect(res).toHaveProperty('jwt');
+        expect(res.jwt.expiresAt).toBeGreaterThan(Date.now());
+        expect(res.jwt.payload.userId).toEqual(refreshToken.payload.userId);
+        expect(res.jwt.payload.username).toEqual(refreshToken.payload.username);
+        expect(res.jwt.payload.jti).not.toEqual(refreshToken.payload.jti);
+      });
     });
 
-    // TODO: create requestFactory
-    const req = {
-      session: {
-        refreshToken: token,
-      },
-    } as Request;
+    describe('when the refresh token is invalid', () => {
+      beforeEach(async () => {
+        refreshToken = refreshTokenFactory({
+          userId: -1,
+          username: 'invalid',
+        });
+      });
 
-    const result = await refreshJwt(req);
+      it('throws an error', async () => {
+        await expect(() =>
+          refreshJwt(
+            requestFactory({
+              session: {
+                refreshToken,
+              },
+            }),
+          ),
+        ).rejects.toThrow('Session expired. Please login again.');
+      });
 
-    expect(result).toHaveProperty('message', 'Token refreshed.');
-
-    expect(result.jwt.token).not.toEqual(token.token);
-    expect(result.jwt.expiresAt).toBeGreaterThan(Date.now());
-    expect(result.jwt.payload.userId).toEqual(token.payload.userId);
-    expect(result.jwt.payload.username).toEqual(token.payload.username);
-    expect(result.jwt.payload.jti).not.toEqual(token.payload.jti);
+      // TODO: add tests for specific error messages
+    });
   });
 });

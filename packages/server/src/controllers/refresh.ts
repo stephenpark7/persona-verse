@@ -2,9 +2,7 @@ import type { Request } from 'express';
 import { TRPCError } from '@trpc/server';
 import type { RefreshTokenResponse } from '@shared/types';
 import { generateAccessToken, verifyToken } from '@utils';
-import { db } from '@db';
-
-const { User, RevokedToken } = db.models;
+import { User, RevokedToken } from '@models';
 
 export const refreshJwt = async (
   req: Request,
