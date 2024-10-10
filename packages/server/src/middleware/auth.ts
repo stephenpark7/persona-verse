@@ -31,6 +31,7 @@ export const auth = async (
     }
 
     const decodedToken = decoded as JwtPayload;
+
     if (decodedToken.userId === undefined || decodedToken.userId === null) {
       return sendUnauthorizedResponse(
         res,
@@ -40,6 +41,7 @@ export const auth = async (
     }
 
     req.userId = decodedToken.userId;
+
     return next();
   });
 };
