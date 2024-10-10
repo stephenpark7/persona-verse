@@ -1,6 +1,6 @@
 import type { NextFunction, Response } from 'express';
 import type { IncomingHttpHeaders } from 'http';
-import jwt from 'jsonwebtoken';
+import jwt, { type Secret } from 'jsonwebtoken';
 import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
 
@@ -11,7 +11,7 @@ export const auth = async (
 ): Promise<Response | void> => {
   const headers = req.headers as IncomingHttpHeaders;
   const token = headers['authorization']?.split(' ')[1];
-  const secret = process.env.JWT_SECRET as jwt.Secret;
+  const secret = process.env.JWT_SECRET as Secret;
 
   if (!token) {
     return sendUnauthorizedResponse(res, 'No token provided.', 401);
