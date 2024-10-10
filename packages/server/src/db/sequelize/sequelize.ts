@@ -3,12 +3,14 @@ import { sequelizeOptions } from './config';
 
 export const sequelize = new Sequelize(sequelizeOptions);
 
-export const setupDatabase = async (): Promise<void> => {
+export const setupDatabase = async (sequelize: Sequelize): Promise<void> => {
   await sequelize.authenticate();
   await sequelize.sync();
 };
 
-export const closeDatabaseConnection = async (): Promise<void> => {
+export const closeDatabaseConnection = async (
+  sequelize: Sequelize,
+): Promise<void> => {
   await sequelize.close();
 };
 

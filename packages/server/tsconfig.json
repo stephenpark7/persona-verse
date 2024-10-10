@@ -29,7 +29,7 @@
       "@db": ["./src/db/index"],
       "@schemas": ["./src/schemas/index"],
       "@middlewares": ["./src/middlewares/index"],
-      "@models": ["./src/models/index"],
+      "@models": ["./src/db/sequelize/models/index"],
       "@routes": ["./src/routes/index"],
       "@trpc": ["./src/trpc/index"],
       "@utils": ["./src/utils/index"],
