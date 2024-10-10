@@ -11,7 +11,7 @@ export const auth = async (
 ): Promise<Response | void> => {
   const headers = req.headers as IncomingHttpHeaders;
   const token = headers['authorization']?.split(' ')[1];
-  const secret: jwt.Secret = process.env.JWT_SECRET as jwt.Secret;
+  const secret = process.env.JWT_SECRET as jwt.Secret;
 
   if (!token) {
     return sendUnauthorizedResponse(res, 'No token provided.', 401);
