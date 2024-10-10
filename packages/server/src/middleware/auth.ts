@@ -1,5 +1,5 @@
-import { NextFunction, Response } from 'express';
-import { IncomingHttpHeaders } from 'http';
+import type { NextFunction, Response } from 'express';
+import type { IncomingHttpHeaders } from 'http';
 import jwt from 'jsonwebtoken';
 import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
