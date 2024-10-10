@@ -1,9 +1,12 @@
+import winston from 'winston';
+import { timingSafeEqual } from 'crypto';
 import jwt, { type Secret } from 'jsonwebtoken';
 import type { IncomingHttpHeaders } from 'http';
 import type { NextFunction, Response } from 'express';
 import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
+import { User } from '@models';
 
 const isAuthHeaderRequired = (url: string) => {
   const noAuthHeaderUrls = [
@@ -61,7 +64,23 @@ export const auth = async (
 
     req.userId = decodedToken.userId;
 
-    // TODO: Check if user is still in the database
+    try {
+      const user = await User.findByPk(req.userId);
+      if (!user) {
+        return sendUnauthorizedResponse(res, 'User not found.', 401);
+      }
+
+      // Timing-safe comparison for user ID
+      const userIdBuffer = Buffer.from(req.userId.toString());
+      const dbUserIdBuffer = Buffer.from(user.getDataValue('id').toString());
+
+      if (!timingSafeEqual(userIdBuffer, dbUserIdBuffer)) {
+        return sendUnauthorizedResponse(res, 'User not found.', 401);
+      }
+    } catch (error) {
+      winston.error(`Database error:, ${error}`);
+      return sendUnauthorizedResponse(res, 'Internal server error.', 500);
+    }
 
     return next();
   });
@@ -71,20 +90,19 @@ export const createContext = async ({
   req,
   res,
 }: CreateExpressContextOptions) => {
-  // await new Promise<void>((resolve, reject) => {
-  //   auth(req as unknown as AuthenticatedRequest, res, (err) => {
-  //     if (err) {
-  //       reject(err);
-  //     } else {
-  //       resolve();
-  //     }
-  //   });
-  // });
-  await auth(req as unknown as AuthenticatedRequest, res, (err) => {
-    if (err) {
-      throw err;
-    }
-  });
+  try {
+    await new Promise<void>((resolve, reject) => {
+      auth(req as unknown as AuthenticatedRequest, res, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  } catch (err) {
+    winston.error(err);
+  }
 
   return {
     req,
