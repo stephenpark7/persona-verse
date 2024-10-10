@@ -93,7 +93,7 @@ export const logout: LogoutFunction = async ({
   }
 
   store.dispatch(clearJwt());
-  store.dispatch(tweetAPI.util.invalidateTags(['Tweets']));
   navigate('/');
+  setTimeout(() => store.dispatch(tweetAPI.util.invalidateTags(['Tweets'])), 0);
   return Promise.resolve(true);
 };
