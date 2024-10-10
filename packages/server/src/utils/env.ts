@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
 
+const requiredEnvVars = ['JWT_SECRET'];
+
 const validateRequiredEnvVars = () => {
-  const requiredEnvVars = ['JWT_SECRET'];
   for (const envVar of requiredEnvVars) {
     if (!process.env[envVar]) {
       throw new Error(`${envVar} is not defined in .env file`);
