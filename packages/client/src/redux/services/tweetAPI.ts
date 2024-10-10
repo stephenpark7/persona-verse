@@ -1,4 +1,3 @@
-import { store } from '@redux';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { type Jwt, Tweet } from '@schemas';
 import { getTweets, postTweet } from '@services';
@@ -15,9 +14,6 @@ export const tweetAPI = createApi({
   endpoints: (builder) => ({
     getTweets: builder.query<Tweet[] | null, void>({
       queryFn: async () => {
-        // if (!store.getState().user.value.jwt) {
-        //   return { data: null };
-        // }
         const tweets = await getTweets();
         return { data: tweets };
       },
