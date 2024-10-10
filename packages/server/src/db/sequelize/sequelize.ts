@@ -8,6 +8,10 @@ export const setupDatabase = async (): Promise<void> => {
   await sequelize.sync();
 };
 
+export const closeDatabaseConnection = async (): Promise<void> => {
+  await sequelize.close();
+};
+
 process.on('SIGINT', () => {
   sequelize.close();
   process.exit();

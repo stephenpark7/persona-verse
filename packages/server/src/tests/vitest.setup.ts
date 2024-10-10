@@ -1,9 +1,9 @@
-import { sequelize, db } from '@db';
+import { db } from '@db';
 
 beforeAll(async () => {
   await db.setup();
 });
 
 afterAll(async () => {
-  await sequelize.close();
+  await db.close();
 });
