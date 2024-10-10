@@ -5,7 +5,7 @@ const requiredEnvVars = ['JWT_SECRET'];
 const validateRequiredEnvVars = () => {
   for (const envVar of requiredEnvVars) {
     if (!process.env[envVar]) {
-      throw new Error(`${envVar} is not defined in .env file`);
+      throw new Error(`${envVar} is not defined in .env file.`);
     }
   }
 };
