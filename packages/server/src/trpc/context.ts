@@ -1,7 +1,7 @@
+import jwt, { type Secret } from 'jsonwebtoken';
+import type { IncomingHttpHeaders } from 'http';
+import type { NextFunction, Response } from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { NextFunction, Response } from 'express';
-import { IncomingHttpHeaders } from 'http';
-import jwt from 'jsonwebtoken';
 import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
 
@@ -18,11 +18,10 @@ export const auth = async (
   ) {
     return next();
   }
-  // console.log(req.url);
 
   const headers = req.headers as IncomingHttpHeaders;
   const token = headers['authorization']?.split(' ')[1];
-  const secret: jwt.Secret = process.env.JWT_SECRET as jwt.Secret;
+  const secret = process.env.JWT_SECRET as Secret;
 
   if (!token) {
     return sendUnauthorizedResponse(res, 'No token provided.', 401);
