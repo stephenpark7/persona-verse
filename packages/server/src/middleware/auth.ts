@@ -11,11 +11,12 @@ export const auth = async (
 ): Promise<Response | void> => {
   const headers = req.headers as IncomingHttpHeaders;
   const token = headers['authorization']?.split(' ')?.[1];
-  const secret = process.env.JWT_SECRET as Secret;
 
   if (!token) {
     return sendUnauthorizedResponse(res, 'No token provided.', 401);
   }
+
+  const secret = process.env.JWT_SECRET as Secret;
 
   jwt.verify(token, secret, async (err, decoded) => {
     if (err) {
