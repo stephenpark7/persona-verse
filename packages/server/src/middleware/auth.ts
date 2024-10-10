@@ -10,7 +10,7 @@ export const auth = async (
   next: NextFunction,
 ): Promise<Response | void> => {
   const headers = req.headers as IncomingHttpHeaders;
-  const token = headers['authorization']?.split(' ')[1];
+  const token = headers['authorization']?.split(' ')?.[1];
   const secret = process.env.JWT_SECRET as Secret;
 
   if (!token) {
