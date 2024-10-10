@@ -1,13 +1,9 @@
-import { sequelize } from './sequelize';
 import * as models from '@models';
+import { sequelize } from './sequelize';
 import { setupDatabase } from './setupDatabase';
 
-// TODO: refactor to use a singleton pattern
-
-export const db = (() => {
-  return {
-    sequelize,
-    setupDatabase,
-    models,
-  };
-})();
+export const db = {
+  models,
+  sequelize,
+  setupDatabase,
+};

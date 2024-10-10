@@ -1,6 +1,7 @@
-export * from './User';
-export * from './Tweet';
-export * from './RevokedToken';
 export * from './RefreshToken';
+export * from './RevokedToken';
+export * from './Tweet';
+export * from './User';
 export * from './UserProfile';
+
 import './associations';
