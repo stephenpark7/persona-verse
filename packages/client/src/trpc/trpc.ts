@@ -4,6 +4,7 @@ import {
   type TRPCClientError,
   createTRPCProxyClient,
   httpLink,
+  httpBatchLink,
 } from '@trpc/client';
 import { observable } from '@trpc/server/observable';
 import type { AppRouter } from 'server/src/trpc';
@@ -31,6 +32,7 @@ const authLink: TRPCLink<AppRouter> = () => {
           },
           async error(err) {
             const response = err.meta?.response as Response;
+            console.log(err);
             if (response.status === 401 && retryCount < maxRetries) {
               retryCount++;
               try {
@@ -58,12 +60,14 @@ const authLink: TRPCLink<AppRouter> = () => {
   };
 };
 
+const isHttpBatchEnabled = process.env.NODE_ENV === 'test';
+
+const httpFlexibleLink = isHttpBatchEnabled ? httpLink : httpBatchLink;
+
 const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     authLink,
-    // NOTE: msw-trpc does not support batch requests yet
-    // httpBatchLink({
-    httpLink({
+    httpFlexibleLink({
       url: apiConfig.trpcUrl,
       fetch: async (url, options) => {
         const requestURL = new URL(url as string);
@@ -78,11 +82,9 @@ const trpc = createTRPCProxyClient<AppRouter>({
         });
         return originalRequest;
       },
-      headers(url) {
+      headers(url: { opList?: { path: string }[]; op?: { path: string } }) {
         const token = store.getState().user.value.jwt?.token;
-        // NOTE: msw-trpc does not support batch requests yet
-        // const path = url.opList[0].path;
-        const path = url.op.path;
+        const path = isHttpBatchEnabled ? url.opList?.[0]?.path : url.op?.path;
         if (
           !token ||
           path === 'registerUser' ||

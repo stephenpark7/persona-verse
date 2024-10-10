@@ -12,8 +12,7 @@ const isAuthHeaderRequired = (url: string) => {
     '/logoutUser',
     '/refreshJwt',
   ];
-
-  return noAuthHeaderUrls.some((u) => url.startsWith(u));
+  return !noAuthHeaderUrls.some((u) => url.startsWith(u));
 };
 
 export const auth = async (
