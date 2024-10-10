@@ -76,9 +76,5 @@ export const validateLogin = async (
 
   const user = await User.findOne({ where: { username: username } });
 
-  if (!user) {
-    throw new Error('Invalid username/password.');
-  }
-
   return user;
 };

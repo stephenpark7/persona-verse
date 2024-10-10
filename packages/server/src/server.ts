@@ -4,6 +4,6 @@ import { app } from './app';
 
 export const startServer = async function (this: Express) {
   app.listen(process.env.SERVER_PORT, async () => {
-    await db.setup();
+    await db.setup(false);
   });
 };
