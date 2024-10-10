@@ -1,9 +1,5 @@
-import { z } from 'zod';
-import { type Options, Sequelize } from 'sequelize';
-
-const sequelizeOptionsSchema = z.custom<Options>();
-
-type SequelizeOptions = z.infer<typeof sequelizeOptionsSchema>;
+import { Sequelize } from 'sequelize';
+import { type SequelizeOptions, sequelizeOptionsSchema } from './schema';
 
 const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
