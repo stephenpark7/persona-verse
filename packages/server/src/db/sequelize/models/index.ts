@@ -5,24 +5,31 @@ import { Tweet } from './Tweet';
 import { User } from './User';
 import { UserProfile } from './UserProfile';
 
-export const initModels = (sequelize: Sequelize) => {
+export const initModels = async (sequelize: Sequelize) => {
   RefreshToken.initModel(sequelize);
   RevokedToken.initModel(sequelize);
   Tweet.initModel(sequelize);
   User.initModel(sequelize);
   UserProfile.initModel(sequelize);
-  setupAssociations();
+  await setupAssociations();
 };
 
-const setupAssociations = () => {
-  RefreshToken.belongsTo(User);
-  RevokedToken.belongsTo(User);
-  Tweet.belongsTo(User);
-  User.hasMany(Tweet);
-  User.hasMany(RevokedToken);
-  User.hasMany(RefreshToken);
-  User.hasOne(UserProfile);
-  UserProfile.belongsTo(User);
+export const setupAssociations = async () => {
+  return new Promise<void>((resolve, reject) => {
+    try {
+      RefreshToken.belongsTo(User);
+      RevokedToken.belongsTo(User);
+      Tweet.belongsTo(User);
+      User.hasMany(Tweet);
+      User.hasMany(RevokedToken);
+      User.hasMany(RefreshToken);
+      User.hasOne(UserProfile);
+      UserProfile.belongsTo(User);
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 export * from './RefreshToken';

@@ -1,9 +1,13 @@
 import { db } from '@db';
 
-beforeAll(async () => {
+beforeEach(async () => {
   await db.setup(true);
 
-  return async () => {
-    await db.close();
-  };
+  // return async () => {
+  //   await db.close();
+  // };
 });
+
+// afterAll(async () => {
+//   await db.close();
+// });
