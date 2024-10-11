@@ -1,7 +1,15 @@
 import winston from 'winston';
 import { Sequelize } from 'sequelize';
 import { sequelizeOptions } from './config';
-import '@models'; // Error: No Sequelize instance passed
+// import '@models'; // Error: No Sequelize instance passed
+
+import { RefreshToken } from './models/RefreshToken';
+import { RevokedToken } from './models/RevokedToken';
+import { Tweet } from './models/Tweet';
+import { User } from './models/User';
+import { UserProfile } from './models/UserProfile';
+
+import { initModels } from './models';
 
 // TODO: we should still start the server for test environment
 // so that we can make use of winston logger
@@ -18,6 +26,17 @@ export const setupDatabase = async (
   }
 
   // TODO: initialize models here
+
+  // RefreshToken.belongsTo(User);
+  // RevokedToken.belongsTo(User);
+  // Tweet.belongsTo(User);
+  // User.hasMany(Tweet);
+  // User.hasMany(RevokedToken);
+  // User.hasMany(RefreshToken);
+  // User.hasOne(UserProfile);
+  // UserProfile.belongsTo(User);
+
+  initModels(sequelize);
 
   await sequelize.authenticate();
   await sequelize.sync(dropTables === true ? { force: true } : undefined);

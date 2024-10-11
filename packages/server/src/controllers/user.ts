@@ -36,17 +36,20 @@ interface LoginParams {
   password: string;
 }
 
-export const userLogin = async (
-  { username, password }: LoginParams,
-  req: AuthenticatedRequest,
-): Promise<
+export type LoginResponse =
   | {
       message: string;
       jwt: Jwt;
       profile: InstanceType<typeof UserProfile> | null;
     }
-  | { message: string }
-> => {
+  | {
+      message: string;
+    };
+
+export const userLogin = async (
+  { username, password }: LoginParams,
+  req: AuthenticatedRequest,
+): Promise<LoginResponse> => {
   const user = await validateLogin(username, password);
 
   if (!user) {
