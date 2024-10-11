@@ -25,9 +25,10 @@ export const setupDatabase = async (
     dropTables = false;
   }
 
-  await initModels(sequelize);
+  // await sequelize.sync({ force: true });
   await sequelize.authenticate();
   await sequelize.sync(dropTables === true ? { force: true } : undefined);
+  await initModels(sequelize);
 };
 
 export const closeDatabaseConnection = async (

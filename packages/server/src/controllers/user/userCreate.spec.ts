@@ -1,6 +1,12 @@
 import { z } from 'zod';
 import { userCreate } from '../user';
 
+// TOOD: wip more than 1 test breaks
+// look into how vitest works with async functions / concurrency
+// because it seems to be running tests concurrently
+// as a result, the database is being shared between tests
+// and the tests are failing
+
 // TODO: use shared package for this
 const registerFormFields = z.object({
   username: z.string(),
@@ -11,7 +17,7 @@ const registerFormFields = z.object({
 type RegisterFormFields = z.infer<typeof registerFormFields>;
 
 describe('userCreate', () => {
-  describe.skip('when body is missing', () => {
+  describe('when body is missing', () => {
     let params: RegisterFormFields;
 
     beforeEach(() => {
@@ -23,14 +29,14 @@ describe('userCreate', () => {
     });
 
     it('throws an error', async () => {
-      // await expect(() => userCreate(params)).rejects.toThrow(
-      //   'Missing field(s).',
-      // );
+      await expect(() => userCreate(params)).rejects.toThrow(
+        'Missing field(s).',
+      );
     });
   });
 });
-describe.skip('when username is invalid', () => {
-  it('throws an error', async () => {
+describe('when username is invalid', () => {
+  it.skip('throws an error', async () => {
     const req = {
       username: '$',
       email: 'test',
