@@ -1,7 +1,5 @@
 import validator from 'validator';
 import * as models from '@models';
-import { initModels } from '@models';
-import { sequelize } from '@db';
 
 const validateUsername = (username: string): boolean => {
   return validator.isAlphanumeric(username);
@@ -12,26 +10,10 @@ const validateEmail = (email: string): boolean => {
 };
 
 const validatePassword = (password: string): boolean => {
-  if (process.env.NODE_ENV === 'development') {
-    return true;
-  }
   return validator.isStrongPassword(password);
 };
 
 const usernameAlreadyExists = async (username: string): Promise<boolean> => {
-  // console.log(
-  //   'abc',
-  //   await db.models.User.findOne({
-  //     where: { username: username },
-  //   }),
-  // );
-  // console.log(
-  //   'aaa' +
-  //     (await db.models.User.findOne({
-  //       where: { username: username },
-  //     })),
-  // );
-  await initModels(sequelize);
   const user = await models.User.findOne({ where: { username: username } });
   return user != null;
 };

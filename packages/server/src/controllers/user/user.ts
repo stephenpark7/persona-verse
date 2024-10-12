@@ -1,50 +1,14 @@
 import type { Request } from 'express';
-import type {
-  AuthenticatedRequest,
-  Jwt,
-  JwtPayload,
-  UserCreateParams,
-} from '@shared/types';
+import type { AuthenticatedRequest, Jwt, JwtPayload } from '@shared/types';
 import {
   compare,
   generateAccessToken,
   generateRefreshToken,
   generateRevokedToken,
-  hash,
-  validateCreate,
   validateLogin,
   verifyToken,
 } from '@utils';
-import { User, RevokedToken, RefreshToken, UserProfile, Tweet } from '@models';
-import { RegisterResponse } from '@schemas';
-import { sequelize } from '@db';
-
-export const userCreate = async ({
-  username,
-  email,
-  password,
-}: UserCreateParams): Promise<RegisterResponse> => {
-  await validateCreate(username, email, password);
-
-  const hashedPassword = await hash(password);
-
-  // TODO: need to create a create a wrapper function for User.create so that it initializes models before creating a user
-  // await initModels(sequelize);
-
-  RefreshToken.initModel(sequelize);
-  RevokedToken.initModel(sequelize);
-  Tweet.initModel(sequelize);
-  User.initModel(sequelize);
-  UserProfile.initModel(sequelize);
-
-  await User.create({
-    username,
-    email,
-    password: hashedPassword,
-  });
-
-  return { message: 'User created successfully.' };
-};
+import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
 
 interface LoginParams {
   username: string;

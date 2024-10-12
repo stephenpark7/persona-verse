@@ -1,4 +1,5 @@
-import { type SequelizeOptions, sequelizeOptionsSchema } from './schema';
+import { sequelizeOptionsSchema } from '@schemas';
+import { SequelizeOptions } from '@types';
 
 export const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
