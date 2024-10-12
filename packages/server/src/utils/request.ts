@@ -22,8 +22,15 @@ export const extractUserIdFromRequest = (req: AuthenticatedRequest): number => {
 export const extractMessageFromRequest = (
   req: AuthenticatedRequest,
 ): string => {
-  const body = req.body as { message: string }[];
-  const message = body[0].message;
+  const body = req.body as { message: string }[] | { message: string };
+
+  let message;
+
+  if (Array.isArray(body)) {
+    message = body[0].message;
+  } else {
+    message = body.message;
+  }
 
   if (message === undefined || message === null) {
     throw new Error('Message not found.');

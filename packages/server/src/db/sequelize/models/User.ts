@@ -12,12 +12,12 @@ export class User extends Model {
         username: {
           type: DataTypes.STRING,
           allowNull: false,
-          unique: true,
+          unique: false,
         },
         email: {
           type: DataTypes.STRING,
           allowNull: false,
-          unique: true,
+          unique: false,
         },
         password: {
           type: DataTypes.STRING,

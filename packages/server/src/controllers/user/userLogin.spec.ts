@@ -2,35 +2,31 @@ import type { AuthenticatedRequest, UserLoginParams } from '@shared/types';
 import { authenticatedRequestFactory } from '@tests/factories';
 import { LoginResponse, userCreate, userLogin } from '../user';
 
-describe.skip('userLogin', () => {
+describe('userLogin', async () => {
   let req: AuthenticatedRequest;
   let params: UserLoginParams;
+  let res;
 
   beforeAll(async () => {
     params = {
       username: '',
       password: '',
     };
+
     req = authenticatedRequestFactory({
       session: {
         refreshToken: '',
       },
     });
+
+    res = () => userLogin(params, req);
   });
 
-  it('throws an error', async () => {
-    await expect(() => userLogin(params, req)).rejects.toThrow(
-      'Missing field(s).',
-    );
+  describe('when body is missing', () => {
+    it('throws an error', async () => {
+      await expect(res).rejects.toThrow('Missing field(s).');
+    });
   });
-
-  // describe.only('when body is missing', () => {
-  //   it('throws an error', async () => {
-  //     await expect(() => userLogin(params, req)).rejects.toThrow(
-  //       'Missing field(s).',
-  //     );
-  //   });
-  // });
 
   describe('when username is invalid', () => {
     it('throws an error', async () => {
@@ -60,7 +56,7 @@ describe.skip('userLogin', () => {
     });
   });
 
-  describe('when body is valid', () => {
+  describe('when body is valid', async () => {
     let res: LoginResponse;
 
     beforeAll(async () => {

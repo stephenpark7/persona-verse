@@ -1,6 +1,5 @@
 import * as models from '@models';
 import {
-  sequelize,
   setupDatabase,
   closeDatabaseConnection,
   resetDatabase,
@@ -11,11 +10,11 @@ import {
 // using @models, and that can cause issues since they depend on db.
 
 export const setup = async (dropTables: boolean): Promise<void> => {
-  await setupDatabase(sequelize, dropTables);
+  await setupDatabase(dropTables);
 };
 
 export const close = async (): Promise<void> => {
-  await closeDatabaseConnection(sequelize);
+  await closeDatabaseConnection();
 };
 
 export const reset = async (): Promise<void> => {
@@ -24,7 +23,6 @@ export const reset = async (): Promise<void> => {
 
 export const db = {
   models,
-  sequelize,
   setup,
   close,
   reset,

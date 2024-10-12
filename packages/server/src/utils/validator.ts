@@ -1,5 +1,7 @@
 import validator from 'validator';
-import { db } from '@db';
+import * as models from '@models';
+import { initModels } from '@models';
+import { sequelize } from '@db';
 
 const validateUsername = (username: string): boolean => {
   return validator.isAlphanumeric(username);
@@ -23,12 +25,19 @@ const usernameAlreadyExists = async (username: string): Promise<boolean> => {
   //     where: { username: username },
   //   }),
   // );
-  const user = await db.models.User.findOne({ where: { username: username } });
+  // console.log(
+  //   'aaa' +
+  //     (await db.models.User.findOne({
+  //       where: { username: username },
+  //     })),
+  // );
+  await initModels(sequelize);
+  const user = await models.User.findOne({ where: { username: username } });
   return user != null;
 };
 
 const emailAlreadyExists = async (email: string): Promise<boolean> => {
-  const user = await db.models.User.findOne({ where: { email: email } });
+  const user = await models.User.findOne({ where: { email: email } });
   return user != null;
 };
 
@@ -75,12 +84,12 @@ export const validateCreate = async (
 export const validateLogin = async (
   username: string,
   password: string,
-): Promise<InstanceType<typeof db.models.User> | null> => {
+): Promise<InstanceType<typeof models.User> | null> => {
   if (missingFields(username, password)) {
     throw new Error('Missing field(s).');
   }
 
-  const user = await db.models.User.findOne({ where: { username: username } });
+  const user = await models.User.findOne({ where: { username: username } });
 
   return user;
 };

@@ -1,13 +1,13 @@
 import { z } from 'zod';
-import { db } from '@db';
-import { RegisterResponse, userCreate } from '../user';
-import { AuthenticatedRequest } from '@shared/types';
+import { userCreate } from '../user';
 
 // TOOD: wip more than 1 test breaks
 // look into how vitest works with async functions / concurrency
 // because it seems to be running tests concurrently
 // as a result, the database is being shared between tests
 // and the tests are failing
+// The fix: setting fileParallelism to false in vitest.config.mts
+// so that the tests run sequentially
 
 // TODO: use shared package for this
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,7 +20,7 @@ const registerFormFields = z.object({
 type RegisterFormFields = z.infer<typeof registerFormFields>;
 
 describe('userCreate', () => {
-  describe('when body is valid', () => {
+  describe('when body is valid', async () => {
     let params: RegisterFormFields;
     let res: RegisterResponse;
 
@@ -30,6 +30,7 @@ describe('userCreate', () => {
         email: 'test@test.com',
         password: 'Password123!',
       };
+
       res = await userCreate(params);
     });
 
@@ -74,7 +75,7 @@ describe('userCreate', () => {
     });
   });
 
-  describe.skip('when email is invalid', () => {
+  describe('when email is invalid', () => {
     it('throws an error', async () => {
       const req = {
         username: 'test',
@@ -87,7 +88,7 @@ describe('userCreate', () => {
     });
   });
 
-  describe.skip('when password is invalid', () => {
+  describe('when password is invalid', () => {
     it('throws an error', async () => {
       const req = {
         username: 'test',

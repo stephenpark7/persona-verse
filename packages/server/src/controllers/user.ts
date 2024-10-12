@@ -15,8 +15,9 @@ import {
   validateLogin,
   verifyToken,
 } from '@utils';
-import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
+import { User, RevokedToken, RefreshToken, UserProfile, Tweet } from '@models';
 import { RegisterResponse } from '@schemas';
+import { sequelize } from '@db';
 
 export const userCreate = async ({
   username,
@@ -26,6 +27,15 @@ export const userCreate = async ({
   await validateCreate(username, email, password);
 
   const hashedPassword = await hash(password);
+
+  // TODO: need to create a create a wrapper function for User.create so that it initializes models before creating a user
+  // await initModels(sequelize);
+
+  RefreshToken.initModel(sequelize);
+  RevokedToken.initModel(sequelize);
+  Tweet.initModel(sequelize);
+  User.initModel(sequelize);
+  UserProfile.initModel(sequelize);
 
   await User.create({
     username,
