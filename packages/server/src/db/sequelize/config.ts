@@ -1,11 +1,6 @@
-import { z } from 'zod';
-import { type Options, Sequelize } from 'sequelize';
+import { type SequelizeOptions, sequelizeOptionsSchema } from './schema';
 
-const sequelizeOptionsSchema = z.custom<Options>();
-
-type SequelizeOptions = z.infer<typeof sequelizeOptionsSchema>;
-
-const sequelizeOptions: SequelizeOptions = {
+export const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
   database: process.env.DB_NAME,
   username: process.env.DB_USER,
@@ -22,10 +17,3 @@ const sequelizeOptions: SequelizeOptions = {
 };
 
 sequelizeOptionsSchema.parse(sequelizeOptions);
-
-export const sequelize = new Sequelize(sequelizeOptions);
-
-process.on('SIGINT', () => {
-  sequelize.close();
-  process.exit();
-});

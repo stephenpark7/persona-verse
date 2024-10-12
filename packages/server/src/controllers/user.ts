@@ -1,4 +1,10 @@
 import type { Request } from 'express';
+import type {
+  AuthenticatedRequest,
+  Jwt,
+  JwtPayload,
+  UserCreateParams,
+} from '@shared/types';
 import {
   compare,
   generateAccessToken,
@@ -9,18 +15,27 @@ import {
   validateLogin,
   verifyToken,
 } from '@utils';
-import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
-import { CreateUserParams } from '@schemas';
-import type { AuthenticatedRequest, Jwt, JwtPayload } from '@shared/types';
+import { User, RevokedToken, RefreshToken, UserProfile, Tweet } from '@models';
+import { RegisterResponse } from '@schemas';
+import { sequelize } from '@db';
 
-export const userCreate: CreateUserParams = async ({
+export const userCreate = async ({
   username,
   email,
   password,
-}): Promise<{ message: string }> => {
+}: UserCreateParams): Promise<RegisterResponse> => {
   await validateCreate(username, email, password);
 
   const hashedPassword = await hash(password);
+
+  // TODO: need to create a create a wrapper function for User.create so that it initializes models before creating a user
+  // await initModels(sequelize);
+
+  RefreshToken.initModel(sequelize);
+  RevokedToken.initModel(sequelize);
+  Tweet.initModel(sequelize);
+  User.initModel(sequelize);
+  UserProfile.initModel(sequelize);
 
   await User.create({
     username,
@@ -36,17 +51,20 @@ interface LoginParams {
   password: string;
 }
 
-export const userLogin = async (
-  { username, password }: LoginParams,
-  req: AuthenticatedRequest,
-): Promise<
+export type LoginResponse =
   | {
       message: string;
       jwt: Jwt;
       profile: InstanceType<typeof UserProfile> | null;
     }
-  | { message: string }
-> => {
+  | {
+      message: string;
+    };
+
+export const userLogin = async (
+  { username, password }: LoginParams,
+  req: AuthenticatedRequest,
+): Promise<LoginResponse> => {
   const user = await validateLogin(username, password);
 
   if (!user) {

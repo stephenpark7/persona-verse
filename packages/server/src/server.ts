@@ -1,10 +1,9 @@
-import { Express } from 'express';
+import type { Express } from 'express';
+import { db } from '@db';
 import { app } from './app';
-import { db } from './db';
 
 export const startServer = async function (this: Express) {
   app.listen(process.env.SERVER_PORT, async () => {
-    console.log('Express server started at port ' + process.env.SERVER_PORT);
-    await db.setupDatabase();
+    await db.setup(false);
   });
 };
