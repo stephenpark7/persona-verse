@@ -6,7 +6,7 @@ import {
 } from '@tests/factories';
 import { refreshJwt } from './refresh';
 
-describe.skip('Refresh Controller', () => {
+describe('Refresh Controller', () => {
   describe('refreshJwt', () => {
     let refreshToken: RefreshToken;
     let res: RefreshTokenResponse;

@@ -2,7 +2,7 @@ import { User } from '@models';
 import { tweetCreate, tweetGet } from './tweet';
 import { authenticatedRequestFactory } from '@tests/factories';
 
-describe.skip('Tweet Controller', () => {
+describe('Tweet Controller', () => {
   let userId: number;
 
   beforeAll(async () => {

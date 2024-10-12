@@ -12,5 +12,8 @@ export default defineConfig({
     env: {
       ...config({ path: '.env.test' }).parsed,
     },
+    isolate: true,
+    printConsoleTrace: true,
+    fileParallelism: false, // This is necessary for Sequelize to work
   },
 });

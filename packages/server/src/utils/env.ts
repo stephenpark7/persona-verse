@@ -1,5 +1,15 @@
 import dotenv from 'dotenv';
 
+const requiredEnvVars = ['JWT_SECRET'];
+
+const validateRequiredEnvVars = () => {
+  for (const envVar of requiredEnvVars) {
+    if (!process.env[envVar]) {
+      throw new Error(`${envVar} is not defined in .env file.`);
+    }
+  }
+};
+
 export const loadEnvironmentVariables = () => {
   const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -9,4 +19,6 @@ export const loadEnvironmentVariables = () => {
     path: `.env.${NODE_ENV}`,
     debug: true,
   });
+
+  validateRequiredEnvVars();
 };
