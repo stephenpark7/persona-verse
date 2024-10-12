@@ -3,6 +3,7 @@ import {
   sequelize,
   setupDatabase,
   closeDatabaseConnection,
+  resetDatabase,
 } from './sequelize/sequelize';
 
 // TODO: db needs to be run first, then models.
@@ -17,9 +18,14 @@ export const close = async (): Promise<void> => {
   await closeDatabaseConnection(sequelize);
 };
 
+export const reset = async (): Promise<void> => {
+  await resetDatabase();
+};
+
 export const db = {
   models,
   sequelize,
   setup,
   close,
+  reset,
 };

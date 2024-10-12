@@ -6,12 +6,22 @@ import { User } from './User';
 import { UserProfile } from './UserProfile';
 
 export const initModels = async (sequelize: Sequelize) => {
-  RefreshToken.initModel(sequelize);
-  RevokedToken.initModel(sequelize);
-  Tweet.initModel(sequelize);
-  User.initModel(sequelize);
-  UserProfile.initModel(sequelize);
-  await setupAssociations();
+  return new Promise<void>((resolve, reject) => {
+    const init = async () => {
+      try {
+        RefreshToken.initModel(sequelize);
+        RevokedToken.initModel(sequelize);
+        Tweet.initModel(sequelize);
+        User.initModel(sequelize);
+        UserProfile.initModel(sequelize);
+        await setupAssociations();
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    };
+    init();
+  });
 };
 
 export const setupAssociations = async () => {

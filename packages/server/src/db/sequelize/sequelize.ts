@@ -1,14 +1,6 @@
 import winston from 'winston';
 import { Sequelize } from 'sequelize';
 import { sequelizeOptions } from './config';
-// import '@models'; // Error: No Sequelize instance passed
-
-import { RefreshToken } from './models/RefreshToken';
-import { RevokedToken } from './models/RevokedToken';
-import { Tweet } from './models/Tweet';
-import { User } from './models/User';
-import { UserProfile } from './models/UserProfile';
-
 import { initModels } from './models';
 
 // TODO: we should still start the server for test environment
@@ -25,10 +17,15 @@ export const setupDatabase = async (
     dropTables = false;
   }
 
-  // await sequelize.sync({ force: true });
   await sequelize.authenticate();
-  await sequelize.sync(dropTables === true ? { force: true } : undefined);
+
   await initModels(sequelize);
+
+  await sequelize.sync(dropTables === true ? { force: true } : undefined);
+};
+
+export const resetDatabase = async (): Promise<void> => {
+  await sequelize.sync({ force: true });
 };
 
 export const closeDatabaseConnection = async (

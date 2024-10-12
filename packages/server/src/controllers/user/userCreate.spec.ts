@@ -1,5 +1,7 @@
 import { z } from 'zod';
-import { userCreate } from '../user';
+import { db } from '@db';
+import { RegisterResponse, userCreate } from '../user';
+import { AuthenticatedRequest } from '@shared/types';
 
 // TOOD: wip more than 1 test breaks
 // look into how vitest works with async functions / concurrency
@@ -8,6 +10,7 @@ import { userCreate } from '../user';
 // and the tests are failing
 
 // TODO: use shared package for this
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const registerFormFields = z.object({
   username: z.string(),
   email: z.string(),
@@ -17,6 +20,24 @@ const registerFormFields = z.object({
 type RegisterFormFields = z.infer<typeof registerFormFields>;
 
 describe('userCreate', () => {
+  describe('when body is valid', () => {
+    let params: RegisterFormFields;
+    let res: RegisterResponse;
+
+    beforeAll(async () => {
+      params = {
+        username: 'test',
+        email: 'test@test.com',
+        password: 'Password123!',
+      };
+      res = await userCreate(params);
+    });
+
+    it('creates a new user', async () => {
+      expect(res).toHaveProperty('message', 'User created successfully.');
+    });
+  });
+
   describe('when body is missing', () => {
     let params: RegisterFormFields;
 
@@ -34,49 +55,48 @@ describe('userCreate', () => {
       );
     });
   });
-});
-describe('when username is invalid', () => {
-  it.skip('throws an error', async () => {
-    const req = {
-      username: '$',
-      email: 'test',
-      password: 'password',
-    };
-    await expect(() => userCreate(req)).rejects.toThrow('Invalid username.');
+
+  describe('when username is invalid', () => {
+    let params: RegisterFormFields;
+
+    beforeEach(() => {
+      params = {
+        username: '$',
+        email: 'test',
+        password: 'password',
+      };
+    });
+
+    it('throws an error', async () => {
+      await expect(() => userCreate(params)).rejects.toThrow(
+        'Invalid username.',
+      );
+    });
   });
-});
-describe.skip('when email is invalid', () => {
-  it('throws an error', async () => {
-    const req = {
-      username: 'test',
-      email: 'test',
-      password: 'password',
-    };
-    await expect(() => userCreate(req)).rejects.toThrow(
-      'Invalid email address.',
-    );
+
+  describe.skip('when email is invalid', () => {
+    it('throws an error', async () => {
+      const req = {
+        username: 'test',
+        email: 'test',
+        password: 'password',
+      };
+      await expect(() => userCreate(req)).rejects.toThrow(
+        'Invalid email address.',
+      );
+    });
   });
-});
-describe.skip('when password is invalid', () => {
-  it('throws an error', async () => {
-    const req = {
-      username: 'test',
-      email: 'test@test.com',
-      password: 'password',
-    };
-    await expect(() => userCreate(req)).rejects.toThrow(
-      'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.',
-    );
-  });
-});
-describe.skip('when body is valid', () => {
-  it('creates a new user', async () => {
-    const req = {
-      username: 'test',
-      email: 'test@test.com',
-      password: 'Password123!',
-    };
-    const res = await userCreate(req);
-    expect(res).toHaveProperty('message', 'User created successfully.');
+
+  describe.skip('when password is invalid', () => {
+    it('throws an error', async () => {
+      const req = {
+        username: 'test',
+        email: 'test@test.com',
+        password: 'password',
+      };
+      await expect(() => userCreate(req)).rejects.toThrow(
+        'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.',
+      );
+    });
   });
 });

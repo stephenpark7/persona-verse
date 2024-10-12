@@ -1,4 +1,10 @@
 import type { Request } from 'express';
+import type {
+  AuthenticatedRequest,
+  Jwt,
+  JwtPayload,
+  UserCreateParams,
+} from '@shared/types';
 import {
   compare,
   generateAccessToken,
@@ -10,14 +16,13 @@ import {
   verifyToken,
 } from '@utils';
 import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
-import { CreateUserParams } from '@schemas';
-import type { AuthenticatedRequest, Jwt, JwtPayload } from '@shared/types';
+import { RegisterResponse } from '@schemas';
 
-export const userCreate: CreateUserParams = async ({
+export const userCreate = async ({
   username,
   email,
   password,
-}): Promise<{ message: string }> => {
+}: UserCreateParams): Promise<RegisterResponse> => {
   await validateCreate(username, email, password);
 
   const hashedPassword = await hash(password);
