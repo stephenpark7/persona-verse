@@ -5,9 +5,6 @@
   "author": "Stephen Park",
   "private": true,
   "type": "commonjs",
-  "devDependencies": {
-    "typescript": "^5.5.4"
-  },
   "scripts": {
     "build": "npm run lint && tsc",
     "lint": "eslint ."
