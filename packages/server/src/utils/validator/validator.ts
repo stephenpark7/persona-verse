@@ -1,35 +1,14 @@
-import validator from 'validator';
 import * as models from '@models';
+import {
+  emailAlreadyExists,
+  usernameAlreadyExists,
+  isMissingFields,
+  validateUsername,
+  validateEmail,
+  validateUserPassword,
+} from './base';
 
-const validateUsername = (username: string): boolean => {
-  return validator.isAlphanumeric(username);
-};
-
-const validateEmail = (email: string): boolean => {
-  return validator.isEmail(email);
-};
-
-const validatePassword = (password: string): boolean => {
-  return validator.isStrongPassword(password);
-};
-
-const usernameAlreadyExists = async (username: string): Promise<boolean> => {
-  const user = await models.User.findOne({ where: { username: username } });
-  return user != null;
-};
-
-const emailAlreadyExists = async (email: string): Promise<boolean> => {
-  const user = await models.User.findOne({ where: { email: email } });
-  return user != null;
-};
-
-const isMissingFields = (...fields: string[]): boolean => {
-  return fields.some(
-    (field) => field === undefined || field === null || field?.length === 0,
-  );
-};
-
-export const validateCreate = async (
+export const validateUserCreate = async (
   username: string,
   email: string,
   password: string,
@@ -46,7 +25,7 @@ export const validateCreate = async (
     throw new Error('Invalid email address.');
   }
 
-  if (!validatePassword(password)) {
+  if (!validateUserPassword(password)) {
     throw new Error(
       'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.',
     );

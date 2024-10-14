@@ -1,7 +1,7 @@
 import type { RegisterFormFields } from '@schemas';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../sequelize';
-import { hash, validateCreate } from '@utils';
+import { hash, validateUserCreate } from '@utils';
 
 export class User extends Model {
   public static async createAccount({
@@ -9,7 +9,7 @@ export class User extends Model {
     email,
     password,
   }: RegisterFormFields) {
-    await validateCreate(username, email, password);
+    await validateUserCreate(username, email, password);
 
     const hashedPassword = await hash(password);
 
