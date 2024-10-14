@@ -1,29 +1,10 @@
-import { RegisterFormFields, RegisterResponse } from '@schemas';
+import type { UserCreateParams, UserCreateResponse } from '@types';
 import { userCreate } from './userCreate';
 
 describe('userCreate', () => {
-  describe('when body is valid', async () => {
-    let params: RegisterFormFields;
-    let res: RegisterResponse;
-
-    beforeAll(async () => {
-      params = {
-        username: 'test',
-        email: 'test@test.com',
-        password: 'Password123!',
-      };
-
-      res = await userCreate(params);
-    });
-
-    it('creates a new user', async () => {
-      expect(res).toHaveProperty('message', 'User created successfully.');
-    });
-  });
+  let params: UserCreateParams;
 
   describe('when body is missing', () => {
-    let params: RegisterFormFields;
-
     beforeEach(() => {
       params = {
         username: '',
@@ -40,13 +21,11 @@ describe('userCreate', () => {
   });
 
   describe('when username is invalid', () => {
-    let params: RegisterFormFields;
-
     beforeEach(() => {
       params = {
         username: '$',
-        email: 'test',
-        password: 'password',
+        email: 'test@test.com',
+        password: 'Password123!',
       };
     });
 
@@ -62,8 +41,9 @@ describe('userCreate', () => {
       const req = {
         username: 'test',
         email: 'test',
-        password: 'password',
+        password: 'Password123!',
       };
+
       await expect(() => userCreate(req)).rejects.toThrow(
         'Invalid email address.',
       );
@@ -77,9 +57,28 @@ describe('userCreate', () => {
         email: 'test@test.com',
         password: 'password',
       };
+
       await expect(() => userCreate(req)).rejects.toThrow(
         'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.',
       );
+    });
+  });
+
+  describe('when body is valid', async () => {
+    let res: UserCreateResponse;
+
+    beforeAll(async () => {
+      params = {
+        username: 'test',
+        email: 'test@test.com',
+        password: 'Password123!',
+      };
+
+      res = await userCreate(params);
+    });
+
+    it('creates a new user', async () => {
+      expect(res).toHaveProperty('message', 'User created successfully.');
     });
   });
 });
