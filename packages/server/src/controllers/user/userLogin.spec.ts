@@ -1,12 +1,13 @@
 import type { AuthenticatedRequest, UserLoginParams } from '@shared/types';
+import type { UserLoginResponse } from '@types';
 import { authenticatedRequestFactory } from '@tests/factories';
-import { LoginResponse, userLogin } from './userLogin';
+import { userLogin } from './userLogin';
 import { userCreate } from '../user/userCreate';
 
 describe('userLogin', async () => {
   let req: AuthenticatedRequest;
   let params: UserLoginParams;
-  let res: () => Promise<LoginResponse>;
+  let res: () => Promise<UserLoginResponse>;
 
   beforeAll(async () => {
     params = {
@@ -58,7 +59,7 @@ describe('userLogin', async () => {
   });
 
   describe('when body is valid', async () => {
-    let res: LoginResponse;
+    let res: UserLoginResponse;
 
     beforeAll(async () => {
       await userCreate({

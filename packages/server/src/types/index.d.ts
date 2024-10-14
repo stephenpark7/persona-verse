@@ -5,3 +5,5 @@ export * from './response';
 export * from './sequelize';
 export * from './tweet';
 export * from './zod';
+
+export * from './controller';

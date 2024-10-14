@@ -1,5 +1,6 @@
 import type { Request } from 'express';
-import type { AuthenticatedRequest, Jwt, JwtPayload } from '@shared/types';
+import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
+import type { UserLoginParams, UserLoginResponse } from '@types';
 import {
   compare,
   generateAccessToken,
@@ -10,25 +11,10 @@ import {
 } from '@utils';
 import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
 
-interface LoginParams {
-  username: string;
-  password: string;
-}
-
-export type LoginResponse =
-  | {
-      message: string;
-      jwt: Jwt;
-      profile: InstanceType<typeof UserProfile> | null;
-    }
-  | {
-      message: string;
-    };
-
 export const userLogin = async (
-  { username, password }: LoginParams,
+  { username, password }: UserLoginParams,
   req: AuthenticatedRequest,
-): Promise<LoginResponse> => {
+): Promise<UserLoginResponse> => {
   const user = await validateLogin(username, password);
 
   if (!user) {
