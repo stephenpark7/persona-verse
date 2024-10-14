@@ -1,6 +1,6 @@
 import type { AuthenticatedRequest, UserLoginParams } from '@shared/types';
 import { authenticatedRequestFactory } from '@tests/factories';
-import { LoginResponse, userLogin } from './user';
+import { LoginResponse, userLogin } from './userLogin';
 import { userCreate } from '../user/userCreate';
 
 describe('userLogin', async () => {
