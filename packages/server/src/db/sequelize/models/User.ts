@@ -1,4 +1,4 @@
-import type { RegisterFormFields } from '@schemas';
+import type { UserCreateParams } from '@types';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../sequelize';
 import { hash, validateUserCreate } from '@utils';
@@ -8,7 +8,7 @@ export class User extends Model {
     username,
     email,
     password,
-  }: RegisterFormFields) {
+  }: UserCreateParams): Promise<User> {
     await validateUserCreate(username, email, password);
 
     const hashedPassword = await hash(password);

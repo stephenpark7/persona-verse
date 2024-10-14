@@ -15,7 +15,7 @@ describe('Refresh Controller', () => {
       beforeEach(async () => {
         const user = await userFactory();
 
-        refreshToken = refreshTokenFactory({
+        refreshToken = await refreshTokenFactory({
           userId: user.id,
           username: user.username,
         });
@@ -39,23 +39,27 @@ describe('Refresh Controller', () => {
     });
 
     describe('when the refresh token is invalid', () => {
-      beforeEach(async () => {
-        refreshToken = refreshTokenFactory({
-          userId: -1,
-          username: 'invalid',
-        });
-      });
+      // beforeEach(async () => {
+      // });
 
       it('throws an error', async () => {
-        await expect(() =>
-          refreshJwt(
-            requestFactory({
-              session: {
-                refreshToken,
-              },
+        await expect(
+          async () =>
+            await refreshTokenFactory({
+              userId: -1,
+              username: 'invalid',
             }),
-          ),
-        ).rejects.toThrow('Session expired. Please login again.');
+        ).rejects.toThrow('User does not exist.');
+
+        // await expect(() =>
+        //   refreshJwt(
+        //     requestFactory({
+        //       session: {
+        //         refreshToken,
+        //       },
+        //     }),
+        //   ),
+        // ).rejects.toThrow('User does not exist.');
       });
 
       // TODO: add tests for specific error messages

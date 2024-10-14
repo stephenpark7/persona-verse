@@ -45,10 +45,14 @@ export const refreshJwt = async (
       throw new Error('Failed to generate access token.');
     }
 
-    RevokedToken.create({
+    const revokedToken = RevokedToken.create({
       jti,
       UserId: payload.userId,
     });
+
+    if (!revokedToken) {
+      throw new Error('Failed to revoke refresh token.');
+    }
 
     return {
       message: 'Token refreshed.',

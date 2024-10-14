@@ -66,6 +66,7 @@ export const auth = async (
 
     try {
       const user = await User.findByPk(req.userId);
+
       if (!user) {
         return sendUnauthorizedResponse(res, 'User not found.', 401);
       }

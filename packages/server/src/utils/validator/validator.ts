@@ -45,12 +45,16 @@ export const validateUserCreate = async (
 export const validateUserLogin = async (
   username: string,
   password: string,
-): Promise<InstanceType<typeof models.User> | null> => {
+): Promise<InstanceType<typeof models.User>> => {
   if (isMissingFields(username, password)) {
     throw new Error('Missing field(s).');
   }
 
   const user = await models.User.findOne({ where: { username } });
+
+  if (user == null) {
+    throw new Error('Invalid credentials.');
+  }
 
   return user;
 };
