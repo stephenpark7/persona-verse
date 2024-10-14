@@ -23,7 +23,7 @@ const emailAlreadyExists = async (email: string): Promise<boolean> => {
   return user != null;
 };
 
-const missingFields = (...fields: string[]): boolean => {
+const isMissingFields = (...fields: string[]): boolean => {
   return fields.some(
     (field) => field === undefined || field === null || field?.length === 0,
   );
@@ -34,7 +34,7 @@ export const validateCreate = async (
   email: string,
   password: string,
 ): Promise<boolean> => {
-  if (missingFields(username, email, password)) {
+  if (isMissingFields(username, email, password)) {
     throw new Error('Missing field(s).');
   }
 
@@ -67,7 +67,7 @@ export const validateLogin = async (
   username: string,
   password: string,
 ): Promise<InstanceType<typeof models.User> | null> => {
-  if (missingFields(username, password)) {
+  if (isMissingFields(username, password)) {
     throw new Error('Missing field(s).');
   }
 
