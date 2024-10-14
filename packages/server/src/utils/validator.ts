@@ -71,7 +71,7 @@ export const validateLogin = async (
     throw new Error('Missing field(s).');
   }
 
-  const user = await models.User.findOne({ where: { username: username } });
+  const user = await models.User.findOne({ where: { username } });
 
   return user;
 };

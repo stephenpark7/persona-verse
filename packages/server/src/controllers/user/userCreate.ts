@@ -1,12 +1,11 @@
-import type { UserCreateParams } from '@shared/types';
+import type { UserCreateParams, UserCreateResponse } from '@types';
 import { User } from '@models';
-import { RegisterResponse } from '@schemas';
 
 export const userCreate = async ({
   username,
   email,
   password,
-}: UserCreateParams): Promise<RegisterResponse> => {
+}: UserCreateParams): Promise<UserCreateResponse> => {
   await User.createAccount({
     username,
     email,
