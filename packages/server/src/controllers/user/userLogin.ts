@@ -6,7 +6,7 @@ import {
   generateAccessToken,
   generateRefreshToken,
   generateRevokedToken,
-  validateLogin,
+  validateUserLogin,
   verifyToken,
 } from '@utils';
 import { User, RevokedToken, RefreshToken, UserProfile } from '@models';
@@ -15,7 +15,7 @@ export const userLogin = async (
   { username, password }: UserLoginParams,
   req: AuthenticatedRequest,
 ): Promise<UserLoginResponse> => {
-  const user = await validateLogin(username, password);
+  const user = await validateUserLogin(username, password);
 
   if (!user) {
     throw new Error('Invalid credentials.');

@@ -42,7 +42,7 @@ export const validateUserCreate = async (
   return true;
 };
 
-export const validateLogin = async (
+export const validateUserLogin = async (
   username: string,
   password: string,
 ): Promise<InstanceType<typeof models.User> | null> => {
