@@ -6,9 +6,13 @@ export class Exception extends Error {
 }
 
 export class InternalServerError extends Exception {
-  constructor(
-    message = 'Internal server error occurred while processing request',
-  ) {
+  constructor(message = 'Internal server error.') {
+    super(message);
+  }
+}
+
+export class AuthenticationError extends Exception {
+  constructor(message = 'Unauthorized access.') {
     super(message);
   }
 }

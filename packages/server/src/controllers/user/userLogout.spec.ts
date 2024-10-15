@@ -40,7 +40,7 @@ describe('userLogout', async () => {
   describe('when body is missing', () => {
     it('throws an error', async () => {
       await expect(() => userLogout(session, req, res)).rejects.toThrow(
-        'jwt must be provided',
+        'Token not found.',
       );
     });
   });

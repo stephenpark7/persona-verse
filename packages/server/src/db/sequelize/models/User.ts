@@ -19,6 +19,7 @@ import {
   validatePassword,
   verifyToken,
   InternalServerError,
+  AuthenticationError,
 } from '@utils';
 import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
@@ -100,13 +101,19 @@ export class User extends Model {
     authenticatedRequest.parse(req);
 
     if (!req.session) {
-      throw new Error('Internal server error occurred while logging out.');
+      throw new InternalServerError(
+        'Internal server error occurred while logging out.',
+      );
     }
 
     const refreshToken = req.session.refreshToken;
 
     if (!refreshToken) {
-      throw new InternalServerError('Session expired. Please login again.');
+      throw new AuthenticationError('Session expired. Please login again.');
+    }
+
+    if (!refreshToken.token) {
+      throw new InternalServerError('Token not found.');
     }
 
     const { jti, userId } = verifyToken(refreshToken.token);
