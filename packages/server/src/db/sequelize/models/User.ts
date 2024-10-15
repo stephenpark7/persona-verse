@@ -23,6 +23,8 @@ import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
 import { Session } from 'express-session';
 
+// TODO: use helper function for throwing errors
+
 export class User extends Model {
   public static async createAccount({
     username,

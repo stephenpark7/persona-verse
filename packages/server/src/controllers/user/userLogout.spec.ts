@@ -16,12 +16,14 @@ describe('userLogout', async () => {
       password: 'Password123!',
     });
 
+    // TODO: create factory/mocks for these
+
     session = {
       destroy: vi.fn(),
     } as unknown as Session;
 
     req = {
-      url: 'test',
+      url: '',
       userId: 1,
       session: {
         refreshToken: {

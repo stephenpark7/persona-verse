@@ -7,7 +7,6 @@ import { userCreate } from '../user/userCreate';
 describe('userLogin', async () => {
   let req: AuthenticatedRequest;
   let params: UserLoginParams;
-  let res: () => Promise<UserLoginResponse>;
 
   beforeAll(async () => {
     params = {
@@ -20,13 +19,13 @@ describe('userLogin', async () => {
         refreshToken: '',
       },
     });
-
-    res = () => userLogin(params, req);
   });
 
   describe('when body is missing', () => {
     it('throws an error', async () => {
-      await expect(res).rejects.toThrow('Missing field(s).');
+      await expect(() => userLogin(params, req)).rejects.toThrow(
+        'Missing field(s).',
+      );
     });
   });
 
