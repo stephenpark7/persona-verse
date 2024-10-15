@@ -3,6 +3,7 @@ import type {
   UserCreateParams,
   UserCreateResponse,
   UserLoginParams,
+  UserLoginResponse,
 } from '@types';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../sequelize';
@@ -38,14 +39,20 @@ export class User extends Model {
   public static async loginAccount(
     { username, password }: UserLoginParams,
     req: AuthenticatedRequest,
-  ) {
-    const user = await assertValidUserLogin(username, password);
+  ): Promise<UserLoginResponse> {
+    await assertValidUserLogin(username, password);
+
+    const user = await User.findOne({ where: { username } });
+
+    if (!user) {
+      throw new Error('Invalid credentials.');
+    }
 
     await validatePassword(password, user);
 
     const payload = {
-      userId: parseInt(user.get('id') as string),
-      username: username,
+      userId: parseInt(user.getDataValue('id')),
+      username,
     };
 
     const accessToken = generateAccessToken(payload);
@@ -53,6 +60,8 @@ export class User extends Model {
 
     if (req.session) {
       req.session.refreshToken = refreshToken;
+    } else {
+      throw new Error('Internal server error occurred while logging in.');
     }
 
     const [profile] = await UserProfile.findOrCreate({
@@ -72,13 +81,7 @@ export class User extends Model {
       jwt: accessToken,
       profile: profile,
     };
-
-    //: Promise<UserLoginResponse>
-    // await userLogin({ username, password }, req);
   }
-
-  // TODO: move validation here
-  // const validateLogin(..)
 }
 
 User.init(

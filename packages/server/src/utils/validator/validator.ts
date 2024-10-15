@@ -1,4 +1,3 @@
-import * as models from '@models';
 import {
   emailAlreadyExists,
   usernameAlreadyExists,
@@ -12,7 +11,7 @@ export const assertValidUserCreate = async (
   username: string,
   email: string,
   password: string,
-): Promise<boolean> => {
+): Promise<void> => {
   if (isMissingFields(username, email, password)) {
     throw new Error('Missing field(s).');
   }
@@ -38,23 +37,13 @@ export const assertValidUserCreate = async (
   if (await emailAlreadyExists(email)) {
     throw new Error('Email address already in use.');
   }
-
-  return true;
 };
 
 export const assertValidUserLogin = async (
   username: string,
   password: string,
-): Promise<InstanceType<typeof models.User>> => {
+): Promise<void> => {
   if (isMissingFields(username, password)) {
     throw new Error('Missing field(s).');
   }
-
-  const user = await models.User.findOne({ where: { username } });
-
-  if (user == null) {
-    throw new Error('Invalid credentials.');
-  }
-
-  return user;
 };
