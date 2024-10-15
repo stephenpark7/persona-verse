@@ -18,6 +18,7 @@ import {
   hashPassword,
   validatePassword,
   verifyToken,
+  InternalServerError,
 } from '@utils';
 import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
@@ -98,42 +99,53 @@ export class User extends Model {
   ) {
     authenticatedRequest.parse(req);
 
-    if (req.session) {
-      const refreshToken = req.session.refreshToken;
-
-      if (refreshToken) {
-        const { jti, userId } = verifyToken(refreshToken.token);
-
-        if (jti != null && userId != null) {
-          const user = await User.findByPk(userId);
-
-          if (user) {
-            const revokedToken = await RevokedToken.findByPk(jti);
-
-            if (!revokedToken) {
-              await generateRevokedToken(userId);
-            }
-          }
-        }
-      } else {
-        throw new Error('Internal server error occurred while logging out.');
-      }
-    } else {
+    if (!req.session) {
       throw new Error('Internal server error occurred while logging out.');
     }
 
-    session.destroy((err: Error) => {
-      if (err) {
-        console.error('Error while destroying session: ', err);
-        return { message: 'Error while logging out.' };
-      }
-    });
+    const refreshToken = req.session.refreshToken;
 
+    if (!refreshToken) {
+      throw new InternalServerError('Session expired. Please login again.');
+    }
+
+    const { jti, userId } = verifyToken(refreshToken.token);
+
+    if (jti == null || userId == null) {
+      throw new InternalServerError('Invalid token.');
+    }
+
+    const user = await User.findByPk(userId);
+    if (user) {
+      await revokeTokenIfNotRevoked(jti, userId);
+    }
+
+    await destroySession(session);
     res.clearCookie('pv-session', { path: '/' });
 
     return { message: 'Logged out successfully.' };
   }
 }
+
+const revokeTokenIfNotRevoked = async (jti: string, userId: number) => {
+  const revokedToken = await RevokedToken.findByPk(jti);
+  if (!revokedToken) {
+    await generateRevokedToken(userId);
+  }
+};
+
+const destroySession = (session: Session): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    session.destroy((err: Error) => {
+      if (err) {
+        console.error('Error while destroying session: ', err);
+        reject(new Error('Error while logging out.'));
+      } else {
+        resolve();
+      }
+    });
+  });
+};
 
 User.init(
   {
