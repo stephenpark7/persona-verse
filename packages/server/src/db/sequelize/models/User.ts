@@ -19,6 +19,9 @@ export class User extends Model {
       password: hashedPassword,
     });
   }
+
+  // TODO: move validation here
+  // const validateLogin(..)
 }
 
 User.init(
