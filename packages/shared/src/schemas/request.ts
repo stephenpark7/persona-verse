@@ -9,10 +9,11 @@ export const request = z.object({
 });
 
 export const authenticatedRequest = request.extend({
-  // token: z.string(),
   userId: z.number(),
   session: z.object({
-    refreshToken: z.string(),
+    refreshToken: z.object({
+      token: z.string(),
+    }),
   }),
 });
 

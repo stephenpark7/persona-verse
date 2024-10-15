@@ -1,9 +1,11 @@
-import type {
-  AuthenticatedRequest,
-  UserCreateParams,
-  UserCreateResponse,
-  UserLoginParams,
-  UserLoginResponse,
+import { authenticatedRequest } from '@shared/schemas';
+import type { AuthenticatedRequest } from '@shared/types';
+import type { Response } from 'express';
+import {
+  type UserCreateParams,
+  type UserCreateResponse,
+  type UserLoginParams,
+  type UserLoginResponse,
 } from '@types';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../sequelize';
@@ -12,10 +14,14 @@ import {
   assertValidUserLogin,
   generateAccessToken,
   generateRefreshToken,
+  generateRevokedToken,
   hashPassword,
   validatePassword,
+  verifyToken,
 } from '@utils';
 import { UserProfile } from './UserProfile';
+import { RevokedToken } from './RevokedToken';
+import { Session } from 'express-session';
 
 export class User extends Model {
   public static async createAccount({
@@ -81,6 +87,49 @@ export class User extends Model {
       jwt: accessToken,
       profile: profile,
     };
+  }
+
+  public static async logoutAccount(
+    session: Session,
+    req: AuthenticatedRequest,
+    res: Response,
+  ) {
+    authenticatedRequest.parse(req);
+
+    if (req.session) {
+      const refreshToken = req.session.refreshToken;
+
+      if (refreshToken) {
+        const { jti, userId } = verifyToken(refreshToken.token);
+
+        if (jti != null && userId != null) {
+          const user = await User.findByPk(userId);
+
+          if (user) {
+            const revokedToken = await RevokedToken.findByPk(jti);
+
+            if (!revokedToken) {
+              await generateRevokedToken(userId);
+            }
+          }
+        }
+      } else {
+        throw new Error('Internal server error occurred while logging out.');
+      }
+    } else {
+      throw new Error('Internal server error occurred while logging out.');
+    }
+
+    session.destroy((err: Error) => {
+      if (err) {
+        console.error('Error while destroying session: ', err);
+        return { message: 'Error while logging out.' };
+      }
+    });
+
+    res.clearCookie('pv-session', { path: '/' });
+
+    return { message: 'Logged out successfully.' };
   }
 }
 

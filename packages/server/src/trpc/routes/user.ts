@@ -26,14 +26,18 @@ export const userRoutes = {
       return await userLogin(input, ctx.req as unknown as AuthenticatedRequest);
     }),
   logoutUser: publicProcedure.mutation(async ({ ctx }) => {
-    await userLogout(ctx.req);
-    ctx.session.destroy((err: Error) => {
-      if (err) {
-        console.error('Error while destroying session: ', err);
-        return { message: 'Error while logging out.' };
-      }
-    });
-    ctx.res.clearCookie('pv-session', { path: '/' });
+    await userLogout(
+      ctx.session,
+      ctx.req as unknown as AuthenticatedRequest,
+      ctx.res,
+    );
+    // ctx.session.destroy((err: Error) => {
+    //   if (err) {
+    //     console.error('Error while destroying session: ', err);
+    //     return { message: 'Error while logging out.' };
+    //   }
+    // });
+    // ctx.res.clearCookie('pv-session', { path: '/' });
     return { message: 'Successfully logged out.' };
   }),
 };
