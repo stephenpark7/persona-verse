@@ -1,53 +1,14 @@
 import type { Request } from 'express';
-import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
+import type { AuthenticatedRequest } from '@shared/types';
 import type { UserLoginParams, UserLoginResponse } from '@types';
-import {
-  validatePassword,
-  generateAccessToken,
-  generateRefreshToken,
-  generateRevokedToken,
-  assertValidUserLogin,
-  verifyToken,
-} from '@utils';
+import { generateRevokedToken, verifyToken } from '@utils';
 import * as models from '@models';
 
 export const userLogin = async (
   { username, password }: UserLoginParams,
   req: AuthenticatedRequest,
 ): Promise<UserLoginResponse> => {
-  const user = await assertValidUserLogin(username, password);
-
-  await validatePassword(password, user);
-
-  const payload: JwtPayload = {
-    userId: parseInt(user.get('id') as string),
-    username: username,
-  };
-
-  const accessToken = generateAccessToken(payload);
-  const refreshToken = await generateRefreshToken(payload);
-
-  if (req.session) {
-    req.session.refreshToken = refreshToken;
-  }
-
-  const [profile] = await models.UserProfile.findOrCreate({
-    where: { UserId: payload.userId },
-    defaults: {
-      displayName: username,
-    },
-    attributes: ['displayName', 'picture', 'bio'],
-  });
-
-  if (!profile) {
-    throw new Error('Internal server error occurred while logging in.');
-  }
-
-  return {
-    message: 'Logged in successfully.',
-    jwt: accessToken,
-    profile: profile,
-  };
+  return await models.User.loginAccount({ username, password }, req);
 };
 
 export const userLogout = async (req: Request) => {
