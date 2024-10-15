@@ -1,5 +1,5 @@
 import { User } from '@models';
-import { compare } from './base';
+import { compare, hash } from './base';
 
 export const validatePassword = async (
   password: string,
@@ -13,4 +13,8 @@ export const validatePassword = async (
   if (!isAuthenticated) {
     throw new Error('Invalid credentials.');
   }
+};
+
+export const hashPassword = async (password: string): Promise<string> => {
+  return await hash(password);
 };

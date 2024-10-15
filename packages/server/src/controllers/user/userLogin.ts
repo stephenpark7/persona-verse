@@ -6,7 +6,7 @@ import {
   generateAccessToken,
   generateRefreshToken,
   generateRevokedToken,
-  validateUserLogin,
+  assertValidUserLogin,
   verifyToken,
 } from '@utils';
 import * as models from '@models';
@@ -15,7 +15,7 @@ export const userLogin = async (
   { username, password }: UserLoginParams,
   req: AuthenticatedRequest,
 ): Promise<UserLoginResponse> => {
-  const user = await validateUserLogin(username, password);
+  const user = await assertValidUserLogin(username, password);
 
   await validatePassword(password, user);
 

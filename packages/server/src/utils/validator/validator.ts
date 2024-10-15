@@ -8,7 +8,7 @@ import {
   validateUserPassword,
 } from './base';
 
-export const validateUserCreate = async (
+export const assertValidUserCreate = async (
   username: string,
   email: string,
   password: string,
@@ -42,7 +42,7 @@ export const validateUserCreate = async (
   return true;
 };
 
-export const validateUserLogin = async (
+export const assertValidUserLogin = async (
   username: string,
   password: string,
 ): Promise<InstanceType<typeof models.User>> => {

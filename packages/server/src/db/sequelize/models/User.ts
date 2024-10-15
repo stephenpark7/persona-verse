@@ -1,23 +1,25 @@
-import type { UserCreateParams } from '@types';
+import type { UserCreateParams, UserCreateResponse } from '@types';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../sequelize';
-import { hash, validateUserCreate } from '@utils';
+import { assertValidUserCreate, hashPassword } from '@utils';
 
 export class User extends Model {
   public static async createAccount({
     username,
     email,
     password,
-  }: UserCreateParams): Promise<User> {
-    await validateUserCreate(username, email, password);
+  }: UserCreateParams): Promise<UserCreateResponse> {
+    await assertValidUserCreate(username, email, password);
 
-    const hashedPassword = await hash(password);
+    const hashedPassword = await hashPassword(password);
 
-    return User.create({
+    await User.create({
       username,
       email,
       password: hashedPassword,
     });
+
+    return { message: 'User created successfully.' };
   }
 
   // TODO: move validation here

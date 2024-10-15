@@ -6,11 +6,9 @@ export const userCreate = async ({
   email,
   password,
 }: UserCreateParams): Promise<UserCreateResponse> => {
-  await User.createAccount({
+  return await User.createAccount({
     username,
     email,
     password,
   });
-
-  return { message: 'User created successfully.' };
 };
