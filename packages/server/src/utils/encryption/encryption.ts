@@ -1,5 +1,6 @@
 import { User } from '@models';
 import { compare, hash } from './base';
+import { isFalsy } from '../base';
 
 export const validatePassword = async (
   password: string,

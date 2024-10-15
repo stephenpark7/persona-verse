@@ -22,7 +22,6 @@ import {
   InternalServerError,
   AuthenticationError,
   isFalsy,
-  isTruthy,
 } from '@utils';
 import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
@@ -57,8 +56,6 @@ export class User extends Model {
     if (!user) {
       throw new Error('Invalid credentials.');
     }
-
-    await validatePassword(password, user);
 
     const payload = {
       userId: parseInt(user.getDataValue('id')),

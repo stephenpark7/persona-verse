@@ -1,3 +1,10 @@
+// TODO: don't use this because
+// TypeScript is not able to infer the type of the value
+// so User | null cannot be inferred
+
+// just be careful when comparing integers
+// since an id of 0 should be considered as a valid id (truthy)
+
 import { isFalsy } from './base';
 
 describe('isFalsy', () => {
