@@ -1,11 +1,12 @@
+import type { Response } from 'express';
+import type { Session } from 'express-session';
 import { authenticatedRequest } from '@shared/schemas';
 import type { AuthenticatedRequest } from '@shared/types';
-import type { Response } from 'express';
-import {
-  type UserCreateParams,
-  type UserCreateResponse,
-  type UserLoginParams,
-  type UserLoginResponse,
+import type {
+  UserCreateParams,
+  UserCreateResponse,
+  UserLoginParams,
+  UserLoginResponse,
 } from '@types';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../sequelize';
@@ -20,12 +21,11 @@ import {
   verifyToken,
   InternalServerError,
   AuthenticationError,
+  isFalsy,
+  isTruthy,
 } from '@utils';
 import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
-import { Session } from 'express-session';
-
-// TODO: use helper function for throwing errors
 
 export class User extends Model {
   public static async createAccount({
@@ -100,7 +100,7 @@ export class User extends Model {
   ) {
     authenticatedRequest.parse(req);
 
-    if (!req.session) {
+    if (isFalsy(req.session)) {
       throw new InternalServerError(
         'Internal server error occurred while logging out.',
       );
@@ -108,50 +108,58 @@ export class User extends Model {
 
     const refreshToken = req.session.refreshToken;
 
-    if (!refreshToken) {
+    if (isFalsy(refreshToken)) {
       throw new AuthenticationError('Session expired. Please login again.');
     }
 
-    if (!refreshToken.token) {
+    if (isFalsy(refreshToken.token)) {
       throw new InternalServerError('Token not found.');
     }
 
     const { jti, userId } = verifyToken(refreshToken.token);
 
-    if (jti == null || userId == null) {
-      throw new InternalServerError('Invalid token.');
-    }
+    await revokeToken(jti, userId);
 
-    const user = await User.findByPk(userId);
-    if (user) {
-      await revokeTokenIfNotRevoked(jti, userId);
-    }
+    await clearSession(session);
 
-    await destroySession(session);
-    res.clearCookie('pv-session', { path: '/' });
+    clearCookie(res);
 
     return { message: 'Logged out successfully.' };
   }
 }
 
-const revokeTokenIfNotRevoked = async (jti: string, userId: number) => {
+const revokeToken = async (jti: string, userId: number) => {
+  if (isFalsy(jti) || isFalsy(userId)) {
+    throw new InternalServerError('Invalid token.');
+  }
+
+  const user = await User.findByPk(userId);
+
+  if (isFalsy(user)) {
+    throw new InternalServerError('User not found.');
+  }
+
   const revokedToken = await RevokedToken.findByPk(jti);
-  if (!revokedToken) {
+
+  if (isFalsy(revokedToken)) {
     await generateRevokedToken(userId);
   }
 };
 
-const destroySession = (session: Session): Promise<void> => {
+const clearSession = (session: Session): Promise<void> => {
   return new Promise((resolve, reject) => {
     session.destroy((err: Error) => {
       if (err) {
-        console.error('Error while destroying session: ', err);
-        reject(new Error('Error while logging out.'));
+        reject(new AuthenticationError('Error while clearing session.'));
       } else {
         resolve();
       }
     });
   });
+};
+
+const clearCookie = (res: Response): void => {
+  res.clearCookie('pv-session', { path: '/' });
 };
 
 User.init(

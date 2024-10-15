@@ -24,3 +24,7 @@ export const isFalsy = (value: unknown): boolean => {
 
   return false;
 };
+
+export const isTruthy = (value: unknown): boolean => {
+  return !isFalsy(value);
+};

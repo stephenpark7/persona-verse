@@ -115,3 +115,85 @@ describe('isFalsy', () => {
     });
   });
 });
+
+describe('isTruthy', () => {
+  describe('when value is null', () => {
+    it('should return false for null', () => {
+      expect(isFalsy(null)).toBe(true);
+    });
+  });
+
+  describe('when value is undefined', () => {
+    it('should return false for undefined', () => {
+      expect(isFalsy(undefined)).toBe(true);
+    });
+  });
+
+  describe('when value is a string', () => {
+    it('should return false for empty string', () => {
+      expect(isFalsy('')).toBe(true);
+    });
+
+    it('should return true for non-empty string', () => {
+      expect(isFalsy('hello')).toBe(false);
+    });
+
+    it('should return true for whitespace', () => {
+      expect(isFalsy(' ')).toBe(false);
+    });
+  });
+
+  describe('when value is a number', () => {
+    it('should return true for 0', () => {
+      expect(isFalsy(0)).toBe(false);
+    });
+
+    it('should return true for 1', () => {
+      expect(isFalsy(1)).toBe(false);
+    });
+
+    it('should return false for NaN', () => {
+      expect(isFalsy(NaN)).toBe(true);
+    });
+
+    it('should return true for Infinity', () => {
+      expect(isFalsy(Infinity)).toBe(false);
+    });
+
+    it('should return true for -Infinity', () => {
+      expect(isFalsy(-Infinity)).toBe(false);
+    });
+  });
+
+  describe('when value is an object or array', () => {
+    it('should return false for empty object', () => {
+      expect(isFalsy({})).toBe(true);
+    });
+
+    it('should return false for empty array', () => {
+      expect(isFalsy([])).toBe(true);
+    });
+
+    it('should return true for non-empty object', () => {
+      expect(isFalsy({ key: 'value' })).toBe(false);
+    });
+
+    it('should return true for non-empty array', () => {
+      expect(isFalsy([1, 2, 3])).toBe(false);
+    });
+
+    it('should return false for empty Map', () => {
+      expect(isFalsy(new Map())).toBe(true);
+    });
+
+    it('should return true for non-empty Map', () => {
+      const map = new Map();
+      map.set('key', 'value');
+      expect(isFalsy(map)).toBe(false);
+    });
+
+    it('should return false for empty Set', () => {
+      expect(isFalsy(new Set())).toBe(true);
+    });
+  });
+});
