@@ -26,6 +26,7 @@
     "types": ["node", "vitest/globals", "vitest", "./src/types/index.d.ts"],
     "paths": {
       "@controllers": ["./src/controllers/index"],
+      "@models": ["./src/models/index"],
       "@db": ["./src/db/index"],
       "@db/models": ["./src/db/sequelize/models/index"],
       "@schemas": ["./src/schemas/index"],

@@ -32,7 +32,7 @@ fs.writeFile(filePath, '')
 
 // Create a index file that exports that module (barrel file)
 const indexFilePath = `${basePath}/src/${directoryName}/index.ts`;
-const indexFileContent = `export * from './${moduleName}';`;
+const indexFileContent = `export * from './${moduleName}';\n`;
 fs.writeFile(indexFilePath, indexFileContent)
   .then(() => {
     console.log(`Index file created successfully at ${indexFilePath}`);
