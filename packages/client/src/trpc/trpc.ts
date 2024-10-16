@@ -90,14 +90,15 @@ const trpc = createTRPCProxyClient<AppRouter>({
       url: apiConfig.trpcUrl,
       fetch: async (url, options) => {
         const requestURL = new URL(url as string);
+        const credentials =
+          requestURL.pathname.endsWith('loginUser') ||
+          requestURL.pathname.endsWith('logoutUser') ||
+          requestURL.pathname.endsWith('refreshJwt')
+            ? 'include'
+            : 'omit';
         const originalRequest = fetch(url, {
           ...options,
-          credentials:
-            requestURL.pathname.endsWith('loginUser') ||
-            requestURL.pathname.endsWith('logoutUser') ||
-            requestURL.pathname.endsWith('refreshJwt')
-              ? 'include'
-              : 'omit',
+          credentials,
         });
         return originalRequest;
       },
