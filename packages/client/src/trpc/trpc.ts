@@ -17,8 +17,6 @@ import {
 } from '@schemas';
 import { apiConfig } from '@utils';
 import { clearJwt, setJwt, store, tweetAPI } from '@redux';
-import { getHTTPStatusCodeFromError } from '@trpc/server/http';
-import { TRPCError } from '@trpc/server';
 
 let retryCount = 0;
 
@@ -78,7 +76,12 @@ const authLink: TRPCLink<AppRouter> = () => {
 
 const isHttpBatchEnabled = process.env.NODE_ENV === 'test';
 
-const httpFlexibleLink = isHttpBatchEnabled ? httpLink : httpBatchLink;
+const httpFlexibleLink = isHttpBatchEnabled ? httpBatchLink : httpLink;
+
+export interface Url {
+  opList?: { path: string }[];
+  op?: { path: string };
+}
 
 const trpc = createTRPCProxyClient<AppRouter>({
   links: [
@@ -98,7 +101,7 @@ const trpc = createTRPCProxyClient<AppRouter>({
         });
         return originalRequest;
       },
-      headers(url: { opList?: { path: string }[]; op?: { path: string } }) {
+      headers(url: Url) {
         const token = store.getState().user.value.jwt?.token;
         const path = isHttpBatchEnabled ? url.opList?.[0]?.path : url.op?.path;
         if (

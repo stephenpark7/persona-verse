@@ -25,7 +25,8 @@
     "useDefineForClassFields": true,
     "types": ["node", "vitest/globals", "vitest", "./src/types/index.d.ts"],
     "paths": {
-      "@models": ["../server/src/models"],
+      "@models": ["../server/src/db/sequelize/models/index"],
+      "@types": ["../server/src/types"],
       "@db": ["../server/src/db"],
       "@utils": ["../server/src/utils"],
       "@controllers": ["../server/src/controllers"],
