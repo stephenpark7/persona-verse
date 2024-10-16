@@ -1,4 +1,4 @@
-import { User } from '@models';
+import { User } from '@db/models';
 import { user, User as UserParams } from '@schemas';
 
 export const userFactory = async (

@@ -1,7 +1,7 @@
 import type { Response } from 'express';
 import type { Session } from 'express-session';
 import type { AuthenticatedRequest } from '@shared/types';
-import { User } from '@models';
+import { User } from '@db/models';
 import { TRPCError } from '@trpc/server';
 import { ZodError } from 'zod';
 

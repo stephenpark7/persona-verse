@@ -1,4 +1,4 @@
-import { UserProfile } from '@models';
+import { UserProfile } from '@db/models';
 import { jwt } from '@shared/schemas';
 import { z } from 'zod';
 

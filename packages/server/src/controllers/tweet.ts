@@ -1,6 +1,6 @@
 import type { AuthenticatedRequest } from '@shared/types';
 import { extractUserIdFromRequest, extractMessageFromRequest } from '@utils';
-import { Tweet } from '@models';
+import { Tweet } from '@db/models';
 
 export const tweetCreate = async (req: AuthenticatedRequest) => {
   const userId = extractUserIdFromRequest(req);

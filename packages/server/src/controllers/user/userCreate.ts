@@ -1,5 +1,5 @@
 import type { UserCreateParams, UserCreateResponse } from '@types';
-import { User } from '@models';
+import { User } from '@db/models';
 
 export const userCreate = async ({
   username,

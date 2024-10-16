@@ -6,7 +6,7 @@ import type { NextFunction, Response } from 'express';
 import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
-import { User } from '@models';
+import { User } from '@db/models';
 
 const isAuthHeaderRequired = (url: string) => {
   const noAuthHeaderUrls = ['/registerUser', '/loginUser', '/refreshJwt'];

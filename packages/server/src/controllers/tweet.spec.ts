@@ -1,4 +1,4 @@
-import { User } from '@models';
+import { User } from '@db/models';
 import { tweetCreate, tweetGet } from './tweet';
 import { authenticatedRequestFactory } from '@tests/factories';
 

@@ -3,11 +3,11 @@ import type { Response } from 'express';
 import type { AuthenticatedRequest } from '@shared/types';
 // import { userCreate } from './userCreate';
 import { userLogout } from './userLogout';
-import { User } from '@models';
+import { User } from '@db/models';
 import { Mock } from 'vitest';
 
-vi.mock('@models', async (importOriginal) => {
-  const models = await importOriginal<typeof import('@models')>();
+vi.mock('@db/models', async (importOriginal) => {
+  const models = await importOriginal<typeof import('@db/models')>();
   return {
     ...models,
     User: {
