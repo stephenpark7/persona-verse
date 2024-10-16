@@ -16,20 +16,22 @@ const packageName = args[0];
 const directoryName = args[1];
 const moduleName = args.slice(2);
 
+const basePath = `../${packageName}`;
+
 console.log(`Generating module: ${moduleName} in package: ${packageName}`);
 
 // Create a directory for the module if it doesn't exist
-const dirPath = `./${packageName}/src/${directoryName}`;
+const dirPath = `${basePath}/src/${directoryName}`;
 fs.mkdir(dirPath, { recursive: true });
 
 // Create a file for the module (.ts/.tsx)
-const filePath = `./${packageName}/src/${directoryName}/${moduleName}.ts`;
+const filePath = `${basePath}/src/${directoryName}/${moduleName}.ts`;
 fs.writeFile(filePath, '')
   .then(() => console.log(`File created successfully at ${filePath}`))
   .catch((err) => console.error('Error creating file:', err));
 
 // Create a index file that exports that module (barrel file)
-const indexFilePath = `./${packageName}/src/${directoryName}/index.ts`;
+const indexFilePath = `${basePath}/src/${directoryName}/index.ts`;
 const indexFileContent = `export * from './${moduleName}';`;
 fs.writeFile(indexFilePath, indexFileContent)
   .then(() => {
@@ -40,7 +42,7 @@ fs.writeFile(indexFilePath, indexFileContent)
 // TODO: If there are parent directories, those should import the index file
 
 // Create a spec file for the module
-const specFilePath = `./${packageName}/src/${directoryName}/${moduleName}.spec.ts`;
+const specFilePath = `${basePath}/src/${directoryName}/${moduleName}.spec.ts`;
 fs.writeFile(specFilePath, '')
   .then(() => {
     console.log(`Spec file created successfully at ${specFilePath}`);
