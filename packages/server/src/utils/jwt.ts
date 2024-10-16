@@ -55,7 +55,7 @@ export const generateRefreshToken = async (
   }
 
   const refreshTokenInstance = await models.RefreshToken.create({
-    jti: refreshToken.payload.jti,
+    jti,
     UserId: payload.userId,
   });
 

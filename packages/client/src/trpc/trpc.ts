@@ -1,7 +1,7 @@
 import {
   type Operation,
   type TRPCLink,
-  type TRPCClientError,
+  TRPCClientError,
   createTRPCProxyClient,
   httpLink,
   httpBatchLink,
@@ -17,6 +17,8 @@ import {
 } from '@schemas';
 import { apiConfig } from '@utils';
 import { clearJwt, setJwt, store, tweetAPI } from '@redux';
+import { getHTTPStatusCodeFromError } from '@trpc/server/http';
+import { TRPCError } from '@trpc/server';
 
 let retryCount = 0;
 
@@ -32,20 +34,34 @@ const authLink: TRPCLink<AppRouter> = () => {
           },
           async error(err) {
             const response = err.meta?.response as Response;
-            console.log(err);
-            if (response.status === 401 && retryCount < maxRetries) {
+
+            if (!response) {
+              observer.error(
+                new TRPCClientError(
+                  'Server is not available. Please try again later.',
+                ),
+              );
+              return;
+            }
+
+            if (response.status === 401) {
+              if (retryCount > maxRetries) {
+                return;
+              }
+
               retryCount++;
+
               try {
                 const response = await refreshJwt({});
                 store.dispatch(setJwt(response.jwt as Jwt));
                 store.dispatch(tweetAPI.util.invalidateTags(['Tweets']));
                 makeRequest(operation);
-              } catch (_err) {
+              } catch {
                 store.dispatch(clearJwt());
-                observer.error(_err as TRPCClientError<AppRouter>);
+                observer.error(new TRPCClientError('Unauthorized.'));
               }
-            } else {
-              observer.error(err);
+            } else if (response.status === 500) {
+              observer.error(new TRPCClientError(err.message));
             }
           },
           complete() {

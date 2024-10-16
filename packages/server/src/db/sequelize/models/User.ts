@@ -1,4 +1,3 @@
-import { authenticatedRequest } from '@shared/schemas';
 import type { AuthenticatedRequest } from '@shared/types';
 import type { Response } from 'express';
 import {
@@ -24,8 +23,8 @@ import {
 import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
 import { Session } from 'express-session';
-
-// TODO: use helper function for throwing errors
+import { authenticatedRequest } from '@shared/schemas';
+import { TRPCError } from '@trpc/server';
 
 export class User extends Model {
   public static async createAccount({
@@ -37,11 +36,15 @@ export class User extends Model {
 
     const hashedPassword = await hashPassword(password);
 
-    await User.create({
+    const user = await User.create({
       username,
       email,
       password: hashedPassword,
     });
+
+    if (!user) {
+      throw new InternalServerError('Internal server error occurred.');
+    }
 
     return { message: 'User created successfully.' };
   }
@@ -101,9 +104,11 @@ export class User extends Model {
     authenticatedRequest.parse(req);
 
     if (!req.session) {
-      throw new InternalServerError(
-        'Internal server error occurred while logging out.',
-      );
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Internal server error occurred.',
+        cause: new AuthenticationError('Session not found.'),
+      });
     }
 
     const refreshToken = req.session.refreshToken;

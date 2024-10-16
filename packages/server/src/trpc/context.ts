@@ -9,12 +9,7 @@ import { sendUnauthorizedResponse } from '@utils';
 import { User } from '@models';
 
 const isAuthHeaderRequired = (url: string) => {
-  const noAuthHeaderUrls = [
-    '/registerUser',
-    '/loginUser',
-    '/logoutUser',
-    '/refreshJwt',
-  ];
+  const noAuthHeaderUrls = ['/registerUser', '/loginUser', '/refreshJwt'];
   return !noAuthHeaderUrls.some((u) => url.startsWith(u));
 };
 

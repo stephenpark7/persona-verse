@@ -26,11 +26,8 @@ export const userRoutes = {
       return await userLogin(input, ctx.req as unknown as AuthenticatedRequest);
     }),
   logoutUser: publicProcedure.mutation(async ({ ctx }) => {
-    await userLogout(
-      ctx.session,
-      ctx.req as unknown as AuthenticatedRequest,
-      ctx.res,
-    );
-    return { message: 'Successfully logged out.' };
+    const req = ctx.req as unknown as AuthenticatedRequest;
+
+    return await userLogout(ctx.session, req, ctx.res);
   }),
 };

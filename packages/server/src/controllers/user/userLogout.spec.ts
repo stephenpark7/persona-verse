@@ -1,8 +1,21 @@
 import type { Session } from 'express-session';
 import type { Response } from 'express';
 import type { AuthenticatedRequest } from '@shared/types';
-import { userCreate } from './userCreate';
+// import { userCreate } from './userCreate';
 import { userLogout } from './userLogout';
+import { User } from '@models';
+import { Mock } from 'vitest';
+
+vi.mock('@models', async (importOriginal) => {
+  const models = await importOriginal<typeof import('@models')>();
+  return {
+    ...models,
+    User: {
+      // createAccount: models.User.createAccount,
+      logoutAccount: vi.fn(models.User.logoutAccount),
+    },
+  };
+});
 
 describe('userLogout', async () => {
   let session: Session;
@@ -10,11 +23,13 @@ describe('userLogout', async () => {
   let res: Response;
 
   beforeAll(async () => {
-    await userCreate({
-      username: 'test',
-      email: 'test@test.com',
-      password: 'Password123!',
-    });
+    vi.restoreAllMocks();
+
+    // await userCreate({
+    //   username: 'test',
+    //   email: 'test@test.com',
+    //   password: 'Password123!',
+    // });
 
     // TODO: create factory/mocks for these
 
@@ -37,10 +52,24 @@ describe('userLogout', async () => {
     } as unknown as Response;
   });
 
-  describe('when body is missing', () => {
+  describe('when body is missing', async () => {
     it('throws an error', async () => {
       await expect(() => userLogout(session, req, res)).rejects.toThrow(
         'Token not found.',
+      );
+    });
+  });
+
+  describe('when server is down', async () => {
+    beforeAll(async () => {
+      (User.logoutAccount as Mock).mockReturnValue(
+        Promise.reject('Internal server error occurred.'),
+      );
+    });
+
+    it('throws an error', async () => {
+      await expect(() => userLogout(session, req, res)).rejects.toThrow(
+        'Internal server error occurred.',
       );
     });
   });
