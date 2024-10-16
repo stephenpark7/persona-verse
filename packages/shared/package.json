@@ -6,8 +6,9 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "build": "npm run lint && tsc",
+    "tsc": "tsc",
     "lint": "eslint .",
+    "build": "npm run lint && tsc --build",
     "generate:module": "tsc && ts-node scripts/generate-module.ts"
   }
 }
