@@ -1,4 +1,4 @@
-import type { UserCreateParams, UserCreateResponse } from '@types';
+import type { UserCreateParams, UserCreateResponse } from '@shared/types';
 import { userCreate } from './userCreate';
 
 describe('userCreate', () => {

@@ -1,5 +1,5 @@
 import type { AuthenticatedRequest } from '@shared/types';
-import type { UserLoginParams, UserLoginResponse } from '@types';
+import type { UserLoginParams, UserLoginResponse } from '@shared/types';
 import { User } from '@db/models';
 
 export const userLogin = async (

@@ -5,7 +5,7 @@ import {
   type UserCreateResponse,
   type UserLoginParams,
   type UserLoginResponse,
-} from '@types';
+} from '@shared/types';
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../sequelize';
 import {

@@ -1,5 +1,5 @@
 import type { AuthenticatedRequest, UserLoginParams } from '@shared/types';
-import type { UserLoginResponse } from '@types';
+import type { UserLoginResponse } from '@shared/types';
 import { authenticatedRequestFactory } from '@tests/factories';
 import { userLogin } from './userLogin';
 import { userCreate } from '../user/userCreate';
