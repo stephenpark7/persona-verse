@@ -1,67 +1,64 @@
 import { z } from 'zod';
-import jwt from 'jsonwebtoken';
-import { JwtPayload } from '@shared/types';
+import jwt, { Algorithm } from 'jsonwebtoken';
+import { JwtOptions, JwtPayload } from '@shared/types';
+import { jwtPayload, jwtOptions } from '@shared/schemas';
 
-const jwtPayload = z.object({
-  // Define the structure of your JWT payload here
+export const jsonWebToken = z.object({
+  payload: jwtPayload,
+  token: z.string(),
+  options: jwtOptions,
 });
-
-const jwtOptions = z.object({
-  // Define the structure of your JWT options here
-});
-
-export const jsonWebToken = z
-  .object({
-    token: z.string().optional().nullable(),
-    expiresIn: z.number().optional().nullable(),
-    payload: jwtPayload.optional().nullable(),
-    options: jwtOptions.optional().nullable(),
-  })
-  .partial();
 
 export type JsonWebToken = z.infer<typeof jsonWebToken>;
 
 export class Jwt {
-  protected _token?: string | null;
-  expiresIn?: number | null;
-  payload?: JwtPayload;
-  options?: z.infer<typeof jwtOptions> | null;
+  protected algorithm: Algorithm = 'HS256';
 
-  constructor(data: JsonWebToken) {
-    const parsedData = jsonWebToken.parse(data);
-    this._token = parsedData.token;
-    this.expiresIn = parsedData.expiresIn;
-    this.payload = parsedData.payload;
-    this.options = parsedData.options;
-  }
+  protected token: string | null;
+  protected payload: JwtPayload;
+  protected options: JwtOptions;
 
-  get token(): string | null | undefined {
-    return this._token;
+  constructor(payload: JwtPayload) {
+    this.payload = jwtPayload.parse(payload);
+    this.options = jwtOptions.parse({
+      algorithm: 'HS256',
+      expiresIn: 30 * 60 * 1000,
+    });
+    this.token = jwt.sign(
+      this.payload,
+      process.env.JWT_SECRET || 'secret',
+      this.options,
+    );
   }
 
   value() {
     return {
-      token: this._token as string,
+      token: this.token as string,
       payload: this.payload as JwtPayload,
     };
   }
 }
 
-const secret = process.env.JWT_SECRET || 'secret';
-
 export class AccessToken extends Jwt {
   expiresIn: number = Date.now() + 30 * 60 * 1000;
+}
 
-  constructor(data: JsonWebToken) {
-    super(data);
+export class RefreshToken extends Jwt {
+  expiresIn: number = Date.now() + 7 * 24 * 60 * 60 * 1000;
 
-    if (this.payload) {
-      this._token = jwt.sign(this.payload, secret, {
-        algorithm: 'HS256',
-        expiresIn: this.expiresIn,
-      });
-    } else {
-      throw new Error('Payload is required to generate a token');
-    }
+  constructor(payload: JwtPayload) {
+    super(payload);
+
+    this.options = {
+      expiresIn: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    };
   }
+
+  // constructor(data: JsonWebToken) {
+  //   super(data);
+
+  //   // TODO:
+  //   // 1) Generate jti
+  //   // 2) Save jti to database
+  // }
 }
