@@ -37,6 +37,16 @@ export class Jwt {
       payload: this.payload as JwtPayload,
     };
   }
+
+  toString() {
+    return this.token as string;
+  }
+
+  [Symbol.toPrimitive](hint: string) {
+    if (hint === 'string') {
+      return this.token as string;
+    }
+  }
 }
 
 export class AccessToken extends Jwt {

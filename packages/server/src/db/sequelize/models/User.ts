@@ -11,8 +11,6 @@ import { sequelize } from '../sequelize';
 import {
   assertValidUserCreate,
   assertValidUserLogin,
-  // generateAccessToken,
-  generateRefreshToken,
   generateRevokedToken,
   hashPassword,
   validatePassword,
@@ -25,7 +23,7 @@ import { RevokedToken } from './RevokedToken';
 import { Session } from 'express-session';
 import { authenticatedRequest } from '@shared/schemas';
 import { TRPCError } from '@trpc/server';
-import { AccessToken } from '@models';
+import { AccessToken, RefreshToken } from '@models';
 
 export class User extends Model {
   public static async createAccount({
@@ -71,10 +69,12 @@ export class User extends Model {
 
     const accessToken = new AccessToken(payload);
 
-    const refreshToken = await generateRefreshToken(payload);
+    const refreshToken = new RefreshToken(payload);
 
     if (req.session) {
-      req.session.refreshToken = refreshToken;
+      req.session.refreshToken = {
+        token: refreshToken.toString(),
+      };
     } else {
       throw new Error('Internal server error occurred while logging in.');
     }

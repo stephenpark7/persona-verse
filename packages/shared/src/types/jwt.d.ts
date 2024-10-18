@@ -1,5 +1,5 @@
-import type { InferType } from '.';
-import { jwtPayload, accessToken, refreshToken } from '../schemas';
+import type { InferType } from 'zod';
+import { jwtPayload, accessToken, refreshToken } from '../schemas/jwt';
 
 export type Jwt = InferType<typeof jwt>;
 
