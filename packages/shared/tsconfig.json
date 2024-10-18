@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*.ts"],
+  "include": ["./src/**/*.ts", "../server/src/**/*.ts"],
   "compilerOptions": {
     "allowImportingTsExtensions": false,
     "allowSyntheticDefaultImports": true,
@@ -11,13 +11,13 @@
     "lib": ["ESNext"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "noEmit": false,
+    "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist",
     "resolveJsonModule": true,
-    "rootDir": ".",
+    "rootDir": "../",
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
