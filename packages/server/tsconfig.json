@@ -29,7 +29,6 @@
       "@models": ["./src/models/index"],
       "@db": ["./src/db/index"],
       "@db/models": ["./src/db/sequelize/models/index"],
-      "@schemas": ["./src/schemas/index"],
       "@types": ["./src/types/index"],
       "@middleware": ["./src/middleware/index"],
       "@routes": ["./src/routes/index"],
