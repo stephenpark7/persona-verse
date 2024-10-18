@@ -11,7 +11,7 @@ import { sequelize } from '../sequelize';
 import {
   assertValidUserCreate,
   assertValidUserLogin,
-  generateAccessToken,
+  // generateAccessToken,
   generateRefreshToken,
   generateRevokedToken,
   hashPassword,
@@ -25,6 +25,7 @@ import { RevokedToken } from './RevokedToken';
 import { Session } from 'express-session';
 import { authenticatedRequest } from '@shared/schemas';
 import { TRPCError } from '@trpc/server';
+import { AccessToken } from '@models';
 
 export class User extends Model {
   public static async createAccount({
@@ -68,7 +69,9 @@ export class User extends Model {
       username,
     };
 
-    const accessToken = generateAccessToken(payload);
+    const accessToken = new AccessToken({
+      payload,
+    });
     const refreshToken = await generateRefreshToken(payload);
 
     if (req.session) {
@@ -91,7 +94,7 @@ export class User extends Model {
 
     return {
       message: 'Logged in successfully.',
-      jwt: accessToken,
+      jwt: accessToken.value(),
       profile: profile,
     };
   }

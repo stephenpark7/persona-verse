@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const jwtPayload = z.object({
   userId: z.number(),
   username: z.string(),
-  expiresAt: z.number().optional(),
+  // expiresAt: z.number().optional(),
   jti: z.string().optional(),
 });
 
@@ -21,7 +21,7 @@ export const refreshToken = z.object({
 
 export const jwt = z.object({
   token: z.string(),
-  expiresAt: z.number(),
+  // expiresAt: z.number(),
   payload: jwtPayload,
 });
 

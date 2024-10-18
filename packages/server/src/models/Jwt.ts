@@ -1,60 +1,67 @@
 import { z } from 'zod';
 import jwt from 'jsonwebtoken';
-import { jwtPayload } from '@shared/schemas';
 import { JwtPayload } from '@shared/types';
 
-export const jsonWebToken = z.object({
-  type: z.union([z.literal('Access'), z.literal('Refresh')]),
-  token: z.string(),
-  expiresIn: z.string(),
-  expiresAt: z.number(),
-  payload: jwtPayload,
+const jwtPayload = z.object({
+  // Define the structure of your JWT payload here
 });
+
+const jwtOptions = z.object({
+  // Define the structure of your JWT options here
+});
+
+export const jsonWebToken = z
+  .object({
+    token: z.string().optional().nullable(),
+    expiresIn: z.number().optional().nullable(),
+    payload: jwtPayload.optional().nullable(),
+    options: jwtOptions.optional().nullable(),
+  })
+  .partial();
 
 export type JsonWebToken = z.infer<typeof jsonWebToken>;
 
 export class Jwt {
-  type: 'Access' | 'Refresh';
-  token: string;
-  expiresIn: string;
-  expiresAt: number;
-  payload: JwtPayload;
+  protected _token?: string | null;
+  expiresIn?: number | null;
+  payload?: JwtPayload;
+  options?: z.infer<typeof jwtOptions> | null;
 
   constructor(data: JsonWebToken) {
     const parsedData = jsonWebToken.parse(data);
-    this.type = parsedData.type;
-    this.token = parsedData.token;
+    this._token = parsedData.token;
     this.expiresIn = parsedData.expiresIn;
-    this.expiresAt = parsedData.expiresAt;
     this.payload = parsedData.payload;
+    this.options = parsedData.options;
+  }
+
+  get token(): string | null | undefined {
+    return this._token;
+  }
+
+  value() {
+    return {
+      token: this._token as string,
+      payload: this.payload as JwtPayload,
+    };
   }
 }
 
+const secret = process.env.JWT_SECRET || 'secret';
+
 export class AccessToken extends Jwt {
+  expiresIn: number = Date.now() + 30 * 60 * 1000;
+
   constructor(data: JsonWebToken) {
     super(data);
 
-    if (this.type !== 'Access') {
-      throw new Error('Invalid token type.');
+    if (this.payload) {
+      this._token = jwt.sign(this.payload, secret, {
+        algorithm: 'HS256',
+        expiresIn: this.expiresIn,
+      });
+    } else {
+      throw new Error('Payload is required to generate a token');
     }
-
-    const expiresAt = Date.now() + 30 * 60 * 1000;
-
-    // TODO: refactor to use expiresAt only or expiresIn only, not both
-
-    const token = jwt.sign(
-      { ...this.payload, expiresAt },
-      process.env.JWT_SECRET || 'secret',
-      { expiresIn: '30m' },
-    );
-
-    if (!token) {
-      throw new Error(
-        'Internal server error occurred while generating access token.',
-      );
-    }
-
-    this.token = token;
-    this.expiresAt = expiresAt;
   }
 }

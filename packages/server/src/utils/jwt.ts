@@ -6,8 +6,8 @@ import * as models from '@db/models';
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 export const generateAccessToken = (payload: JwtPayload): AccessToken => {
-  const options = { expiresIn: '30m' };
   const expiresAt = Date.now() + 30 * 60 * 1000;
+  const options = { expiresIn: Date.now() + 30 * 60 * 1000 };
   const token = jwt.sign({ ...payload, expiresAt }, JWT_SECRET, options);
 
   if (!token) {
