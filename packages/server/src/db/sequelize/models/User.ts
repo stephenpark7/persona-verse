@@ -69,9 +69,8 @@ export class User extends Model {
       username,
     };
 
-    const accessToken = new AccessToken({
-      payload,
-    });
+    const accessToken = new AccessToken(payload);
+
     const refreshToken = await generateRefreshToken(payload);
 
     if (req.session) {
