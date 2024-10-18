@@ -25,6 +25,8 @@ import { authenticatedRequest } from '@shared/schemas';
 import { TRPCError } from '@trpc/server';
 import { AccessToken, RefreshToken } from '@models';
 
+// TODO: refactor
+
 export class User extends Model {
   public static async createAccount({
     username,
