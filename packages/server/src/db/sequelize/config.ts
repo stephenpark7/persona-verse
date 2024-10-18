@@ -1,4 +1,4 @@
-import { sequelizeOptionsSchema } from '@schemas';
+import { sequelizeOptionsSchema } from '@shared/schemas';
 import { SequelizeOptions } from '@types';
 
 export const sequelizeOptions: SequelizeOptions = {
