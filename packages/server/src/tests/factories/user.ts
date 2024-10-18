@@ -1,5 +1,5 @@
 import { User } from '@db/models';
-import { user, User as UserParams } from '@schemas';
+import { user, User as UserParams } from '@shared/schemas';
 
 export const userFactory = async (
   params: UserParams = {

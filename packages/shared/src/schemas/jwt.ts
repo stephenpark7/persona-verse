@@ -25,4 +25,8 @@ export const jwt = z.object({
   payload: jwtPayload,
 });
 
+export const jwtOptions = z.object({
+  expiresIn: z.number(),
+});
+
 export const jwtToken = z.union([accessToken, refreshToken]);

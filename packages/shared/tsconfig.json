@@ -31,7 +31,6 @@
       "@db/models": ["../server/src/db/sequelize/models/index"],
       "@utils": ["../server/src/utils"],
       "@controllers": ["../server/src/controllers"],
-      "@schemas": ["../server/src/schemas"],
       "@tests/factories": ["../server/src/tests/factories"],
       "@shared/schemas": ["./src/schemas/index"],
       "@shared/types": ["./src/types/index"],

@@ -10,3 +10,5 @@ export type AccessToken = InferType<typeof accessToken>;
 export type RefreshToken = InferType<typeof refreshToken>;
 
 export type JwtToken = InferType<typeof jwtToken>;
+
+export type JwtOptions = z.infer<typeof jwtOptions>;

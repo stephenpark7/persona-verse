@@ -1,8 +1,9 @@
 import type { Request } from 'express';
 import { TRPCError } from '@trpc/server';
 import type { RefreshTokenResponse } from '@shared/types';
-import { generateAccessToken, verifyToken } from '@utils';
+import { verifyToken } from '@utils';
 import { User, RevokedToken } from '@db/models';
+import { AccessToken } from '@models';
 
 export const refreshJwt = async (
   req: Request,
@@ -39,7 +40,9 @@ export const refreshJwt = async (
       username: user.get('username') as string,
     };
 
-    const accessToken = generateAccessToken(payload);
+    const accessToken = new AccessToken({
+      payload,
+    });
 
     if (!accessToken) {
       throw new Error('Failed to generate access token.');
@@ -56,7 +59,7 @@ export const refreshJwt = async (
 
     return {
       message: 'Token refreshed.',
-      jwt: accessToken,
+      jwt: accessToken.value(),
     };
   } catch (_err) {
     throw new TRPCError({
