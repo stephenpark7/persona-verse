@@ -40,9 +40,7 @@ export const refreshJwt = async (
       username: user.get('username') as string,
     };
 
-    const accessToken = new AccessToken({
-      payload,
-    });
+    const accessToken = new AccessToken(payload);
 
     if (!accessToken) {
       throw new Error('Failed to generate access token.');

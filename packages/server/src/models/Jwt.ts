@@ -1,74 +1,113 @@
 import { z } from 'zod';
 import jwt, { Algorithm } from 'jsonwebtoken';
-import { JwtOptions, JwtPayload } from '@shared/types';
-import { jwtPayload, jwtOptions } from '@shared/schemas';
+import { v4 as uuidv4 } from 'uuid';
+import * as models from '@db/models';
 
-export const jsonWebToken = z.object({
-  payload: jwtPayload,
-  token: z.string(),
-  options: jwtOptions,
+const jwtPayload = z.object({
+  userId: z.number(),
+  username: z.string(),
 });
 
-export type JsonWebToken = z.infer<typeof jsonWebToken>;
+const jwtOptions = z.object({
+  algorithm: z.custom<Algorithm>(),
+  expiresIn: z.number().optional(),
+});
+
+type JwtPayload = z.infer<typeof jwtPayload>;
+type JwtOptions = z.infer<typeof jwtOptions>;
 
 export class Jwt {
-  protected algorithm: Algorithm = 'HS256';
+  payload: JwtPayload;
+  options: JwtOptions;
+  token: string | null = null;
 
-  protected token: string | null;
-  protected payload: JwtPayload;
-  protected options: JwtOptions;
-
-  constructor(payload: JwtPayload) {
+  constructor(payload: JwtPayload, options: Partial<JwtOptions> = {}) {
     this.payload = jwtPayload.parse(payload);
+
     this.options = jwtOptions.parse({
       algorithm: 'HS256',
-      expiresIn: 30 * 60 * 1000,
+      ...options,
     });
+
+    this.generate();
+  }
+
+  generate() {
     this.token = jwt.sign(
       this.payload,
-      process.env.JWT_SECRET || 'secret',
+      process.env.JWT_SECRET || 'pv-jwt-secret',
       this.options,
     );
   }
 
-  value() {
-    return {
-      token: this.token as string,
-      payload: this.payload as JwtPayload,
-    };
-  }
-
   toString() {
-    return this.token as string;
+    return this.token;
   }
 
   [Symbol.toPrimitive](hint: string) {
     if (hint === 'string') {
-      return this.token as string;
+      return this.toString();
     }
+  }
+
+  value() {
+    return {
+      token: this.toString() as string,
+      payload: this.payload,
+    };
   }
 }
 
 export class AccessToken extends Jwt {
-  expiresIn: number = Date.now() + 30 * 60 * 1000;
+  constructor(payload: JwtPayload) {
+    const options = {
+      expiresIn: Date.now() + 30 * 60 * 1000,
+    };
+    super(payload, options);
+  }
 }
 
 export class RefreshToken extends Jwt {
-  expiresIn: number = Date.now() + 7 * 24 * 60 * 60 * 1000;
-
   constructor(payload: JwtPayload) {
-    super(payload);
-
-    this.options = {
+    const options = {
       expiresIn: Date.now() + 7 * 24 * 60 * 60 * 1000,
     };
+    super(payload, options);
+
+    const jti = uuidv4();
+
+    this.payload = jwtPayload.parse({
+      ...this.payload,
+      jti,
+    });
+
+    try {
+      models.User.findByPk(payload.userId)
+        .then((user) => {
+          if (!user) {
+            throw new Error('User does not exist.');
+          }
+          return models.RefreshToken.create({
+            jti,
+            UserId: payload.userId,
+          });
+        })
+        .then((refreshTokenInstance) => {
+          if (!refreshTokenInstance) {
+            throw new Error(
+              'Internal server error occurred while generating refresh token.',
+            );
+          }
+        })
+        .catch(() => {
+          throw new Error(
+            'Internal server error occurred while generating refresh token.',
+          );
+        });
+    } catch {
+      throw new Error(
+        'Internal server error occurred while generating refresh token.',
+      );
+    }
   }
-
-  // constructor(data: JsonWebToken) {
-  //   super(data);
-
-  //   // TODO:
-  //   // 1) Generate jti
-  //   // 2) Save jti to database
-  // }
 }
