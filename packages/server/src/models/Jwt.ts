@@ -6,6 +6,7 @@ import * as models from '@db/models';
 const jwtPayload = z.object({
   userId: z.number(),
   username: z.string(),
+  jti: z.string().optional(),
 });
 
 const jwtOptions = z.object({
@@ -80,30 +81,27 @@ export class RefreshToken extends Jwt {
       ...this.payload,
       jti,
     });
+  }
+
+  async generate() {
+    super.generate();
 
     try {
-      models.User.findByPk(payload.userId)
-        .then((user) => {
-          if (!user) {
-            throw new Error('User does not exist.');
-          }
-          return models.RefreshToken.create({
-            jti,
-            UserId: payload.userId,
-          });
-        })
-        .then((refreshTokenInstance) => {
-          if (!refreshTokenInstance) {
-            throw new Error(
-              'Internal server error occurred while generating refresh token.',
-            );
-          }
-        })
-        .catch(() => {
-          throw new Error(
-            'Internal server error occurred while generating refresh token.',
-          );
-        });
+      const user = await models.User.findByPk(this.payload.userId);
+      if (!user) {
+        throw new Error('User does not exist.');
+      }
+
+      const refreshTokenInstance = await models.RefreshToken.create({
+        jti: this.payload.jti,
+        UserId: this.payload.userId,
+      });
+
+      if (!refreshTokenInstance) {
+        throw new Error(
+          'Internal server error occurred while generating refresh token.',
+        );
+      }
     } catch {
       throw new Error(
         'Internal server error occurred while generating refresh token.',
