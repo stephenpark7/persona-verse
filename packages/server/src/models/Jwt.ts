@@ -40,17 +40,17 @@ export class Jwt {
     );
   }
 
-  toString() {
-    return this.token;
+  toString(): string {
+    return this.token as string;
   }
 
-  [Symbol.toPrimitive](hint: string) {
+  [Symbol.toPrimitive](hint: string): string | undefined {
     if (hint === 'string') {
-      return this.toString();
+      return this.toString() as string;
     }
   }
 
-  value() {
+  value(): { token: string; payload: JwtPayload } {
     return {
       token: this.toString() as string,
       payload: this.payload,
