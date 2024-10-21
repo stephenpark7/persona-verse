@@ -17,12 +17,12 @@ export const usernameAlreadyExists = async (
   username: string,
 ): Promise<boolean> => {
   const user = await models.User.findOne({ where: { username: username } });
-  return user != null;
+  return user !== null;
 };
 
 export const emailAlreadyExists = async (email: string): Promise<boolean> => {
   const user = await models.User.findOne({ where: { email: email } });
-  return user != null;
+  return user !== null;
 };
 
 export const isMissingFields = (...fields: string[]): boolean => {
