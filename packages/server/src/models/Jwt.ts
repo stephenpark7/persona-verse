@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import type {
+  Jwt as JwtData,
   JwtOptions,
   JwtPayload,
   RefreshTokenPayload,
@@ -11,7 +12,7 @@ const secret = process.env.JWT_SECRET || 'pv-jwt-secret';
 export abstract class Jwt {
   payload: JwtPayload;
   options: Partial<JwtOptions>;
-  token: string | null = null;
+  token: string | undefined;
 
   constructor(payload: JwtPayload) {
     this.payload = jwtPayload.parse(payload);
@@ -22,24 +23,28 @@ export abstract class Jwt {
   }
 
   toString(): string {
-    return this.token as string;
+    if (!this.token) {
+      throw new Error('Token not generated.');
+    }
+
+    return this.token;
   }
 
   [Symbol.toPrimitive](hint: string): string | undefined {
     if (hint === 'string') {
-      return this.toString() as string;
+      return this.toString();
     }
   }
 
-  value(): { token: string; payload: JwtPayload } {
+  value(): JwtData {
     return {
-      token: this.toString() as string,
+      token: this.toString(),
       payload: this.payload,
     };
   }
 
   expires(): number {
-    return this.payload.exp || 0;
+    return this.options.expiresIn;
   }
 
   static decode(token: string): RefreshTokenPayload {

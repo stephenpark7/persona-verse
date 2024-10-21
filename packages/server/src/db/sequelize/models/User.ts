@@ -21,9 +21,10 @@ import {
 import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
 import { Session } from 'express-session';
-import { authenticatedRequest } from '@shared/schemas';
+import { authenticatedRequest, TokenType } from '@shared/schemas';
 import { TRPCError } from '@trpc/server';
 import { AccessToken, RefreshToken } from '@models';
+import { jwtFactory } from '@factories';
 
 // TODO: refactor
 
@@ -69,16 +70,14 @@ export class User extends Model {
       username,
     };
 
-    const accessToken = new AccessToken(payload);
+    const accessToken = jwtFactory(TokenType.AccessToken, payload);
 
-    const refreshToken = new RefreshToken(payload);
+    const refreshToken = jwtFactory(TokenType.RefreshToken, payload);
 
-    if (req.session) {
-      req.session.refreshToken = {
-        token: refreshToken.toString(),
-      };
-    } else {
-      throw new Error('Internal server error occurred while logging in.');
+    const token = refreshToken.toString();
+
+    if (token) {
+      req.session.refreshToken = { token };
     }
 
     const [profile] = await UserProfile.findOrCreate({

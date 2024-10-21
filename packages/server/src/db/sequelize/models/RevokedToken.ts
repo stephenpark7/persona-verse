@@ -4,7 +4,7 @@ import { sequelize } from '../sequelize';
 export class RevokedToken extends Model {
   public static async isRevoked(jti: string): Promise<boolean> {
     const revokedToken = await RevokedToken.findByPk(jti);
-    return revokedToken === null;
+    return revokedToken !== null;
   }
 }
 

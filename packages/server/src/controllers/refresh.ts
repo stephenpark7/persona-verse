@@ -16,7 +16,9 @@ export const refreshJwt = async (
       throw new Error('Session not found.');
     }
 
-    const { jti, userId } = Jwt.decode(session.refreshToken.token);
+    const token: string = session.refreshToken.token;
+
+    const { jti, userId } = Jwt.decode(token);
 
     const user = await User.findById(userId);
 
@@ -31,7 +33,7 @@ export const refreshJwt = async (
 
     const accessToken = jwtFactory(TokenType.AccessToken, payload);
 
-    const revokedToken = RevokedToken.create({
+    const revokedToken = await RevokedToken.create({
       jti,
       UserId: payload.userId,
     });

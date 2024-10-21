@@ -29,10 +29,10 @@ describe('Jwt', () => {
         payload = { userId: 1, username: 'test' };
       });
 
-      it('returns the token and payload', () => {
+      it('throws an error when token is not generated', () => {
         const jwt = new AccessToken(payload);
-        expect(jwt.toString()).toBeDefined();
-        expect(`${jwt}`).toBeDefined();
+        expect(() => jwt.toString()).toThrowError('Token not generated.');
+        expect(() => `${jwt}`).toThrowError('Token not generated.');
       });
     });
 
@@ -41,10 +41,9 @@ describe('Jwt', () => {
         payload = { userId: 1, username: 'test' };
       });
 
-      it('returns the token and payload', () => {
+      it('throws an error when token is not generated', () => {
         const jwt = new AccessToken(payload);
-        expect(jwt.value()).toEqual({ token: jwt.toString(), payload });
-        expect(jwt.expires()).toBeDefined();
+        expect(() => jwt.value()).toThrowError('Token not generated.');
       });
     });
   });
