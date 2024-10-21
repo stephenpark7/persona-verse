@@ -35,6 +35,6 @@
       "@tests/factories": ["../server/src/tests/factories"],
       "@shared/schemas": ["./src/schemas"],
       "@shared/types": ["./src/types"],
-    }
-  }
+    },
+  },
 }
