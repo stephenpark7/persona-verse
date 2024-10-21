@@ -55,7 +55,7 @@ describe('userLogout', async () => {
   describe('when body is missing', async () => {
     it('throws an error', async () => {
       await expect(() => userLogout(session, req, res)).rejects.toThrow(
-        'Token not found.',
+        'Token not provided.',
       );
     });
   });

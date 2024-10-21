@@ -1,7 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { Response } from 'express';
 import { Session } from 'express-session';
-import { TRPCError } from '@trpc/server';
 
 import type { AuthenticatedRequest } from '@shared/types';
 import {
@@ -11,17 +10,20 @@ import {
   type UserLoginResponse,
 } from '@shared/types';
 
-import { authenticatedRequest, TokenType } from '@shared/schemas';
+import {
+  authenticatedRequest,
+  TokenType,
+  userLoginParams as userLoginParamsSchema,
+  userCreateParams as userCreateParamsSchema,
+} from '@shared/schemas';
 
 import {
-  assertValidUserCreate,
-  assertValidUserLogin,
+  validateUserCreate,
+  validateUserLogin,
   generateRevokedToken,
   hashPassword,
   validatePassword,
-  verifyToken,
   InternalServerError,
-  AuthenticationError,
 } from '@utils';
 
 import { jwtFactory } from '@factories';
@@ -29,14 +31,24 @@ import { jwtFactory } from '@factories';
 import { sequelize } from '../sequelize';
 import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
+import { Jwt } from '@models';
 
 export class User extends Model {
-  public static async createAccount({
-    username,
-    email,
-    password,
-  }: UserCreateParams): Promise<UserCreateResponse> {
-    await assertValidUserCreate(username, email, password);
+  public getId(): number {
+    return parseInt(this.getDataValue('id'));
+  }
+
+  public static async createAccount(
+    userCreateParams: UserCreateParams,
+  ): Promise<UserCreateResponse> {
+    const { username, email, password } =
+      userCreateParamsSchema.parse(userCreateParams);
+
+    const error = await validateUserCreate(username, email, password);
+
+    if (error) {
+      throw new InternalServerError(error);
+    }
 
     const hashedPassword = await hashPassword(password);
 
@@ -47,23 +59,29 @@ export class User extends Model {
     });
 
     if (!user) {
-      throw new InternalServerError('Internal server error occurred.');
+      throw new InternalServerError();
     }
 
     return { message: 'User created successfully.' };
   }
 
   public static async loginAccount(
-    { username, password }: UserLoginParams,
+    userLoginParams: UserLoginParams,
     req: AuthenticatedRequest,
   ): Promise<UserLoginResponse> {
-    await assertValidUserLogin(username, password);
+    const { username, password } = userLoginParamsSchema.parse(userLoginParams);
+
+    const error = await validateUserLogin(username, password);
+
+    if (error) {
+      throw new InternalServerError(error);
+    }
 
     const user = await User.findByUsername(username);
 
     await validatePassword(user, password);
 
-    const userId = parseInt(user.getDataValue('id'));
+    const userId = user.getId();
 
     const payload = {
       userId,
@@ -94,36 +112,18 @@ export class User extends Model {
   ) {
     authenticatedRequest.parse(req);
 
-    if (!req.session) {
-      throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Internal server error occurred.',
-        cause: new AuthenticationError('Session not found.'),
-      });
-    }
-
     const refreshToken = req.session.refreshToken;
 
-    if (!refreshToken) {
-      throw new AuthenticationError('Session expired. Please login again.');
-    }
-
-    if (!refreshToken.token) {
-      throw new InternalServerError('Token not found.');
-    }
-
-    const { jti, userId } = verifyToken(refreshToken.token);
-
-    if (jti == null || userId == null) {
-      throw new InternalServerError('Invalid token.');
-    }
+    const { jti, userId } = Jwt.decode(refreshToken.token);
 
     const user = await User.findByPk(userId);
+
     if (user) {
       await revokeTokenIfNotRevoked(jti, userId);
     }
 
     await destroySession(session);
+
     res.clearCookie('pv-session', { path: '/' });
 
     return { message: 'Logged out successfully.' };

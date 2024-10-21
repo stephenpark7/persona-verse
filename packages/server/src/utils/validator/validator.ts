@@ -7,43 +7,56 @@ import {
   validateUserPassword,
 } from './base';
 
-export const assertValidUserCreate = async (
+enum ValidationError {
+  MISSING_FIELDS = 'Missing field(s).',
+  INVALID_USERNAME = 'Invalid username.',
+  INVALID_EMAIL = 'Invalid email address.',
+  INVALID_PASSWORD = 'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.',
+  USERNAME_EXISTS = 'Username already in use.',
+  EMAIL_EXISTS = 'Email address already in use.',
+}
+
+export const validateUserCreate = async (
   username: string,
   email: string,
   password: string,
-): Promise<void> => {
-  if (isMissingFields(username, email, password)) {
-    throw new Error('Missing field(s).');
-  }
+): Promise<string | null> => {
+  const error: ValidationError | null = await getValidationError(
+    username,
+    email,
+    password,
+  );
 
-  if (!validateUsername(username)) {
-    throw new Error('Invalid username.');
-  }
-
-  if (!validateEmail(email)) {
-    throw new Error('Invalid email address.');
-  }
-
-  if (!validateUserPassword(password)) {
-    throw new Error(
-      'Invalid password. Please enter a password that is at least 6 characters long, contain at least one uppercase letter, one lowercase letter, and one number.',
-    );
-  }
-
-  if (await usernameAlreadyExists(username)) {
-    throw new Error('Username already in use.');
-  }
-
-  if (await emailAlreadyExists(email)) {
-    throw new Error('Email address already in use.');
-  }
+  return error ? error : null;
 };
 
-export const assertValidUserLogin = async (
+export const validateUserLogin = async (
   username: string,
   password: string,
-): Promise<void> => {
+): Promise<string | null> => {
   if (isMissingFields(username, password)) {
-    throw new Error('Missing field(s).');
+    return ValidationError.MISSING_FIELDS;
   }
+  return null;
+};
+
+const getValidationError = async (
+  username: string,
+  email: string,
+  password: string,
+): Promise<ValidationError | null> => {
+  if (isMissingFields(username, email, password)) {
+    return ValidationError.MISSING_FIELDS;
+  } else if (!validateUsername(username)) {
+    return ValidationError.INVALID_USERNAME;
+  } else if (!validateEmail(email)) {
+    return ValidationError.INVALID_EMAIL;
+  } else if (!validateUserPassword(password)) {
+    return ValidationError.INVALID_PASSWORD;
+  } else if (await usernameAlreadyExists(username)) {
+    return ValidationError.USERNAME_EXISTS;
+  } else if (await emailAlreadyExists(email)) {
+    return ValidationError.EMAIL_EXISTS;
+  }
+  return null;
 };
