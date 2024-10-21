@@ -141,6 +141,16 @@ export class User extends Model {
 
     return { message: 'Logged out successfully.' };
   }
+
+  public static async findById(id: number) {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      throw new InternalServerError('User not found.');
+    }
+
+    return user;
+  }
 }
 
 const revokeTokenIfNotRevoked = async (jti: string, userId: number) => {

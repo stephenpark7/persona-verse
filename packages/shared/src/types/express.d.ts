@@ -5,7 +5,7 @@ import type { Jwt } from './jwt';
 // NOTE: can't correctly infer the type due to Zod, it will be any
 declare module 'express-session' {
   interface SessionData {
-    refreshToken: Jwt;
+    refreshToken?: Jwt;
     clearSession: () => void;
   }
 }

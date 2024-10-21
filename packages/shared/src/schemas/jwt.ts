@@ -8,6 +8,12 @@ export const jwtPayload = z.object({
   // expiresAt: z.number().optional(),
 });
 
+export const refreshTokenPayload = z.object({
+  userId: z.number(),
+  username: z.string(),
+  jti: z.string(),
+});
+
 export const jwt = z.object({
   token: z.string(),
   payload: jwtPayload,

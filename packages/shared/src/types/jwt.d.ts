@@ -6,6 +6,7 @@ import {
   refreshToken,
   jwtToken,
   jwtOptions,
+  refreshTokenPayload,
 } from '../schemas/jwt';
 
 export type Jwt = InferType<typeof jwt>;
@@ -18,4 +19,6 @@ export type RefreshToken = InferType<typeof refreshToken>;
 
 export type JwtToken = InferType<typeof jwtToken>;
 
-export type JwtOptions = z.infer<typeof jwtOptions>;
+export type JwtOptions = InferType<typeof jwtOptions>;
+
+export type RefreshTokenPayload = InferType<typeof refreshTokenPayload>;

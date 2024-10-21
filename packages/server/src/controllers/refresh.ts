@@ -16,35 +16,17 @@ export const refreshJwt = async (
       throw new Error('Session not found.');
     }
 
-    const refreshToken = session.refreshToken;
+    const { jti, userId } = Jwt.decode(session.refreshToken.token);
 
-    if (!refreshToken) {
-      throw new Error('Session expired. Please login again.');
-    }
+    const user = await User.findById(userId);
 
-    const { jti, userId } = Jwt.decode(refreshToken.token);
-
-    if (!jti) {
-      throw new Error('Token does not have a jti.');
-    }
-
-    if (userId === undefined || userId === null) {
-      throw new Error('Token does not have a userId.');
-    }
-
-    const user = await User.findByPk(userId);
-
-    if (!user) {
-      throw new Error('User not found.');
-    }
-
-    if (await RevokedToken.findByPk(jti)) {
-      throw new Error('Token already revoked.');
+    if (await RevokedToken.isRevoked(jti)) {
+      throw new Error('Token revoked.');
     }
 
     const payload = {
-      userId: parseInt(user.get('id') as string),
-      username: user.get('username') as string,
+      userId: parseInt(user.getDataValue('id')),
+      username: user.getDataValue('username'),
     };
 
     const accessToken = jwtFactory(TokenType.AccessToken, payload);

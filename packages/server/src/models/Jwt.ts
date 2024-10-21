@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken';
-import type { JwtOptions, JwtPayload } from '@shared/types';
-import { jwtPayload, jwtOptions } from '@shared/schemas';
+import type {
+  JwtOptions,
+  JwtPayload,
+  RefreshTokenPayload,
+} from '@shared/types';
+import { jwtPayload, jwtOptions, refreshTokenPayload } from '@shared/schemas';
 
 const secret = process.env.JWT_SECRET || 'pv-jwt-secret';
 
@@ -38,12 +42,16 @@ export abstract class Jwt {
     return this.payload.exp || 0;
   }
 
-  static decode(token: string): JwtPayload {
+  static decode(token: string): RefreshTokenPayload {
+    if (!token) {
+      throw new Error('Token not provided.');
+    }
+
     const decoded = jwt.verify(token, secret, {
       complete: false,
     });
 
-    return jwtPayload.parse(decoded);
+    return refreshTokenPayload.parse(decoded);
   }
 }
 
