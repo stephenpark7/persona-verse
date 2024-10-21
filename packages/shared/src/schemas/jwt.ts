@@ -4,14 +4,14 @@ import type { Algorithm } from 'jsonwebtoken';
 export const jwtPayload = z.object({
   userId: z.number(),
   username: z.string(),
-  // expiresAt: z.number().optional(),
   jti: z.string().optional(),
+  // expiresAt: z.number().optional(),
 });
 
 export const jwt = z.object({
   token: z.string(),
-  // expiresAt: z.number(),
   payload: jwtPayload,
+  // expiresAt: z.number(),
 });
 
 export const jwtOptions = z.object({
