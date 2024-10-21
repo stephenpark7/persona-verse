@@ -6,12 +6,12 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "start": "npm run tsc && NODE_ENV=development TS_NODE_BASEURL=./dist/server node -r tsconfig-paths/register ./dist/server/src/app.js",
+    "start": "NODE_ENV=development TS_NODE_BASEURL=./dist/server node -r tsconfig-paths/register ./dist/server/src/app.js",
     "dev": "tsc-watch --onSuccess \"npm run start\"",
-    "build": "npm run lint && tsc --build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "tsc": "tsc --build",
     "tsc:watch": "tsc --watch",
+    "build": "npm run lint && npm run tsc",
     "test": "NODE_ENV=test vitest",
     "test:watch": "NODE_ENV=test vitest --watch"
   },

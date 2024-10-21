@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*.ts", "../server/src/**/*.ts"],
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "../server/src/**/*.ts"],
   "compilerOptions": {
     "allowImportingTsExtensions": false,
     "allowSyntheticDefaultImports": true,
@@ -11,7 +11,7 @@
     "lib": ["ESNext"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "noEmit": true,
+    "noEmit": false,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -23,7 +23,7 @@
     "target": "ESNext",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "useDefineForClassFields": true,
-    "types": ["node", "vitest/globals", "vitest", "./src/types/index.d.ts"],
+    "types": ["node", "vitest/globals", "vitest"],
     "paths": {
       "@types": ["../server/src/types"],
       "@models": ["../server/src/models"],

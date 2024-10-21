@@ -6,9 +6,12 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "tsc": "tsc",
+    "start": "node ./dist/shared/src/index.js",
+    "dev": "tsc-watch --onSuccess \"npm run start\"",
     "lint": "eslint .",
+    "tsc": "tsc --build",
+    "tsc:watch": "tsc --watch",
     "build": "npm run lint && npm run tsc",
-    "generate:module": "tsc && ts-node scripts/generate-module.ts"
+    "generate": "ts-node scripts/generate.ts"
   }
 }
