@@ -30,6 +30,8 @@ export const assertValidUserCreate = async (
     );
   }
 
+  // TODO: refactor to use Promise.all to check for username and email in parallel OR use a single query to check for both
+
   if (await usernameAlreadyExists(username)) {
     throw new Error('Username already in use.');
   }
