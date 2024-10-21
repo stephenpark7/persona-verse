@@ -2,8 +2,8 @@ import { User } from '@db/models';
 import { compare, hash } from './base';
 
 export const validatePassword = async (
-  password: string,
   user: User,
+  password: string,
 ): Promise<void> => {
   const isAuthenticated = await compare(
     password,

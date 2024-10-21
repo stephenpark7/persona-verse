@@ -59,13 +59,9 @@ export class User extends Model {
   ): Promise<UserLoginResponse> {
     await assertValidUserLogin(username, password);
 
-    const user = await User.findOne({ where: { username } });
+    const user = await User.findByUsername(username);
 
-    if (!user) {
-      throw new Error('Invalid credentials.');
-    }
-
-    await validatePassword(password, user);
+    await validatePassword(user, password);
 
     const userId = parseInt(user.getDataValue('id'));
 

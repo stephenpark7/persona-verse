@@ -3,6 +3,7 @@ import type { UserLoginResponse } from '@shared/types';
 import { authenticatedRequestFactory } from '@tests/factories';
 import { userLogin } from './userLogin';
 import { userCreate } from '../user/userCreate';
+import { User } from '@db/models';
 
 describe('userLogin', async () => {
   let req: AuthenticatedRequest;
@@ -39,11 +40,19 @@ describe('userLogin', async () => {
           },
           req,
         ),
-      ).rejects.toThrow('Invalid credentials.');
+      ).rejects.toThrow('User not found.');
     });
   });
 
   describe('when password is invalid', () => {
+    beforeAll(async () => {
+      await userCreate({
+        username: 'test',
+        email: 'test@test.com',
+        password: 'Password123!',
+      });
+    });
+
     it('throws an error', async () => {
       await expect(() =>
         userLogin(
@@ -61,6 +70,8 @@ describe('userLogin', async () => {
     let res: UserLoginResponse;
 
     beforeAll(async () => {
+      await User.sync({ force: true });
+
       await userCreate({
         username: 'test',
         email: 'test@test.com',
