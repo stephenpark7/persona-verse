@@ -49,7 +49,7 @@ describe('Refresh Controller', () => {
               userId: -1,
               username: 'invalid',
             }),
-        ).rejects.toThrow('User does not exist.');
+        ).rejects.toThrow('User not found.');
 
         // await expect(() =>
         //   refreshJwt(

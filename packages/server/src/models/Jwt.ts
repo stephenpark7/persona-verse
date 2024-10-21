@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 import type {
   Jwt as JwtData,
   JwtOptions,
@@ -6,6 +7,7 @@ import type {
   RefreshTokenPayload,
 } from '@shared/types';
 import { jwtPayload, jwtOptions, refreshTokenPayload } from '@shared/schemas';
+import * as models from '@db/models';
 
 const secret = process.env.JWT_SECRET || 'pv-jwt-secret';
 
@@ -18,7 +20,7 @@ export abstract class Jwt {
     this.payload = jwtPayload.parse(payload);
   }
 
-  generate(): this {
+  async generate(): Promise<this> {
     const token = jwt.sign(this.payload, secret, this.options);
 
     if (token.length === 0) {
@@ -85,5 +87,30 @@ export class RefreshToken extends Jwt {
     this.options = jwtOptions.parse({
       expiresIn: 7 * 24 * 60 * 60 * 1000,
     });
+  }
+
+  async generate(): Promise<this> {
+    this.payload.jti = uuidv4();
+
+    const token = jwt.sign(this.payload, secret, this.options);
+
+    if (token.length === 0) {
+      throw new Error('Failed to generate token.');
+    }
+
+    this.token = token;
+
+    await models.User.findById(this.payload.userId);
+
+    const refreshToken = await models.RefreshToken.create({
+      jti: this.payload.jti,
+      UserId: this.payload.userId,
+    });
+
+    if (!refreshToken) {
+      throw new Error('Failed to generate token.');
+    }
+
+    return this;
   }
 }

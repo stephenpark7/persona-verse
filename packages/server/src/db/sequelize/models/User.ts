@@ -88,9 +88,9 @@ export class User extends Model {
       username,
     };
 
-    const accessToken = jwtFactory(TokenType.AccessToken, payload);
+    const accessToken = await jwtFactory(TokenType.AccessToken, payload);
 
-    const refreshToken = jwtFactory(TokenType.RefreshToken, payload);
+    const refreshToken = await jwtFactory(TokenType.RefreshToken, payload);
 
     req.session.refreshToken = {
       token: refreshToken.toString(),

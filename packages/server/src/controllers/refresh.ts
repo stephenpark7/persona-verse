@@ -31,7 +31,7 @@ export const refreshJwt = async (
       username: user.getDataValue('username'),
     };
 
-    const accessToken = jwtFactory(TokenType.AccessToken, payload);
+    const accessToken = await jwtFactory(TokenType.AccessToken, payload);
 
     const revokedToken = await RevokedToken.create({
       jti,

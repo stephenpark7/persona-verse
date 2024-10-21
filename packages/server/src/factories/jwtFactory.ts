@@ -2,7 +2,10 @@ import type { Jwt as JwtData, JwtPayload } from '@shared/types';
 import { TokenType } from '@shared/schemas';
 import { AccessToken, RefreshToken } from '@models';
 
-export const jwtFactory = (type: TokenType, payload: JwtPayload): JwtData => {
+export const jwtFactory = async (
+  type: TokenType,
+  payload: JwtPayload,
+): Promise<JwtData> => {
   let jwt: JwtData;
 
   if (type === TokenType.AccessToken) {
@@ -13,5 +16,5 @@ export const jwtFactory = (type: TokenType, payload: JwtPayload): JwtData => {
     throw new Error('Invalid token type.');
   }
 
-  return jwt.generate();
+  return await jwt.generate();
 };
