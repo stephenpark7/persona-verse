@@ -1,13 +1,18 @@
+import { DataTypes, Model } from 'sequelize';
+import { Response } from 'express';
+import { Session } from 'express-session';
+import { TRPCError } from '@trpc/server';
+
 import type { AuthenticatedRequest } from '@shared/types';
-import type { Response } from 'express';
 import {
   type UserCreateParams,
   type UserCreateResponse,
   type UserLoginParams,
   type UserLoginResponse,
 } from '@shared/types';
-import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../sequelize';
+
+import { authenticatedRequest, TokenType } from '@shared/schemas';
+
 import {
   assertValidUserCreate,
   assertValidUserLogin,
@@ -18,15 +23,12 @@ import {
   InternalServerError,
   AuthenticationError,
 } from '@utils';
-import { UserProfile } from './UserProfile';
-import { RevokedToken } from './RevokedToken';
-import { Session } from 'express-session';
-import { authenticatedRequest, TokenType } from '@shared/schemas';
-import { TRPCError } from '@trpc/server';
-import { AccessToken, RefreshToken } from '@models';
+
 import { jwtFactory } from '@factories';
 
-// TODO: refactor
+import { sequelize } from '../sequelize';
+import { UserProfile } from './UserProfile';
+import { RevokedToken } from './RevokedToken';
 
 export class User extends Model {
   public static async createAccount({
@@ -65,8 +67,10 @@ export class User extends Model {
 
     await validatePassword(password, user);
 
+    const userId = parseInt(user.getDataValue('id'));
+
     const payload = {
-      userId: parseInt(user.getDataValue('id')),
+      userId,
       username,
     };
 
@@ -74,28 +78,16 @@ export class User extends Model {
 
     const refreshToken = jwtFactory(TokenType.RefreshToken, payload);
 
-    const token = refreshToken.toString();
+    req.session.refreshToken = {
+      token: refreshToken.toString(),
+    };
 
-    if (token) {
-      req.session.refreshToken = { token };
-    }
-
-    const [profile] = await UserProfile.findOrCreate({
-      where: { UserId: payload.userId },
-      defaults: {
-        displayName: username,
-      },
-      attributes: ['displayName', 'picture', 'bio'],
-    });
-
-    if (!profile) {
-      throw new Error('Internal server error occurred while logging in.');
-    }
+    const profile = await UserProfile.findOrCreateForUser(userId, username);
 
     return {
       message: 'Logged in successfully.',
       jwt: accessToken.value(),
-      profile: profile,
+      profile,
     };
   }
 
@@ -143,6 +135,16 @@ export class User extends Model {
 
   public static async findById(id: number) {
     const user = await User.findByPk(id);
+
+    if (!user) {
+      throw new InternalServerError('User not found.');
+    }
+
+    return user;
+  }
+
+  public static async findByUsername(username: string) {
+    const user = await User.findOne({ where: { username } });
 
     if (!user) {
       throw new InternalServerError('User not found.');

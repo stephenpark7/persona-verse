@@ -1,7 +1,26 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../sequelize';
 
-export class UserProfile extends Model {}
+export class UserProfile extends Model {
+  public static async findOrCreateForUser(
+    userId: number,
+    username: string,
+  ): Promise<UserProfile> {
+    const [userProfile] = await UserProfile.findOrCreate({
+      where: { UserId: userId },
+      defaults: {
+        displayName: username,
+      },
+      attributes: ['displayName', 'picture', 'bio'],
+    });
+
+    if (!userProfile) {
+      throw new Error('Failed to find or create user profile.');
+    }
+
+    return userProfile;
+  }
+}
 
 UserProfile.init(
   {
