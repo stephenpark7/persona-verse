@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "../server/src/**/*.ts"],
+  "include": ["./src/**/*.ts", "../server/src/**/*.ts"],
   "compilerOptions": {
     "allowImportingTsExtensions": false,
     "allowSyntheticDefaultImports": true,
