@@ -110,17 +110,13 @@ export class User extends Model {
     req: AuthenticatedRequest,
     res: Response,
   ) {
-    authenticatedRequest.parse(req);
+    req = authenticatedRequest.parse(req);
 
     const refreshToken = req.session.refreshToken;
 
     const { jti, userId } = Jwt.decode(refreshToken.token);
 
-    const user = await User.findByPk(userId);
-
-    if (user) {
-      await revokeTokenIfNotRevoked(jti, userId);
-    }
+    await revokeTokenIfNotRevoked(jti, userId);
 
     await destroySession(session);
 
@@ -150,12 +146,16 @@ export class User extends Model {
   }
 }
 
+// TODO: refactor by moving to Jwt class
+
 const revokeTokenIfNotRevoked = async (jti: string, userId: number) => {
   const revokedToken = await RevokedToken.findByPk(jti);
   if (!revokedToken) {
     await generateRevokedToken(userId);
   }
 };
+
+// TODO: refactor by moving to Session class
 
 const destroySession = (session: Session): Promise<void> => {
   return new Promise((resolve, reject) => {
