@@ -5,14 +5,14 @@ import { AccessToken } from './Jwt';
 describe('Jwt', () => {
   let payload: JwtPayload;
 
+  beforeEach(() => {
+    payload = { userId: 1, username: 'test' };
+  });
+
   describe('Access token', () => {
     describe('Constructor', () => {
-      beforeEach(() => {
-        payload = { userId: 1, username: 'test' };
-      });
-
       it('throws an error when payload is missing', () => {
-        payload = {};
+        payload = {} as JwtPayload;
         const createJwt = () => new AccessToken(payload);
         expect(createJwt).toThrowError(ZodError);
       });
@@ -25,25 +25,30 @@ describe('Jwt', () => {
     });
 
     describe('toString() and Symbol.toPrimitive', () => {
-      beforeEach(() => {
-        payload = { userId: 1, username: 'test' };
-      });
-
       it('throws an error when token is not generated', () => {
         const jwt = new AccessToken(payload);
         expect(() => jwt.toString()).toThrowError('Token not generated.');
         expect(() => `${jwt}`).toThrowError('Token not generated.');
       });
+
+      it('returns the token when generated', () => {
+        const jwt = new AccessToken(payload);
+        jwt.generate();
+        expect(jwt.toString()).toEqual(jwt.token);
+        expect(`${jwt}`).toEqual(jwt.token);
+      });
     });
 
     describe('value()', () => {
-      beforeEach(() => {
-        payload = { userId: 1, username: 'test' };
-      });
-
       it('throws an error when token is not generated', () => {
         const jwt = new AccessToken(payload);
         expect(() => jwt.value()).toThrowError('Token not generated.');
+      });
+
+      it('returns the token and payload when generated', () => {
+        const jwt = new AccessToken(payload);
+        jwt.generate();
+        expect(jwt.value()).toEqual({ token: jwt.toString(), payload });
       });
     });
   });
