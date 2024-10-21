@@ -13,11 +13,5 @@ export const jwtFactory = (type: TokenType, payload: JwtPayload): JwtData => {
     throw new Error('Invalid token type.');
   }
 
-  jwt.generate();
-
-  if (!jwt.token) {
-    throw new Error('Failed to generate token.');
-  }
-
-  return jwt;
+  return jwt.generate();
 };

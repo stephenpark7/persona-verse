@@ -18,8 +18,16 @@ export abstract class Jwt {
     this.payload = jwtPayload.parse(payload);
   }
 
-  generate() {
-    this.token = jwt.sign(this.payload, secret, this.options);
+  generate(): this {
+    const token = jwt.sign(this.payload, secret, this.options);
+
+    if (token.length === 0) {
+      throw new Error('Failed to generate token.');
+    }
+
+    this.token = token;
+
+    return this;
   }
 
   toString(): string {
