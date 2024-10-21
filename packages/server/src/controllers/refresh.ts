@@ -3,7 +3,8 @@ import { TRPCError } from '@trpc/server';
 import type { RefreshTokenResponse } from '@shared/types';
 import { verifyToken } from '@utils';
 import { User, RevokedToken } from '@db/models';
-import { AccessToken } from '@models';
+import { jwtFactory } from 'src/factories';
+import { TokenType } from '@shared/schemas';
 
 export const refreshJwt = async (
   req: Request,
@@ -40,11 +41,7 @@ export const refreshJwt = async (
       username: user.get('username') as string,
     };
 
-    const accessToken = new AccessToken(payload);
-
-    if (!accessToken) {
-      throw new Error('Failed to generate access token.');
-    }
+    const accessToken = jwtFactory(TokenType.AccessToken, payload);
 
     const revokedToken = RevokedToken.create({
       jti,
