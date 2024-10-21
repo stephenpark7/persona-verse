@@ -23,17 +23,18 @@
     "target": "ESNext",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "useDefineForClassFields": true,
-    "types": ["node", "vitest/globals", "vitest"],
+    "types": ["node", "vitest/globals", "vitest", "shared/src/types/index.d.ts"],
     "paths": {
+      "@factories": ["../server/src/factories"],
       "@types": ["../server/src/types"],
       "@models": ["../server/src/models"],
       "@db": ["../server/src/db"],
-      "@db/models": ["../server/src/db/sequelize/models/index"],
+      "@db/models": ["../server/src/db/sequelize/models"],
       "@utils": ["../server/src/utils"],
       "@controllers": ["../server/src/controllers"],
       "@tests/factories": ["../server/src/tests/factories"],
-      "@shared/schemas": ["./src/schemas/index"],
-      "@shared/types": ["./src/types/index"],
+      "@shared/schemas": ["./src/schemas"],
+      "@shared/types": ["./src/types"],
     }
   }
 }

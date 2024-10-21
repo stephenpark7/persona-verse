@@ -25,18 +25,18 @@
     "useDefineForClassFields": true,
     "types": ["node", "vitest/globals", "vitest"],
     "paths": {
-      "@db": ["./src/db/index"],
-      "@db/models": ["./src/db/sequelize/models/index"],
-      "@controllers": ["./src/controllers/index"],
-      "@factories": ["./src/tests/factories/index"],
-      "@middleware": ["./src/middleware/index"],
-      "@models": ["./src/models/index"],
-      "@routes": ["./src/routes/index"],
-      "@trpc": ["./src/trpc/index"],
-      "@utils": ["./src/utils/index"],
-      "@shared/schemas": ["../shared/src/schemas/index"],
-      "@shared/types": ["../shared/src/types/index"],
-      "@tests/factories": ["./src/tests/factories/index"]
+      "@db": ["./src/db"],
+      "@db/models": ["./src/db/sequelize/models"],
+      "@controllers": ["./src/controllers"],
+      "@factories": ["./src/factories"],
+      "@middleware": ["./src/middleware"],
+      "@models": ["./src/models"],
+      "@routes": ["./src/routes"],
+      "@trpc": ["./src/trpc"],
+      "@utils": ["./src/utils"],
+      "@shared/schemas": ["../shared/src/schemas"],
+      "@shared/types": ["../shared/src/types"],
+      "@tests/factories": ["./src/tests/factories"]
     }
   }
 }

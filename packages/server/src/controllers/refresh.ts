@@ -3,7 +3,7 @@ import { TRPCError } from '@trpc/server';
 import type { RefreshTokenResponse } from '@shared/types';
 import { Jwt } from '@models';
 import { User, RevokedToken } from '@db/models';
-import { jwtFactory } from 'src/factories';
+import { jwtFactory } from '@factories';
 import { TokenType } from '@shared/schemas';
 
 export const refreshJwt = async (
