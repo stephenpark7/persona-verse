@@ -22,7 +22,20 @@ export abstract class Jwt {
     this.payload = jwtPayload.parse(payload);
   }
 
+  appendDataToPayload(records: Record<string, string>): this {
+    this.payload = {
+      ...this.payload,
+      ...records,
+    };
+
+    return this;
+  }
+
   async generate(): Promise<this> {
+    this.appendDataToPayload({
+      expiresAt: new Date(Date.now() + this.options.expiresIn).toISOString(),
+    });
+
     const token = jwt.sign(this.payload, secret, this.options);
 
     if (token.length === 0) {
