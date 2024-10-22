@@ -8,7 +8,11 @@ export const setJwtReducer: CaseReducer<UserState, PayloadAction<Jwt>> = (
   action: PayloadAction<Jwt>,
 ) => {
   if (!action.payload) return state;
+
+  console.log('Setting JWT:', action.payload);
+
   tokenStorage.setAccessToken(action.payload);
+
   return {
     value: {
       ...state.value,
@@ -19,6 +23,7 @@ export const setJwtReducer: CaseReducer<UserState, PayloadAction<Jwt>> = (
 
 export const clearJwtReducer: CaseReducer = () => {
   tokenStorage.clearAccessToken();
+
   return {
     value: {
       jwt: null,

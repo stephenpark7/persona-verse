@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import type {
   Jwt as JwtData,
@@ -80,7 +80,15 @@ export abstract class Jwt {
     return new Promise((resolve, reject) => {
       jwt.verify(token, secret, { complete: false }, (err, decoded) => {
         if (err) {
-          return reject(err);
+          if (err instanceof TokenExpiredError) {
+            return reject(
+              new TokenExpiredError(
+                'Session expired. Please login again.',
+                err.expiredAt,
+              ),
+            );
+          }
+          return reject('Failed to verify token.');
         }
         return resolve(refreshTokenPayload.parse(decoded));
       });

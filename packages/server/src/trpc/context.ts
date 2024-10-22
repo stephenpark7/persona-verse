@@ -12,6 +12,7 @@ import { User } from '@db/models';
 import { Jwt } from '@models';
 
 import { assertIsError } from '@shared/utils';
+import { TokenExpiredError } from 'jsonwebtoken';
 
 const isAuthHeaderRequired = (url: string) => {
   const noAuthHeaderUrls = ['/registerUser', '/loginUser', '/refreshJwt'];
@@ -49,7 +50,14 @@ export const auth = async (
     }
   } catch (err) {
     assertIsError(err);
-    return sendUnauthorizedResponse(res, err.message, 500);
+
+    let statusCode;
+
+    if (err instanceof TokenExpiredError) {
+      statusCode = 400;
+    }
+
+    return sendUnauthorizedResponse(res, err.message, statusCode || 500);
   }
 
   return next();
