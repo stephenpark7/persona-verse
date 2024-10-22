@@ -1,6 +1,5 @@
 import { timingSafeEqual } from 'crypto';
 
-import type { IncomingHttpHeaders } from 'http';
 import type { NextFunction, Request, Response } from 'express';
 
 import type { CreateContextParams } from '@shared/types';
@@ -15,7 +14,12 @@ import { assertIsError } from '@shared/utils';
 import { TokenExpiredError } from 'jsonwebtoken';
 
 const isAuthHeaderRequired = (url: string) => {
-  const noAuthHeaderUrls = ['/registerUser', '/loginUser', '/refreshJwt'];
+  const noAuthHeaderUrls = [
+    '/registerUser',
+    '/loginUser',
+    '/refreshJwt',
+    '/logoutUser',
+  ];
   return !noAuthHeaderUrls.some((u) => url.startsWith(u));
 };
 
@@ -29,7 +33,7 @@ export const auth = async (
       return next();
     }
 
-    const headers = req.headers as IncomingHttpHeaders;
+    const headers = req.headers;
     const token = headers['authorization']?.split(' ')[1];
 
     if (!token) {

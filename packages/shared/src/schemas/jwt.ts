@@ -8,6 +8,16 @@ export const jwtPayload = z.object({
   expiresAt: z.date().optional(),
 });
 
+export const decodedJwt = jwtPayload
+  .extend({
+    expiresAt: z.string(),
+  })
+  .pick({
+    userId: true,
+    username: true,
+    expiresAt: true,
+  });
+
 export const accessTokenPayload = jwtPayload
   .extend({
     expiresAt: z.date(),

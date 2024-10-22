@@ -17,7 +17,6 @@ import {
 } from '@shared/schemas';
 
 import {
-  generateRevokedToken,
   hashPassword,
   InternalServerError,
   validatePassword,
@@ -32,7 +31,6 @@ import { Jwt } from '@models';
 import { sequelize } from '../sequelize';
 
 import { UserProfile } from './UserProfile';
-import { RevokedToken } from './RevokedToken';
 
 export class User extends Model {
   public getId(): number {
