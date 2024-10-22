@@ -36,6 +36,7 @@
       "@utils": ["./src/utils"],
       "@shared/schemas": ["../shared/src/schemas"],
       "@shared/types": ["../shared/src/types"],
+      "@shared/utils": ["../shared/src/utils"],
       "@tests/factories": ["./src/tests/factories"]
     }
   }

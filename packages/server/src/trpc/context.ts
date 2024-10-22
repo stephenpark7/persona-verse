@@ -1,12 +1,17 @@
-import winston from 'winston';
 import { timingSafeEqual } from 'crypto';
-import type { NextFunction, Response } from 'express';
-import type { CreateContextParams } from '@shared/types';
-import { sendUnauthorizedResponse } from '@utils';
-import { User } from '@db/models';
-import type { Request } from 'express';
+
 import type { IncomingHttpHeaders } from 'http';
+import type { NextFunction, Request, Response } from 'express';
+
+import type { CreateContextParams } from '@shared/types';
+
+import { logger, sendUnauthorizedResponse } from '@utils';
+
+import { User } from '@db/models';
+
 import { Jwt } from '@models';
+
+import { assertIsError } from '@shared/utils';
 
 const isAuthHeaderRequired = (url: string) => {
   const noAuthHeaderUrls = ['/registerUser', '/loginUser', '/refreshJwt'];
@@ -18,22 +23,22 @@ export const auth = async (
   res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {
-  if (!isAuthHeaderRequired(req.url)) {
-    return next();
-  }
-
-  const headers = req.headers as IncomingHttpHeaders;
-  const token = headers['authorization']?.split(' ')[1];
-
-  if (!token) {
-    return sendUnauthorizedResponse(res, 'No token provided.', 401);
-  }
-
-  const decoded = await Jwt.decode(token);
-
-  req.userId = decoded.userId as number;
-
   try {
+    if (!isAuthHeaderRequired(req.url)) {
+      return next();
+    }
+
+    const headers = req.headers as IncomingHttpHeaders;
+    const token = headers['authorization']?.split(' ')[1];
+
+    if (!token) {
+      return sendUnauthorizedResponse(res, 'No token provided.', 401);
+    }
+
+    const decoded = await Jwt.decode(token);
+
+    req.userId = decoded.userId as number;
+
     const user = await User.findById(req.userId);
 
     const userIdBuffer = Buffer.from(req.userId.toString());
@@ -42,9 +47,9 @@ export const auth = async (
     if (!timingSafeEqual(userIdBuffer, dbUserIdBuffer)) {
       return sendUnauthorizedResponse(res, 'User not found.', 401);
     }
-  } catch (error) {
-    winston.error(`Database error:, ${error}`);
-    return sendUnauthorizedResponse(res, 'Internal server error.', 500);
+  } catch (err) {
+    assertIsError(err);
+    return sendUnauthorizedResponse(res, err.message, 500);
   }
 
   return next();
@@ -62,7 +67,7 @@ export const createContext = async ({ req, res }: CreateContextParams) => {
       });
     });
   } catch (err) {
-    winston.error(err);
+    logger.error(err);
   }
 
   return {

@@ -33,6 +33,8 @@ const authLink: TRPCLink<AppRouter> = () => {
           async error(err) {
             const response = err.meta?.response as Response;
 
+            console.log(response);
+
             if (!response) {
               observer.error(
                 new TRPCClientError(
@@ -63,7 +65,9 @@ const authLink: TRPCLink<AppRouter> = () => {
                 observer.error(new TRPCClientError('Unauthorized.'));
               }
             } else if (response.status === 500) {
-              observer.error(new TRPCClientError(err.message));
+              const responseJSON = err.meta?.responseJSON as JsonResponse;
+              const message = responseJSON.message;
+              observer.error(new TRPCClientError(message));
             }
           },
           complete() {

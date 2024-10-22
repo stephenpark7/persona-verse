@@ -82,11 +82,7 @@ export abstract class Jwt {
         if (err) {
           return reject(err);
         }
-        try {
-          return resolve(refreshTokenPayload.parse(decoded));
-        } catch (parseErr) {
-          return reject(parseErr);
-        }
+        return resolve(refreshTokenPayload.parse(decoded));
       });
     });
   }
