@@ -1,8 +1,15 @@
-import { Home, Login, Signup, Dashboard, Profile } from '@pages';
+import { Home, Login, Signup, Dashboard, Profile, Maintenance } from '@pages';
 import { Route, routeSchema } from '@schemas';
 import { RouteWrapper } from './RouteWrapper';
 
 export const Routes: Route[] = [
+  {
+    path: '/maintenance',
+    element: <Maintenance />,
+    title: 'PersonaVerse',
+    hideNavbar: true,
+    private: false,
+  },
   {
     path: '/signup',
     element: <Signup />,

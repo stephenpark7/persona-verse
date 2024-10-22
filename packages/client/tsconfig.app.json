@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "../server/src/trpc/*.ts"],
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
@@ -18,7 +18,7 @@
     "noUnusedParameters": true,
     "outDir": "./dist",
     "resolveJsonModule": true,
-    "rootDir": ".",
+    "rootDir": "../",
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2020",

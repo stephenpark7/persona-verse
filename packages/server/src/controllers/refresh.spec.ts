@@ -21,7 +21,7 @@ describe('Refresh Controller', async () => {
         });
       });
 
-      it.only('returns a new access token', async () => {
+      it('returns a new access token', async () => {
         const req = requestFactory({
           session: {
             refreshToken,

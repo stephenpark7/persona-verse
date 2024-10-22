@@ -7,7 +7,7 @@ import {
   httpBatchLink,
 } from '@trpc/client';
 import { observable } from '@trpc/server/observable';
-import type { AppRouter } from 'server/src/trpc';
+import type { AppRouter } from '../../../server/src/trpc';
 import {
   type JsonResponse,
   type Jwt,
@@ -39,6 +39,10 @@ const authLink: TRPCLink<AppRouter> = () => {
                   'Server is not available. Please try again later.',
                 ),
               );
+              window.location.href = new URL(
+                '/maintenance',
+                window.location.origin,
+              ).href;
               return;
             }
 

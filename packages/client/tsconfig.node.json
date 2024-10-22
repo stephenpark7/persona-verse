@@ -1,5 +1,10 @@
 {
-  "include": ["./src/**/*", "vite.config.ts", "vitest.config.ts"],
+  "include": [
+    "./src/**/*",
+    "../server/src/trpc/*.ts",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ],
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
@@ -17,7 +22,7 @@
     "noUnusedParameters": true,
     "outDir": "./dist",
     "resolveJsonModule": true,
-    "rootDir": ".",
+    "rootDir": "../",
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2020",

@@ -11,6 +11,8 @@ import * as models from '@db/models';
 
 const secret = process.env.JWT_SECRET || 'pv-jwt-secret';
 
+// TODO: jwt needs to expire
+
 export abstract class Jwt {
   payload: JwtPayload;
   options: Partial<JwtOptions>;
