@@ -6,6 +6,6 @@ export const refreshTokenFactory = async (
   payload: JwtPayload,
 ): RefreshToken => {
   jwtPayload.parse(payload);
-  const jwt = await jwtFactory(TokenType.RefreshToken, payload);
-  return await jwt.generate();
+
+  return await jwtFactory(TokenType.RefreshToken, payload, true);
 };

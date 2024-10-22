@@ -27,8 +27,8 @@ export const refreshJwt = async (
     }
 
     const payload = {
-      userId: parseInt(user.getDataValue('id')),
-      username: user.getDataValue('username'),
+      userId: user.getId(),
+      username: user.getUsername(),
     };
 
     const accessToken = await jwtFactory(TokenType.AccessToken, payload);

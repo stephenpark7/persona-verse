@@ -9,5 +9,6 @@ export const userFactory = async (
   },
 ) => {
   user.parse(params);
+
   return (await User.create(params)).get();
 };

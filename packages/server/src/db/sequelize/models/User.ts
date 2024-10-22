@@ -38,6 +38,10 @@ export class User extends Model {
     return parseInt(this.getDataValue('id'));
   }
 
+  public getUsername(): string {
+    return this.getDataValue('username');
+  }
+
   public static async createAccount(
     userCreateParams: UserCreateParams,
   ): Promise<UserCreateResponse> {

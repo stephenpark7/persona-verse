@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*", "vitest.config.mts", "../shared/**/*"],
+  "include": ["../shared/**/*", "./src/**/*", "vitest.config.mts"],
   "compilerOptions": {
     "allowImportingTsExtensions": false,
     "allowSyntheticDefaultImports": true,

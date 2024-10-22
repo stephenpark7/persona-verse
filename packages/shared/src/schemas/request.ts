@@ -1,21 +1,14 @@
 import { z } from 'zod';
+// import type { Session } from 'express-session';
 
-export const request = z.object({
-  headers: z.record(z.string()).optional(),
-  body: z.unknown().optional(),
-  query: z.record(z.string()).optional(),
-  params: z.record(z.string()).optional(),
-  url: z.string(),
-});
+export const request = z.custom<Request>();
 
-export const authenticatedRequest = request.extend({
-  userId: z.number(),
-  session: z.object({
-    refreshToken: z.object({
-      token: z.string(),
-    }),
-  }),
-});
+export const authenticatedRequest = z.custom<Request>();
+
+// request.extend({
+//   userId: z.number(),
+//   session: z.custom<Session>(),
+// });
 
 export const userCreateParams = z.object({
   username: z.string(),

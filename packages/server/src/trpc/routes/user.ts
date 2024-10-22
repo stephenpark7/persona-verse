@@ -1,7 +1,6 @@
-import { AuthenticatedRequest } from '@shared/types';
+import { z } from 'zod';
 import { userCreate, userLogin, userLogout } from '@controllers';
 import { publicProcedure } from '../trpc';
-import { z } from 'zod';
 
 export const userRoutes = {
   registerUser: publicProcedure
@@ -23,11 +22,9 @@ export const userRoutes = {
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      return await userLogin(input, ctx.req as unknown as AuthenticatedRequest);
+      return await userLogin(input, ctx.req);
     }),
   logoutUser: publicProcedure.mutation(async ({ ctx }) => {
-    const req = ctx.req as unknown as AuthenticatedRequest;
-
-    return await userLogout(ctx.session, req, ctx.res);
+    return await userLogout(ctx.session, ctx.req, ctx.res);
   }),
 };

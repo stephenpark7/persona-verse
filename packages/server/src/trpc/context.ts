@@ -1,12 +1,19 @@
 import winston from 'winston';
 import { timingSafeEqual } from 'crypto';
 import jwt, { type Secret } from 'jsonwebtoken';
-import type { IncomingHttpHeaders } from 'http';
 import type { NextFunction, Response } from 'express';
-import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import type { AuthenticatedRequest, JwtPayload } from '@shared/types';
+import type {
+  AuthenticatedRequest,
+  CreateContextParams,
+  JwtPayload,
+  RefreshTokenPayload,
+} from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
 import { User } from '@db/models';
+import type { Request } from 'express';
+import type { IncomingHttpHeaders } from 'http';
+import { Jwt, RefreshToken } from '@models';
+import { refreshTokenPayload } from '@shared/schemas';
 
 const isAuthHeaderRequired = (url: string) => {
   const noAuthHeaderUrls = ['/registerUser', '/loginUser', '/refreshJwt'];
@@ -14,7 +21,7 @@ const isAuthHeaderRequired = (url: string) => {
 };
 
 export const auth = async (
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<Response | void> => {
@@ -24,71 +31,36 @@ export const auth = async (
 
   const headers = req.headers as IncomingHttpHeaders;
   const token = headers['authorization']?.split(' ')[1];
-  const secret = process.env.JWT_SECRET as Secret;
 
   if (!token) {
     return sendUnauthorizedResponse(res, 'No token provided.', 401);
   }
 
-  jwt.verify(token, secret, async (err, decoded) => {
-    if (err) {
-      if (err.name === 'TokenExpiredError') {
-        return sendUnauthorizedResponse(
-          res,
-          'Session expired. Please login again.',
-          401,
-        );
-      }
+  const decoded = (await Jwt.decode(token, true)) as RefreshTokenPayload;
 
-      if (err.message == null) {
-        return sendUnauthorizedResponse(res, err.message, 401);
-      }
+  req.userId = decoded.userId as number;
 
-      return sendUnauthorizedResponse(res, 'Unexpected error.', 401);
+  try {
+    const user = await User.findById(req.userId);
+
+    const userIdBuffer = Buffer.from(req.userId.toString());
+    const dbUserIdBuffer = Buffer.from(user.getId().toString());
+
+    if (!timingSafeEqual(userIdBuffer, dbUserIdBuffer)) {
+      return sendUnauthorizedResponse(res, 'User not found.', 401);
     }
+  } catch (error) {
+    winston.error(`Database error:, ${error}`);
+    return sendUnauthorizedResponse(res, 'Internal server error.', 500);
+  }
 
-    const decodedToken = decoded as JwtPayload;
-
-    if (decodedToken.userId == null) {
-      return sendUnauthorizedResponse(
-        res,
-        'Token does not have a userId.',
-        401,
-      );
-    }
-
-    req.userId = decodedToken.userId;
-
-    try {
-      const user = await User.findByPk(req.userId);
-
-      if (!user) {
-        return sendUnauthorizedResponse(res, 'User not found.', 401);
-      }
-
-      // Timing-safe comparison for user ID
-      const userIdBuffer = Buffer.from(req.userId.toString());
-      const dbUserIdBuffer = Buffer.from(user.getDataValue('id').toString());
-
-      if (!timingSafeEqual(userIdBuffer, dbUserIdBuffer)) {
-        return sendUnauthorizedResponse(res, 'User not found.', 401);
-      }
-    } catch (error) {
-      winston.error(`Database error:, ${error}`);
-      return sendUnauthorizedResponse(res, 'Internal server error.', 500);
-    }
-
-    return next();
-  });
+  return next();
 };
 
-export const createContext = async ({
-  req,
-  res,
-}: CreateExpressContextOptions) => {
+export const createContext = async ({ req, res }: CreateContextParams) => {
   try {
     await new Promise<void>((resolve, reject) => {
-      auth(req as unknown as AuthenticatedRequest, res, (err) => {
+      auth(req, res, (err) => {
         if (err) {
           reject(err);
         } else {
