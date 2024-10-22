@@ -25,7 +25,7 @@ export const refreshJwt = async (
       username: user.getUsername(),
     };
 
-    const accessToken = await jwtFactory(TokenType.AccessToken, payload, true);
+    const accessToken = await jwtFactory(TokenType.AccessToken, payload);
 
     const revokedToken = await RevokedToken.create({
       jti,

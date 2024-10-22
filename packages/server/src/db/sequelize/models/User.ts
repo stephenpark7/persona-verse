@@ -1,13 +1,12 @@
 import { DataTypes, Model } from 'sequelize';
-import { Response } from 'express';
-import { Session } from 'express-session';
+import type { Request, Response } from 'express';
+import type { Session } from 'express-session';
 
-import type { Request } from 'express';
-import {
-  type UserCreateParams,
-  type UserCreateResponse,
-  type UserLoginParams,
-  type UserLoginResponse,
+import type {
+  UserCreateParams,
+  UserCreateResponse,
+  UserLoginParams,
+  UserLoginResponse,
 } from '@shared/types';
 
 import {
@@ -18,20 +17,22 @@ import {
 } from '@shared/schemas';
 
 import {
-  validateUserCreate,
-  validateUserLogin,
   generateRevokedToken,
   hashPassword,
-  validatePassword,
   InternalServerError,
+  validatePassword,
+  validateUserCreate,
+  validateUserLogin,
 } from '@utils';
 
 import { jwtFactory } from '@factories';
 
+import { Jwt } from '@models';
+
 import { sequelize } from '../sequelize';
+
 import { UserProfile } from './UserProfile';
 import { RevokedToken } from './RevokedToken';
-import { Jwt } from '@models';
 
 export class User extends Model {
   public getId(): number {
@@ -92,13 +93,9 @@ export class User extends Model {
       username,
     };
 
-    const accessToken = await jwtFactory(TokenType.AccessToken, payload, true);
+    const accessToken = await jwtFactory(TokenType.AccessToken, payload);
 
-    const refreshToken = await jwtFactory(
-      TokenType.RefreshToken,
-      payload,
-      true,
-    );
+    const refreshToken = await jwtFactory(TokenType.RefreshToken, payload);
 
     req.session.refreshToken = {
       token: refreshToken.toString(),

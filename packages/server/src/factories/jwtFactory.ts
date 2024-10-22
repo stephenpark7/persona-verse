@@ -5,7 +5,6 @@ import { AccessToken, RefreshToken } from '@models';
 export const jwtFactory = async (
   type: TokenType,
   payload: JwtPayload,
-  generate = true,
 ): Promise<JwtData> => {
   let jwt: JwtData;
 
@@ -17,9 +16,5 @@ export const jwtFactory = async (
     throw new Error('Invalid token type.');
   }
 
-  if (generate) {
-    return await jwt.generate();
-  }
-
-  return jwt;
+  return await jwt.generate();
 };

@@ -4,8 +4,8 @@ import { jwtFactory } from '@factories';
 
 export const refreshTokenFactory = async (
   payload: JwtPayload,
-): RefreshToken => {
+): Promise<RefreshToken> => {
   jwtPayload.parse(payload);
 
-  return await jwtFactory(TokenType.RefreshToken, payload, true);
+  return await jwtFactory(TokenType.RefreshToken, payload);
 };
