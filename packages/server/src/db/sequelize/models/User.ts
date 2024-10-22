@@ -137,7 +137,6 @@ export class User extends Model {
     const user = await User.findByPk(id);
 
     if (!user) {
-      console.log('User not found: ', id);
       throw new InternalServerError('User not found.');
     }
 

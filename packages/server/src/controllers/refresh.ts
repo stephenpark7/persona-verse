@@ -10,23 +10,9 @@ export const refreshJwt = async (
   req: Request,
 ): Promise<RefreshTokenResponse> => {
   try {
-    // const session = req.session;
-
-    // if (!session) {
-    //   throw new Error('Session not found.');
-    // }
-
-    // console.log('``:', session);
-
-    // const token: string = session.refreshToken.token;
-
     const token = req.session?.refreshToken.token;
 
-    console.log('``:', token);
-
     const { jti, userId } = await Jwt.decode(token);
-
-    console.log(jti, userId);
 
     const user = await User.findById(userId);
 
