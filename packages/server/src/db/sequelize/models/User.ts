@@ -119,15 +119,11 @@ export class User extends Model {
 
     const refreshToken = req.session.refreshToken;
 
-    logger.info(req.session);
-
     try {
       const { jti, userId } = await Jwt.decode(refreshToken.token);
       await Jwt.revokeToken(jti, userId);
       await destroySession(session);
     } catch (err) {
-      assertIsError(err);
-      logger.error(err);
       // If an error occurs while:
       // -- 1) decoding the token,
       // -- 2) revoking the token
@@ -135,6 +131,8 @@ export class User extends Model {
       // We should catch the error
       // And log it, but still continue with the logout process
       // This is to ensure that the user is logged out on the client side even if an error occurs on the server side
+      assertIsError(err);
+      logger.error(err);
     }
 
     res.clearCookie('pv-session', { path: '/' });

@@ -9,8 +9,6 @@ export const setJwtReducer: CaseReducer<UserState, PayloadAction<Jwt>> = (
 ) => {
   if (!action.payload) return state;
 
-  console.log('Setting JWT:', action.payload);
-
   tokenStorage.setAccessToken(action.payload);
 
   return {
