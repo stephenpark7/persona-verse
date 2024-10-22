@@ -1,19 +1,6 @@
 In Progress:
   Priority:
-    ☐ Bug : toastify doesnt show message, since it's in JSON
-    ☐ 
-      {
-        "error": {
-            "message": "Invalid credentials.",
-            "code": -32603,
-            "data": {
-                "code": "INTERNAL_SERVER_ERROR",
-                "httpStatus": 500,
-                "stack": "Error: Invalid credentials.\n    at validatePassword (/Users/spark/Documents/Personal/projects/current/persona-verse/packages/server/dist/server/src/utils/encryption/encryption.js:8:15)\n    at async User.loginAccount (/Users/spark/Documents/Personal/projects/current/persona-verse/packages/server/dist/server/src/db/sequelize/models/User.js:43:9)\n    at async userLogin (/Users/spark/Documents/Personal/projects/current/persona-verse/packages/server/dist/server/src/controllers/user/userLogin.js:6:12)\n    at async /Users/spark/Documents/Personal/projects/current/persona-verse/packages/server/dist/server/src/trpc/routes/user.js:23:16\n    at async resolveMiddleware (/Users/spark/Documents/Personal/projects/current/persona-verse/node_modules/@trpc/server/dist/index.js:423:30)\n    at async callRecursive (/Users/spark/Documents/Personal/projects/current/persona-verse/node_modules/@trpc/server/dist/index.js:453:32)\n    at async callRecursive (/Users/spark/Documents/Personal/projects/current/persona-verse/node_modules/@trpc/server/dist/index.js:453:32)\n    at async resolve (/Users/spark/Documents/Personal/projects/current/persona-verse/node_modules/@trpc/server/dist/index.js:483:24)\n    at async inputToProcedureCall (/Users/spark/Documents/Personal/projects/current/persona-verse/node_modules/@trpc/server/dist/resolveHTTPResponse-b7a8a1c9.js:48:22)\n    at async Promise.all (index 0)",
-                "path": "loginUser"
-            }
-        }
-      }
+    ✔ Bug : toastify doesnt show message, since it's in JSON @done(24-10-22 08:56)
     ✔ Bug where jti parse is failing (zod) @done(24-10-22 08:46)
     ☐ Refactor testing for serverside
   Frontend:

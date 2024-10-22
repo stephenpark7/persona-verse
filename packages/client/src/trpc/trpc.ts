@@ -64,13 +64,13 @@ const authLink: TRPCLink<AppRouter> = () => {
               }
             } else if (response.status === 400) {
               const responseJSON = err.meta?.responseJSON as JsonResponse;
-              const message = responseJSON.message;
+              const message = responseJSON.message as string;
               store.dispatch(clearJwt());
               observer.error(new TRPCClientError(message));
             } else if (response.status === 500) {
               const responseJSON = err.meta?.responseJSON as JsonResponse;
-              const message = responseJSON.message;
-              observer.error(new TRPCClientError(message));
+              const error = responseJSON.error?.message as string;
+              observer.error(new TRPCClientError(error));
             }
           },
           complete() {
