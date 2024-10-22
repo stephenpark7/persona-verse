@@ -19,6 +19,7 @@ import {
 import {
   hashPassword,
   InternalServerError,
+  logger,
   validatePassword,
   validateUserCreate,
   validateUserLogin,
@@ -31,6 +32,7 @@ import { Jwt } from '@models';
 import { sequelize } from '../sequelize';
 
 import { UserProfile } from './UserProfile';
+import { assertIsError } from '@shared/utils';
 
 export class User extends Model {
   public getId(): number {
@@ -117,11 +119,23 @@ export class User extends Model {
 
     const refreshToken = req.session.refreshToken;
 
-    const { jti, userId } = await Jwt.decode(refreshToken.token);
+    logger.info(req.session);
 
-    await Jwt.revokeToken(jti, userId);
-
-    await destroySession(session);
+    try {
+      const { jti, userId } = await Jwt.decode(refreshToken.token);
+      await Jwt.revokeToken(jti, userId);
+      await destroySession(session);
+    } catch (err) {
+      assertIsError(err);
+      logger.error(err);
+      // If an error occurs while:
+      // -- 1) decoding the token,
+      // -- 2) revoking the token
+      // -- 3) destroying the session
+      // We should catch the error
+      // And log it, but still continue with the logout process
+      // This is to ensure that the user is logged out on the client side even if an error occurs on the server side
+    }
 
     res.clearCookie('pv-session', { path: '/' });
 
