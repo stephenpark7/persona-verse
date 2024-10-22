@@ -1,8 +1,8 @@
-import type { AuthenticatedRequest } from '@shared/types';
+import type { Request } from 'express';
 import { extractUserIdFromRequest, extractMessageFromRequest } from '@utils';
 import { Tweet } from '@db/models';
 
-export const createTweet = async (req: AuthenticatedRequest) => {
+export const createTweet = async (req: Request) => {
   const userId = extractUserIdFromRequest(req);
 
   const message = extractMessageFromRequest(req);
@@ -23,7 +23,7 @@ export const createTweet = async (req: AuthenticatedRequest) => {
   };
 };
 
-export const getTweets = async (req: AuthenticatedRequest) => {
+export const getTweets = async (req: Request) => {
   const userId = extractUserIdFromRequest(req);
 
   const tweets = await Tweet.findAll({

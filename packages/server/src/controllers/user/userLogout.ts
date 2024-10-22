@@ -1,13 +1,13 @@
 import type { Response } from 'express';
 import type { Session } from 'express-session';
-import type { AuthenticatedRequest } from '@shared/types';
+import type { Request } from 'express';
 import { User } from '@db/models';
 import { TRPCError } from '@trpc/server';
 import { ZodError } from 'zod';
 
 export const userLogout = async (
   session: Session,
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response,
 ) => {
   try {

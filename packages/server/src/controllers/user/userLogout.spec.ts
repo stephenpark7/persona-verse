@@ -1,6 +1,6 @@
 import type { Session } from 'express-session';
 import type { Response } from 'express';
-import type { AuthenticatedRequest } from '@shared/types';
+import type { Request } from 'express';
 // import { userCreate } from './userCreate';
 import { userLogout } from './userLogout';
 import { User } from '@db/models';
@@ -19,7 +19,7 @@ vi.mock('@db/models', async (importOriginal) => {
 
 describe('userLogout', async () => {
   let session: Session;
-  let req: AuthenticatedRequest;
+  let req: Request;
   let res: Response;
 
   beforeAll(async () => {
@@ -45,7 +45,7 @@ describe('userLogout', async () => {
           token: '',
         },
       },
-    } as unknown as AuthenticatedRequest;
+    } as unknown as Request;
 
     res = {
       clearCookie: vi.fn(),

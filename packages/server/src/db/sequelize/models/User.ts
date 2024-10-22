@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import { Response } from 'express';
 import { Session } from 'express-session';
 
-import type { AuthenticatedRequest } from '@shared/types';
+import type { Request } from 'express';
 import {
   type UserCreateParams,
   type UserCreateResponse,
@@ -11,10 +11,10 @@ import {
 } from '@shared/types';
 
 import {
-  authenticatedRequest,
   TokenType,
   userLoginParams as userLoginParamsSchema,
   userCreateParams as userCreateParamsSchema,
+  request,
 } from '@shared/schemas';
 
 import {
@@ -71,7 +71,7 @@ export class User extends Model {
 
   public static async loginAccount(
     userLoginParams: UserLoginParams,
-    req: AuthenticatedRequest,
+    req: Request,
   ): Promise<UserLoginResponse> {
     const { username, password } = userLoginParamsSchema.parse(userLoginParams);
 
@@ -111,10 +111,10 @@ export class User extends Model {
 
   public static async logoutAccount(
     session: Session,
-    req: AuthenticatedRequest,
+    req: Request,
     res: Response,
   ) {
-    req = authenticatedRequest.parse(req);
+    req = request.parse(req);
 
     const refreshToken = req.session.refreshToken;
 

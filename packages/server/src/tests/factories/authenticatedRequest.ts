@@ -1,9 +1,9 @@
-import type { AuthenticatedRequest } from '@shared/types';
+import type { Request } from 'express';
 
 export const authenticatedRequestFactory = (
   override = {},
-): AuthenticatedRequest => {
+): Request => {
   return {
     ...override,
-  } as AuthenticatedRequest;
+  } as Request;
 };

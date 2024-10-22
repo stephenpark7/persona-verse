@@ -1,19 +1,12 @@
 import winston from 'winston';
 import { timingSafeEqual } from 'crypto';
-import jwt, { type Secret } from 'jsonwebtoken';
 import type { NextFunction, Response } from 'express';
-import type {
-  AuthenticatedRequest,
-  CreateContextParams,
-  JwtPayload,
-  RefreshTokenPayload,
-} from '@shared/types';
+import type { CreateContextParams, RefreshTokenPayload } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
 import { User } from '@db/models';
 import type { Request } from 'express';
 import type { IncomingHttpHeaders } from 'http';
-import { Jwt, RefreshToken } from '@models';
-import { refreshTokenPayload } from '@shared/schemas';
+import { Jwt } from '@models';
 
 const isAuthHeaderRequired = (url: string) => {
   const noAuthHeaderUrls = ['/registerUser', '/loginUser', '/refreshJwt'];

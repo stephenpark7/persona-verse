@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { Request } from 'express';
 // import type { Session } from 'express-session';
 
 export const request = z.custom<Request>();

@@ -1,4 +1,4 @@
-import type { AuthenticatedRequest, UserLoginParams } from '@shared/types';
+import type { Request, UserLoginParams } from '@shared/types';
 import type { UserLoginResponse } from '@shared/types';
 import { authenticatedRequestFactory } from '@tests/factories';
 import { userLogin } from './userLogin';
@@ -6,7 +6,7 @@ import { userCreate } from '../user/userCreate';
 import { User } from '@db/models';
 
 describe('userLogin', async () => {
-  let req: AuthenticatedRequest;
+  let req: Request;
   let params: UserLoginParams;
 
   beforeAll(async () => {
