@@ -31,7 +31,7 @@ export abstract class Jwt {
     return this;
   }
 
-  async generate(): Promise<this> {
+  public async generate(): Promise<this> {
     this.appendDataToPayload({
       expiresAt: new Date(Date.now() + this.options.expiresIn).toISOString(),
     });
@@ -47,7 +47,7 @@ export abstract class Jwt {
     return this;
   }
 
-  toString(): string {
+  public toString(): string {
     if (!this.token) {
       throw new Error('Token not generated.');
     }
@@ -55,20 +55,20 @@ export abstract class Jwt {
     return this.token;
   }
 
-  [Symbol.toPrimitive](hint: string): string | undefined {
+  public [Symbol.toPrimitive](hint: string): string | undefined {
     if (hint === 'string') {
       return this.toString();
     }
   }
 
-  value(): JwtData {
+  public value(): JwtData {
     return {
       token: this.toString(),
       payload: this.payload,
     };
   }
 
-  expires(): number {
+  public expires(): number {
     return this.options.expiresIn;
   }
 
@@ -93,6 +93,14 @@ export abstract class Jwt {
         return resolve(refreshTokenPayload.parse(decoded));
       });
     });
+  }
+
+  public static async revokeToken(jti: string, userId: number): Promise<void> {
+    const revokedToken = await models.RevokedToken.findByPk(jti);
+
+    if (!revokedToken) {
+      await models.RevokedToken.create({ jti, UserId: userId });
+    }
   }
 }
 

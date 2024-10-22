@@ -121,7 +121,7 @@ export class User extends Model {
 
     const { jti, userId } = await Jwt.decode(refreshToken.token);
 
-    await revokeTokenIfNotRevoked(jti, userId);
+    await Jwt.revokeToken(jti, userId);
 
     await destroySession(session);
 
@@ -150,15 +150,6 @@ export class User extends Model {
     return user;
   }
 }
-
-// TODO: refactor by moving to Jwt class
-
-const revokeTokenIfNotRevoked = async (jti: string, userId: number) => {
-  const revokedToken = await RevokedToken.findByPk(jti);
-  if (!revokedToken) {
-    await generateRevokedToken(userId);
-  }
-};
 
 // TODO: refactor by moving to Session class
 
