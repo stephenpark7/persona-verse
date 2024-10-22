@@ -1,5 +1,6 @@
 In Progress:
   Priority:
+    ☐ Bug where jti parse is failing (zod)
     ☐ Refactor testing for serverside
   Frontend:
     ☐ Add profile page @started(24-10-05 21:35)
