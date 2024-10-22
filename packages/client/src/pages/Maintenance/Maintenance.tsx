@@ -1,5 +1,7 @@
 import { FC, useEffect } from 'react';
 
+// TODO: should ping the server every 5 minutes to check if it's back up
+
 export const Maintenance: FC = () => {
   useEffect(() => {
     const timeout = setTimeout(
