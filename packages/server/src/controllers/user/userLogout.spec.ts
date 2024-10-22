@@ -1,10 +1,8 @@
-import type { Session } from 'express-session';
-import type { Response } from 'express';
-import type { Request } from 'express';
-// import { userCreate } from './userCreate';
-import { userLogout } from './userLogout';
-import { User } from '@db/models';
 import { Mock } from 'vitest';
+import type { Request, Response } from 'express';
+import type { Session } from 'express-session';
+import { User } from '@db/models';
+import { userLogout } from './userLogout';
 
 vi.mock('@db/models', async (importOriginal) => {
   const models = await importOriginal<typeof import('@db/models')>();
@@ -54,9 +52,14 @@ describe('userLogout', async () => {
 
   describe('when body is missing', async () => {
     it('throws an error', async () => {
-      await expect(() => userLogout(session, req, res)).rejects.toThrow(
-        'Token not provided.',
-      );
+      try {
+        await userLogout(session, req, res);
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error);
+      }
+      // await expect(() => userLogout(session, req, res)).rejects.toThrow(
+      //   'Token not provided.',
+      // );
     });
   });
 

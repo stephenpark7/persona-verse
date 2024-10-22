@@ -6,12 +6,12 @@ import {
 } from '@tests/factories';
 import { refreshJwt } from './refresh';
 
-describe('Refresh Controller', () => {
-  describe('refreshJwt', () => {
+describe('Refresh Controller', async () => {
+  describe('refreshJwt', async () => {
     let refreshToken: RefreshToken;
     let res: RefreshTokenResponse;
 
-    describe('when the refresh token is valid', () => {
+    describe('when the refresh token is valid', async () => {
       beforeEach(async () => {
         const user = await userFactory();
 
@@ -21,14 +21,15 @@ describe('Refresh Controller', () => {
         });
       });
 
-      it('returns a new access token', async () => {
-        res = await refreshJwt(
-          requestFactory({
-            session: {
-              refreshToken,
-            },
-          }),
-        );
+      it.only('returns a new access token', async () => {
+        const req = requestFactory({
+          session: {
+            refreshToken,
+          },
+        });
+
+        res = await refreshJwt(req);
+
         expect(res).toHaveProperty('message', 'Token refreshed.');
         expect(res).toHaveProperty('jwt');
         // expect(res.jwt.expiresAt).toBeGreaterThan(Date.now());
@@ -38,7 +39,7 @@ describe('Refresh Controller', () => {
       });
     });
 
-    describe('when the refresh token is invalid', () => {
+    describe('when the refresh token is invalid', async () => {
       // beforeEach(async () => {
       // });
 

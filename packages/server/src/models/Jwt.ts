@@ -57,34 +57,23 @@ export abstract class Jwt {
     return this.options.expiresIn;
   }
 
-  public static async decode(
-    token: string,
-    async = false,
-  ): RefreshTokenPayload | Promise<RefreshTokenPayload> {
+  public static async decode(token: string): Promise<RefreshTokenPayload> {
     if (!token) {
       throw new Error('Token not provided.');
     }
 
-    if (async) {
-      return new Promise((resolve, reject) => {
-        jwt.verify(token, secret, { complete: false }, (err, decoded) => {
-          if (err) {
-            return reject(err);
-          }
-          try {
-            resolve(refreshTokenPayload.parse(decoded));
-          } catch (parseErr) {
-            reject(parseErr);
-          }
-        });
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, secret, { complete: false }, (err, decoded) => {
+        if (err) {
+          return reject(err);
+        }
+        try {
+          return resolve(refreshTokenPayload.parse(decoded));
+        } catch (parseErr) {
+          return reject(parseErr);
+        }
       });
-    }
-
-    const decoded = jwt.verify(token, secret, {
-      complete: false,
-    }) as JwtPayload;
-
-    return refreshTokenPayload.parse(decoded);
+    });
   }
 }
 

@@ -1,7 +1,7 @@
 import winston from 'winston';
 import { timingSafeEqual } from 'crypto';
 import type { NextFunction, Response } from 'express';
-import type { CreateContextParams, RefreshTokenPayload } from '@shared/types';
+import type { CreateContextParams } from '@shared/types';
 import { sendUnauthorizedResponse } from '@utils';
 import { User } from '@db/models';
 import type { Request } from 'express';
@@ -29,7 +29,7 @@ export const auth = async (
     return sendUnauthorizedResponse(res, 'No token provided.', 401);
   }
 
-  const decoded = (await Jwt.decode(token, true)) as RefreshTokenPayload;
+  const decoded = await Jwt.decode(token);
 
   req.userId = decoded.userId as number;
 

@@ -92,9 +92,13 @@ export class User extends Model {
       username,
     };
 
-    const accessToken = await jwtFactory(TokenType.AccessToken, payload);
+    const accessToken = await jwtFactory(TokenType.AccessToken, payload, true);
 
-    const refreshToken = await jwtFactory(TokenType.RefreshToken, payload);
+    const refreshToken = await jwtFactory(
+      TokenType.RefreshToken,
+      payload,
+      true,
+    );
 
     req.session.refreshToken = {
       token: refreshToken.toString(),
@@ -118,7 +122,7 @@ export class User extends Model {
 
     const refreshToken = req.session.refreshToken;
 
-    const { jti, userId } = Jwt.decode(refreshToken.token);
+    const { jti, userId } = await Jwt.decode(refreshToken.token);
 
     await revokeTokenIfNotRevoked(jti, userId);
 
@@ -133,6 +137,7 @@ export class User extends Model {
     const user = await User.findByPk(id);
 
     if (!user) {
+      console.log('User not found: ', id);
       throw new InternalServerError('User not found.');
     }
 

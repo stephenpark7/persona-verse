@@ -5,7 +5,7 @@ import { AccessToken, RefreshToken } from '@models';
 export const jwtFactory = async (
   type: TokenType,
   payload: JwtPayload,
-  generate = false,
+  generate = true,
 ): Promise<JwtData> => {
   let jwt: JwtData;
 
