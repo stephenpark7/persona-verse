@@ -63,11 +63,13 @@ const authLink: TRPCLink<AppRouter> = () => {
                 observer.error(new TRPCClientError('Unauthorized.'));
               }
             } else if (response.status === 400) {
+              // TODO: have separate schema for error responses
               const responseJSON = err.meta?.responseJSON as JsonResponse;
               const message = responseJSON.message as string;
               store.dispatch(clearJwt());
               observer.error(new TRPCClientError(message));
             } else if (response.status === 500) {
+              // TODO: have separate schema for error responses
               const responseJSON = err.meta?.responseJSON as JsonResponse;
               const error = responseJSON.error?.message as string;
               observer.error(new TRPCClientError(error));
