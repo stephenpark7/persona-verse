@@ -80,7 +80,7 @@ export const createContext = async ({ req, res }: CreateContextParams) => {
     });
   } catch (err) {
     assertIsError(err);
-    logger.error(err);
+    logger.error(err.message);
   }
 
   return {

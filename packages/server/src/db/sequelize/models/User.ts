@@ -132,7 +132,7 @@ export class User extends Model {
       // And log it, but still continue with the logout process
       // This is to ensure that the user is logged out on the client side even if an error occurs on the server side
       assertIsError(err);
-      logger.error(err);
+      logger.error(err.message);
     }
 
     res.clearCookie('pv-session', { path: '/' });
