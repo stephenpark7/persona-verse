@@ -40,7 +40,7 @@ describe('Refresh Controller', async () => {
         expect(res.jwt.payload.expiresAt).toBeDefined();
         expect(res.jwt.payload.userId).toEqual(refreshToken.payload.userId);
         expect(res.jwt.payload.username).toEqual(refreshToken.payload.username);
-        expect(res.jwt.payload.jti).not.toBeDefined();
+        expect(res.jwt.payload.jti).toBeDefined();
       });
     });
 
