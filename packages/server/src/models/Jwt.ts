@@ -12,7 +12,7 @@ import { jwtPayload, jwtOptions, decodedJwt } from '@shared/schemas';
 
 import * as models from '@db/models';
 
-import { InternalServerError } from '@utils';
+import { InternalServerError } from '@shared/utils';
 
 const secret = process.env.JWT_SECRET || 'pv-jwt-secret';
 

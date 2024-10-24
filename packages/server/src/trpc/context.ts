@@ -1,11 +1,8 @@
-import { timingSafeEqual } from 'crypto';
 import type { NextFunction, Request, Response } from 'express';
-import { TokenExpiredError } from 'jsonwebtoken';
 import type { CreateContextParams } from '@shared/types';
-import { assertIsError } from '@shared/utils';
+import { assertIsError, assertIsException } from '@shared/utils';
 import {
   logger,
-  sendUnauthorizedResponse,
   isAuthHeaderRequired,
   extractAuthTokenFromRequest,
 } from '@utils';
@@ -18,38 +15,22 @@ export const auth = async (
   next: NextFunction,
 ): Promise<Response | void> => {
   try {
-    if (!isAuthHeaderRequired(req.url)) {
+    if (!isAuthHeaderRequired(req)) {
       return next();
     }
 
     const token = extractAuthTokenFromRequest(req);
 
-    if (!token) {
-      return sendUnauthorizedResponse(res, 'No token provided.', 401);
-    }
-
     const { userId } = await Jwt.decode(token);
 
-    const user = await User.findById(userId);
-
-    const userIdBuffer = Buffer.from(userId.toString());
-    const dbUserIdBuffer = Buffer.from(user.getId().toString());
-
-    if (!timingSafeEqual(userIdBuffer, dbUserIdBuffer)) {
-      return sendUnauthorizedResponse(res, 'User not found.', 401);
-    }
+    await User.findById(userId);
 
     req.userId = userId;
   } catch (err) {
-    assertIsError(err);
-
-    let statusCode;
-
-    if (err instanceof TokenExpiredError) {
-      statusCode = 400;
-    }
-
-    return sendUnauthorizedResponse(res, err.message, statusCode || 500);
+    assertIsException(err);
+    res.status(err.getStatusCode()).json({
+      message: err.message,
+    });
   }
 
   return next();

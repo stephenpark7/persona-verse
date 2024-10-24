@@ -1,6 +1,9 @@
 import type { Request } from 'express';
+import { AuthenticationError } from '@shared/utils';
 
-export const isAuthHeaderRequired = (url: string) => {
+export const isAuthHeaderRequired = (request: Request) => {
+  const url = request.url;
+
   // URLs that don't require an auth header
   const whitelistedUrls = [
     '/registerUser',
@@ -16,17 +19,17 @@ export const extractAuthTokenFromRequest = (req: Request): string => {
   const headers = req.get('authorization');
 
   if (!headers) {
-    throw new Error('No authorization header.');
+    throw new AuthenticationError('No authorization header.');
   }
 
   const authHeader = headers.split(' ');
 
   if (authHeader.length !== 2) {
-    throw new Error('Invalid authorization header.');
+    throw new AuthenticationError('Invalid authorization header.');
   }
 
   if (authHeader[0] !== 'Bearer') {
-    throw new Error('Invalid token prefix.');
+    throw new AuthenticationError('Invalid token prefix.');
   }
 
   const token = authHeader[1];

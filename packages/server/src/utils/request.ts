@@ -1,12 +1,4 @@
-import type { Request, Response } from 'express';
-
-export const sendUnauthorizedResponse = (
-  res: Response,
-  message: string,
-  statusCode = 401,
-): Response => {
-  return res.status(statusCode).json({ message: message });
-};
+import type { Request } from 'express';
 
 export const extractUserIdFromRequest = (req: Request): number => {
   const userId = req.userId;

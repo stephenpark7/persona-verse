@@ -18,7 +18,6 @@ import {
 
 import {
   hashPassword,
-  InternalServerError,
   logger,
   validatePassword,
   validateUserCreate,
@@ -32,7 +31,7 @@ import { Jwt } from '@models';
 import { sequelize } from '../sequelize';
 
 import { UserProfile } from './UserProfile';
-import { assertIsError } from '@shared/utils';
+import { assertIsError, InternalServerError } from '@shared/utils';
 
 export class User extends Model {
   public getId(): number {
