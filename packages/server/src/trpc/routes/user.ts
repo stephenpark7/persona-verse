@@ -25,6 +25,6 @@ export const userRoutes = {
       return await userLogin(input, ctx.req);
     }),
   logoutUser: publicProcedure.mutation(async ({ ctx }) => {
-    return await userLogout(ctx.session, ctx.req, ctx.res);
+    return await userLogout(ctx.req, ctx.res);
   }),
 };

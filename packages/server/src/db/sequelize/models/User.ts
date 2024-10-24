@@ -110,7 +110,7 @@ export class User extends Model {
   }
 
   public static async logoutAccount(
-    session: Session,
+    // session: Session,
     req: Request,
     res: Response,
   ) {
@@ -121,7 +121,7 @@ export class User extends Model {
     try {
       const { jti, userId } = await Jwt.decode(refreshToken.token);
       await Jwt.revokeToken(jti, userId);
-      await destroySession(session);
+      await destroySession(req.session);
     } catch (err) {
       // If an error occurs while:
       // -- 1) decoding the token,

@@ -1,6 +1,5 @@
 import { Mock } from 'vitest';
 import type { Request, Response } from 'express';
-import type { Session } from 'express-session';
 import { User } from '@db/models';
 import { userLogout } from './userLogout';
 
@@ -16,7 +15,6 @@ vi.mock('@db/models', async (importOriginal) => {
 });
 
 describe('userLogout', async () => {
-  let session: Session;
   let req: Request;
   let res: Response;
 
@@ -31,9 +29,9 @@ describe('userLogout', async () => {
 
     // TODO: create factory/mocks for these
 
-    session = {
-      destroy: vi.fn(),
-    } as unknown as Session;
+    // session = {
+    //   destroy: vi.fn(),
+    // } as unknown as Session;
 
     req = {
       url: '',
@@ -53,7 +51,7 @@ describe('userLogout', async () => {
   describe('when body is missing', async () => {
     it('throws an error', async () => {
       try {
-        await userLogout(session, req, res);
+        await userLogout(req, res);
       } catch (err) {
         expect(err).toBeInstanceOf(Error);
       }
@@ -71,7 +69,7 @@ describe('userLogout', async () => {
     });
 
     it('throws an error', async () => {
-      await expect(() => userLogout(session, req, res)).rejects.toThrow(
+      await expect(() => userLogout(req, res)).rejects.toThrow(
         'Internal server error occurred.',
       );
     });

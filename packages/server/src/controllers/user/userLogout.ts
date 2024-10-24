@@ -1,11 +1,11 @@
 import type { Request, Response } from 'express';
-import type { Session } from 'express-session';
+// import type { Session } from 'express-session';
 import { User } from '@db/models';
 
 export const userLogout = async (
-  session: Session,
+  // session: Session,
   req: Request,
   res: Response,
 ) => {
-  return await User.logoutAccount(session, req, res);
+  return await User.logoutAccount(req, res);
 };
