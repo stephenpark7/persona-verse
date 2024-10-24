@@ -31,12 +31,12 @@ describe('Refresh Controller', async () => {
         res = await refreshJwt(req);
       });
 
-      it('returns a message and jwt', async () => {
+      it('returns a message', async () => {
         expect(res).toHaveProperty('message', 'Token refreshed.');
-        expect(res).toHaveProperty('jwt');
       });
 
       it('returns a jwt with the correct payload', async () => {
+        expect(res).toHaveProperty('jwt');
         expect(res.jwt.payload.expiresAt).toBeDefined();
         expect(res.jwt.payload.userId).toEqual(refreshToken.payload.userId);
         expect(res.jwt.payload.username).toEqual(refreshToken.payload.username);
