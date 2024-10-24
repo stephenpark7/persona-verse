@@ -1,6 +1,6 @@
-import { User } from '@db/models';
-import { createTweet, getTweets } from './tweet';
 import { authenticatedRequestFactory } from '@tests/factories';
+import { User } from '@db/models';
+import { createTweet, getTweets } from './';
 
 describe('Tweet Controller', () => {
   let userId: number;
