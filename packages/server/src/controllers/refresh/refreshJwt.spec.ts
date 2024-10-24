@@ -5,7 +5,7 @@ import {
   userFactory,
   requestFactory,
 } from '@tests/factories';
-import { refreshJwt } from './refresh';
+import { refreshJwt } from '.';
 import { Jwt } from '@models';
 
 describe('Refresh Controller', async () => {
