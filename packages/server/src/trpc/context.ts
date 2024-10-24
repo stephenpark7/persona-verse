@@ -4,20 +4,19 @@ import { User } from '@db/models';
 import { Jwt } from '@models';
 
 export const createContext = async ({ req, res }: CreateContextParams) => {
-  if (isAuthHeaderRequired(req)) {
-    const token = extractAuthTokenFromRequest(req);
+  const context = { req, res };
+
+  if (isAuthHeaderRequired(context.req)) {
+    const token = extractAuthTokenFromRequest(context.req);
 
     const { userId } = await Jwt.decode(token);
 
     await User.findById(userId);
 
-    req.userId = userId;
+    context.req.userId = userId;
   }
 
-  return {
-    req,
-    res,
-  };
+  return context;
 };
 
 export type Context = Awaited<ReturnType<typeof createContext>>;
