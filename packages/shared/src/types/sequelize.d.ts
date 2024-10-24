@@ -1,4 +1,4 @@
 import { z } from 'zod';
-import { sequelizeOptionsSchema } from '@schemas';
+import { sequelizeOptionsSchema } from '@shared/schemas';
 
 export type SequelizeOptions = z.infer<typeof sequelizeOptionsSchema>;

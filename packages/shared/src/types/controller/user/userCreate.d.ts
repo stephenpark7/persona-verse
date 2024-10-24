@@ -3,7 +3,7 @@ import {
   userCreateParams,
   userCreateResponse,
   userCreateSchema,
-} from '@schemas';
+} from '@shared/schemas';
 
 export type UserCreateParams = z.infer<typeof userCreateParams>;
 
