@@ -1,4 +1,3 @@
-// import type { IncomingHTTPHeaders } from 'http';
 import type { Request } from 'express';
 
 export const isAuthHeaderRequired = (url: string) => {
