@@ -98,6 +98,8 @@ export abstract class Jwt {
       if (!revokedToken) {
         throw new InternalServerError('Failed to revoke token.');
       }
+    } else {
+      throw new Error('Token already revoked.');
     }
   }
 }

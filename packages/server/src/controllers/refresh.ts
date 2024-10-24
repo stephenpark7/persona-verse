@@ -5,6 +5,7 @@ import { Jwt } from '@models';
 import { User, RevokedToken } from '@db/models';
 import { jwtFactory } from '@factories';
 import { TokenType } from '@shared/schemas';
+import { assertIsError } from '@shared/utils';
 
 export const refreshJwt = async (
   req: Request,
@@ -40,11 +41,12 @@ export const refreshJwt = async (
       message: 'Token refreshed.',
       jwt: accessToken.value(),
     };
-  } catch (_err) {
+  } catch (err) {
+    assertIsError(err);
     throw new TRPCError({
       code: 'UNAUTHORIZED',
-      message: 'Session expired. Please login again.',
-      cause: _err,
+      message: err.message,
+      cause: err,
     });
   }
 };

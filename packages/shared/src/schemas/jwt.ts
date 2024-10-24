@@ -5,22 +5,12 @@ export const jwtPayload = z.object({
   userId: z.number(),
   username: z.string(),
   jti: z.string().optional(),
-  expiresAt: z.date().optional(),
+  expiresAt: z.string().optional(),
 });
-
-export const decodedJwt = jwtPayload
-  .extend({
-    expiresAt: z.string(),
-  })
-  .pick({
-    userId: true,
-    username: true,
-    expiresAt: true,
-  });
 
 export const accessTokenPayload = jwtPayload
   .extend({
-    expiresAt: z.date(),
+    expiresAt: z.string(),
   })
   .pick({
     userId: true,
@@ -30,13 +20,20 @@ export const accessTokenPayload = jwtPayload
 export const refreshTokenPayload = jwtPayload
   .extend({
     jti: z.string(),
-    expiresAt: z.date(),
+    expiresAt: z.string(),
   })
   .pick({
     userId: true,
     username: true,
     jti: true,
   });
+
+export const decodedJwt = z.object({
+  jti: z.string(),
+  userId: z.number(),
+  username: z.string(),
+  expiresAt: z.string(),
+});
 
 export const jwt = z.object({
   token: z.string(),

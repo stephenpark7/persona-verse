@@ -6,6 +6,7 @@ import {
   requestFactory,
 } from '@tests/factories';
 import { refreshJwt } from './refresh';
+import { Jwt } from '@models';
 
 describe('Refresh Controller', async () => {
   describe('refreshJwt', async () => {
@@ -40,7 +41,7 @@ describe('Refresh Controller', async () => {
         expect(res.jwt.payload.expiresAt).toBeDefined();
         expect(res.jwt.payload.userId).toEqual(refreshToken.payload.userId);
         expect(res.jwt.payload.username).toEqual(refreshToken.payload.username);
-        expect(res.jwt.payload.jti).toBeDefined();
+        expect(res.jwt.payload.jti).toBeUndefined();
       });
     });
 
@@ -54,6 +55,26 @@ describe('Refresh Controller', async () => {
                 username: 'invalid',
               }),
           ).rejects.toThrow('User not found.');
+        });
+      });
+      describe('when token is revoked', async () => {
+        it('throws an error', async () => {
+          const user = await userFactory();
+
+          refreshToken = await refreshTokenFactory({
+            userId: user.id,
+            username: user.username,
+          });
+
+          req = requestFactory({
+            session: {
+              refreshToken,
+            },
+          });
+
+          await Jwt.revokeToken(refreshToken.payload.jti, user.id);
+
+          await expect(() => refreshJwt(req)).rejects.toThrow('Token revoked.');
         });
       });
     });
