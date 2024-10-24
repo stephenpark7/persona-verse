@@ -3,7 +3,12 @@ import type { NextFunction, Request, Response } from 'express';
 import { TokenExpiredError } from 'jsonwebtoken';
 import type { CreateContextParams } from '@shared/types';
 import { assertIsError } from '@shared/utils';
-import { logger, sendUnauthorizedResponse, isAuthHeaderRequired } from '@utils';
+import {
+  logger,
+  sendUnauthorizedResponse,
+  isAuthHeaderRequired,
+  extractAuthTokenFromRequest,
+} from '@utils';
 import { User } from '@db/models';
 import { Jwt } from '@models';
 
@@ -17,8 +22,7 @@ export const auth = async (
       return next();
     }
 
-    const headers = req.headers;
-    const token = headers['authorization']?.split(' ')[1];
+    const token = extractAuthTokenFromRequest(req);
 
     if (!token) {
       return sendUnauthorizedResponse(res, 'No token provided.', 401);
