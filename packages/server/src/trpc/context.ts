@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import type { CreateContextParams } from '@shared/types';
-import { assertIsError, assertIsException } from '@shared/utils';
+import { assertIsError, handleException } from '@shared/utils';
 import {
   logger,
   isAuthHeaderRequired,
@@ -27,10 +27,7 @@ export const auth = async (
 
     req.userId = userId;
   } catch (err) {
-    assertIsException(err);
-    res.status(err.getStatusCode()).json({
-      message: err.message,
-    });
+    handleException(err, res);
   }
 
   return next();

@@ -10,6 +10,10 @@ export class Exception extends Error {
   public getStatusCode(): number {
     return this.statusCode;
   }
+
+  public getMessage(): string {
+    return this.message;
+  }
 }
 
 export class InternalServerError extends Exception {
