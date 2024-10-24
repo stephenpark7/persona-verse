@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 import { jwtSchema } from './jwt';
 import { tweetSchema } from './tweet';
 
@@ -16,7 +16,8 @@ export const postTweetResponse = z.object({
 
 export const jsonResponse = z
   .object({
-    message: z.string(),
+    message: z.string().optional(),
+    error: z.custom<ZodError>().optional(),
   })
   .extend(refreshTokenResponse.partial().shape)
   .extend(getTweetsResponse.partial().shape)

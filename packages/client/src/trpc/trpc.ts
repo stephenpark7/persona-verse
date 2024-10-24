@@ -1,7 +1,7 @@
 import {
   type Operation,
   type TRPCLink,
-  type TRPCClientError,
+  TRPCClientError,
   createTRPCProxyClient,
   httpLink,
   httpBatchLink,
@@ -32,20 +32,48 @@ const authLink: TRPCLink<AppRouter> = () => {
           },
           async error(err) {
             const response = err.meta?.response as Response;
-            console.log(err);
-            if (response.status === 401 && retryCount < maxRetries) {
+
+            if (!response) {
+              observer.error(
+                new TRPCClientError(
+                  'Server is not available. Please try again later.',
+                ),
+              );
+              window.location.href = new URL(
+                '/maintenance',
+                window.location.origin,
+              ).href;
+              return;
+            }
+
+            if (response.status === 401) {
+              if (retryCount > maxRetries) {
+                return;
+              }
+
               retryCount++;
+
               try {
                 const response = await refreshJwt({});
                 store.dispatch(setJwt(response.jwt as Jwt));
                 store.dispatch(tweetAPI.util.invalidateTags(['Tweets']));
                 makeRequest(operation);
-              } catch (_err) {
+              } catch {
                 store.dispatch(clearJwt());
-                observer.error(_err as TRPCClientError<AppRouter>);
+                observer.error(new TRPCClientError('Unauthorized.'));
               }
-            } else {
-              observer.error(err);
+            } else if (response.status === 400) {
+              // TODO: have separate schema for error responses
+              const responseJSON = err.meta?.responseJSON as JsonResponse;
+              const message = responseJSON.message as string;
+              store.dispatch(clearJwt());
+              observer.error(new TRPCClientError(message));
+            } else if (response.status === 500) {
+              // TODO: have separate schema for error responses
+              console.log('500 error:', err.meta.responseJSON);
+              const responseJSON = err.meta?.responseJSON as JsonResponse;
+              const error = responseJSON.error?.message as string;
+              observer.error(new TRPCClientError(error));
             }
           },
           complete() {
@@ -62,7 +90,12 @@ const authLink: TRPCLink<AppRouter> = () => {
 
 const isHttpBatchEnabled = process.env.NODE_ENV === 'test';
 
-const httpFlexibleLink = isHttpBatchEnabled ? httpLink : httpBatchLink;
+const httpFlexibleLink = isHttpBatchEnabled ? httpBatchLink : httpLink;
+
+export interface Url {
+  opList?: { path: string }[];
+  op?: { path: string };
+}
 
 const trpc = createTRPCProxyClient<AppRouter>({
   links: [
@@ -71,18 +104,19 @@ const trpc = createTRPCProxyClient<AppRouter>({
       url: apiConfig.trpcUrl,
       fetch: async (url, options) => {
         const requestURL = new URL(url as string);
+        const credentials =
+          requestURL.pathname.endsWith('loginUser') ||
+          requestURL.pathname.endsWith('logoutUser') ||
+          requestURL.pathname.endsWith('refreshJwt')
+            ? 'include'
+            : 'omit';
         const originalRequest = fetch(url, {
           ...options,
-          credentials:
-            requestURL.pathname.endsWith('loginUser') ||
-            requestURL.pathname.endsWith('logoutUser') ||
-            requestURL.pathname.endsWith('refreshJwt')
-              ? 'include'
-              : 'omit',
+          credentials,
         });
         return originalRequest;
       },
-      headers(url: { opList?: { path: string }[]; op?: { path: string } }) {
+      headers(url: Url) {
         const token = store.getState().user.value.jwt?.token;
         const path = isHttpBatchEnabled ? url.opList?.[0]?.path : url.op?.path;
         if (

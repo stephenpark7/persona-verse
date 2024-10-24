@@ -28,6 +28,8 @@ To-Do:
     ☐ Amend commit messages to be more descriptive
     ☐ Use eslint in root instead of in each package
 Done:
+  ✔ Bug : toastify doesnt show message, since it's in JSON @done(24-10-22 08:56)
+  ✔ Bug where jti parse is failing (zod) @done(24-10-22 08:46)
   ✔ Refactor more @done(24-10-05 21:35)
   ✔ Fix broken tests @done(24-10-05 21:35)
   ✔ Add more tests @started(24-08-21 02:24) @done(24-10-05 21:34) @lasted(6w3d19h10m30s)

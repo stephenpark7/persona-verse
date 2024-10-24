@@ -7,6 +7,7 @@ const vitestConfig = defineConfig({
     environment: 'jsdom',
     setupFiles: './src/tests/vitest.setup.ts',
     include: ['./**/*.(spec|test).(ts|tsx)'],
+    fileParallelism: true,
   },
 });
 

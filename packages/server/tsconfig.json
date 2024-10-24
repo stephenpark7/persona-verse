@@ -1,5 +1,5 @@
 {
-  "include": ["./src/**/*", "vitest.config.mts", "../shared/**/*"],
+  "include": ["../shared/**/*", "./src/**/*", "vitest.config.mts"],
   "compilerOptions": {
     "allowImportingTsExtensions": false,
     "allowSyntheticDefaultImports": true,
@@ -23,19 +23,21 @@
     "target": "ESNext",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "useDefineForClassFields": true,
-    "types": ["node", "vitest/globals", "vitest", "./src/types/index.d.ts"],
+    "types": ["node", "vitest/globals", "vitest"],
     "paths": {
-      "@controllers": ["./src/controllers/index"],
-      "@db": ["./src/db/index"],
-      "@schemas": ["./src/schemas/index"],
-      "@middleware": ["./src/middleware/index"],
-      "@models": ["./src/db/sequelize/models/index"],
-      "@routes": ["./src/routes/index"],
-      "@trpc": ["./src/trpc/index"],
-      "@utils": ["./src/utils/index"],
-      "@tests/factories": ["./src/tests/factories/index"],
-      "@shared/schemas": ["../shared/src/schemas/index"],
-      "@shared/types": ["../shared/src/types/index"]
+      "@db": ["./src/db"],
+      "@db/models": ["./src/db/sequelize/models"],
+      "@controllers": ["./src/controllers"],
+      "@factories": ["./src/factories"],
+      "@middleware": ["./src/middleware"],
+      "@models": ["./src/models"],
+      "@routes": ["./src/routes"],
+      "@trpc": ["./src/trpc"],
+      "@utils": ["./src/utils"],
+      "@shared/schemas": ["../shared/src/schemas"],
+      "@shared/types": ["../shared/src/types"],
+      "@shared/utils": ["../shared/src/utils"],
+      "@tests/factories": ["./src/tests/factories"]
     }
   }
 }

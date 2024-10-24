@@ -1,15 +1,6 @@
-import { AuthenticatedRequest } from '@shared/types';
-import { Response } from 'express';
+import type { Request } from 'express';
 
-export const sendUnauthorizedResponse = (
-  res: Response,
-  message: string,
-  statusCode = 401,
-): Response => {
-  return res.status(statusCode).json({ message: message });
-};
-
-export const extractUserIdFromRequest = (req: AuthenticatedRequest): number => {
+export const extractUserIdFromRequest = (req: Request): number => {
   const userId = req.userId;
 
   if (userId === undefined || userId === null) {
@@ -19,9 +10,7 @@ export const extractUserIdFromRequest = (req: AuthenticatedRequest): number => {
   return userId;
 };
 
-export const extractMessageFromRequest = (
-  req: AuthenticatedRequest,
-): string => {
+export const extractMessageFromRequest = (req: Request): string => {
   const body = req.body as { message: string }[] | { message: string };
 
   let message;

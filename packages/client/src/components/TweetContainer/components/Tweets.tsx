@@ -12,7 +12,7 @@ export const Tweets: FC = (): JSX.Element => {
     }
 
     if (!data) {
-      return <p>Error loading tweets.</p>;
+      return <p>Loading...</p>;
     }
 
     const tweets = data.slice(0, 5);
