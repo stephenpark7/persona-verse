@@ -57,6 +57,7 @@ describe('Refresh Controller', async () => {
           ).rejects.toThrow('User not found.');
         });
       });
+
       describe('when token is revoked', async () => {
         it('throws an error', async () => {
           const user = await userFactory();
