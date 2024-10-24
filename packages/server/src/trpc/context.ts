@@ -1,27 +1,11 @@
 import { timingSafeEqual } from 'crypto';
-
 import type { NextFunction, Request, Response } from 'express';
-
-import type { CreateContextParams } from '@shared/types';
-
-import { logger, sendUnauthorizedResponse } from '@utils';
-
-import { User } from '@db/models';
-
-import { Jwt } from '@models';
-
-import { assertIsError } from '@shared/utils';
 import { TokenExpiredError } from 'jsonwebtoken';
-
-const isAuthHeaderRequired = (url: string) => {
-  const noAuthHeaderUrls = [
-    '/registerUser',
-    '/loginUser',
-    '/refreshJwt',
-    '/logoutUser',
-  ];
-  return !noAuthHeaderUrls.some((u) => url.startsWith(u));
-};
+import type { CreateContextParams } from '@shared/types';
+import { assertIsError } from '@shared/utils';
+import { logger, sendUnauthorizedResponse, isAuthHeaderRequired } from '@utils';
+import { User } from '@db/models';
+import { Jwt } from '@models';
 
 export const auth = async (
   req: Request,
