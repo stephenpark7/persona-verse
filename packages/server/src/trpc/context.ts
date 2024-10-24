@@ -3,9 +3,7 @@ import { isAuthHeaderRequired, extractAuthTokenFromRequest } from '@utils';
 import { User } from '@db/models';
 import { Jwt } from '@models';
 
-export const createContext = async ({ req, res }: CreateContextParams) => {
-  const context = { req, res };
-
+export const createContext = async (context: CreateContextParams) => {
   if (isAuthHeaderRequired(context.req)) {
     const token = extractAuthTokenFromRequest(context.req);
 
