@@ -93,3 +93,6 @@ Done:
     ✔ Refresh token on clientside @done(24-07-17 03:31)
   ✔ Only show one message after registering (no need to tell them that they logged in successfully) @done(24-07-21 02:56)
   ✔ Auto sign out on clientside if token is expired @done(24-07-21 02:56)
+
+Notes:
+  ☐ Make sure to delete node_modules/.tmp/tsconfig.tsbuildinfo to rebuild the project, if dist folder is not being created
