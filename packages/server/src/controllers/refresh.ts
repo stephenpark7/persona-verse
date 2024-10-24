@@ -1,64 +1,52 @@
 import type { Request } from 'express';
 import { TRPCError } from '@trpc/server';
 import type { RefreshTokenResponse } from '@shared/types';
-import { generateAccessToken, verifyToken } from '@utils';
-import { User, RevokedToken } from '@models';
+import { Jwt } from '@models';
+import { User, RevokedToken } from '@db/models';
+import { jwtFactory } from '@factories';
+import { TokenType } from '@shared/schemas';
+import { assertIsError } from '@shared/utils';
 
 export const refreshJwt = async (
   req: Request,
 ): Promise<RefreshTokenResponse> => {
   try {
-    const refreshToken = req.session.refreshToken;
+    const token = req.session?.refreshToken.token;
 
-    if (!refreshToken) {
-      throw new Error('Session expired. Please login again.');
-    }
+    const { jti, userId } = await Jwt.decode(token);
 
-    const { jti, userId } = verifyToken(refreshToken.token);
+    const user = await User.findById(userId);
 
-    if (!jti) {
-      throw new Error('Token does not have a jti.');
-    }
-
-    if (userId === undefined || userId === null) {
-      throw new Error('Token does not have a userId.');
-    }
-
-    const user = await User.findByPk(userId);
-
-    if (!user) {
-      throw new Error('User not found.');
-    }
-
-    if (await RevokedToken.findByPk(jti)) {
-      throw new Error('Token already revoked.');
+    if (await RevokedToken.isRevoked(jti)) {
+      throw new Error('Token revoked.');
     }
 
     const payload = {
-      userId: parseInt(user.get('id') as string),
-      username: user.get('username') as string,
+      userId: user.getId(),
+      username: user.getUsername(),
     };
 
-    const accessToken = generateAccessToken(payload);
+    const accessToken = await jwtFactory(TokenType.AccessToken, payload);
 
-    if (!accessToken) {
-      throw new Error('Failed to generate access token.');
-    }
-
-    RevokedToken.create({
+    const revokedToken = await RevokedToken.create({
       jti,
       UserId: payload.userId,
     });
 
+    if (!revokedToken) {
+      throw new Error('Failed to revoke refresh token.');
+    }
+
     return {
       message: 'Token refreshed.',
-      jwt: accessToken,
+      jwt: accessToken.value(),
     };
-  } catch (_err) {
+  } catch (err) {
+    assertIsError(err);
     throw new TRPCError({
       code: 'UNAUTHORIZED',
-      message: 'Session expired. Please login again.',
-      cause: _err,
+      message: err.message,
+      cause: err,
     });
   }
 };

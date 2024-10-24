@@ -1,11 +1,13 @@
-import type { AuthenticatedRequest, UserLoginParams } from '@shared/types';
+import type { Request, UserLoginParams } from '@shared/types';
+import type { UserLoginResponse } from '@shared/types';
 import { authenticatedRequestFactory } from '@tests/factories';
-import { LoginResponse, userCreate, userLogin } from '../user';
+import { userLogin } from './userLogin';
+import { userCreate } from '../user/userCreate';
+import { User } from '@db/models';
 
 describe('userLogin', async () => {
-  let req: AuthenticatedRequest;
+  let req: Request;
   let params: UserLoginParams;
-  let res;
 
   beforeAll(async () => {
     params = {
@@ -18,13 +20,13 @@ describe('userLogin', async () => {
         refreshToken: '',
       },
     });
-
-    res = () => userLogin(params, req);
   });
 
   describe('when body is missing', () => {
     it('throws an error', async () => {
-      await expect(res).rejects.toThrow('Missing field(s).');
+      await expect(() => userLogin(params, req)).rejects.toThrow(
+        'Missing field(s).',
+      );
     });
   });
 
@@ -38,11 +40,19 @@ describe('userLogin', async () => {
           },
           req,
         ),
-      ).rejects.toThrow('Invalid credentials.');
+      ).rejects.toThrow('User not found.');
     });
   });
 
   describe('when password is invalid', () => {
+    beforeAll(async () => {
+      await userCreate({
+        username: 'test',
+        email: 'test@test.com',
+        password: 'Password123!',
+      });
+    });
+
     it('throws an error', async () => {
       await expect(() =>
         userLogin(
@@ -57,9 +67,11 @@ describe('userLogin', async () => {
   });
 
   describe('when body is valid', async () => {
-    let res: LoginResponse;
+    let res: UserLoginResponse;
 
     beforeAll(async () => {
+      await User.sync({ force: true });
+
       await userCreate({
         username: 'test',
         email: 'test@test.com',

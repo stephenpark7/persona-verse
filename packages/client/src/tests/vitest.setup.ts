@@ -30,6 +30,7 @@ const setupServerWithQueries = (mswTrpc: MswTrpc) => {
     }),
   );
 };
+
 const server = setupServerWithQueries(mswTrpc);
 
 beforeAll(() => server.listen());

@@ -1,5 +1,5 @@
-import { User } from '@models';
-import { tweetCreate, tweetGet } from './tweet';
+import { User } from '@db/models';
+import { createTweet, getTweets } from './tweet';
 import { authenticatedRequestFactory } from '@tests/factories';
 
 describe('Tweet Controller', () => {
@@ -15,13 +15,13 @@ describe('Tweet Controller', () => {
     userId = user.getDataValue('id');
   });
 
-  describe('tweetCreate', () => {
+  describe('createTweet', () => {
     it('creates a new tweet', async () => {
       const req = authenticatedRequestFactory({
         userId,
         body: { message: 'Hello, world!' },
       });
-      const res = await tweetCreate(req);
+      const res = await createTweet(req);
       expect(res).toHaveProperty('message', 'Tweet posted.');
       expect(res).toHaveProperty('tweet');
       expect(res.tweet).toHaveProperty('message', 'Hello, world!');
@@ -30,12 +30,12 @@ describe('Tweet Controller', () => {
     });
   });
 
-  describe('tweetGet', () => {
+  describe('getTweets', () => {
     it('gets all tweets for a user', async () => {
       const req = authenticatedRequestFactory({
         userId,
       });
-      const res = await tweetGet(req);
+      const res = await getTweets(req);
       expect(res).toHaveProperty('message', 'Tweets retrieved.');
       expect(res).toHaveProperty('tweets');
       expect(res.tweets).toHaveLength(1);

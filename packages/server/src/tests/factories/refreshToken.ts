@@ -1,8 +1,15 @@
 import type { JwtPayload, RefreshToken } from '@shared/types';
-import { jwtPayload } from '@shared/schemas';
-import { generateRefreshToken } from '@utils';
+import { jwtPayload, refreshTokenPayload, TokenType } from '@shared/schemas';
+import { jwtFactory } from '@factories';
 
-export const refreshTokenFactory = (payload: JwtPayload): RefreshToken => {
+export const refreshTokenFactory = async (
+  payload: JwtPayload,
+): Promise<RefreshToken> => {
   jwtPayload.parse(payload);
-  return generateRefreshToken(payload);
+
+  const refreshToken = await jwtFactory(TokenType.RefreshToken, payload);
+
+  refreshTokenPayload.parse(refreshToken.payload);
+
+  return refreshToken;
 };

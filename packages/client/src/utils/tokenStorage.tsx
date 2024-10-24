@@ -21,6 +21,7 @@ class TokenStorage {
     const data = {
       getAccessToken: (): Jwt | null => {
         const value: string | null = localStorage.getItem('jwt');
+
         return value ? jwtSchema.parse(JSON.parse(value)) : null;
       },
       setAccessToken: (jwt: Jwt | null) => {
@@ -28,6 +29,7 @@ class TokenStorage {
           localStorage.removeItem('jwt');
           return;
         }
+
         localStorage.setItem('jwt', JSON.stringify(jwtSchema.parse(jwt)));
       },
       clearAccessToken: () => {

@@ -4,10 +4,18 @@ import type { Jwt } from './jwt';
 
 declare module 'express-session' {
   interface SessionData {
-    refreshToken: Jwt;
+    refreshToken?: Jwt;
     clearSession: () => void;
   }
 }
+
+declare module 'express' {
+  interface Request {
+    userId?: number;
+    session: SessionData;
+  }
+}
+
 declare module 'express-serve-static-core' {
   interface Application {
     setupMiddleware: typeof setupMiddleware;

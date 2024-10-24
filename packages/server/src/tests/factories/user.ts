@@ -1,5 +1,5 @@
-import { User } from '@models';
-import { user, User as UserParams } from '@schemas';
+import { User } from '@db/models';
+import { user, User as UserParams } from '@shared/schemas';
 
 export const userFactory = async (
   params: UserParams = {
@@ -9,5 +9,6 @@ export const userFactory = async (
   },
 ) => {
   user.parse(params);
+
   return (await User.create(params)).get();
 };

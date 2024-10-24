@@ -12,7 +12,8 @@ export const httpLogger = (() => {
     transports: [
       new winston.transports.Console(),
       new winston.transports.File({
-        filename: `logs/${process.env.NODE_ENV}.log`,
+        dirname: 'logs',
+        filename: `http-${process.env.NODE_ENV}.log`,
       }),
     ],
     format: winston.format.combine(
