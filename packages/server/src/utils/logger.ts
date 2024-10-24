@@ -7,7 +7,7 @@ export const logger = winston.createLogger({
     new winston.transports.Console(),
     new winston.transports.File({
       dirname: 'logs',
-      filename: `error-${process.env.NODE_ENV}.log`,
+      filename: `info-${process.env.NODE_ENV}.log`,
     }),
   ],
 });
