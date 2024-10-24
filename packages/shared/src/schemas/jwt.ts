@@ -29,7 +29,7 @@ export const refreshTokenPayload = jwtPayload
   });
 
 export const decodedJwt = z.object({
-  jti: z.string(),
+  jti: z.string().optional(),
   userId: z.number(),
   username: z.string(),
   expiresAt: z.string(),

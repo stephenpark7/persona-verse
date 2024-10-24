@@ -70,6 +70,7 @@ const authLink: TRPCLink<AppRouter> = () => {
               observer.error(new TRPCClientError(message));
             } else if (response.status === 500) {
               // TODO: have separate schema for error responses
+              console.log('500 error:', err.meta.responseJSON);
               const responseJSON = err.meta?.responseJSON as JsonResponse;
               const error = responseJSON.error?.message as string;
               observer.error(new TRPCClientError(error));

@@ -40,18 +40,18 @@ export const auth = async (
       return sendUnauthorizedResponse(res, 'No token provided.', 401);
     }
 
-    const decoded = await Jwt.decode(token);
+    const { userId } = await Jwt.decode(token);
 
-    req.userId = decoded.userId as number;
+    const user = await User.findById(userId);
 
-    const user = await User.findById(req.userId);
-
-    const userIdBuffer = Buffer.from(req.userId.toString());
+    const userIdBuffer = Buffer.from(userId.toString());
     const dbUserIdBuffer = Buffer.from(user.getId().toString());
 
     if (!timingSafeEqual(userIdBuffer, dbUserIdBuffer)) {
       return sendUnauthorizedResponse(res, 'User not found.', 401);
     }
+
+    req.userId = userId;
   } catch (err) {
     assertIsError(err);
 
