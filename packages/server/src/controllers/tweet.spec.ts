@@ -15,7 +15,7 @@ describe('Tweet Controller', () => {
     userId = user.getDataValue('id');
   });
 
-  describe('tweetCreate', () => {
+  describe('createTweet', () => {
     it('creates a new tweet', async () => {
       const req = authenticatedRequestFactory({
         userId,
@@ -30,7 +30,7 @@ describe('Tweet Controller', () => {
     });
   });
 
-  describe('tweetGet', () => {
+  describe('getTweets', () => {
     it('gets all tweets for a user', async () => {
       const req = authenticatedRequestFactory({
         userId,
