@@ -129,10 +129,18 @@ export class RefreshToken extends Jwt {
     });
   }
 
-  async generate(): Promise<this> {
+  private generateJti(): string {
+    if (this.payload.jti) {
+      throw new Error('Jti already generated.');
+    }
+
+    return (this.payload.token = uuidv4());
+  }
+
+  public async generate(): Promise<this> {
     super.generate();
 
-    this.payload.jti = uuidv4();
+    this.payload.jti = this.generateJti();
 
     this.token = this.generateToken();
 
